@@ -314,8 +314,8 @@
             tapping-term-ms = <200>;
             bindings = <&kp>, <&kp>;
 
-            flavor = "balanced";
-            quick-tap-ms = <250>;
+            flavor = "tap-preferred";
+            quick-tap-ms = <175>;
             require-prior-idle-ms = <100>;
             hold-trigger-key-positions = <POS_RH_C2R1 POS_RH_C3R1 POS_RH_C4R1 POS_RH_C5R1 POS_RH_C6R1 POS_RH_C1R2 POS_RH_C2R2 POS_RH_C3R2 POS_RH_C4R2 POS_RH_C5R2 POS_RH_C6R2 POS_RH_C1R3 POS_RH_C2R3 POS_RH_C3R3 POS_RH_C4R3 POS_RH_C5R3 POS_RH_C6R3 POS_RH_C2R4 POS_RH_C3R4 POS_RH_C4R4 POS_RH_C5R4 POS_RH_C6R4 POS_RH_C2R5 POS_RH_C3R5 POS_RH_C4R5 POS_RH_C5R5 POS_RH_C6R5 POS_RH_C3R6 POS_RH_C4R6 POS_RH_C5R6 POS_RH_C6R6 POS_RH_C1R4 POS_RH_C1R5 POS_RH_C2R6 POS_RH_T3 POS_RH_T2 POS_RH_T1 POS_RH_T6 POS_RH_T5 POS_RH_T4>;
             hold-trigger-on-release;
@@ -329,8 +329,8 @@
             tapping-term-ms = <200>;
             bindings = <&kp>, <&kp>;
 
-            flavor = "balanced";
-            quick-tap-ms = <250>;
+            flavor = "tap-preferred";
+            quick-tap-ms = <175>;
             require-prior-idle-ms = <100>;
             hold-trigger-key-positions = <POS_LH_C6R1 POS_LH_C5R1 POS_LH_C4R1 POS_LH_C3R1 POS_LH_C2R1 POS_LH_C6R2 POS_LH_C5R2 POS_LH_C4R2 POS_LH_C3R2 POS_LH_C2R2 POS_LH_C1R2 POS_LH_C6R3 POS_LH_C5R3 POS_LH_C4R3 POS_LH_C3R3 POS_LH_C2R3 POS_LH_C1R3 POS_LH_C6R4 POS_LH_C5R4 POS_LH_C4R4 POS_LH_C3R4 POS_LH_C2R4 POS_LH_C1R4 POS_LH_C6R5 POS_LH_C5R5 POS_LH_C4R5 POS_LH_C3R5 POS_LH_C2R5 POS_LH_C1R5 POS_LH_T1 POS_LH_T2 POS_LH_T3 POS_LH_C6R6 POS_LH_C5R6 POS_LH_C4R6 POS_LH_C3R6 POS_LH_C2R6 POS_LH_T4 POS_LH_T5 POS_LH_T6>;
             hold-trigger-on-release;
@@ -343,43 +343,7 @@
             bindings = <&mo>, <&kp>;
 
             flavor = "tap-preferred";
-            quick-tap-ms = <250>;
-            require-prior-idle-ms = <100>;
-            hold-trigger-on-release;
-        };
-
-        td_lshift: td_lshift {
-            compatible = "zmk,behavior-tap-dance";
-            label = "TD_LSHIFT";
-            #binding-cells = <0>;
-            tapping-term-ms = <250>;
-            bindings = <&sk LEFT_SHIFT>, <&caps_word>;
-        };
-
-        td_rshift: td_rshift {
-            compatible = "zmk,behavior-tap-dance";
-            label = "TD_RSHIFT";
-            #binding-cells = <0>;
-            tapping-term-ms = <250>;
-            bindings = <&sk RIGHT_SHIFT>, <&caps_word>;
-        };
-
-        ht_lshift: ht_lshift {
-            compatible = "zmk,behavior-hold-tap";
-            label = "HT_LSHIFT";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            flavor = "balanced";
-            bindings = <&kp>, <&td_lshift>;
-        };
-
-        ht_rshift: ht_rshift {
-            compatible = "zmk,behavior-hold-tap";
-            label = "HT_RSHIFT";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            flavor = "balanced";
-            bindings = <&kp>, <&td_rshift>;
+            quick-tap-ms = <175>;
         };
     };
 };
@@ -411,7 +375,7 @@
 &kp GRAVE             &kp N1          &kp N2       &kp N3        &kp N4        &kp N5                                                                                                          &kp N6  &kp N7        &kp N8        &kp N9       &kp N0          &kp MINUS
 &kp TAB               &kp Q           &kp W        &kp E         &kp R         &kp T                                                                                                           &kp Y   &kp U         &kp I         &kp O        &kp P           &kp BSLH
 &kp ESC               &hml LGUI A     &hml LALT S  &hml LCTRL D  &hml LSHFT F  &kp G                                                                                                           &kp H   &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI  &kp SQT
-&kp EQUAL             &kp Z           &kp X        &kp C         &kp V         &kp B   &ht_lshift LEFT_SHIFT 0  &kp LC(B)  &lower      &kp DEL   &kp LS(MINUS)  &ht_rshift RIGHT_SHIFT 0                    &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp PG_UP
+&kp EQUAL             &kp Z           &kp X        &kp C         &kp V         &kp B   &sk LSHFT  &kp LC(B)  &lower      &kp DEL   &kp LS(MINUS)  &sk RSHFT                    &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp PG_UP
 &magic LAYER_Magic 0  &mt GLOBE HOME  &kp END      &kp LBKT      &kp RBKT              &kp LCTRL          &kp LGUI   &kp LALT    &kp BSPC  &kp RET        &hold_tap_layer LAYER_Symbols SPACE          &kp LEFT      &kp DOWN      &kp UP       &kp RIGHT       &kp PG_DN
             >;
         };
