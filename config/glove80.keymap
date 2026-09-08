@@ -348,20 +348,38 @@
             hold-trigger-on-release;
         };
 
-        lshift_tap_dance: lshift_tap_dance {
+        td_lshift: td_lshift {
             compatible = "zmk,behavior-tap-dance";
-            label = "LSHIFT_TAP_DANCE";
+            label = "TD_LSHIFT";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <250>;
             bindings = <&sk LEFT_SHIFT>, <&caps_word>;
         };
 
-        rshift_tap_dance: rshift_tap_dance {
+        td_rshift: td_rshift {
             compatible = "zmk,behavior-tap-dance";
-            label = "RSHIFT_TAP_DANCE";
+            label = "TD_RSHIFT";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <250>;
             bindings = <&sk RIGHT_SHIFT>, <&caps_word>;
+        };
+
+        ht_lshift: ht_lshift {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HT_LSHIFT";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "balanced";
+            bindings = <&kp>, <&td_lshift>;
+        };
+
+        ht_rshift: ht_rshift {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HT_RSHIFT";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "balanced";
+            bindings = <&kp>, <&td_rshift>;
         };
     };
 };
@@ -393,7 +411,7 @@
 &kp GRAVE             &kp N1          &kp N2       &kp N3        &kp N4        &kp N5                                                                                                          &kp N6  &kp N7        &kp N8        &kp N9       &kp N0          &kp MINUS
 &kp TAB               &kp Q           &kp W        &kp E         &kp R         &kp T                                                                                                           &kp Y   &kp U         &kp I         &kp O        &kp P           &kp BSLH
 &kp ESC               &hml LGUI A     &hml LALT S  &hml LCTRL D  &hml LSHFT F  &kp G                                                                                                           &kp H   &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI  &kp SQT
-&kp EQUAL             &kp Z           &kp X        &kp C         &kp V         &kp B   &lshift_tap_dance  &kp LC(B)  &lower      &kp DEL   &kp LS(MINUS)  &rshift_tap_dance                    &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp PG_UP
+&kp EQUAL             &kp Z           &kp X        &kp C         &kp V         &kp B   &ht_lshift LEFT_SHIFT 0  &kp LC(B)  &lower      &kp DEL   &kp LS(MINUS)  &ht_rshift RIGHT_SHIFT 0                    &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp PG_UP
 &magic LAYER_Magic 0  &mt GLOBE HOME  &kp END      &kp LBKT      &kp RBKT              &kp LCTRL          &kp LGUI   &kp LALT    &kp BSPC  &kp RET        &hold_tap_layer LAYER_Symbols SPACE          &kp LEFT      &kp DOWN      &kp UP       &kp RIGHT       &kp PG_DN
             >;
         };
