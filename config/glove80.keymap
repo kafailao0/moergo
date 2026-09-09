@@ -346,7 +346,7 @@
             quick-tap-ms = <175>;
         };
 
-        lt_space: lt_space {
+        lt_bspc: lt_bspc {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             tapping-term-ms = <200>;
@@ -354,7 +354,6 @@
 
             flavor = "balanced";
             quick-tap-ms = <175>;
-            require-prior-idle-ms = <125>;
         };
     };
 };
@@ -386,8 +385,8 @@
 &kp GRAVE             &kp N1          &kp N2       &kp N3        &kp N4        &kp N5                                                                                                          &kp N6  &kp N7        &kp N8        &kp N9       &kp N0          &kp MINUS
 &kp TAB               &kp Q           &kp W        &kp E         &kp R         &kp T                                                                                                           &kp Y   &kp U         &kp I         &kp O        &kp P           &kp BSLH
 &kp ESC               &hml LGUI A     &hml LALT S  &hml LCTRL D  &kp F         &kp G                                                                                                           &kp H   &kp J         &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI  &kp SQT
-&kp UNDER             &kp Z           &kp X        &kp C         &kp V         &kp B   &kp LGUI   &kp LC(B)  &lower      &kp DEL   &kp EQUAL      &sk RSHFT                    &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp PG_UP
-&magic LAYER_Magic 0  &mt GLOBE HOME  &kp END      &kp LBKT      &kp RBKT              &sk LSHFT          &kp LCTRL  &kp LALT    &kp BSPC  &kp RET        &lt_space LAYER_Symbols SPACE          &kp LEFT      &kp DOWN      &kp UP       &kp RIGHT       &kp PG_DN
+&kp UNDER             &kp Z           &kp X        &kp C         &kp V         &kp B   &kp LALT   &kp LC(B)  &lower      &kp DEL   &kp EQUAL      &sk RSHFT                    &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp PG_UP
+&magic LAYER_Magic 0  &mt GLOBE HOME  &kp END      &kp LBKT      &kp RBKT              &sk LSHFT  &kp LGUI   &kp LCTRL   &kp RET   &lt_bspc LAYER_Symbols BSPC  &kp SPACE          &kp LEFT      &kp DOWN      &kp UP       &kp RIGHT       &kp PG_DN
             >;
         };
 
