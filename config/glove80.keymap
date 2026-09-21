@@ -60,6 +60,7 @@
 #define LAYER_Base 0
 #define LAYER_Lower 1
 #define LAYER_Typing 2
+#define LAYER_HRM 2
 #define LAYER_Symbols 3
 #define LAYER_Magic 4
 #define LAYER_Factory 5
@@ -402,14 +403,14 @@
             >;
         };
 
-        layer_Typing {
+        layer_HRM {
             bindings = <
-&trans  &trans  &trans  &trans  &trans                                                                    &trans  &trans  &trans  &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans                                                    &trans  &trans  &trans  &trans  &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans                                                    &trans  &trans  &trans  &trans  &trans    &trans
-&trans  &kp A   &kp S   &kp D   &kp F   &trans                                                    &trans  &kp J   &kp K   &kp L   &kp SEMI  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans
-&trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans    &trans  &trans  &trans          &trans  &trans  &trans  &trans    &trans
+&trans  &trans  &trans  &trans  &trans                                                                                                            &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans              &trans                                                                                &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans              &trans                                                                                &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &hml LSHFT F  &trans                                                                                &trans  &hmr RSHFT J  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans              &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans    &trans  &trans  &trans          &trans  &trans  &trans  &trans  &trans
             >;
         };
 
@@ -427,7 +428,7 @@
         layer_Magic {
             bindings = <
 &bt BT_CLR      &none            &none             &none            &none                                                                                       &none  &none  &none  &none  &bt BT_CLR_ALL
-&to LAYER_Base  &none            &to LAYER_Typing  &none            &none            &none                                                               &none  &none  &none  &none  &none  &none
+&to LAYER_Base  &none            &to LAYER_HRM     &none            &none            &none                                                               &none  &none  &none  &none  &none  &none
 &none           &rgb_ug RGB_SPI  &rgb_ug RGB_SAI   &rgb_ug RGB_HUI  &rgb_ug RGB_BRI  &rgb_ug RGB_TOG                                                     &none  &none  &none  &none  &none  &none
 &bootloader     &rgb_ug RGB_SPD  &rgb_ug RGB_SAD   &rgb_ug RGB_HUD  &rgb_ug RGB_BRD  &rgb_ug RGB_EFF                                                     &none  &none  &none  &none  &none  &bootloader
 &sys_reset      &none            &none             &none            &none            &none            &bt_2  &bt_3  &none           &none  &none  &none  &none  &none  &none  &none  &none  &sys_reset
