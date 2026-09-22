@@ -48,9 +48,9 @@ gh run watch
 gh run list -L 1
 
 # Download the latest compiled firmware artifact once the run succeeds
-gh run download -n glove80.uf2
+rm -rf glove80.uf2 && gh run download -n glove80.uf2
 ```
-This downloads `glove80.uf2` into `./glove80.uf2/glove80.uf2`.
+This downloads `glove80.uf2`.
 
 Alternatively, download `glove80.uf2` manually from the **Actions** tab on your GitHub repository page under the latest run's **Artifacts** section.
 
@@ -60,7 +60,9 @@ Alternatively, download `glove80.uf2` manually from the **Actions** tab on your 
 
 1. **Connect via USB**: Ensure each keyboard half you wish to flash is connected to your PC with a USB-C cable (they can be connected at the same time or flashed one by one).
 2. **Trigger Bootloader Mode** on **each half**:
-   * **Via Keymap**: Hold the `Magic` key (bottom-left corner key on Base or Lower) and tap the `Bootloader` key.
+   * **Via Keymap**: Hold the `Magic` key (bottom-left corner key on Base or Lower) and tap:
+     * **Left half:** The `ESC` key (outermost key on the home row)
+     * **Right half:** The `'` (`SQT`) key (outermost key on the home row)
    * **Via Hardware Reset**: Double-click the physical reset button located on the thumb cluster with a pin or paperclip.
 3. The keyboard LEDs will flash/pulse, and each half will mount as an external USB mass storage drive:
    * Left half: **`GLV80LHBOOT`**
@@ -69,10 +71,14 @@ Alternatively, download `glove80.uf2` manually from the **Actions** tab on your 
 ### 4. Flash Firmware to Both Halves
 
 #### Option A: Using the helper script
-Run the provided script to automatically detect, mount, and flash both halves:
+Run the provided script to flash both halves:
 ```bash
 ./flash.sh
 ```
+
+> **Tip**: By default, `./flash.sh` runs in **monitor mode**. You can start `./flash.sh` *before* triggering bootloader mode. It will automatically detect, mount, flash, and reboot each half as it appears, supporting both simultaneous and one-by-one sequential flashing.
+>
+> To check once without waiting: `./flash.sh --once`
 
 #### Option B: Manual Linux command
 ```bash
