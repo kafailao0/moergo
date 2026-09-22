@@ -99,7 +99,16 @@ flash_half() {
         return 1
     fi
 
+    # Safety check: Verify the drive is a genuine UF2 bootloader
+    local info_file
+    info_file=$(find "$mount_point" -maxdepth 1 -iname "INFO_UF2.TXT" 2>/dev/null | head -n 1)
+    if [[ -z "$info_file" || ! -f "$info_file" ]]; then
+        echo "[-] Error: $mount_point does not contain INFO_UF2.TXT. Skipping (not a valid UF2 bootloader drive)."
+        return 1
+    fi
+
     echo "    Mount point: $mount_point"
+    echo "    Verified UF2 bootloader signature ($info_file)."
     echo "    Copying firmware..."
     cp "$UF2" "$mount_point/" || true
     sync || true
