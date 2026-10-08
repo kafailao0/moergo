@@ -20,6 +20,19 @@
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 20
 #include <dt-bindings/zmk/pointing.h>
 
+#define SNIPER_MOVE_VAL 500
+#define SNIPER_SCRL_VAL 5
+
+#define SNIPER_MOVE_UP    MOVE_Y(-SNIPER_MOVE_VAL)
+#define SNIPER_MOVE_DOWN  MOVE_Y(SNIPER_MOVE_VAL)
+#define SNIPER_MOVE_LEFT  MOVE_X(-SNIPER_MOVE_VAL)
+#define SNIPER_MOVE_RIGHT MOVE_X(SNIPER_MOVE_VAL)
+
+#define SNIPER_SCRL_UP    MOVE_Y(SNIPER_SCRL_VAL)
+#define SNIPER_SCRL_DOWN  MOVE_Y(-SNIPER_SCRL_VAL)
+#define SNIPER_SCRL_LEFT  MOVE_X(-SNIPER_SCRL_VAL)
+#define SNIPER_SCRL_RIGHT MOVE_X(SNIPER_SCRL_VAL)
+
 /* On demand includes */
 /* Helper Macros, based on https://github.com/urob/zmk-helpers/ */
 
@@ -68,6 +81,7 @@
 #define LAYER_Magic 5
 #define LAYER_Factory 6
 #define LAYER_Mouse 7
+#define LAYER_Sniper 8
 
 /* To deal with the situation where there is no Lower layer, to keep &lower happy */
 
@@ -464,12 +478,23 @@
 
         layer_Mouse {
             bindings = <
-&trans  &trans  &trans      &trans      &trans                                                                                                    &trans          &trans          &trans        &trans           &trans
-&trans  &trans  &trans      &trans      &trans      &trans                                                                                &trans  &trans          &trans          &trans        &trans           &trans
-&trans  &trans  &mkp MB4    &mkp MB5    &trans      &trans                                                                                &trans  &trans          &trans          &trans        &trans           &trans
-&trans  &trans  &mkp MCLK   &mkp RCLK   &mkp LCLK   &trans                                                                                &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &trans  &trans
-&trans  &trans  &trans      &trans      &trans      &trans  &trans  &trans  &trans    &trans    &kp ESC    &trans  &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans           &trans
-&trans  &trans  &trans      &trans      &trans              &trans  &trans  &trans    &mkp MCLK &mkp RCLK  &mkp LCLK               &trans          &trans        &trans           &trans           &trans
+&trans  &trans              &trans      &trans      &trans                                                                                                    &trans          &trans          &trans        &trans           &trans
+&trans  &trans              &trans      &trans      &trans      &trans                                                                                &trans  &trans          &trans          &trans        &trans           &trans
+&trans  &trans              &mkp MB4    &mkp MB5    &trans      &trans                                                                                &trans  &trans          &trans          &trans        &trans           &trans
+&trans  &mo LAYER_Sniper    &mkp MCLK   &mkp RCLK   &mkp LCLK   &trans                                                                                &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &trans  &trans
+&trans  &trans              &trans      &trans      &trans      &trans  &trans  &trans  &trans    &trans    &kp ESC    &trans  &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans           &trans
+&trans  &trans              &trans      &trans      &trans              &trans  &trans  &trans    &mkp MCLK &mkp RCLK  &mkp LCLK               &trans          &trans        &trans           &trans           &trans
+            >;
+        };
+
+        layer_Sniper {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                                                                                                                                &trans                 &trans                 &trans               &trans                  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                                                                                                &trans                  &trans                 &trans                 &trans               &trans                  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                                                                                                &trans                  &trans                 &trans                 &trans               &trans                  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                                                                                                &mmv SNIPER_MOVE_LEFT  &mmv SNIPER_MOVE_DOWN  &mmv SNIPER_MOVE_UP  &mmv SNIPER_MOVE_RIGHT  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &msc SNIPER_SCRL_LEFT  &msc SNIPER_SCRL_DOWN  &msc SNIPER_SCRL_UP  &msc SNIPER_SCRL_RIGHT  &trans  &trans
+&trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans    &trans  &trans  &trans                         &trans                 &trans               &trans                  &trans  &trans
             >;
         };
     };
