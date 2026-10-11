@@ -74,14 +74,13 @@
 /* Automatically generated layer name defines */
 
 #define LAYER_Base 0
-#define LAYER_HRM 1
-#define LAYER_Typing 2
-#define LAYER_Lower 3
-#define LAYER_Symbols 4
-#define LAYER_Magic 5
-#define LAYER_Factory 6
-#define LAYER_Mouse 7
-#define LAYER_Sniper 8
+#define LAYER_Typing 1
+#define LAYER_Lower 2
+#define LAYER_Symbols 3
+#define LAYER_Magic 4
+#define LAYER_Factory 5
+#define LAYER_Mouse 6
+#define LAYER_Sniper 7
 
 /* To deal with the situation where there is no Lower layer, to keep &lower happy */
 
@@ -405,19 +404,8 @@
 &kp GRAVE             &kp N1          &kp N2       &kp N3        &kp N4        &kp N5                                                                                                          &kp N6  &kp N7        &kp N8        &kp N9       &kp N0          &kp MINUS
 &kp TAB               &kp Q           &kp W        &kp E         &kp R         &kp T                                                                                                           &kp Y   &kp U         &kp I         &kp O        &kp P           &kp BSLH
 &kp ESC               &hml LGUI A     &hml LALT S  &hml LCTRL D  &hml LSHFT F  &kp G                                                                                                           &kp H   &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI  &kp SQT
-&kp UNDER             &kp Z           &kp X        &kp C         &kp V         &kp B   &kp LALT   &lt LAYER_Mouse TAB  &lower      &kp DEL   &kp ESC        &td_caps                     &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp PG_UP
+&kp UNDER             &kp Z           &kp X        &kp C         &kp V         &kp B   &lt LAYER_Mouse TAB   &kp LALT     &lower      &kp DEL   &kp ESC        &td_caps                     &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp PG_UP
 &magic LAYER_Magic 0  &mt GLOBE HOME  &kp END      &kp LBKT      &kp RBKT              &kp LSHFT  &kp LGUI   &kp LCTRL   &kp RET   &lt_bspc LAYER_Symbols BSPC  &kp SPACE          &kp LEFT      &kp DOWN      &kp UP       &kp RIGHT       &kp PG_DN
-            >;
-        };
-
-        layer_HRM {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans                                                                                                            &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans              &trans                                                                                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans              &trans                                                                                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &kp F         &trans                                                                                &trans  &kp J         &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans              &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans    &trans  &trans  &trans          &trans  &trans  &trans  &trans  &trans
             >;
         };
 
@@ -457,7 +445,7 @@
         layer_Magic {
             bindings = <
 &bt BT_CLR      &none            &none             &none            &none                                                                                       &none  &none  &none  &none  &bt BT_CLR_ALL
-&to LAYER_Base  &to LAYER_HRM    &to LAYER_Typing  &none            &none            &none                                                               &none  &none  &none  &none  &none  &none
+&to LAYER_Base  &to LAYER_Typing  &none             &none            &none            &none                                                               &none  &none  &none  &none  &none  &none
 &none           &rgb_ug RGB_SPI  &rgb_ug RGB_SAI   &rgb_ug RGB_HUI  &rgb_ug RGB_BRI  &rgb_ug RGB_TOG                                                     &none  &none  &none  &none  &none  &none
 &bootloader     &rgb_ug RGB_SPD  &rgb_ug RGB_SAD   &rgb_ug RGB_HUD  &rgb_ug RGB_BRD  &rgb_ug RGB_EFF                                                     &none  &none  &none  &none  &none  &bootloader
 &sys_reset      &none            &none             &none            &none            &none            &bt_2  &bt_3  &none           &none  &none  &none  &none  &none  &none  &none  &none  &sys_reset
@@ -480,9 +468,9 @@
             bindings = <
 &trans  &trans              &trans      &trans      &trans                                                                                                    &trans          &trans          &trans        &trans           &trans
 &trans  &trans              &trans      &trans      &trans      &trans                                                                                &trans  &trans          &trans          &trans        &trans           &trans
-&trans  &trans              &mkp MB4    &mkp MB5    &trans      &trans                                                                                &trans  &trans          &trans          &trans        &trans           &trans
-&trans  &mo LAYER_Sniper    &mkp MCLK   &mkp RCLK   &mkp LCLK   &trans                                                                                &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &trans  &trans
-&trans  &trans              &trans      &trans      &trans      &trans  &trans  &trans  &trans    &trans    &kp ESC    &trans  &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans           &trans
+&trans  &trans              &mkp MB4    &mkp MB5    &trans      &trans                                                                                &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans  &trans
+&trans  &mo LAYER_Sniper    &mkp MCLK   &mkp RCLK   &mkp LCLK   &trans                                                                                &kp LEFT        &kp DOWN        &kp UP        &kp RIGHT        &trans  &trans
+&trans  &trans              &trans      &trans      &trans      &trans  &trans  &trans  &trans    &trans    &kp ESC    &trans  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &trans           &trans
 &trans  &trans              &trans      &trans      &trans              &trans  &trans  &trans    &mkp MCLK &mkp RCLK  &mkp LCLK               &trans          &trans        &trans           &trans           &trans
             >;
         };
@@ -491,10 +479,10 @@
             bindings = <
 &trans  &trans  &trans  &trans  &trans                                                                                                                                &trans                 &trans                 &trans               &trans                  &trans
 &trans  &trans  &trans  &trans  &trans  &trans                                                                                                &trans                  &trans                 &trans                 &trans               &trans                  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                                                                                                &trans                  &trans                 &trans                 &trans               &trans                  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                                                                                                &mmv SNIPER_MOVE_LEFT  &mmv SNIPER_MOVE_DOWN  &mmv SNIPER_MOVE_UP  &mmv SNIPER_MOVE_RIGHT  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &msc SNIPER_SCRL_LEFT  &msc SNIPER_SCRL_DOWN  &msc SNIPER_SCRL_UP  &msc SNIPER_SCRL_RIGHT  &trans  &trans
-&trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans    &trans  &trans  &trans                         &trans                 &trans               &trans                  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                                                                                                &msc SNIPER_SCRL_LEFT   &msc SNIPER_SCRL_DOWN  &msc SNIPER_SCRL_UP  &msc SNIPER_SCRL_RIGHT  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                                                                                                &trans                  &trans                 &trans                 &trans                  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &mmv SNIPER_MOVE_LEFT  &mmv SNIPER_MOVE_DOWN  &mmv SNIPER_MOVE_UP   &mmv SNIPER_MOVE_RIGHT  &trans  &trans
+&trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans    &trans  &trans  &trans                         &trans                 &trans                &trans                  &trans  &trans
             >;
         };
     };
