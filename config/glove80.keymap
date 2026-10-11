@@ -74,13 +74,14 @@
 /* Automatically generated layer name defines */
 
 #define LAYER_Base 0
-#define LAYER_Typing 1
-#define LAYER_Lower 2
-#define LAYER_Symbols 3
-#define LAYER_Magic 4
-#define LAYER_Factory 5
-#define LAYER_Mouse 6
-#define LAYER_Sniper 7
+#define LAYER_PC 1
+#define LAYER_Typing 2
+#define LAYER_Lower 3
+#define LAYER_Symbols 4
+#define LAYER_Magic 5
+#define LAYER_Factory 6
+#define LAYER_Mouse 7
+#define LAYER_Sniper 8
 
 /* To deal with the situation where there is no Lower layer, to keep &lower happy */
 
@@ -151,14 +152,14 @@
             label = "BT_SELECT_0";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&out OUT_BLE &bt BT_SEL 0>;
+            bindings = <&out OUT_BLE &bt BT_SEL 0 &to LAYER_Base>;
         };
 
         bt_select_1: bt_select_1 {
             label = "BT_SELECT_1";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&out OUT_BLE &bt BT_SEL 1>;
+            bindings = <&out OUT_BLE &bt BT_SEL 1 &to LAYER_PC>;
         };
 
         bt_select_2: bt_select_2 {
@@ -183,14 +184,14 @@
             label = "BT_0";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&out OUT_BLE &bt BT_SEL 0>;
+            bindings = <&out OUT_BLE &bt BT_SEL 0 &to LAYER_Base>;
         };
 
         bt_1: bt_1 {
             label = "BT_1";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&out OUT_BLE &bt BT_SEL 1>;
+            bindings = <&out OUT_BLE &bt BT_SEL 1 &to LAYER_PC>;
         };
 
         bt_2: bt_2 {
@@ -374,6 +375,16 @@
             quick-tap-ms = <175>;
         };
 
+        lt_tab: lt_tab {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <280>;
+            flavor = "tap-preferred";
+            quick-tap-ms = <175>;
+            retro-tap;
+            bindings = <&mo>, <&kp>;
+        };
+
         td_caps: td_caps {
             compatible = "zmk,behavior-tap-dance";
             label = "TD_CAPS";
@@ -405,7 +416,18 @@
 &kp TAB               &kp Q           &kp W        &kp E         &kp R         &kp T                                                                                                           &kp Y   &kp U         &kp I         &kp O        &kp P           &kp BSLH
 &kp ESC               &hml LGUI A     &hml LALT S  &hml LCTRL D  &hml LSHFT F  &kp G                                                                                                           &kp H   &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI  &kp SQT
 &kp UNDER             &kp Z           &kp X        &kp C         &kp V         &kp B   &kp LCTRL   &kp LALT     &lower      &kp DEL   &kp ESC        &td_caps                     &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp PG_UP
-&magic LAYER_Magic 0  &mt GLOBE HOME  &kp END      &kp LG(C)     &kp LG(V)             &kp LSHFT  &lt LAYER_Mouse TAB  &kp LGUI    &kp RET   &lt_bspc LAYER_Symbols BSPC  &kp SPACE          &kp LEFT      &kp DOWN      &kp UP       &kp RIGHT       &kp PG_DN
+&magic LAYER_Magic 0  &mt GLOBE HOME  &kp END      &kp LG(C)     &kp LG(V)             &kp LSHFT  &lt_tab LAYER_Mouse TAB  &kp LGUI    &kp RET   &lt_bspc LAYER_Symbols BSPC  &kp SPACE          &kp LEFT      &kp DOWN      &kp UP       &kp RIGHT       &kp PG_DN
+            >;
+        };
+
+        layer_PC {
+            bindings = <
+&trans  &trans  &trans  &trans     &trans                                                                                                            &trans  &trans  &trans  &trans    &trans
+&trans  &trans  &trans  &trans     &trans     &trans                                                                                         &trans  &trans  &trans  &trans  &trans    &trans
+&trans  &trans  &trans  &trans     &trans     &trans                                                                                         &trans  &trans  &trans  &trans  &trans    &trans
+&trans  &trans  &trans  &trans     &trans     &trans                                                                                         &trans  &trans  &trans  &trans  &trans    &trans
+&trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &kp LC(C)  &kp LC(V)          &trans  &trans  &trans    &trans  &trans  &trans          &trans  &trans  &trans  &trans  &trans
             >;
         };
 
@@ -445,7 +467,7 @@
         layer_Magic {
             bindings = <
 &bt BT_CLR      &none            &none             &none            &none                                                                                       &none  &none  &none  &none  &bt BT_CLR_ALL
-&to LAYER_Base  &to LAYER_Typing  &none             &none            &none            &none                                                               &none  &none  &none  &none  &none  &none
+&to LAYER_Base  &to LAYER_Typing  &to LAYER_PC      &none            &none            &none                                                               &none  &none  &none  &none  &none  &none
 &none           &rgb_ug RGB_SPI  &rgb_ug RGB_SAI   &rgb_ug RGB_HUI  &rgb_ug RGB_BRI  &rgb_ug RGB_TOG                                                     &none  &none  &none  &none  &none  &none
 &bootloader     &rgb_ug RGB_SPD  &rgb_ug RGB_SAD   &rgb_ug RGB_HUD  &rgb_ug RGB_BRD  &rgb_ug RGB_EFF                                                     &none  &none  &none  &none  &none  &bootloader
 &sys_reset      &none            &none             &none            &none            &none            &bt_2  &bt_3  &none           &none  &none  &none  &none  &none  &none  &none  &none  &sys_reset
