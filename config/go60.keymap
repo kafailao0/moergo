@@ -156,7 +156,7 @@
 
 /* Automatically generated layer name defines */
 #define LAYER_Base 0
-#define LAYER_LinuxWin 1
+#define LAYER_PC 1
 #define LAYER_Gaming 2
 #define LAYER_SymbolNav 3
 #define LAYER_Keypad 4
@@ -269,7 +269,7 @@
             bindings
                 = <&out OUT_BLE>,
                   <&bt BT_SEL 1>,
-                  <&to LAYER_LinuxWin>;
+                  <&to LAYER_PC>;
         };
         bt_select_2: bt_select_2 {
             label = "BT_SELECT_2";
@@ -306,7 +306,7 @@
             bindings
                 = <&out OUT_BLE>,
                   <&bt BT_SEL 1>,
-                  <&to LAYER_LinuxWin>;
+                  <&to LAYER_PC>;
         };
         bt_2: bt_2 {
             label = "BT_2";
@@ -432,7 +432,7 @@
             >;
         };
 
-        layer_LinuxWin {
+        layer_PC {
             bindings = <
  &trans  &trans     &trans     &trans     &trans  &trans                                                  &trans  &trans  &trans  &trans  &trans  &trans
  &trans  &trans     &trans     &trans     &trans  &trans                                                  &trans  &trans  &trans  &trans  &trans  &trans
@@ -494,7 +494,7 @@
   &sys_reset  &rgb_ug RGB_SPD  &rgb_ug RGB_SAD  &rgb_ug RGB_HUD  &rgb_ug RGB_BRD  &rgb_ug RGB_EFF                                                                           &none    &kp C_PREV    &kp C_NEXT      &kp C_PP   &none         &sys_reset
   &bt BT_CLR            &none            &bt_0            &bt_1            &bt_2            &bt_3                                                                           &none  &kp C_BRI_DN  &kp C_BRI_UP         &none   &none  &to LAYER_Factory
                                   &out OUT_USB            &none            &none                                                                                                          &none         &none         &none
-                                                                                                   &tog LAYER_Gaming  &tog LAYER_LinuxWin   &none   &none   &none   &none
+                                                                                                   &tog LAYER_Gaming  &tog LAYER_PC   &none   &none   &none   &none
             >;
         };
 
@@ -520,7 +520,7 @@
 #define ORG &ug 0xFF5500  /* Symbols, Math Operators & Gaming Mods */
 #define CYN &ug 0x00FFFF  /* Function Keys (F1-F12) & Media Controls */
 #define RED &ug 0xFF0000  /* System / Lock / Exit / WASD */
-#define BLU &ug 0x0066FF  /* Linux/Win & Bluetooth / Connectivity */
+#define BLU &ug 0x0066FF  /* PC & Bluetooth / Connectivity */
 #define NML &ug_nl 0x00FF00 0xFF0000  /* NumLock indicator (Green=ON, Red=OFF) */
 
 / {
@@ -550,8 +550,8 @@
 #endif
 
         /* Permanent layer: lights up for 3s when toggled on, then fades out */
-        layer_LinuxWin {
-            layer-id = <LAYER_LinuxWin>;
+        layer_PC {
+            layer-id = <LAYER_PC>;
             fade-delay = <3>;
             bindings = <
  ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
