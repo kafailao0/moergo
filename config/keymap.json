@@ -1384,10 +1384,6 @@
         "params": []
       },
       {
-        "value": "&none",
-        "params": []
-      },
-      {
         "value": "&kp",
         "params": [
           {
@@ -1408,7 +1404,7 @@
             "value": "LS",
             "params": [
               {
-                "value": "N6",
+                "value": "EQUAL",
                 "params": []
               }
             ]
@@ -1419,13 +1415,8 @@
         "value": "&kp",
         "params": [
           {
-            "value": "LS",
-            "params": [
-              {
-                "value": "N4",
-                "params": []
-              }
-            ]
+            "value": "MINUS",
+            "params": []
           }
         ]
       },
@@ -1436,10 +1427,19 @@
             "value": "LS",
             "params": [
               {
-                "value": "N3",
+                "value": "N8",
                 "params": []
               }
             ]
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "BSLH",
+            "params": []
           }
         ]
       },
@@ -1518,8 +1518,18 @@
         ]
       },
       {
-        "value": "&none",
-        "params": []
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "N3",
+                "params": []
+              }
+            ]
+          }
+        ]
       },
       {
         "value": "&kp",
@@ -1655,19 +1665,10 @@
             "value": "LS",
             "params": [
               {
-                "value": "EQUAL",
+                "value": "N6",
                 "params": []
               }
             ]
-          }
-        ]
-      },
-      {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "MINUS",
-            "params": []
           }
         ]
       },
@@ -1678,7 +1679,7 @@
             "value": "LS",
             "params": [
               {
-                "value": "N8",
+                "value": "COMMA",
                 "params": []
               }
             ]
@@ -1689,8 +1690,27 @@
         "value": "&kp",
         "params": [
           {
-            "value": "BSLH",
-            "params": []
+            "value": "LS",
+            "params": [
+              {
+                "value": "DOT",
+                "params": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "N4",
+                "params": []
+              }
+            ]
           }
         ]
       },
