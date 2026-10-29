@@ -27,7 +27,18 @@ If you are looking to dig deeper into ZMK and develop new functionality, it is r
 
 ## Firmware & Flashing Procedure
 
-### 1. Build via GitHub Actions
+### 1. Build Firmware
+
+#### Option A: Local Build (Recommended — ~10–15s)
+Run the local build script, which uses MoErgo's `compileZmk` environment with a persistent CMake/Ninja cache and `ccache` (`~/.cache/glove80-zmk`) plus pre-built right-half firmware:
+```bash
+./build.sh
+```
+This outputs `glove80.uf2` directly in the repository root (~15s for a new keymap edit, ~9.5s if cached, ~1.5s for syntax validation).
+
+*(To build using Docker instead, run `./build.sh --docker`.)*
+
+#### Option B: Build via GitHub Actions (~2–3 min)
 Push changes to your repository to trigger the automated ZMK build workflow:
 ```bash
 git add config/glove80.keymap
@@ -35,7 +46,7 @@ git commit -m "Update keymap"
 git push origin main
 ```
 
-### 2. Check Build & Download Firmware
+### 2. Check Build & Download Firmware (GitHub Actions only)
 
 > **Note on Build Time**: The GitHub Actions workflow typically takes **2 to 3 minutes** to compile the firmware. Do not attempt to download immediately after pushing; wait for the run to succeed.
 
