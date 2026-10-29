@@ -397,6 +397,14 @@
             quick-tap-ms = <175>;
         };
 
+        td_caps: td_caps {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_CAPS";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings = <&caps_word>, <&kp CAPS>;
+        };
+
         // Layer tap dance behaviors
 
         ZMK_TD_LAYER(td_LAYER_Keypad, 4)
@@ -417,7 +425,7 @@
             bindings = <
  &magic LAYER_Magic 0       &kp N1       &kp N2        &kp N3        &kp N4  &kp N5                                                                                            &kp N6        &kp N7        &kp N8       &kp N9          &kp N0             &none
               &kp TAB        &kp Q        &kp W         &kp E         &kp R   &kp T                                                                                             &kp Y         &kp U         &kp I        &kp O           &kp P           &kp DEL
-              &kp ESC  &hml LGUI A  &hml LALT S  &hml LCTRL D  &hml LSHFT F   &kp G                                                                                             &kp H  &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI        &caps_word
+              &kp ESC  &hml LGUI A  &hml LALT S  &hml LCTRL D  &hml LSHFT F   &kp G                                                                                             &kp H  &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI          &td_caps
         &kp LS(MINUS)        &kp Z        &kp X         &kp C         &kp V   &kp B                                                                                             &kp N         &kp M     &kp COMMA      &kp DOT        &kp FSLH  &td_LAYER_Keypad
                                       &kp LG(X)     &kp LG(C)     &kp LG(V)                                                                                                                &kp DOWN        &kp UP    &kp RIGHT
                                                                                      &lt LAYER_NumRow TAB  &kp LSHFT  &kp BSPC  &kp RET  &kp SPACE  &hold_tap_layer LAYER_SymbolNav LEFT
