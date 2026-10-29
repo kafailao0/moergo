@@ -424,9 +424,9 @@
         layer_Base {
             bindings = <
  &magic LAYER_Magic 0       &kp N1       &kp N2        &kp N3        &kp N4  &kp N5                                                                                            &kp N6        &kp N7        &kp N8       &kp N9          &kp N0           &kp DEL
-              &kp TAB        &kp Q        &kp W         &kp E         &kp R   &kp T                                                                                             &kp Y         &kp U         &kp I        &kp O           &kp P          &td_caps
+        &kp LS(MINUS)        &kp Q        &kp W         &kp E         &kp R   &kp T                                                                                             &kp Y         &kp U         &kp I        &kp O           &kp P          &td_caps
               &kp ESC  &hml LGUI A  &hml LALT S  &hml LCTRL D  &hml LSHFT F   &kp G                                                                                             &kp H  &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI           &kp SQT
-        &kp LS(MINUS)        &kp Z        &kp X         &kp C         &kp V   &kp B                                                                                             &kp N         &kp M     &kp COMMA      &kp DOT        &kp FSLH  &td_LAYER_Keypad
+            &kp MINUS        &kp Z        &kp X         &kp C         &kp V   &kp B                                                                                             &kp N         &kp M     &kp COMMA      &kp DOT        &kp FSLH  &td_LAYER_Keypad
                                       &kp LG(X)     &kp LG(C)     &kp LG(V)                                                                                                                &kp DOWN        &kp UP    &kp RIGHT
                                                                                      &kp LSHFT  &kp BSPC  &lt LAYER_NumRow TAB  &kp RET  &kp SPACE  &hold_tap_layer LAYER_SymbolNav LEFT
             >;
@@ -446,11 +446,11 @@
         layer_Gaming {
             bindings = <
   &trans  &trans  &trans  &trans    &trans  &trans                                                                           &trans  &trans  &trans  &trans    &trans  &trans
-  &trans  &trans  &trans  &trans    &trans  &trans                                                                           &trans  &trans  &trans  &trans    &trans  &trans
+ &kp TAB  &trans  &trans  &trans    &trans  &trans                                                                           &trans  &trans  &trans  &trans    &trans  &trans
   &trans   &kp A   &kp S   &kp D     &kp F  &trans                                                                           &trans   &kp J   &kp K   &kp L  &kp SEMI  &trans
  &kp DEL  &trans  &trans  &trans    &trans  &trans                                                                           &trans  &trans  &trans  &trans    &trans  &trans
-                   &none   &none  &kp LGUI                                                                                           &trans  &trans  &trans
-                                                    &mt LCTRL BSPC  &mt LSHFT SPACE  &mt LALT RET  &trans  &trans  &kp LEFT
+                &kp BSPC  &kp SPACE  &kp LGUI                                                                                        &trans  &trans  &trans
+                                                    &kp LSHFT  &kp LCTRL  &mt LALT RET  &trans  &trans  &kp LEFT
             >;
         };
 
@@ -569,10 +569,10 @@
             fade-delay = <3>;
             bindings = <
  ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
- ___  ___  RED  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
+ ORG  ___  RED  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
  ___  RED  RED  RED  ORG  ___                                                  ___  ORG  ORG  ORG  ORG  ___
  ORG  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
-           ___  ___  ORG                                                            ___  ___  ___
+           ORG  ORG  ORG                                                            ___  ___  ___
                                                ORG  ORG  ORG  ___  ___  ORG
             >;
         };

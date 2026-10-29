@@ -7,7 +7,7 @@
   "date": 1761766000,
   "creator": "Ka Fai Lao",
   "title": "Go60 Custom Layout",
-  "notes": "Custom Go60 layout.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Thumb Cluster:\n  - Left (Outer to Inner): LSHFT, BSPC (DEL on SymbolNav), TAB (hold for NumRow).\n  - Right (Inner to Outer): RET, SPACE, LEFT (hold for SymbolNav, double-tap+hold repeats LEFT).\n- Caps Word / Caps Lock (td_caps): Single tap for Caps Word, double tap for Caps Lock.\n\nLayers:\n- Base: macOS base layer (Cmd+X/C/V shortcuts on bottom-left).\n- PC: Linux/Windows overlay layer (converts bottom-left shortcuts to Ctrl+X/C/V).\n- Gaming: Disables Home Row Mods on ASDF / JKL; and adds thumb mod-taps (Ctrl/BSPC, Shift/Space, Alt/Ret).\n- SymbolNav: Left-hand brackets/quotes/symbols, Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and DEL on Left Thumb T2.\n- Keypad: Hold or double-tap right pinky to toggle numpad (with live NumLock RGB indicator).\n- NumRow: Hold Left Thumb T3 (TAB) for home-row numbers 1-0 on A-G / H-;.\n- Magic: Bluetooth profile/OS switching (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls, media/volume/brightness controls, and bootloader/reset.\n\nPer-Key RGB (underglow-layer):\n- Momentary layers (SymbolNav, NumRow, Magic) and Keypad stay color-coded while active.\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out.",
+  "notes": "Custom Go60 layout.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Thumb Cluster:\n  - Left (Outer to Inner): LSHFT, BSPC (DEL on SymbolNav), TAB (hold for NumRow).\n  - Right (Inner to Outer): RET, SPACE, LEFT (hold for SymbolNav, double-tap+hold repeats LEFT).\n- Caps Word / Caps Lock (td_caps): Single tap for Caps Word, double tap for Caps Lock.\n\nLayers:\n- Base: macOS base layer (Cmd+X/C/V shortcuts on bottom-left).\n- PC: Linux/Windows overlay layer (converts bottom-left shortcuts to Ctrl+X/C/V).\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts BSPC/SPACE/LGUI on bottom-left, and uses LSHFT, LCTRL, Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and DEL on Left Thumb T2.\n- Keypad: Hold or double-tap right pinky to toggle numpad (with live NumLock RGB indicator).\n- NumRow: Hold Left Thumb T3 (TAB) for home-row numbers 1-0 on A-G / H-;.\n- Magic: Bluetooth profile/OS switching (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls, media/volume/brightness controls, and bootloader/reset.\n\nPer-Key RGB (underglow-layer):\n- Momentary layers (SymbolNav, NumRow, Magic) and Keypad stay color-coded while active.\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out.",
   "tags": [
     "go60",
     "custom"
@@ -135,8 +135,13 @@
         "value": "&kp",
         "params": [
           {
-            "value": "TAB",
-            "params": []
+            "value": "LS",
+            "params": [
+              {
+                "value": "MINUS",
+                "params": []
+              }
+            ]
           }
         ]
       },
@@ -383,13 +388,8 @@
         "value": "&kp",
         "params": [
           {
-            "value": "LS",
-            "params": [
-              {
-                "value": "MINUS",
-                "params": []
-              }
-            ]
+            "value": "MINUS",
+            "params": []
           }
         ]
       },
@@ -946,8 +946,13 @@
         "params": []
       },
       {
-        "value": "&trans",
-        "params": []
+        "value": "&kp",
+        "params": [
+          {
+            "value": "TAB",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&trans",
@@ -1135,12 +1140,22 @@
         "params": []
       },
       {
-        "value": "&none",
-        "params": []
+        "value": "&kp",
+        "params": [
+          {
+            "value": "BSPC",
+            "params": []
+          }
+        ]
       },
       {
-        "value": "&none",
-        "params": []
+        "value": "&kp",
+        "params": [
+          {
+            "value": "SPACE",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&kp",
@@ -1164,27 +1179,19 @@
         "params": []
       },
       {
-        "value": "&mt",
+        "value": "&kp",
         "params": [
           {
-            "value": "LCTRL",
-            "params": []
-          },
-          {
-            "value": "BSPC",
+            "value": "LSHFT",
             "params": []
           }
         ]
       },
       {
-        "value": "&mt",
+        "value": "&kp",
         "params": [
           {
-            "value": "LSHFT",
-            "params": []
-          },
-          {
-            "value": "SPACE",
+            "value": "LCTRL",
             "params": []
           }
         ]
