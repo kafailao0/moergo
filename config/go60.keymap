@@ -503,3 +503,122 @@
 
     };
 };
+
+/* Per-key RGB Layer Color Helpers */
+#define ___ &ug 0x000000
+#define GRN &ug 0x00FF00  /* Numbers & Layer Toggles */
+#define MAG &ug 0xFF00FF  /* Vim Arrows (HJKL) */
+#define GLD &ug 0xFFBF00  /* Brackets, Quotes & RGB Controls */
+#define ORG &ug 0xFF5500  /* Symbols, Math Operators & Gaming Mods */
+#define CYN &ug 0x00FFFF  /* Function Keys (F1-F12) & Media Controls */
+#define RED &ug 0xFF0000  /* System / Lock / Exit / WASD */
+#define BLU &ug 0x0066FF  /* Linux/Win & Bluetooth / Connectivity */
+#define NML &ug_nl 0x00FF00 0xFF0000  /* NumLock indicator (Green=ON, Red=OFF) */
+
+/ {
+    underglow-layer {
+        compatible = "zmk,underglow-layer";
+
+#ifdef IS_GO60_RH
+        pixel-lookup = <
+            POS_RH_T1   POS_RH_T2   POS_RH_T3
+            POS_RH_C1R1 POS_RH_C1R2 POS_RH_C1R3 POS_RH_C1R4
+            POS_RH_C2R1 POS_RH_C2R2 POS_RH_C2R3 POS_RH_C2R4 POS_RH_C2R5
+            POS_RH_C3R1 POS_RH_C3R2 POS_RH_C3R3 POS_RH_C3R4 POS_RH_C3R5
+            POS_RH_C4R1 POS_RH_C4R2 POS_RH_C4R3 POS_RH_C4R4 POS_RH_C4R5
+            POS_RH_C5R1 POS_RH_C5R2 POS_RH_C5R3 POS_RH_C5R4
+            POS_RH_C6R1 POS_RH_C6R2 POS_RH_C6R3 POS_RH_C6R4
+        >;
+#else
+        pixel-lookup = <
+            POS_LH_T1   POS_LH_T2   POS_LH_T3
+            POS_LH_C1R1 POS_LH_C1R2 POS_LH_C1R3 POS_LH_C1R4
+            POS_LH_C2R1 POS_LH_C2R2 POS_LH_C2R3 POS_LH_C2R4 POS_LH_C2R5
+            POS_LH_C3R1 POS_LH_C3R2 POS_LH_C3R3 POS_LH_C3R4 POS_LH_C3R5
+            POS_LH_C4R1 POS_LH_C4R2 POS_LH_C4R3 POS_LH_C4R4 POS_LH_C4R5
+            POS_LH_C5R1 POS_LH_C5R2 POS_LH_C5R3 POS_LH_C5R4
+            POS_LH_C6R1 POS_LH_C6R2 POS_LH_C6R3 POS_LH_C6R4
+        >;
+#endif
+
+        /* Permanent layer: lights up for 3s when toggled on, then fades out */
+        layer_LinuxWin {
+            layer-id = <LAYER_LinuxWin>;
+            fade-delay = <3>;
+            bindings = <
+ ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
+ ___  BLU  BLU  BLU  BLU  ___                                                  ___  BLU  BLU  BLU  BLU  ___
+ ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
+           BLU  BLU  BLU                                                            ___  ___  ___
+                                               ___  ___  ___  ___  ___  ___
+            >;
+        };
+
+        /* Permanent layer: lights up for 3s when toggled on, then fades out */
+        layer_Gaming {
+            layer-id = <LAYER_Gaming>;
+            fade-delay = <3>;
+            bindings = <
+ ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
+ ___  ___  RED  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
+ ___  RED  RED  RED  ORG  ___                                                  ___  ORG  ORG  ORG  ORG  ___
+ ORG  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
+           ___  ___  ORG                                                            ___  ___  ___
+                                               ORG  ORG  ORG  ___  ___  ORG
+            >;
+        };
+
+        /* Momentary layer: stays lit while held */
+        layer_SymbolNav {
+            layer-id = <LAYER_SymbolNav>;
+            bindings = <
+ RED  CYN  CYN  CYN  CYN  CYN                                                  CYN  CYN  CYN  CYN  CYN  CYN
+ RED  ORG  GLD  GLD  ORG  ___                                                  ___  ORG  ORG  ORG  ORG  CYN
+ RED  GLD  GLD  GLD  GLD  ORG                                                  MAG  MAG  MAG  MAG  ORG  RED
+ ___  ORG  GLD  GLD  ORG  ___                                                  ORG  ORG  ORG  ORG  ORG  ___
+           ___  ___  ___                                                            ___  ___  ___
+                                               ___  ___  ___  ___  ___  ___
+            >;
+        };
+
+        /* Hybrid layer: stays lit while active (both held and double-tap toggled) */
+        layer_Keypad {
+            layer-id = <LAYER_Keypad>;
+            bindings = <
+ ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                  GRN  GRN  GRN  ORG  ORG  ___
+ ___  ___  ___  ___  ___  ___                                                  GRN  GRN  GRN  ORG  ORG  NML
+ ___  ___  ___  ___  ___  ___                                                  GRN  GRN  GRN  ORG  ORG  RED
+           ___  ___  ___                                                            GRN  GRN  ORG
+                                               ___  ___  ___  ___  ___  GRN
+            >;
+        };
+
+        /* Momentary layer: stays lit while held */
+        layer_NumRow {
+            layer-id = <LAYER_NumRow>;
+            bindings = <
+ ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
+ ___  GRN  GRN  GRN  GRN  GRN                                                  GRN  GRN  GRN  GRN  GRN  ___
+ ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
+           ___  ___  ___                                                            ___  ___  ___
+                                               ___  ___  ___  ___  ___  ___
+            >;
+        };
+
+        /* Momentary layer: stays lit while held */
+        layer_Magic {
+            layer-id = <LAYER_Magic>;
+            bindings = <
+ ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  RED
+ RED  GLD  GLD  GLD  GLD  GLD                                                  ___  CYN  CYN  CYN  ___  RED
+ RED  GLD  GLD  GLD  GLD  GLD                                                  ___  CYN  CYN  CYN  ___  RED
+ RED  ___  BLU  BLU  BLU  BLU                                                  ___  CYN  CYN  ___  ___  RED
+           BLU  ___  ___                                                            ___  ___  ___
+                                               GRN  GRN  ___  ___  ___  ___
+            >;
+        };
+    };
+};
