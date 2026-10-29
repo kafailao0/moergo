@@ -123,8 +123,13 @@
         ]
       },
       {
-        "value": "&none",
-        "params": []
+        "value": "&kp",
+        "params": [
+          {
+            "value": "DEL",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&kp",
@@ -226,10 +231,10 @@
         ]
       },
       {
-        "value": "&kp",
+        "value": "Custom",
         "params": [
           {
-            "value": "DEL",
+            "value": "&td_caps",
             "params": []
           }
         ]
@@ -366,10 +371,10 @@
         ]
       },
       {
-        "value": "Custom",
+        "value": "&kp",
         "params": [
           {
-            "value": "&td_caps",
+            "value": "SQT",
             "params": []
           }
         ]
@@ -2101,7 +2106,7 @@
     ],
     [
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
@@ -2145,7 +2150,11 @@
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
         "params": []
       },
       {
@@ -2189,15 +2198,11 @@
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
-        "params": []
-      },
-      {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
@@ -2291,7 +2296,11 @@
         ]
       },
       {
-        "value": "&none",
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
         "params": []
       },
       {
@@ -2323,71 +2332,67 @@
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       },
       {
-        "value": "&none",
-        "params": []
-      },
-      {
-        "value": "&none",
+        "value": "&trans",
         "params": []
       }
     ],
