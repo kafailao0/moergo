@@ -562,19 +562,6 @@
         ]
       },
       {
-        "value": "&lt",
-        "params": [
-          {
-            "value": "5",
-            "params": []
-          },
-          {
-            "value": "TAB",
-            "params": []
-          }
-        ]
-      },
-      {
         "value": "&kp",
         "params": [
           {
@@ -588,6 +575,19 @@
         "params": [
           {
             "value": "BSPC",
+            "params": []
+          }
+        ]
+      },
+      {
+        "value": "&lt",
+        "params": [
+          {
+            "value": "5",
+            "params": []
+          },
+          {
+            "value": "TAB",
             "params": []
           }
         ]
@@ -1747,8 +1747,13 @@
         "params": []
       },
       {
-        "value": "&trans",
-        "params": []
+        "value": "&kp",
+        "params": [
+          {
+            "value": "DEL",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&trans",

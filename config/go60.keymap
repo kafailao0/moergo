@@ -428,7 +428,7 @@
               &kp ESC  &hml LGUI A  &hml LALT S  &hml LCTRL D  &hml LSHFT F   &kp G                                                                                             &kp H  &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI           &kp SQT
         &kp LS(MINUS)        &kp Z        &kp X         &kp C         &kp V   &kp B                                                                                             &kp N         &kp M     &kp COMMA      &kp DOT        &kp FSLH  &td_LAYER_Keypad
                                       &kp LG(X)     &kp LG(C)     &kp LG(V)                                                                                                                &kp DOWN        &kp UP    &kp RIGHT
-                                                                                     &lt LAYER_NumRow TAB  &kp LSHFT  &kp BSPC  &kp RET  &kp SPACE  &hold_tap_layer LAYER_SymbolNav LEFT
+                                                                                     &kp LSHFT  &kp BSPC  &lt LAYER_NumRow TAB  &kp RET  &kp SPACE  &hold_tap_layer LAYER_SymbolNav LEFT
             >;
         };
 
@@ -461,7 +461,7 @@
   &kp PSCRN     &kp LS(N2)    &kp LS(N9)    &kp LS(N0)  &kp LS(SQT)  &kp LS(N3)                                                   &kp LEFT       &kp DOWN         &kp UP    &kp RIGHT  &kp LS(BSLH)     &none
       &none  &kp LS(GRAVE)  &kp LS(LBKT)  &kp LS(RBKT)   &kp LS(N1)       &none                                                  &kp EQUAL     &kp LS(N6)  &kp LS(COMMA)  &kp LS(DOT)    &kp LS(N4)     &none
                                   &trans        &trans       &trans                                                                                &trans         &trans       &trans
-                                                                                 &trans  &trans  &trans  &trans  &trans  &trans
+                                                                                 &trans  &kp DEL  &trans  &trans  &trans  &trans
             >;
         };
 
@@ -586,7 +586,7 @@
  RED  ORG  GLD  GLD  GLD  ORG                                                  MAG  MAG  MAG  MAG  ORG  ___
  ___  ORG  GLD  GLD  ORG  ___                                                  ORG  ORG  ORG  ORG  ORG  ___
            ___  ___  ___                                                            ___  ___  ___
-                                               ___  ___  ___  ___  ___  ___
+                                               ___  RED  ___  ___  ___  ___
             >;
         };
 
