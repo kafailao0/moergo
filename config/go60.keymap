@@ -456,12 +456,12 @@
 
         layer_SymbolNav {
             bindings = <
-    &kp INS         &kp F1        &kp F2        &kp F3       &kp F4      &kp F5                                                     &kp F6         &kp F7      &kp F8      &kp F9       &kp F10   &kp F11
-   &kp SLCK      &kp GRAVE      &kp LBKT      &kp RBKT   &kp LS(N5)       &none                                                      &none     &kp LS(N7)  &kp LS(N6)  &kp LS(N4)    &kp LS(N3)   &kp F12
-  &kp PSCRN        &kp SQT    &kp LS(N9)    &kp LS(N0)  &kp LS(SQT)  &kp LS(N2)                                                   &kp LEFT       &kp DOWN      &kp UP   &kp RIGHT  &kp LS(BSLH)  &kp CAPS
-      &none  &kp LS(GRAVE)  &kp LS(LBKT)  &kp LS(RBKT)   &kp LS(N1)       &none                                                  &kp EQUAL  &kp LS(EQUAL)   &kp MINUS  &kp LS(N8)      &kp BSLH     &none
-                                  &trans        &trans       &trans                                                                                &trans      &trans      &trans
-                                                                                 &trans  &trans  &trans  &trans  &trans  &trans
+    &kp INS         &kp F1        &kp F2        &kp F3       &kp F4   &kp F5                                                     &kp F6         &kp F7      &kp F8      &kp F9       &kp F10   &kp F11
+   &kp SLCK      &kp GRAVE      &kp LBKT      &kp RBKT   &kp LS(N5)    &none                                                      &none     &kp LS(N7)  &kp LS(N6)  &kp LS(N4)    &kp LS(N3)   &kp F12
+  &kp PSCRN     &kp LS(N2)    &kp LS(N9)    &kp LS(N0)  &kp LS(SQT)    &none                                                   &kp LEFT       &kp DOWN      &kp UP   &kp RIGHT  &kp LS(BSLH)     &none
+      &none  &kp LS(GRAVE)  &kp LS(LBKT)  &kp LS(RBKT)   &kp LS(N1)    &none                                                  &kp EQUAL  &kp LS(EQUAL)   &kp MINUS  &kp LS(N8)      &kp BSLH     &none
+                                  &trans        &trans       &trans                                                                             &trans      &trans      &trans
+                                                                              &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
@@ -583,7 +583,7 @@
             bindings = <
  RED  CYN  CYN  CYN  CYN  CYN                                                  CYN  CYN  CYN  CYN  CYN  CYN
  RED  ORG  GLD  GLD  ORG  ___                                                  ___  ORG  ORG  ORG  ORG  CYN
- RED  GLD  GLD  GLD  GLD  ORG                                                  MAG  MAG  MAG  MAG  ORG  RED
+ RED  ORG  GLD  GLD  GLD  ___                                                  MAG  MAG  MAG  MAG  ORG  ___
  ___  ORG  GLD  GLD  ORG  ___                                                  ORG  ORG  ORG  ORG  ORG  ___
            ___  ___  ___                                                            ___  ___  ___
                                                ___  ___  ___  ___  ___  ___

@@ -1465,8 +1465,13 @@
         "value": "&kp",
         "params": [
           {
-            "value": "SQT",
-            "params": []
+            "value": "LS",
+            "params": [
+              {
+                "value": "N2",
+                "params": []
+              }
+            ]
           }
         ]
       },
@@ -1513,18 +1518,8 @@
         ]
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "LS",
-            "params": [
-              {
-                "value": "N2",
-                "params": []
-              }
-            ]
-          }
-        ]
+        "value": "&none",
+        "params": []
       },
       {
         "value": "&kp",
@@ -1577,13 +1572,8 @@
         ]
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "CAPS",
-            "params": []
-          }
-        ]
+        "value": "&none",
+        "params": []
       },
       {
         "value": "&none",
