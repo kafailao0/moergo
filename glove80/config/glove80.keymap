@@ -543,10 +543,24 @@
 #define RED &ug 0xFF0000  /* System / Lock / Exit / WASD */
 #define BLU &ug 0x0066FF  /* PC & Bluetooth / Connectivity */
 #define NML &ug_nl 0x00FF00 0xFF0000  /* NumLock indicator (Green=ON, Red=OFF) */
+#define CPL &ug_cl 0x000000 0xFF0000  /* CapsLock indicator (Off=0x000000, On=Red) */
 
 / {
     underglow-layer {
         compatible = "zmk,underglow-layer";
+
+        /* Base layer: Caps Lock status light on td_caps */
+        layer_Base {
+            layer-id = <LAYER_Base>;
+            bindings = <
+ ___  ___  ___  ___  ___                                                                                      ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ CPL  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___  ___  ___  ___      ___  ___  ___      ___  ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___       ___  ___  ___      ___  ___  ___           ___  ___  ___  ___  ___
+            >;
+        };
 
         /* Permanent layer: lights up for 3s when toggled on, then fades out */
         layer_PC {
@@ -608,7 +622,7 @@
             bindings = <
  ___  ___  ___  ___  ___                                                                                      ___  ___  ___  ___  ___
  ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
- ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ CPL  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
  ___  GRN  GRN  GRN  GRN  GRN                                                                            GRN  GRN  GRN  GRN  GRN  ___
  ___  ___  ___  ___  ___  ___  ___  ___  ___      ___  ___  ___      ___  ___  ___  ___  ___  ___
  ___  ___  ___  ___  ___       ___  ___  ___      ___  ___  ___           ___  ___  ___  ___  ___
