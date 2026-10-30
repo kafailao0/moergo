@@ -16,6 +16,7 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/rgb.h>
+#include <dt-bindings/zmk/rgb_colors.h>
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 2000
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 20
 #include <dt-bindings/zmk/pointing.h>
@@ -69,24 +70,25 @@
 #define KB_TYPE_GLOVE_80 1
 #define KB_TYPE_GO_60    2
 #define KB_TYPE          KB_TYPE_GLOVE_80
-#define EDITOR_HOST_OS   'L'
+#define EDITOR_HOST_OS   'M'
 
 /* Automatically generated layer name defines */
 
 #define LAYER_Base 0
 #define LAYER_PC 1
-#define LAYER_Typing 2
-#define LAYER_Lower 3
-#define LAYER_Symbols 4
-#define LAYER_Magic 5
-#define LAYER_Factory 6
-#define LAYER_Mouse 7
-#define LAYER_Sniper 8
+#define LAYER_Gaming 2
+#define LAYER_SymbolNav 3
+#define LAYER_Keypad 4
+#define LAYER_NumRow 5
+#define LAYER_Magic 6
+#define LAYER_Factory 7
+#define LAYER_Mouse 8
+#define LAYER_Sniper 9
 
 /* To deal with the situation where there is no Lower layer, to keep &lower happy */
 
 #ifndef LAYER_Lower
-#define LAYER_Lower 0
+#define LAYER_Lower LAYER_Keypad
 #endif
 
 / {
@@ -371,7 +373,7 @@
             tapping-term-ms = <200>;
             bindings = <&mo>, <&kp>;
 
-            flavor = "balanced";
+            flavor = "tap-preferred";
             quick-tap-ms = <175>;
         };
 
@@ -392,6 +394,8 @@
             tapping-term-ms = <250>;
             bindings = <&caps_word>, <&kp CAPS>;
         };
+
+        ZMK_TD_LAYER(td_LAYER_Keypad, LAYER_Keypad)
     };
 };
 
@@ -411,67 +415,78 @@
 
         layer_Base {
             bindings = <
-&kp F1                &kp F2          &kp F3       &kp F4        &kp F5                                                                                                                                &kp F6        &kp F7        &kp F8       &kp F9          &kp F10
-&kp GRAVE             &kp N1          &kp N2       &kp N3        &kp N4        &kp N5                                                                                                          &kp N6  &kp N7        &kp N8        &kp N9       &kp N0          &kp MINUS
-&kp TAB               &kp Q           &kp W        &kp E         &kp R         &kp T                                                                                                           &kp Y   &kp U         &kp I         &kp O        &kp P           &kp BSLH
-&kp ESC               &hml LGUI A     &hml LALT S  &hml LCTRL D  &hml LSHFT F  &kp G                                                                                                           &kp H   &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI  &kp SQT
-&kp UNDER             &kp Z           &kp X        &kp C         &kp V         &kp B   &kp LCTRL   &kp LALT     &lower      &kp DEL   &kp ESC        &td_caps                     &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp PG_UP
-&magic LAYER_Magic 0  &mt GLOBE HOME  &kp END      &kp LG(C)     &kp LG(V)             &kp LSHFT  &lt_tab LAYER_Mouse TAB  &kp LGUI    &kp RET   &lt_bspc LAYER_Symbols BSPC  &kp SPACE          &kp LEFT      &kp DOWN      &kp UP       &kp RIGHT       &kp PG_DN
+&kp F1                &kp F2       &kp F3       &kp F4        &kp F5                                                                                                                                             &kp F6        &kp F7        &kp F8       &kp F9          &kp F10
+&magic LAYER_Magic 0  &kp N1       &kp N2       &kp N3        &kp N4        &kp N5                                                                                                                       &kp N6  &kp N7        &kp N8        &kp N9       &kp N0          &kp DEL
+&kp LS(MINUS)         &kp Q        &kp W        &kp E         &kp R         &kp T                                                                                                                        &kp Y   &kp U         &kp I         &kp O        &kp P           &td_caps
+&kp ESC               &hml LGUI A  &hml LALT S  &hml LCTRL D  &hml LSHFT F  &kp G                                                                                                                        &kp H   &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI  &kp SQT
+&kp MINUS             &kp Z        &kp X        &kp C         &kp V         &kp B   &kp LCTRL  &kp LALT                   &kp LGUI                 &kp RGUI  &kp RALT                             &kp RCTRL  &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &td_LAYER_Keypad
+&kp LG(SPACE)         &kp LG(Z)    &kp LG(X)    &kp LG(C)     &kp LG(V)             &kp LSHFT  &lt_bspc LAYER_Mouse BSPC  &lt LAYER_NumRow TAB     &kp RET   &hold_tap_layer LAYER_SymbolNav ESC  &kp SPACE          &kp LEFT      &kp DOWN      &kp UP       &kp RIGHT       &kp GLOBE
             >;
         };
 
         layer_PC {
             bindings = <
-&trans  &trans  &trans  &trans     &trans                                                                                                            &trans  &trans  &trans  &trans    &trans
-&trans  &trans  &trans  &trans     &trans     &trans                                                                                         &trans  &trans  &trans  &trans  &trans    &trans
-&trans  &trans  &trans  &trans     &trans     &trans                                                                                         &trans  &trans  &trans  &trans  &trans    &trans
-&trans  &trans  &trans  &trans     &trans     &trans                                                                                         &trans  &trans  &trans  &trans  &trans    &trans
-&trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &kp LC(C)  &kp LC(V)          &trans  &trans  &trans    &trans  &trans  &trans          &trans  &trans  &trans  &trans  &trans
+&trans  &trans     &trans     &trans     &trans                                                                                                           &trans  &trans  &trans  &trans  &trans
+&trans  &trans     &trans     &trans     &trans     &trans                                                                                        &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans     &trans     &trans     &trans     &trans                                                                                        &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans     &trans     &trans     &trans     &trans                                                                                        &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans     &trans     &trans     &trans     &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans      &trans
+&trans  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)          &trans  &trans  &trans    &trans  &trans  &trans          &trans  &trans  &trans  &trans      &trans
             >;
         };
 
-        layer_Typing {
+        layer_Gaming {
             bindings = <
-&trans  &trans  &trans  &trans  &trans                                                                                                            &trans  &trans  &trans  &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans                                                                                            &trans  &trans  &trans  &trans  &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans                                                                                            &trans  &trans  &trans  &trans  &trans    &trans
-&trans  &kp A   &kp S   &kp D   &kp F   &trans                                                                                            &trans  &kp J   &kp K   &kp L   &kp SEMI  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans    &trans  &trans    &trans     &trans                                                                                                                               &trans  &trans  &trans  &trans    &trans
+&trans    &trans  &trans    &trans     &trans                   &trans                                                                                              &trans  &trans  &trans  &trans  &trans    &trans
+&kp TAB   &trans  &trans    &trans     &trans                   &trans                                                                                              &trans  &trans  &trans  &trans  &trans    &trans
+&trans    &kp A   &kp S     &kp D      &kp F                    &trans                                                                                              &trans  &kp J   &kp K   &kp L   &kp SEMI  &trans
+&kp LGUI  &trans  &trans    &trans     &trans                   &trans  &trans     &trans     &trans          &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&none     &none   &kp BSPC  &kp SPACE  &lt LAYER_SymbolNav DEL          &kp LSHFT  &kp LCTRL  &mt LALT RET    &trans  &trans  &trans          &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        layer_SymbolNav {
+            bindings = <
+&trans     &trans         &trans        &trans        &trans                                                                                                                                &trans         &trans         &trans       &trans       &trans
+&kp INS    &kp F1         &kp F2        &kp F3        &kp F4       &kp F5                                                                                                       &kp F6      &kp F7         &kp F8         &kp F9       &kp F10      &kp F11
+&kp SLCK   &kp GRAVE      &kp LBKT      &kp RBKT      &kp LS(N5)   &none                                                                                                        &kp LS(N7)  &kp LS(EQUAL)  &kp MINUS      &kp LS(N8)   &kp BSLH     &kp F12
+&kp PSCRN  &kp LS(N2)     &kp LS(N9)    &kp LS(N0)    &kp LS(SQT)  &kp LS(N3)                                                                                                   &kp LEFT    &kp DOWN       &kp UP         &kp RIGHT    &kp LS(BSLH) &none
+&none      &kp LS(GRAVE)  &kp LS(LBKT)  &kp LS(RBKT)  &kp LS(N1)   &none       &trans  &trans   &trans    &trans  &trans  &trans  &kp EQUAL   &kp LS(N6)     &kp LS(COMMA)  &kp LS(DOT)  &kp LS(N4)  &none
+&trans     &trans         &trans        &trans        &trans                   &trans  &kp DEL  &trans    &trans  &trans  &trans              &trans         &trans         &trans       &trans      &trans
+            >;
+        };
+
+        layer_Keypad {
+            bindings = <
+&none  &none  &none  &none  &none                                                                                                                     &none       &none          &none            &none         &none
+&none  &none  &none  &none  &none  &none                                                                                                  &none       &none       &none          &none            &none         &none
+&none  &none  &none  &none  &none  &none                                                                                                  &kp KP_N7   &kp KP_N8   &kp KP_N9      &kp KP_MINUS     &kp KP_SLASH  &none
+&none  &none  &none  &none  &none  &none                                                                                                  &kp KP_N4   &kp KP_N5   &kp KP_N6      &kp KP_PLUS      &kp KP_MULTIPLY &kp KP_NUM
+&none  &none  &none  &none  &none  &none  &trans  &trans  &trans    &trans  &trans  &trans     &kp KP_N1  &kp KP_N2   &kp KP_N3           &kp KP_ENTER &kp KP_EQUAL &tog LAYER_Keypad
+&none  &none  &none  &none  &none         &trans  &trans  &trans    &trans  &trans  &kp KP_N0             &kp KP_N0   &kp KP_DOT          &kp BSPC     &none        &none
+            >;
+        };
+
+        layer_NumRow {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                                                                                                            &trans  &trans  &trans  &trans  &trans
+&trans  &none   &none   &none   &none   &none                                                                                             &none   &none   &none   &none   &none   &trans
+&trans  &none   &none   &none   &none   &none                                                                                             &none   &none   &none   &none   &none   &trans
+&trans  &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                                                                                            &kp N6  &kp N7  &kp N8  &kp N9  &kp N0  &trans
+&trans  &none   &none   &none   &none   &none   &trans  &trans  &trans    &trans  &trans  &trans  &none   &none   &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans    &trans  &trans  &trans          &trans  &trans  &trans  &trans  &trans
-            >;
-        };
-
-        layer_Lower {
-            bindings = <
-&kp C_BRI_DN          &kp C_BRI_UP  &kp C_PREV      &kp C_NEXT      &kp C_PP                                                                                          &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP  &none            &kp PAUSE_BREAK
-&trans                &none         &none           &none           &none            &kp HOME                                                             &kp LS(N9)  &kp KP_NUM  &kp KP_EQUAL  &kp KP_SLASH  &kp KP_MULTIPLY  &kp PRINTSCREEN
-&trans                &none         &none           &kp UP_ARROW    &none            &kp END                                                              &kp LS(N0)  &kp KP_N7   &kp KP_N8     &kp KP_N9     &kp KP_MINUS     &kp SCROLLLOCK
-&trans                &none         &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp PG_UP                                                            &kp LS(N5)  &kp KP_N4   &kp KP_N5     &kp KP_N6     &kp KP_PLUS      &none
-&trans                &kp K_APP     &none           &kp F11         &kp F12          &kp PG_DN  &trans  &trans  &tog LAYER_Lower  &trans  &trans  &trans  &kp COMMA   &kp KP_N1   &kp KP_N2     &kp KP_N3     &kp KP_ENTER     &trans
-&magic LAYER_Magic 0  &kp CAPS      &kp INS         &kp F11         &kp F12                     &trans  &trans  &trans            &trans  &trans  &trans              &kp KP_N0   &kp KP_N0     &kp KP_DOT    &kp KP_ENTER     &trans
-            >;
-        };
-
-        layer_Symbols {
-            bindings = <
-&none  &none      &none         &none         &none                                                                                            &none          &none          &none        &none       &none
-&none  &none      &none         &none         &none        &none                                                                    &none      &none          &none          &none        &none       &none
-&none  &kp GRAVE  &kp LBKT      &kp RBKT      &kp LS(N5)   &kp LS(GRAVE)                                                            &none      &kp LS(N6)     &kp LS(COMMA)  &kp LS(DOT)  &kp LS(N4)  &none
-&none  &kp SQT    &kp LS(N9)    &kp LS(N0)    &kp LS(SQT)  &kp LS(N3)                                                               &kp EQUAL  &kp LS(EQUAL)  &kp MINUS      &kp LS(N8)   &kp FSLH    &none
-&none  &none      &kp LS(LBKT)  &kp LS(RBKT)  &kp LS(N1)   &kp LS(N2)     &none         &none         &none    &none  &none  &none  &none      &kp LS(BSLH)   &kp LS(MINUS)  &kp LS(N7)   &kp BSLH    &none
-&none  &none      &none         &none         &none                       &kp LS(SEMI)  &kp LS(FSLH)  &none    &none  &none  &none             &none          &none          &none        &none       &none
             >;
         };
 
         layer_Magic {
             bindings = <
-&bt BT_CLR      &none            &none             &none            &none                                                                                       &none  &none  &none  &none  &bt BT_CLR_ALL
-&to LAYER_Base  &tog LAYER_Typing &to LAYER_PC      &none            &none            &none                                                               &none  &none  &none  &none  &none  &none
-&none           &rgb_ug RGB_SPI  &rgb_ug RGB_SAI   &rgb_ug RGB_HUI  &rgb_ug RGB_BRI  &rgb_ug RGB_TOG                                                     &none  &none  &none  &none  &none  &none
-&bootloader     &rgb_ug RGB_SPD  &rgb_ug RGB_SAD   &rgb_ug RGB_HUD  &rgb_ug RGB_BRD  &rgb_ug RGB_EFF                                                     &none  &none  &none  &none  &none  &bootloader
-&sys_reset      &none            &none             &none            &none            &none            &bt_2  &bt_3  &none           &none  &none  &none  &none  &none  &none  &none  &none  &sys_reset
-&none           &none            &none             &none            &none                             &bt_0  &bt_1  &out OUT_USB    &none  &none  &none         &none  &none  &none  &none  &to LAYER_Factory
+&none        &none            &none            &none            &none                                                                                                                                      &none         &none         &none         &none   &none
+&none        &none            &none            &none            &none            &none                                                                                                              &none  &none         &none         &none         &none   &bt BT_CLR_ALL
+&bootloader  &rgb_ug RGB_SPI  &rgb_ug RGB_SAI  &rgb_ug RGB_HUI  &rgb_ug RGB_BRI  &rgb_ug RGB_TOG                                                                                                    &none  &kp C_MUTE    &kp C_VOL_DN  &kp C_VOL_UP  &none   &bootloader
+&sys_reset   &rgb_ug RGB_SPD  &rgb_ug RGB_SAD  &rgb_ug RGB_HUD  &rgb_ug RGB_BRD  &rgb_ug RGB_EFF                                                                                                    &none  &kp C_PREV    &kp C_NEXT    &kp C_PP      &none   &sys_reset
+&bt BT_CLR   &none            &bt_0            &bt_1            &bt_2            &bt_3            &none              &none          &none    &none  &none  &none  &none  &kp C_BRI_DN  &kp C_BRI_UP  &none  &none         &to LAYER_Factory
+&none        &none            &out OUT_USB     &none            &none                             &tog LAYER_Gaming  &tog LAYER_PC  &none    &none  &none  &none         &none         &none         &none  &none         &none
             >;
         };
 
@@ -505,6 +520,129 @@
 &trans  &trans  &trans  &trans  &trans  &trans                                                                                                &trans                  &trans                 &trans                 &trans                  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &mmv SNIPER_MOVE_LEFT  &mmv SNIPER_MOVE_DOWN  &mmv SNIPER_MOVE_UP   &mmv SNIPER_MOVE_RIGHT  &trans  &trans
 &trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans    &trans  &trans  &trans                         &trans                 &trans                &trans                  &trans  &trans
+            >;
+        };
+    };
+};
+
+/* Per-key RGB Layer Color Helpers */
+#define ___ &ug 0x000000
+#define GRN &ug 0x00FF00  /* Numbers & Layer Toggles */
+#define MAG &ug 0xFF00FF  /* Vim Arrows (HJKL) & Mouse Movement */
+#define GLD &ug 0xFFBF00  /* Brackets, Quotes, Scroll & RGB Controls */
+#define ORG &ug 0xFF5500  /* Symbols, Math Operators, Clicks & Gaming Mods */
+#define CYN &ug 0x00FFFF  /* Function Keys (F1-F12) & Media Controls */
+#define RED &ug 0xFF0000  /* System / Lock / Exit / WASD */
+#define BLU &ug 0x0066FF  /* PC & Bluetooth / Connectivity */
+#define NML &ug_nl 0x00FF00 0xFF0000  /* NumLock indicator (Green=ON, Red=OFF) */
+
+/ {
+    underglow-layer {
+        compatible = "zmk,underglow-layer";
+
+        /* Permanent layer: lights up for 3s when toggled on, then fades out */
+        layer_PC {
+            layer-id = <LAYER_PC>;
+            fade-delay = <3>;
+            bindings = <
+ ___  ___  ___  ___  ___                                                                                      ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ ___  BLU  BLU  BLU  BLU  ___                                                                            ___  BLU  BLU  BLU  BLU  ___
+ ___  ___  ___  ___  ___  ___  ___  ___  ___      ___  ___  ___      ___  ___  ___  ___  ___  ___
+ ___  BLU  BLU  BLU  BLU       ___  ___  ___      ___  ___  ___           ___  ___  ___  ___  ___
+            >;
+        };
+
+        /* Permanent layer: lights up for 3s when toggled on, then fades out */
+        layer_Gaming {
+            layer-id = <LAYER_Gaming>;
+            fade-delay = <3>;
+            bindings = <
+ ___  ___  ___  ___  ___                                                                                      ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ ORG  ___  RED  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ ___  RED  RED  RED  ORG  ___                                                                            ___  ORG  ORG  ORG  ORG  ___
+ ORG  ___  ___  ___  ___  ___  ___  ___  ___      ___  ___  ___      ___  ___  ___  ___  ___  ___
+ ___  ___  ORG  ORG  GRN       ORG  ORG  ORG      ___  ___  ___           ___  ___  ___  ___  ___
+            >;
+        };
+
+        /* Momentary layer: stays lit while held */
+        layer_SymbolNav {
+            layer-id = <LAYER_SymbolNav>;
+            bindings = <
+ ___  ___  ___  ___  ___                                                                                      ___  ___  ___  ___  ___
+ RED  CYN  CYN  CYN  CYN  CYN                                                                            CYN  CYN  CYN  CYN  CYN  CYN
+ RED  ORG  GLD  GLD  ORG  ___                                                                            ORG  ORG  ORG  ORG  ORG  CYN
+ RED  ORG  GLD  GLD  GLD  ORG                                                                            MAG  MAG  MAG  MAG  ORG  ___
+ ___  ORG  GLD  GLD  ORG  ___  ___  ___  ___      ___  ___  ___      ORG  ORG  ORG  ORG  ORG  ___
+ ___  ___  ___  ___  ___       ___  RED  ___      ___  ___  ___           ___  ___  ___  ___  ___
+            >;
+        };
+
+        /* Hybrid layer: stays lit while active (both held and double-tap toggled) */
+        layer_Keypad {
+            layer-id = <LAYER_Keypad>;
+            bindings = <
+ ___  ___  ___  ___  ___                                                                                      ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            GRN  GRN  GRN  ORG  ORG  ___
+ ___  ___  ___  ___  ___  ___                                                                            GRN  GRN  GRN  ORG  ORG  NML
+ ___  ___  ___  ___  ___  ___  ___  ___  ___      ___  ___  ___      GRN  GRN  GRN  ORG  ORG  RED
+ ___  ___  ___  ___  ___       ___  ___  ___      ___  ___  GRN           GRN  GRN  ORG  ___  ___
+            >;
+        };
+
+        /* Momentary layer: stays lit while held */
+        layer_NumRow {
+            layer-id = <LAYER_NumRow>;
+            bindings = <
+ ___  ___  ___  ___  ___                                                                                      ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ ___  GRN  GRN  GRN  GRN  GRN                                                                            GRN  GRN  GRN  GRN  GRN  ___
+ ___  ___  ___  ___  ___  ___  ___  ___  ___      ___  ___  ___      ___  ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___       ___  ___  ___      ___  ___  ___           ___  ___  ___  ___  ___
+            >;
+        };
+
+        /* Momentary layer: stays lit while held */
+        layer_Magic {
+            layer-id = <LAYER_Magic>;
+            bindings = <
+ ___  ___  ___  ___  ___                                                                                      ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  RED
+ RED  GLD  GLD  GLD  GLD  GLD                                                                            ___  CYN  CYN  CYN  ___  RED
+ RED  GLD  GLD  GLD  GLD  GLD                                                                            ___  CYN  CYN  CYN  ___  RED
+ RED  ___  BLU  BLU  BLU  BLU  ___  ___  ___      ___  ___  ___      ___  CYN  CYN  ___  ___  RED
+ ___  ___  BLU  ___  ___       GRN  GRN  ___      ___  ___  ___           ___  ___  ___  ___  ___
+            >;
+        };
+
+        /* Momentary layer: stays lit while held */
+        layer_Mouse {
+            layer-id = <LAYER_Mouse>;
+            bindings = <
+ ___  ___  ___  ___  ___                                                                                      ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ ___  ___  ORG  ORG  ___  ___                                                                            GLD  GLD  GLD  GLD  ___  ___
+ ___  GRN  ORG  ORG  ORG  ___                                                                            CYN  CYN  CYN  CYN  ___  ___
+ ___  ___  ___  ___  ___  ___  ___  ___  ___      ___  RED  ___      MAG  MAG  MAG  MAG  ___  ___
+ ___  ___  ___  ___  ___       ___  ___  ___      ORG  ORG  ORG           ___  ___  ___  ___  ___
+            >;
+        };
+
+        /* Momentary layer: stays lit while held */
+        layer_Sniper {
+            layer-id = <LAYER_Sniper>;
+            bindings = <
+ ___  ___  ___  ___  ___                                                                                      ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            GLD  GLD  GLD  GLD  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
+ ___  ___  ___  ___  ___  ___  ___  ___  ___      ___  ___  ___      RED  RED  RED  RED  ___  ___
+ ___  ___  ___  ___  ___       ___  ___  ___      ___  ___  ___           ___  ___  ___  ___  ___
             >;
         };
     };
