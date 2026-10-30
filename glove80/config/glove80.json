@@ -2332,6 +2332,15 @@
         "value": "&kp",
         "params": [
           {
+            "value": "KP_EQUAL",
+            "params": []
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
             "value": "KP_N7",
             "params": []
           }
@@ -2398,8 +2407,13 @@
         "params": []
       },
       {
-        "value": "&none",
-        "params": []
+        "value": "&kp",
+        "params": [
+          {
+            "value": "BSPC",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&kp",
@@ -2442,15 +2456,6 @@
         "params": [
           {
             "value": "KP_MULTIPLY",
-            "params": []
-          }
-        ]
-      },
-      {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "KP_NUM",
             "params": []
           }
         ]
@@ -2512,6 +2517,15 @@
         "value": "&kp",
         "params": [
           {
+            "value": "KP_N0",
+            "params": []
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
             "value": "KP_N1",
             "params": []
           }
@@ -2539,7 +2553,7 @@
         "value": "&kp",
         "params": [
           {
-            "value": "KP_ENTER",
+            "value": "KP_DOT",
             "params": []
           }
         ]
@@ -2548,7 +2562,7 @@
         "value": "&kp",
         "params": [
           {
-            "value": "KP_EQUAL",
+            "value": "KP_ENTER",
             "params": []
           }
         ]
@@ -2574,10 +2588,6 @@
         "params": []
       },
       {
-        "value": "&none",
-        "params": []
-      },
-      {
         "value": "&trans",
         "params": []
       },
@@ -2594,8 +2604,13 @@
         "params": []
       },
       {
-        "value": "&trans",
-        "params": []
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_ENTER",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&kp",
@@ -2634,8 +2649,13 @@
         ]
       },
       {
-        "value": "&none",
-        "params": []
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_ENTER",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&none",

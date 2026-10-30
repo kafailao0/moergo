@@ -1860,6 +1860,15 @@
         "value": "&kp",
         "params": [
           {
+            "value": "KP_EQUAL",
+            "params": []
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
             "value": "KP_N7",
             "params": []
           }
@@ -1926,8 +1935,13 @@
         "params": []
       },
       {
-        "value": "&none",
-        "params": []
+        "value": "&kp",
+        "params": [
+          {
+            "value": "BSPC",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&kp",
@@ -1975,15 +1989,6 @@
         ]
       },
       {
-        "value": "&kp",
-        "params": [
-          {
-            "value": "KP_NUM",
-            "params": []
-          }
-        ]
-      },
-      {
         "value": "&tog",
         "params": [
           {
@@ -2016,6 +2021,15 @@
         "value": "&kp",
         "params": [
           {
+            "value": "KP_N0",
+            "params": []
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
             "value": "KP_N1",
             "params": []
           }
@@ -2043,7 +2057,7 @@
         "value": "&kp",
         "params": [
           {
-            "value": "KP_ENTER",
+            "value": "KP_DOT",
             "params": []
           }
         ]
@@ -2052,14 +2066,10 @@
         "value": "&kp",
         "params": [
           {
-            "value": "KP_EQUAL",
+            "value": "KP_ENTER",
             "params": []
           }
         ]
-      },
-      {
-        "value": "&none",
-        "params": []
       },
       {
         "value": "&none",
