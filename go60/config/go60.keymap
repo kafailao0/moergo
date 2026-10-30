@@ -424,9 +424,9 @@
         layer_Base {
             bindings = <
  &magic LAYER_Magic 0       &kp N1       &kp N2        &kp N3        &kp N4  &kp N5                                                                                            &kp N6        &kp N7        &kp N8       &kp N9          &kp N0           &kp DEL
-        &kp LS(MINUS)        &kp Q        &kp W         &kp E         &kp R   &kp T                                                                                             &kp Y         &kp U         &kp I        &kp O           &kp P          &td_caps
+            &kp MINUS        &kp Q        &kp W         &kp E         &kp R   &kp T                                                                                             &kp Y         &kp U         &kp I        &kp O           &kp P          &td_caps
               &kp ESC  &hml LGUI A  &hml LALT S  &hml LCTRL D  &hml LSHFT F   &kp G                                                                                             &kp H  &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI           &kp SQT
-            &kp MINUS        &kp Z        &kp X         &kp C         &kp V   &kp B                                                                                             &kp N         &kp M     &kp COMMA      &kp DOT        &kp FSLH  &td_LAYER_Keypad
+        &kp LS(MINUS)        &kp Z        &kp X         &kp C         &kp V   &kp B                                                                                             &kp N         &kp M     &kp COMMA      &kp DOT        &kp FSLH  &td_LAYER_Keypad
                                       &kp LG(X)     &kp LG(C)     &kp LG(V)                                                                                                                &kp DOWN        &kp UP    &kp RIGHT
                                                                                      &kp LSHFT  &kp BSPC  &lt LAYER_NumRow TAB  &kp RET  &kp SPACE  &hold_tap_layer LAYER_SymbolNav LEFT
             >;
@@ -490,7 +490,7 @@
         layer_Magic {
             bindings = <
        &none            &none            &none            &none            &none            &none                                                                           &none         &none         &none         &none   &none     &bt BT_CLR_ALL
- &bootloader  &rgb_ug RGB_SPI  &rgb_ug RGB_SAI  &rgb_ug RGB_HUI  &rgb_ug RGB_BRI  &rgb_ug RGB_TOG                                                                           &none    &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP   &none        &bootloader
+ &bootloader  &rgb_ug RGB_SPI  &rgb_ug RGB_SAI  &rgb_ug RGB_HUI  &rgb_ug RGB_BRI  &rgb_ug RGB_TOG                                                                           &none  &kp C_VOL_DN  &kp C_VOL_UP    &kp C_MUTE   &none        &bootloader
   &sys_reset  &rgb_ug RGB_SPD  &rgb_ug RGB_SAD  &rgb_ug RGB_HUD  &rgb_ug RGB_BRD  &rgb_ug RGB_EFF                                                                           &none    &kp C_PREV    &kp C_NEXT      &kp C_PP   &none         &sys_reset
   &bt BT_CLR            &none            &bt_0            &bt_1            &bt_2            &bt_3                                                                           &none  &kp C_BRI_DN  &kp C_BRI_UP         &none   &none  &to LAYER_Factory
                                   &out OUT_USB            &none            &none                                                                                                          &none         &none         &none

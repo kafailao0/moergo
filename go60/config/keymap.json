@@ -135,13 +135,8 @@
         "value": "&kp",
         "params": [
           {
-            "value": "LS",
-            "params": [
-              {
-                "value": "MINUS",
-                "params": []
-              }
-            ]
+            "value": "MINUS",
+            "params": []
           }
         ]
       },
@@ -388,8 +383,13 @@
         "value": "&kp",
         "params": [
           {
-            "value": "MINUS",
-            "params": []
+            "value": "LS",
+            "params": [
+              {
+                "value": "MINUS",
+                "params": []
+              }
+            ]
           }
         ]
       },
@@ -2533,15 +2533,6 @@
         "value": "&kp",
         "params": [
           {
-            "value": "C_MUTE",
-            "params": []
-          }
-        ]
-      },
-      {
-        "value": "&kp",
-        "params": [
-          {
             "value": "C_VOL_DN",
             "params": []
           }
@@ -2552,6 +2543,15 @@
         "params": [
           {
             "value": "C_VOL_UP",
+            "params": []
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "C_MUTE",
             "params": []
           }
         ]
