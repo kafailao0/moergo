@@ -395,6 +395,14 @@
             bindings = <&caps_word>, <&kp CAPS>;
         };
 
+        td_mouse: td_mouse {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_MOUSE";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp LG(SPACE)>, <&tog LAYER_Mouse>;
+        };
+
         ZMK_TD_LAYER(td_LAYER_Keypad, LAYER_Keypad)
     };
 };
@@ -420,7 +428,7 @@
 &kp MINUS             &kp Q        &kp W        &kp E         &kp R         &kp T                                                                                                                        &kp Y   &kp U         &kp I         &kp O        &kp P           &td_caps
 &kp ESC               &hml LGUI A  &hml LALT S  &hml LCTRL D  &hml LSHFT F  &kp G                                                                                                                        &kp H   &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI  &kp SQT
 &kp LS(MINUS)         &kp Z        &kp X        &kp C         &kp V         &kp B   &kp LCTRL  &kp LALT                   &kp LGUI                 &kp RGUI  &kp RALT                             &kp RCTRL  &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &td_LAYER_Keypad
-&kp LG(SPACE)         &kp LG(Z)    &kp LG(X)    &kp LG(C)     &kp LG(V)             &kp LSHFT  &lt_bspc LAYER_Mouse BSPC  &lt LAYER_NumRow TAB     &kp RET   &hold_tap_layer LAYER_SymbolNav ESC  &kp SPACE          &kp LEFT      &kp DOWN      &kp UP       &kp RIGHT       &kp GLOBE
+&td_mouse             &kp LG(Z)    &kp LG(X)    &kp LG(C)     &kp LG(V)             &kp LSHFT  &kp BSPC                   &lt LAYER_NumRow TAB     &kp RET   &hold_tap_layer LAYER_SymbolNav ESC  &kp SPACE          &kp LEFT      &kp DOWN      &kp UP       &kp RIGHT       &kp GLOBE
             >;
         };
 
@@ -503,12 +511,12 @@
 
         layer_Mouse {
             bindings = <
-&trans  &trans              &trans      &trans      &trans                                                                                                    &trans          &trans          &trans        &trans           &trans
-&trans  &trans              &trans      &trans      &trans      &trans                                                                                &trans  &trans          &trans          &trans        &trans           &trans
-&trans  &trans              &mkp MB4    &mkp MB5    &trans      &trans                                                                                &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans  &trans
-&trans  &mo LAYER_Sniper    &mkp MCLK   &mkp RCLK   &mkp LCLK   &trans                                                                                &kp LEFT        &kp DOWN        &kp UP        &kp RIGHT        &trans  &trans
-&trans  &trans              &trans      &trans      &trans      &trans  &trans  &trans  &trans    &trans    &kp ESC    &trans  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &trans           &trans
-&trans  &trans              &trans      &trans      &trans              &trans  &trans  &trans    &mkp MCLK &mkp RCLK  &mkp LCLK               &trans          &trans        &trans           &trans           &trans
+&trans            &trans              &trans      &trans      &trans                                                                                                    &trans          &trans          &trans        &trans           &trans
+&trans            &trans              &trans      &trans      &trans      &trans                                                                                &trans  &trans          &trans          &trans        &trans           &trans
+&trans            &trans              &mkp MB4    &mkp MB5    &trans      &trans                                                                                &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans  &trans
+&trans            &mo LAYER_Sniper    &mkp MCLK   &mkp RCLK   &mkp LCLK   &trans                                                                                &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &trans  &trans
+&trans            &trans              &trans      &trans      &trans      &trans  &trans  &trans  &trans    &trans    &kp ESC    &trans  &trans          &trans          &trans        &trans           &trans  &trans
+&tog LAYER_Mouse  &trans              &trans      &trans      &trans              &trans  &trans  &trans    &mkp MCLK &mkp RCLK  &mkp LCLK               &trans          &trans        &trans           &trans  &trans
             >;
         };
 
@@ -517,8 +525,8 @@
 &trans  &trans  &trans  &trans  &trans                                                                                                                                &trans                 &trans                 &trans               &trans                  &trans
 &trans  &trans  &trans  &trans  &trans  &trans                                                                                                &trans                  &trans                 &trans                 &trans               &trans                  &trans
 &trans  &trans  &trans  &trans  &trans  &trans                                                                                                &msc SNIPER_SCRL_LEFT   &msc SNIPER_SCRL_DOWN  &msc SNIPER_SCRL_UP  &msc SNIPER_SCRL_RIGHT  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                                                                                                &trans                  &trans                 &trans                 &trans                  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &mmv SNIPER_MOVE_LEFT  &mmv SNIPER_MOVE_DOWN  &mmv SNIPER_MOVE_UP   &mmv SNIPER_MOVE_RIGHT  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                                                                                                &mmv SNIPER_MOVE_LEFT   &mmv SNIPER_MOVE_DOWN  &mmv SNIPER_MOVE_UP   &mmv SNIPER_MOVE_RIGHT  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans                 &trans                 &trans                &trans                  &trans  &trans
 &trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans    &trans  &trans  &trans                         &trans                 &trans                &trans                  &trans  &trans
             >;
         };
@@ -620,16 +628,16 @@
             >;
         };
 
-        /* Momentary layer: stays lit while held */
+        /* Toggled layer: stays lit while active */
         layer_Mouse {
             layer-id = <LAYER_Mouse>;
             bindings = <
  ___  ___  ___  ___  ___                                                                                      ___  ___  ___  ___  ___
  ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
  ___  ___  ORG  ORG  ___  ___                                                                            GLD  GLD  GLD  GLD  ___  ___
- ___  GRN  ORG  ORG  ORG  ___                                                                            CYN  CYN  CYN  CYN  ___  ___
- ___  ___  ___  ___  ___  ___  ___  ___  ___      ___  RED  ___      MAG  MAG  MAG  MAG  ___  ___
- ___  ___  ___  ___  ___       ___  ___  ___      ORG  ORG  ORG           ___  ___  ___  ___  ___
+ ___  GRN  ORG  ORG  ORG  ___                                                                            MAG  MAG  MAG  MAG  ___  ___
+ ___  ___  ___  ___  ___  ___  ___  ___  ___      ___  RED  ___      ___  ___  ___  ___  ___  ___
+ RED  ___  ___  ___  ___       ___  ___  ___      ORG  ORG  ORG           ___  ___  ___  ___  ___
             >;
         };
 
@@ -640,8 +648,8 @@
  ___  ___  ___  ___  ___                                                                                      ___  ___  ___  ___  ___
  ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
  ___  ___  ___  ___  ___  ___                                                                            GLD  GLD  GLD  GLD  ___  ___
- ___  ___  ___  ___  ___  ___                                                                            ___  ___  ___  ___  ___  ___
- ___  ___  ___  ___  ___  ___  ___  ___  ___      ___  ___  ___      RED  RED  RED  RED  ___  ___
+ ___  ___  ___  ___  ___  ___                                                                            RED  RED  RED  RED  ___  ___
+ ___  ___  ___  ___  ___  ___  ___  ___  ___      ___  ___  ___      ___  ___  ___  ___  ___  ___
  ___  ___  ___  ___  ___       ___  ___  ___      ___  ___  ___           ___  ___  ___  ___  ___
             >;
         };

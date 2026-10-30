@@ -12,7 +12,7 @@
     "glove80",
     "custom"
   ],
-  "custom_defined_behaviors": "behaviors {\n    td_caps: td_caps {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_CAPS\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&caps_word>, <&kp CAPS>;\n    };\n};",
+  "custom_defined_behaviors": "behaviors {\n    td_caps: td_caps {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_CAPS\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&caps_word>, <&kp CAPS>;\n    };\n    td_mouse: td_mouse {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_MOUSE\";\n        #binding-cells = <0>;\n        tapping-term-ms = <200>;\n        bindings = <&kp LG(SPACE)>, <&tog 8>;\n    };\n};",
   "custom_devicetree": "",
   "config_parameters": [],
   "layout_parameters": {},
@@ -639,16 +639,11 @@
         ]
       },
       {
-        "value": "&kp",
+        "value": "Custom",
         "params": [
           {
-            "value": "LG",
-            "params": [
-              {
-                "value": "SPACE",
-                "params": []
-              }
-            ]
+            "value": "&td_mouse",
+            "params": []
           }
         ]
       },
@@ -718,12 +713,8 @@
         ]
       },
       {
-        "value": "&lt_bspc",
+        "value": "&kp",
         "params": [
-          {
-            "value": "8",
-            "params": []
-          },
           {
             "value": "BSPC",
             "params": []
@@ -4399,37 +4390,37 @@
         "params": []
       },
       {
-        "value": "&kp",
+        "value": "&mmv",
         "params": [
           {
-            "value": "LEFT",
+            "value": "MOVE_LEFT",
             "params": []
           }
         ]
       },
       {
-        "value": "&kp",
+        "value": "&mmv",
         "params": [
           {
-            "value": "DOWN",
+            "value": "MOVE_DOWN",
             "params": []
           }
         ]
       },
       {
-        "value": "&kp",
+        "value": "&mmv",
         "params": [
           {
-            "value": "UP",
+            "value": "MOVE_UP",
             "params": []
           }
         ]
       },
       {
-        "value": "&kp",
+        "value": "&mmv",
         "params": [
           {
-            "value": "RIGHT",
+            "value": "MOVE_RIGHT",
             "params": []
           }
         ]
@@ -4496,40 +4487,16 @@
         "params": []
       },
       {
-        "value": "&mmv",
-        "params": [
-          {
-            "value": "MOVE_LEFT",
-            "params": []
-          }
-        ]
+        "value": "&trans",
+        "params": []
       },
       {
-        "value": "&mmv",
-        "params": [
-          {
-            "value": "MOVE_DOWN",
-            "params": []
-          }
-        ]
+        "value": "&trans",
+        "params": []
       },
       {
-        "value": "&mmv",
-        "params": [
-          {
-            "value": "MOVE_UP",
-            "params": []
-          }
-        ]
-      },
-      {
-        "value": "&mmv",
-        "params": [
-          {
-            "value": "MOVE_RIGHT",
-            "params": []
-          }
-        ]
+        "value": "&trans",
+        "params": []
       },
       {
         "value": "&trans",
@@ -4542,6 +4509,15 @@
       {
         "value": "&trans",
         "params": []
+      },
+      {
+        "value": "&tog",
+        "params": [
+          {
+            "value": "8",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&trans",
@@ -4801,78 +4777,6 @@
         "params": []
       },
       {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
-      },
-      {
         "value": "Custom",
         "params": [
           {
@@ -4907,6 +4811,78 @@
             "params": []
           }
         ]
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
+      },
+      {
+        "value": "&trans",
+        "params": []
       },
       {
         "value": "&trans",
