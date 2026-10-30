@@ -598,7 +598,7 @@
  ___  ___  ___  ___  ___  ___                                                  ORG  GRN  GRN  GRN  ORG  ORG
  ___  ___  ___  ___  ___  ___                                                  RED  GRN  GRN  GRN  ORG  ORG
  RED  ___  ___  ___  ___  ___                                                  GRN  GRN  GRN  GRN  ORG  ORG
-           ___  ___  ___                                                            GRN  GRN  RED
+           ___  ___  ___                                                            GRN  ORG  RED
                                                ___  ___  ___  ___  ___  GRN
             >;
         };
