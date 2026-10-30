@@ -224,10 +224,10 @@
         ]
       },
       {
-        "value": "&kp",
+        "value": "Custom",
         "params": [
           {
-            "value": "MINUS",
+            "value": "&td_caps",
             "params": []
           }
         ]
@@ -323,10 +323,10 @@
         ]
       },
       {
-        "value": "Custom",
+        "value": "&kp",
         "params": [
           {
-            "value": "&td_caps",
+            "value": "MINUS",
             "params": []
           }
         ]
@@ -472,16 +472,11 @@
         ]
       },
       {
-        "value": "&kp",
+        "value": "&layer",
         "params": [
           {
-            "value": "LS",
-            "params": [
-              {
-                "value": "MINUS",
-                "params": []
-              }
-            ]
+            "value": "4",
+            "params": []
           }
         ]
       },
@@ -630,11 +625,16 @@
         ]
       },
       {
-        "value": "&layer",
+        "value": "&kp",
         "params": [
           {
-            "value": "4",
-            "params": []
+            "value": "LS",
+            "params": [
+              {
+                "value": "MINUS",
+                "params": []
+              }
+            ]
           }
         ]
       },
@@ -2456,8 +2456,13 @@
         ]
       },
       {
-        "value": "&none",
-        "params": []
+        "value": "&tog",
+        "params": [
+          {
+            "value": "4",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&none",
@@ -2549,13 +2554,8 @@
         ]
       },
       {
-        "value": "&tog",
-        "params": [
-          {
-            "value": "4",
-            "params": []
-          }
-        ]
+        "value": "&none",
+        "params": []
       },
       {
         "value": "&none",
