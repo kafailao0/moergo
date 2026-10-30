@@ -1,5 +1,5 @@
 { pkgs ?  import <nixpkgs> {}
-, firmware ? import ../src {}
+, firmware ? import (if builtins.pathExists ../src then ../src else ../../src) {}
 }:
 
 let

@@ -22,11 +22,20 @@ jobs:
           name: moergo-glove80-zmk-dev
           skipPush: true
       - name: Build Glove80 combined firmware
-        run: nix-build config -o combined
-      - name: Copy result out of nix store
-        run: cp combined/glove80.uf2 glove80.uf2
-      - name: Upload result
+        run: |
+          nix-build glove80/config -o combined-glove80
+          cp combined-glove80/glove80.uf2 glove80.uf2
+      - name: Build Go60 combined firmware
+        run: |
+          nix-build go60/config -o combined-go60
+          cp combined-go60/go60.uf2 go60.uf2
+      - name: Upload Glove80 firmware
         uses: actions/upload-artifact@v4
         with:
           name: glove80.uf2
           path: glove80.uf2
+      - name: Upload Go60 firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: go60.uf2
+          path: go60.uf2
