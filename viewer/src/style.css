@@ -629,6 +629,25 @@
       .brand-title { font-size: 1rem; }
       .btn { padding: 5px 10px; font-size: 0.75rem; }
       .search-box input { width: 100px; }
+      .layer-bar {
+        flex-wrap: wrap;
+        padding: 6px 10px;
+        gap: 4px;
+      }
+      .layer-btn {
+        padding: 4px 8px;
+        font-size: 0.72rem;
+        border-radius: 5px;
+      }
+      .layer-btn .idx {
+        font-size: 0.65rem;
+        padding: 1px 4px;
+      }
+      .sim-reset-tab-btn {
+        padding: 4px 8px;
+        font-size: 0.72rem;
+        margin-left: 0;
+      }
       .drawer { padding: 6px 10px; height: 50px; min-height: 50px; max-height: 50px; }
       .key-pill-label { font-size: 0.9rem; }
       .canvas-widget { bottom: 10px; right: 10px; }
