@@ -25,37 +25,12 @@ function readUrlParams() {
   if (modeParam && ['simulate', 'inspect'].includes(modeParam.toLowerCase())) {
     viewerMode = modeParam.toLowerCase();
   }
-  const layerParam = params.get('layer');
-  if (layerParam !== null && layerParam !== '') {
-    const kb = KEYBOARDS[currentKb];
-    if (viewerMode === 'inspect') {
-      const idx = parseInt(layerParam, 10);
-      if (!isNaN(idx) && idx >= 0 && idx < kb.layers.length) {
-        currentLayer = idx;
-      }
-    } else {
-      const indices = layerParam.split(',').map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n) && n >= 0 && n < kb.layers.length);
-      if (indices.length > 0) {
-        simStack = Array.from(new Set([0, ...indices])).sort((a, b) => a - b);
-      }
-    }
-  }
 }
 
 function updateUrlParams() {
   const params = new URLSearchParams();
   params.set('kb', currentKb);
   params.set('mode', viewerMode);
-  if (viewerMode === 'inspect') {
-    if (currentLayer !== 0) {
-      params.set('layer', currentLayer);
-    }
-  } else {
-    const activeLayers = simStack.filter(idx => idx !== 0);
-    if (activeLayers.length > 0) {
-      params.set('layer', activeLayers.join(','));
-    }
-  }
   const qs = params.toString();
   const newUrl = window.location.pathname + (qs ? '?' + qs : '');
   window.history.replaceState(null, '', newUrl);
@@ -621,8 +596,9 @@ function onKeyClick(idx) {
     // In Simulation Mode:
     const { key } = resolveCompositeKey(idx);
 
-    if (key.rawBinding && key.rawBinding.startsWith('&to') && key.targetLayer !== null) {
-      simStack = [key.targetLayer];
+    // Explicit &to switch (e.g. &to 7 Factory layer)
+    if (key.rawBinding && /^&to\s/.test(key.rawBinding) && key.targetLayer !== null) {
+      simStack = key.targetLayer === 0 ? [0] : [0, key.targetLayer];
       momentaryHoverLayer = null;
       momentaryHoverTriggerIdx = null;
       updateLayerTabStates();
