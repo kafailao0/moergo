@@ -5090,18 +5090,6 @@
       "quickTapMs": 175,
       "flavor": "tap-preferred",
       "description": "&lt_bspc"
-    },
-    {
-      "name": "&lt_tab",
-      "bindings": [
-        "&mo",
-        "&kp"
-      ],
-      "tappingTermMs": 280,
-      "quickTapMs": 175,
-      "flavor": "tap-preferred",
-      "retroTap": true,
-      "description": "&lt_tab"
     }
   ],
   "combos": [

@@ -377,16 +377,6 @@
             quick-tap-ms = <175>;
         };
 
-        lt_tab: lt_tab {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <280>;
-            flavor = "tap-preferred";
-            quick-tap-ms = <175>;
-            retro-tap;
-            bindings = <&mo>, <&kp>;
-        };
-
         td_caps: td_caps {
             compatible = "zmk,behavior-tap-dance";
             label = "TD_CAPS";
