@@ -330,14 +330,6 @@
 
 / {
     behaviors {
-        td_magic: td_magic {
-            compatible = "zmk,behavior-tap-dance";
-            label = "TD_MAGIC";
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&sl LAYER_Magic>, <&rgb_ug_status_macro>;
-        };
-
         magic: magic {
             compatible = "zmk,behavior-hold-tap";
             label = "MAGIC_HOLD_TAP";
@@ -447,10 +439,10 @@
 
         layer_Base {
             bindings = <
-            &td_magic       &kp N1       &kp N2        &kp N3        &kp N4  &kp N5                                                                                            &kp N6        &kp N7        &kp N8       &kp N9          &kp N0          &kp BSPC
+     &td_LAYER_Keypad       &kp N1       &kp N2        &kp N3        &kp N4  &kp N5                                                                                            &kp N6        &kp N7        &kp N8       &kp N9          &kp N0          &kp BSPC
              &td_caps        &kp Q        &kp W         &kp E         &kp R   &kp T                                                                                             &kp Y         &kp U         &kp I        &kp O           &kp P          &kp MINUS
               &kp ESC  &hml LGUI A  &hml LALT S  &hml LCTRL D  &hml LSHFT F   &kp G                                                                                             &kp H  &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI           &kp SQT
-     &td_LAYER_Keypad        &kp Z        &kp X         &kp C         &kp V   &kp B                                                                                             &kp N         &kp M     &kp COMMA      &kp DOT        &kp FSLH     &kp LS(MINUS)
+ &magic LAYER_Magic 0        &kp Z        &kp X         &kp C         &kp V   &kp B                                                                                             &kp N         &kp M     &kp COMMA      &kp DOT        &kp FSLH     &kp LS(MINUS)
                                  &td_copy_paste      &kp LEFT     &kp RIGHT                                                                                                                &kp DOWN        &kp UP  &kp LG(SPACE)
                                                                                      &kp LSHFT  &kp BSPC  &lt LAYER_NumRow TAB  &kp RET  &hold_tap_layer LAYER_SymbolNav DEL  &kp SPACE
             >;
@@ -491,10 +483,10 @@
 
         layer_Keypad {
             bindings = <
-  &none   &none   &none   &none   &none   &none                                                         &none        &none       &none         &none            &none              &none
+  &tog LAYER_Keypad   &none   &none   &none   &none   &none                                                         &none        &none       &none         &none            &none              &none
   &none   &none   &none   &none   &none   &none                                                     &kp KP_EQUAL &kp KP_N7   &kp KP_N8     &kp KP_N9        &kp KP_MINUS       &kp KP_SLASH
   &none   &none   &none   &none   &none   &none                                                     &kp BSPC     &kp KP_N4   &kp KP_N5     &kp KP_N6        &kp KP_PLUS        &kp KP_MULTIPLY
-  &tog LAYER_Keypad   &none   &none   &none   &none   &none                                         &kp KP_N0    &kp KP_N1   &kp KP_N2     &kp KP_N3        &kp KP_DOT         &kp KP_ENTER
+  &none               &none   &none   &none   &none   &none                                         &kp KP_N0    &kp KP_N1   &kp KP_N2     &kp KP_N3        &kp KP_DOT         &kp KP_ENTER
                   &none   &none   &none                                                                          &kp KP_N0   &kp KP_DOT    &kp BSPC
                                                  &trans  &trans  &trans  &trans  &kp KP_ENTER  &kp KP_ENTER
             >;
@@ -513,10 +505,10 @@
 
         layer_Magic {
             bindings = <
-       &none            &none            &none            &none            &none            &none                                                                           &none         &none         &none         &none   &none     &bt BT_CLR_ALL
+  &bt BT_CLR            &none            &none            &none            &none            &none                                                                           &none         &none         &none         &none   &none     &bt BT_CLR_ALL
  &bootloader  &rgb_ug RGB_SPI  &rgb_ug RGB_SAI  &rgb_ug RGB_HUI  &rgb_ug RGB_BRI  &rgb_ug RGB_TOG                                                                           &none  &kp C_VOL_DN  &kp C_VOL_UP    &kp C_MUTE   &none        &bootloader
   &sys_reset  &rgb_ug RGB_SPD  &rgb_ug RGB_SAD  &rgb_ug RGB_HUD  &rgb_ug RGB_BRD  &rgb_ug RGB_EFF                                                                           &none    &kp C_PREV    &kp C_NEXT      &kp C_PP   &none         &sys_reset
-  &bt BT_CLR            &none            &bt_0            &bt_1            &bt_2            &bt_3                                                                           &none  &kp C_BRI_DN  &kp C_BRI_UP         &none   &none  &to LAYER_Factory
+       &none            &none            &bt_0            &bt_1            &bt_2            &bt_3                                                                           &none  &kp C_BRI_DN  &kp C_BRI_UP         &none   &none  &to LAYER_Factory
                                   &out OUT_USB            &none            &none                                                                                                          &none         &none         &none
                                                                                                    &tog LAYER_Gaming  &tog LAYER_PC   &none   &none   &none   &none
             >;
@@ -632,10 +624,10 @@
         layer_Keypad {
             layer-id = <LAYER_Keypad>;
             bindings = <
- ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
+ RED  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  ___
  ___  ___  ___  ___  ___  ___                                                  ORG  GRN  GRN  GRN  ORG  ORG
  ___  ___  ___  ___  ___  ___                                                  RED  GRN  GRN  GRN  ORG  ORG
- RED  ___  ___  ___  ___  ___                                                  GRN  GRN  GRN  GRN  ORG  ORG
+ ___  ___  ___  ___  ___  ___                                                  GRN  GRN  GRN  GRN  ORG  ORG
            ___  ___  ___                                                            GRN  ORG  RED
                                                ___  ___  ___  ___  ORG  ORG
             >;
@@ -658,10 +650,10 @@
         layer_Magic {
             layer-id = <LAYER_Magic>;
             bindings = <
- ___  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  RED
+ RED  ___  ___  ___  ___  ___                                                  ___  ___  ___  ___  ___  RED
  RED  GLD  GLD  GLD  GLD  GLD                                                  ___  CYN  CYN  CYN  ___  RED
  RED  GLD  GLD  GLD  GLD  GLD                                                  ___  CYN  CYN  CYN  ___  RED
- RED  ___  BLU  BLU  BLU  BLU                                                  ___  CYN  CYN  ___  ___  RED
+ ___  ___  BLU  BLU  BLU  BLU                                                  ___  CYN  CYN  ___  ___  RED
            BLU  ___  ___                                                            ___  ___  ___
                                                GRN  GRN  ___  ___  ___  ___
             >;

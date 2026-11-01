@@ -7,12 +7,12 @@
   "date": 1761840000,
   "creator": "Ka Fai Lao",
   "title": "Glove80 Custom Layout",
-  "notes": "Custom Glove80 layout.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_caps (Row 2), ESC (Row 3), td_LAYER_Keypad (Row 4), Mouse layer toggle (Row 5).\n- Right Outer Column (Punctuation & Nav): Backspace (Row 1), Hyphen - (Row 2), Quote ' (Row 3), Underscore _ (Row 4), End (Row 5).\n- Thumb Cluster:\n  - Left Lower (Outer to Inner): LSHFT, BSPC (pure instant key; DEL on SymbolNav), TAB (hold for NumRow).\n  - Right Lower (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n  - Left Upper (Outer to Inner): LCTRL, LALT, LGUI.\n  - Right Upper (Inner to Outer): RGUI, RALT, RCTRL.\n\nLayers:\n- Base: macOS base layer (td_magic on top-left, Mouse toggle, Globe, Copy/Paste tap-dance, Left, Right on bottom-left; Down, Up, Cmd+Space, Home, End on bottom-right; Backspace on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-row shortcuts to Ctrl+C/V tap-dance and Ctrl+Space).\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, moves LGUI to left of Z, puts BSPC/SPACE/DEL(hold SymbolNav for F1-F5) on bottom-left, and uses LSHFT, LCTRL, Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, PageUp/PageDown below F12, and DEL on Left Thumb T5.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. Lower right thumb Enter keys (0 removed). Left pinky toggles off.\n- NumRow: Hold Left Thumb T6 (TAB) for home-row numbers 1-0 on A-G / H-;.\n- Magic: Single-tap td_magic for Sticky Magic (activates Magic layer for one keypress, e.g. T for RGB toggle), double-tap for battery/RGB status, hold for momentary Magic. Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls, and bootloader/reset.\n- Mouse / Sniper: Mouse toggle key enters mouse layer; home-row HJKL mouse movement; hold A for Sniper precision mode.\n\nPer-Key RGB (underglow-layer):\n- Caps Lock status: td_caps glows red when Caps Lock is active (in Base & NumRow).\n- Momentary layers (SymbolNav, NumRow, Magic, Mouse, Sniper) and Keypad stay color-coded while active (PageUp/PageDown light up Magenta; Keypad right thumbs light up Orange).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (PC lights up Copy/Paste and Ctrl+Space in Blue).",
+  "notes": "Custom Glove80 layout.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 1), td_caps (Row 2), ESC (Row 3), Magic (Row 4), Mouse layer toggle (Row 5).\n- Right Outer Column (Punctuation & Nav): Backspace (Row 1), Hyphen - (Row 2), Quote ' (Row 3), Underscore _ (Row 4), End (Row 5).\n- Thumb Cluster:\n  - Left Lower (Outer to Inner): LSHFT, BSPC (pure instant key; DEL on SymbolNav), TAB (hold for NumRow).\n  - Right Lower (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n  - Left Upper (Outer to Inner): LCTRL, LALT, LGUI.\n  - Right Upper (Inner to Outer): RGUI, RALT, RCTRL.\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 4, Mouse toggle, Globe, Copy/Paste tap-dance, Left, Right on bottom-left; Down, Up, Cmd+Space, Home, End on bottom-right; Backspace on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-row shortcuts to Ctrl+C/V tap-dance and Ctrl+Space).\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, moves LGUI to left of Z, puts BSPC/SPACE/DEL(hold SymbolNav for F1-F5) on bottom-left, and uses LSHFT, LCTRL, Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, PageUp/PageDown below F12, and DEL on Left Thumb T5.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. Lower right thumb Enter keys (0 removed). Left pinky toggles off.\n- NumRow: Hold Left Thumb T6 (TAB) for home-row numbers 1-0 on A-G / H-;.\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls, and bootloader/reset.\n- Mouse / Sniper: Mouse toggle key enters mouse layer; home-row HJKL mouse movement; hold A for Sniper precision mode.\n\nPer-Key RGB (underglow-layer):\n- Caps Lock status: td_caps glows red when Caps Lock is active (in Base & NumRow).\n- Momentary layers (SymbolNav, NumRow, Magic, Mouse, Sniper) and Keypad stay color-coded while active (PageUp/PageDown light up Magenta; Keypad right thumbs light up Orange).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (PC lights up Copy/Paste and Ctrl+Space in Blue).",
   "tags": [
     "glove80",
     "custom"
   ],
-  "custom_defined_behaviors": "behaviors {\n    td_magic: td_magic {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_MAGIC\";\n        #binding-cells = <0>;\n        tapping-term-ms = <200>;\n        bindings = <&sl 6>, <&rgb_ug_status_macro>;\n    };\n    td_caps: td_caps {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_CAPS\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&caps_word>, <&kp CAPS>;\n    };\n    td_mouse: td_mouse {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_MOUSE\";\n        #binding-cells = <0>;\n        tapping-term-ms = <200>;\n        bindings = <&kp LG(SPACE)>, <&tog 8>;\n    };\n    td_copy_paste: td_copy_paste {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_COPY_PASTE\";\n        #binding-cells = <0>;\n        tapping-term-ms = <200>;\n        bindings = <&kp LG(C)>, <&kp LG(V)>;\n    };\n    td_copy_paste_pc: td_copy_paste_pc {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_COPY_PASTE_PC\";\n        #binding-cells = <0>;\n        tapping-term-ms = <200>;\n        bindings = <&kp LC(C)>, <&kp LC(V)>;\n    };\n};",
+  "custom_defined_behaviors": "behaviors {\n    td_caps: td_caps {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_CAPS\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&caps_word>, <&kp CAPS>;\n    };\n    td_mouse: td_mouse {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_MOUSE\";\n        #binding-cells = <0>;\n        tapping-term-ms = <200>;\n        bindings = <&kp LG(SPACE)>, <&tog 8>;\n    };\n    td_copy_paste: td_copy_paste {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_COPY_PASTE\";\n        #binding-cells = <0>;\n        tapping-term-ms = <200>;\n        bindings = <&kp LG(C)>, <&kp LG(V)>;\n    };\n    td_copy_paste_pc: td_copy_paste_pc {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_COPY_PASTE_PC\";\n        #binding-cells = <0>;\n        tapping-term-ms = <200>;\n        bindings = <&kp LC(C)>, <&kp LC(V)>;\n    };\n};",
   "custom_devicetree": "",
   "config_parameters": [],
   "layout_parameters": {},
@@ -121,10 +121,10 @@
         ]
       },
       {
-        "value": "Custom",
+        "value": "&layer",
         "params": [
           {
-            "value": "&td_magic",
+            "value": "4",
             "params": []
           }
         ]
@@ -477,13 +477,8 @@
         ]
       },
       {
-        "value": "&layer",
-        "params": [
-          {
-            "value": "4",
-            "params": []
-          }
-        ]
+        "value": "&magic",
+        "params": []
       },
       {
         "value": "&kp",
@@ -2232,8 +2227,13 @@
         "params": []
       },
       {
-        "value": "&none",
-        "params": []
+        "value": "&tog",
+        "params": [
+          {
+            "value": "4",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&none",
@@ -2436,13 +2436,8 @@
         ]
       },
       {
-        "value": "&tog",
-        "params": [
-          {
-            "value": "4",
-            "params": []
-          }
-        ]
+        "value": "&none",
+        "params": []
       },
       {
         "value": "&none",
@@ -3051,8 +3046,13 @@
         "params": []
       },
       {
-        "value": "&none",
-        "params": []
+        "value": "&bt",
+        "params": [
+          {
+            "value": "BT_CLR",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&none",
@@ -3280,13 +3280,8 @@
         "params": []
       },
       {
-        "value": "&bt",
-        "params": [
-          {
-            "value": "BT_CLR",
-            "params": []
-          }
-        ]
+        "value": "&none",
+        "params": []
       },
       {
         "value": "&none",
