@@ -419,6 +419,14 @@
             bindings = <&kp LC(C)>, <&kp LC(V)>;
         };
 
+        td_media: td_media {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_MEDIA";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings = <&kp C_PP>, <&kp C_NEXT>, <&kp C_PREV>;
+        };
+
         ZMK_TD_LAYER(td_LAYER_Keypad, LAYER_Keypad)
     };
 };
@@ -428,6 +436,12 @@
 / {
     combos {
         compatible = "zmk,combos";
+
+        combo_mute {
+            timeout-ms = <50>;
+            key-positions = <POS_RH_T3 POS_RH_T2>;
+            bindings = <&kp C_MUTE>;
+        };
     };
 };
 
@@ -440,10 +454,10 @@
         layer_Base {
             bindings = <
 &kp F1                &kp F2       &kp F3       &kp F4        &kp F5                                                                                                                                             &kp F6        &kp F7        &kp F8       &kp F9          &kp F10
-&td_LAYER_Keypad      &kp N1       &kp N2       &kp N3        &kp N4        &kp N5                                                                                                                       &kp N6  &kp N7        &kp N8        &kp N9       &kp N0          &kp BSPC
+&td_LAYER_Keypad      &kp N1       &kp N2       &kp N3        &kp N4        &kp N5                                                                                                                       &kp N6  &kp N7        &kp N8        &kp N9       &kp N0          &kp LC(LG(M))
 &td_caps              &kp Q        &kp W        &kp E         &kp R         &kp T                                                                                                                        &kp Y   &kp U         &kp I         &kp O        &kp P           &kp MINUS
 &kp ESC               &hml LGUI A  &hml LALT S  &hml LCTRL D  &hml LSHFT F  &kp G                                                                                                                        &kp H   &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI  &kp SQT
-&magic LAYER_Magic 0  &kp Z        &kp X        &kp C         &kp V         &kp B   &kp LCTRL  &kp LALT                   &kp LGUI                 &kp RGUI  &kp RALT                             &kp RCTRL  &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp LS(MINUS)
+&magic LAYER_Magic 0  &kp Z        &kp X        &kp C         &kp V         &kp B   &kp LCTRL  &kp LALT                   &kp LGUI                 &kp C_VOL_DN  &kp C_VOL_UP                         &td_media  &kp N   &kp M         &kp COMMA     &kp DOT      &kp FSLH        &kp LS(MINUS)
 &tog LAYER_Mouse      &kp GLOBE    &td_copy_paste &kp LEFT    &kp RIGHT             &kp LSHFT  &kp BSPC                   &lt LAYER_NumRow TAB     &kp RET   &hold_tap_layer LAYER_SymbolNav DEL  &kp SPACE          &kp DOWN      &kp UP        &kp LG(SPACE) &kp HOME        &kp END
             >;
         };

@@ -439,7 +439,7 @@
 
         layer_Base {
             bindings = <
-     &td_LAYER_Keypad       &kp N1       &kp N2        &kp N3        &kp N4  &kp N5                                                                                            &kp N6        &kp N7        &kp N8       &kp N9          &kp N0          &kp BSPC
+     &td_LAYER_Keypad       &kp N1       &kp N2        &kp N3        &kp N4  &kp N5                                                                                            &kp N6        &kp N7        &kp N8       &kp N9          &kp N0   &kp LC(LG(M))
              &td_caps        &kp Q        &kp W         &kp E         &kp R   &kp T                                                                                             &kp Y         &kp U         &kp I        &kp O           &kp P          &kp MINUS
               &kp ESC  &hml LGUI A  &hml LALT S  &hml LCTRL D  &hml LSHFT F   &kp G                                                                                             &kp H  &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI           &kp SQT
  &magic LAYER_Magic 0        &kp Z        &kp X         &kp C         &kp V   &kp B                                                                                             &kp N         &kp M     &kp COMMA      &kp DOT        &kp FSLH     &kp LS(MINUS)

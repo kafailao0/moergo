@@ -48,8 +48,12 @@ Whenever modifying keyboard layouts, follow these steps sequentially:
   - Update the documentation in the top-level `"notes"` field summarizing new features and layer changes.
 - Keeping JSON in sync guarantees layouts can be imported into the MoErgo web GUI without losing custom modifications.
 
-### Step 4: Build Firmware
-- Run the local build script:
+### Step 4: Build Firmware (ON EXPLICIT REQUEST ONLY)
+> [!IMPORTANT]
+> **DO NOT build or flash firmware automatically.**
+> Only compile (`./glove80/build.sh`, `./go60/build.sh`) or flash firmware when the user explicitly instructs you to do so.
+
+- When instructed, run the local build script:
   ```bash
   # Glove80
   ./glove80/build.sh
