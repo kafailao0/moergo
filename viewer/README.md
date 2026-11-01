@@ -60,7 +60,11 @@ Interactive web-based layout viewer and firmware simulator for the **MoErgo Glov
 - **Collapsible Inspector (`[I]` or `▼`/`▲`):** Toggle the key inspector drawer between full detail mode, compact single-line mode, or collapsed.
 - **Horizontal & Minimizable Canvas Tools (`[T]` or `⚙️`):** The floating tools (Legend, RGB, Fullscreen, Zoom) are laid out horizontally at the bottom right with idle translucency (opacity 0.65). A gear toggle collapses the entire toolstrip into a single 26×26px button so the rightmost keys (`F9`, `F10`, `Home`, `End`) are never obstructed.
 
-### 7. Search & Keyboard Shortcuts
+### 8. Progressive Web App (PWA) & Offline Support
+- **Installable Home Screen App:** Includes a Web App Manifest (`manifest.json`) and service worker (`sw.js`) that allows installing the visualizer directly to your home screen or desktop application drawer from Chrome, Edge, and Safari.
+- **Offline First:** All HTML, layout data (`data.json`), and SVG icons are cached locally, allowing the visualizer to load instantly and run completely offline without an active network connection.
+
+### 9. Search & Keyboard Shortcuts
 - Key search (`/` shortcut): Highlights matching keys across the keyboard layout.
 - Fast keyboard shortcuts: `[0-9]` toggle layers, `[M]` toggle mode, `[G]` Glove80, `[O]` Go60, `[C]` Color legend, `[F]` Focus/Fullscreen mode, `[I]` Toggle inspector drawer, `[T]` Toggle canvas tools, `[Esc]` reset stack or exit Focus mode.
 
@@ -75,11 +79,17 @@ Interactive web-based layout viewer and firmware simulator for the **MoErgo Glov
 ```
 viewer/
 ├── src/                  # Modular viewer source files
-│   ├── index.html        # Clean HTML template
+│   ├── index.html        # Clean HTML template with PWA metadata
 │   ├── style.css         # Responsive styling & themes
 │   └── app.js            # Interactive layer simulator and event logic
 ├── data.json             # Generated JSON dataset containing parsed keys & RGB
 ├── index.html            # Compiled standalone HTML with inlined assets (local VPS)
+├── manifest.json         # Web App Manifest for mobile/desktop PWA installation
+├── sw.js                 # Service Worker with offline caching & background sync
+├── icon-192.png          # 192x192 PWA application icon
+├── icon-512.png          # 512x512 PWA application icon
+├── icon-maskable-512.png # 512x512 maskable icon for Android adaptive icons
+├── favicon.svg           # High-resolution vector SVG favicon
 ├── serve.py              # Lightweight HTTP server on port 8088
 ├── coords_glove80.json   # Physical key coordinates for Glove80 (80 keys)
 └── coords_go60.json      # Physical key coordinates for Go60 (60 keys)

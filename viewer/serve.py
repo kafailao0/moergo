@@ -29,9 +29,16 @@ def main():
 
     # Allow dual-stack / binding
     class Handler(http.server.SimpleHTTPRequestHandler):
+        extensions_map = {
+            **http.server.SimpleHTTPRequestHandler.extensions_map,
+            '.json': 'application/json',
+            '.webmanifest': 'application/manifest+json',
+        }
+
         def end_headers(self):
             # Cache control for easy live updates
             self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            self.send_header('Service-Worker-Allowed', '/')
             super().end_headers()
 
     # Bind to 0.0.0.0 so both Tailscale and localhost work

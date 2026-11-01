@@ -10,6 +10,7 @@ import json
 import re
 import os
 import sys
+import shutil
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -586,8 +587,25 @@ def main():
     with open(docs_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
 
+    # Sync PWA assets (manifest, service worker, icons) to docs/
+    pwa_files = [
+        'manifest.json',
+        'sw.js',
+        'favicon.svg',
+        'icon-192.png',
+        'icon-512.png',
+        'icon-maskable-512.png',
+    ]
+    viewer_dir = os.path.join(BASE_DIR, 'viewer')
+    for fname in pwa_files:
+        src = os.path.join(viewer_dir, fname)
+        if os.path.exists(src):
+            dst = os.path.join(docs_dir, fname)
+            shutil.copy2(src, dst)
+
     size_kb = len(html_content.encode('utf-8')) / 1024
     print(f"Generated viewer: {out_path} and {docs_path} ({size_kb:.1f} KB)")
+    print(f"Synced {len(pwa_files)} PWA assets to {docs_dir}")
 
 if __name__ == '__main__':
     main()
