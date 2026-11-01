@@ -334,8 +334,8 @@ function switchKeyboard(kb) {
 
 function updateHeader() {
   const kb = KEYBOARDS[currentKb];
-  const match = kb.title.match(/v[0-9]+/);
-  document.getElementById('kb-version').textContent = match ? match[0] : 'v28';
+  const match = kb && kb.title ? kb.title.match(/v[0-9]+/) : null;
+  document.getElementById('kb-version').textContent = match ? match[0] : '';
 }
 
 function getActiveSimLayers() {

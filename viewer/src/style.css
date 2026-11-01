@@ -72,6 +72,9 @@
       border-radius: 12px;
       font-weight: 600;
     }
+    .brand-sub:empty {
+      display: none;
+    }
 
     .controls {
       display: flex;

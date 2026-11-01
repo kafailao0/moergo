@@ -80,6 +80,9 @@
       border-radius: 12px;
       font-weight: 600;
     }
+    .brand-sub:empty {
+      display: none;
+    }
 
     .controls {
       display: flex;
@@ -716,7 +719,7 @@
       </svg>
       <div>
         <span class="brand-title">MoErgo Layout</span>
-        <span class="brand-sub" id="kb-version">v24</span>
+        <span class="brand-sub" id="kb-version"></span>
       </div>
     </div>
 
@@ -1132,8 +1135,8 @@ function switchKeyboard(kb) {
 
 function updateHeader() {
   const kb = KEYBOARDS[currentKb];
-  const match = kb.title.match(/v[0-9]+/);
-  document.getElementById('kb-version').textContent = match ? match[0] : 'v28';
+  const match = kb && kb.title ? kb.title.match(/v[0-9]+/) : null;
+  document.getElementById('kb-version').textContent = match ? match[0] : '';
 }
 
 function getActiveSimLayers() {
