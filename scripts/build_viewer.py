@@ -1065,6 +1065,7 @@ def generate_html(data):
     let currentKb = 'glove80';
     let currentLayer = 0;
     let previewLayer = null;
+    let previewTriggerKeyIdx = null;
     let layerHistory = [];
     let rgbEnabled = true;
     let selectedKeyIdx = null;
@@ -1104,10 +1105,8 @@ def generate_html(data):
           e.preventDefault();
           document.getElementById('search-input').focus();
         }} else if (e.key === 'Escape') {{
-          if (previewLayer !== null) {{
-            previewLayer = null;
-            updatePreviewBanner();
-            renderSvg();
+          if (previewLayer !== null || previewTriggerKeyIdx !== null) {{
+            stopPreview();
           }} else if (layerHistory.length > 0) {{
             returnToPreviousLayer();
           }} else {{
@@ -1116,6 +1115,23 @@ def generate_html(data):
             renderSvg();
             resetInspector();
           }}
+        }}
+      }});
+
+      // Bulletproof move-away detection for layer preview:
+      // Instantly disables preview the moment mouse moves off the trigger key
+      document.addEventListener('pointermove', (e) => {{
+        if (previewTriggerKeyIdx === null) return;
+        const targetKey = e.target.closest('[data-idx]');
+        const hoveredIdx = targetKey ? parseInt(targetKey.getAttribute('data-idx'), 10) : null;
+        if (hoveredIdx !== previewTriggerKeyIdx) {{
+          stopPreview();
+        }}
+      }});
+
+      document.addEventListener('mouseleave', () => {{
+        if (previewTriggerKeyIdx !== null) {{
+          stopPreview();
         }}
       }});
     }}
@@ -1156,7 +1172,6 @@ def generate_html(data):
       const kb = KEYBOARDS[currentKb];
       const bar = document.getElementById('layer-tabs');
       bar.innerHTML = '';
-      const displayLayer = (previewLayer !== null) ? previewLayer : currentLayer;
 
       kb.layers.forEach((layer, idx) => {{
         const btn = document.createElement('button');
@@ -1169,20 +1184,32 @@ def generate_html(data):
         btn.onmouseenter = () => {{
           if (idx !== currentLayer) {{
             previewLayer = idx;
-            renderLayerTabs();
+            updateLayerTabStates();
             renderSvg();
             updatePreviewBanner();
           }}
         }};
         btn.onmouseleave = () => {{
-          if (previewLayer === idx) {{
+          if (previewLayer === idx && previewTriggerKeyIdx === null) {{
             previewLayer = null;
-            renderLayerTabs();
+            updateLayerTabStates();
             renderSvg();
             updatePreviewBanner();
           }}
         }};
         bar.appendChild(btn);
+      }});
+    }}
+
+    function updateLayerTabStates() {{
+      const kb = KEYBOARDS[currentKb];
+      kb.layers.forEach((layer, idx) => {{
+        const btn = document.getElementById(`layer-tab-${{idx}}`);
+        if (btn) {{
+          const isActive = (idx === currentLayer && previewLayer === null);
+          const isPreview = (idx === previewLayer);
+          btn.className = `layer-btn ${{isActive ? 'active' : ''}} ${{isPreview ? 'preview-active' : ''}}`;
+        }}
       }});
     }}
 
@@ -1192,9 +1219,10 @@ def generate_html(data):
       }}
       currentLayer = idx;
       previewLayer = null;
+      previewTriggerKeyIdx = null;
       updateBackButton();
       updatePreviewBanner();
-      renderLayerTabs();
+      updateLayerTabStates();
       renderSvg();
       if (selectedKeyIdx !== null) {{
         inspectKey(selectedKeyIdx);
@@ -1206,9 +1234,10 @@ def generate_html(data):
         const prev = layerHistory.pop();
         currentLayer = prev;
         previewLayer = null;
+        previewTriggerKeyIdx = null;
         updateBackButton();
         updatePreviewBanner();
-        renderLayerTabs();
+        updateLayerTabStates();
         renderSvg();
         if (selectedKeyIdx !== null) inspectKey(selectedKeyIdx);
       }} else {{
@@ -1329,9 +1358,6 @@ def generate_html(data):
           <g class="${{groupClass}}" ${{rotAttr}}
              onclick="onKeyClick(${{idx}})"
              onmouseenter="onKeyHover(${{idx}})"
-             onmouseleave="onKeyLeave(${{idx}})"
-             onpointerdown="onKeyPointerDown(${{idx}})"
-             onpointerup="onKeyPointerUp(${{idx}})"
              data-idx="${{idx}}">
 
             <!-- RGB Glow border -->
@@ -1369,58 +1395,47 @@ def generate_html(data):
       svg.innerHTML = html;
     }}
 
-    function onKeyClick(idx) {{
-      selectedKeyIdx = idx;
-      const kb = KEYBOARDS[currentKb];
-      const key = kb.layers[currentLayer].keys[idx];
+    function startPreview(idx, targetLayer) {{
+      if (previewTriggerKeyIdx === idx && previewLayer === targetLayer) return;
+      previewTriggerKeyIdx = idx;
+      previewLayer = targetLayer;
+      updateLayerTabStates();
+      renderSvg();
+      updatePreviewBanner();
+    }}
 
-      // If key links to another layer, switch permanently
-      if (key && key.targetLayer !== null && key.targetLayer !== undefined && key.targetLayer !== currentLayer) {{
-        setLayer(key.targetLayer, true);
+    function stopPreview() {{
+      if (previewTriggerKeyIdx === null && previewLayer === null) return;
+      previewTriggerKeyIdx = null;
+      previewLayer = null;
+      updateLayerTabStates();
+      renderSvg();
+      updatePreviewBanner();
+    }}
+
+    function onKeyClick(idx) {{
+      const kb = KEYBOARDS[currentKb];
+      const origKey = kb.layers[currentLayer].keys[idx];
+
+      // If clicked key links to another layer, switch permanently
+      if (origKey && origKey.targetLayer !== null && origKey.targetLayer !== undefined && origKey.targetLayer !== currentLayer) {{
+        stopPreview();
+        setLayer(origKey.targetLayer, true);
         return;
       }}
 
+      stopPreview();
+      selectedKeyIdx = idx;
       renderSvg();
       inspectKey(idx);
     }}
 
     function onKeyHover(idx) {{
+      if (previewTriggerKeyIdx !== null) return;
       const kb = KEYBOARDS[currentKb];
       const key = kb.layers[currentLayer].keys[idx];
       if (key && key.targetLayer !== null && key.targetLayer !== undefined && key.targetLayer !== currentLayer) {{
-        previewLayer = key.targetLayer;
-        renderLayerTabs();
-        renderSvg();
-        updatePreviewBanner();
-      }}
-    }}
-
-    function onKeyLeave(idx) {{
-      if (previewLayer !== null) {{
-        previewLayer = null;
-        renderLayerTabs();
-        renderSvg();
-        updatePreviewBanner();
-      }}
-    }}
-
-    function onKeyPointerDown(idx) {{
-      const kb = KEYBOARDS[currentKb];
-      const key = kb.layers[currentLayer].keys[idx];
-      if (key && key.targetLayer !== null && key.targetLayer !== undefined && key.targetLayer !== currentLayer) {{
-        previewLayer = key.targetLayer;
-        renderLayerTabs();
-        renderSvg();
-        updatePreviewBanner();
-      }}
-    }}
-
-    function onKeyPointerUp(idx) {{
-      if (previewLayer !== null) {{
-        previewLayer = null;
-        renderLayerTabs();
-        renderSvg();
-        updatePreviewBanner();
+        startPreview(idx, key.targetLayer);
       }}
     }}
 
