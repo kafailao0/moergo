@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
 Build standalone interactive layout viewer for MoErgo Glove80 and Go60.
-Extracts data from config/*.json and config/*.keymap and generates viewer/index.html.
+Extracts data from config/*.json and config/*.keymap and generates:
+- viewer/index.html (for local VPS/Tailscale serving)
+- docs/index.html (for GitHub Pages publishing)
 """
 
 import json
@@ -15,7 +17,6 @@ def parse_rgb_from_keymap(keymap_path):
     with open(keymap_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Parse color hex defines
     colors = {
         '___': '#000000',
         'GRN': '#00FF00',
@@ -33,7 +34,6 @@ def parse_rgb_from_keymap(keymap_path):
         if m:
             colors[m.group(1)] = '#' + m.group(2).upper()
 
-    # Parse layers inside underglow-layer { ... }
     start = content.find('underglow-layer {')
     layers = {}
     if start != -1:
@@ -46,10 +46,49 @@ def parse_rgb_from_keymap(keymap_path):
 
     return colors, layers
 
-def format_zmk_param(val):
-    if not val:
-        return ''
-    aliases = {
+def format_param_recursive(p):
+    """Recursively formats ZMK parameter objects including shifted symbols and modifier wrappers."""
+    if isinstance(p, dict):
+        val = str(p.get('value', ''))
+        sub_params = p.get('params', [])
+    else:
+        val = str(p)
+        sub_params = []
+
+    shift_symbols = {
+        'N1': '!', 'N2': '@', 'N3': '#', 'N4': '$', 'N5': '%',
+        'N6': '^', 'N7': '&', 'N8': '*', 'N9': '(', 'N0': ')',
+        'NUMBER_1': '!', 'NUMBER_2': '@', 'NUMBER_3': '#', 'NUMBER_4': '$', 'NUMBER_5': '%',
+        'NUMBER_6': '^', 'NUMBER_7': '&', 'NUMBER_8': '*', 'NUMBER_9': '(', 'NUMBER_0': ')',
+        'MINUS': '_', 'EQUAL': '+', 'LBKT': '{', 'RBKT': '}',
+        'LEFT_BRACKET': '{', 'RIGHT_BRACKET': '}',
+        'BSLH': '|', 'BACKSLASH': '|', 'GRAVE': '~', 'COMMA': '<', 'DOT': '>', 'PERIOD': '>',
+        'SLASH': '?', 'FSLH': '?', 'SQT': '"', 'SINGLE_QUOTE': '"',
+        'SEMI': ':', 'SEMICOLON': ':'
+    }
+
+    if val == 'LS' and sub_params:
+        sub_val = str(sub_params[0].get('value', '')) if isinstance(sub_params[0], dict) else str(sub_params[0])
+        if sub_val in shift_symbols:
+            return shift_symbols[sub_val]
+        return '⇧' + format_param_recursive(sub_params[0])
+
+    mod_prefixes = {
+        'LG': '⌘', 'RG': '⌘',
+        'LC': '⌃', 'RC': '⌃',
+        'LA': '⌥', 'RA': '⌥',
+        'LS': '⇧', 'RS': '⇧',
+        'MEH': '⌃⌥⇧', 'HYPER': '⌘⌃⌥⇧'
+    }
+
+    if val in mod_prefixes and sub_params:
+        sub_formatted = ''.join(format_param_recursive(sp) for sp in sub_params)
+        # If sub_formatted is a word like SPACE, insert a space: e.g. "⌘ Space"
+        if len(sub_formatted) > 1 and sub_formatted[0].isalnum():
+            return f"{mod_prefixes[val]} {sub_formatted}"
+        return f"{mod_prefixes[val]}{sub_formatted}"
+
+    base_aliases = {
         'EXCLAMATION': '!', 'EXCL': '!',
         'AT_SIGN': '@', 'AT': '@',
         'HASH': '#', 'POUND': '#',
@@ -94,191 +133,250 @@ def format_zmk_param(val):
         'DOWN': '↓', 'DOWN_ARROW': '↓',
         'LEFT': '←', 'LEFT_ARROW': '←',
         'RIGHT': '→', 'RIGHT_ARROW': '→',
-        'LGUI': '⌘ Cmd', 'RGUI': '⌘ Cmd', 'LCMD': '⌘ Cmd', 'RCMD': '⌘ Cmd',
-        'LALT': '⌥ Alt', 'RALT': '⌥ Alt', 'LOPT': '⌥ Alt', 'ROPT': '⌥ Alt',
-        'LCTRL': '⌃ Ctrl', 'RCTRL': '⌃ Ctrl',
-        'LSHFT': '⇧ Shift', 'RSHFT': '⇧ Shift',
+        'LGUI': '⌘', 'RGUI': '⌘', 'LCMD': '⌘', 'RCMD': '⌘',
+        'LALT': '⌥', 'RALT': '⌥', 'LOPT': '⌥', 'ROPT': '⌥',
+        'LCTRL': '⌃', 'RCTRL': '⌃',
+        'LSHFT': '⇧', 'RSHFT': '⇧',
         'CAPS': 'Caps', 'CAPSLOCK': 'Caps',
         'C_VOL_UP': 'Vol +', 'C_VOL_DN': 'Vol -', 'C_MUTE': 'Mute',
         'C_BRI_UP': 'Bri +', 'C_BRI_DN': 'Bri -',
         'C_PLAY_PAUSE': '⏯', 'C_PP': '⏯',
-        'C_NEXT': '⏭ Next', 'C_PREV': '⏮ Prev',
+        'C_NEXT': '⏭', 'C_PREV': '⏮',
         'PSCRN': 'PrtSc', 'SLCK': 'ScrLk', 'PAUSE_BREAK': 'Pause', 'INS': 'Ins',
-        'KP_N1': 'Pad 1', 'KP_N2': 'Pad 2', 'KP_N3': 'Pad 3', 'KP_N4': 'Pad 4',
-        'KP_N5': 'Pad 5', 'KP_N6': 'Pad 6', 'KP_N7': 'Pad 7', 'KP_N8': 'Pad 8',
-        'KP_N9': 'Pad 9', 'KP_N0': 'Pad 0', 'KP_DOT': 'Pad .', 'KP_PLUS': 'Pad +',
-        'KP_MINUS': 'Pad -', 'KP_MULTIPLY': 'Pad *', 'KP_DIVIDE': 'Pad /',
-        'KP_ENTER': 'Pad ↵', 'KP_NUM': 'NumLk', 'KP_EQUAL': 'Pad ='
+        'KP_N1': '1', 'KP_N2': '2', 'KP_N3': '3', 'KP_N4': '4',
+        'KP_N5': '5', 'KP_N6': '6', 'KP_N7': '7', 'KP_N8': '8',
+        'KP_N9': '9', 'KP_N0': '0', 'KP_DOT': '.', 'KP_PLUS': '+',
+        'KP_MINUS': '-', 'KP_MULTIPLY': '*', 'KP_DIVIDE': '/',
+        'KP_ENTER': '↵', 'KP_NUM': 'NumLk', 'KP_EQUAL': '=', 'KP_SLASH': '/',
+        'GLOBE': '🌐'
     }
+
+    if val.startswith('NUMBER_') and len(val) == 8 and val[7].isdigit():
+        return val[7]
     if val.startswith('N') and len(val) == 2 and val[1].isdigit():
         return val[1]
-    return aliases.get(val, val)
+
+    return base_aliases.get(val, val)
+
+def stringify_param(p):
+    if isinstance(p, dict):
+        val = str(p.get('value', ''))
+        sub = p.get('params', [])
+        if sub:
+            return f"{val}({', '.join(stringify_param(sp) for sp in sub)})"
+        return val
+    return str(p)
 
 def parse_key_data(key_obj, layer_names):
     beh = str(key_obj.get('value', ''))
-    raw_params = [str(p.get('value', '')) for p in key_obj.get('params', [])]
+    raw_params = key_obj.get('params', [])
+    formatted_params = [format_param_recursive(p) for p in raw_params]
 
-    primary = ''
+    line1 = ''
+    line2 = ''
     secondary = ''
     badge = ''
     badge_type = ''
     tooltip = ''
-    raw_binding = beh + (' ' + ' '.join(raw_params) if raw_params else '')
+    target_layer = None
+    raw_binding = beh + (' ' + ' '.join(stringify_param(p) for p in raw_params) if raw_params else '')
 
     if beh == '&kp':
-        primary = format_zmk_param(raw_params[0]) if raw_params else ''
-        tooltip = f"Key: {raw_params[0]}"
+        primary_text = formatted_params[0] if formatted_params else ''
+        if ' ' in primary_text and len(primary_text) > 4:
+            parts = primary_text.split(None, 1)
+            line1, line2 = parts[0], parts[1]
+        else:
+            line1 = primary_text
+        tooltip = f"Key: {primary_text}"
+
     elif beh in ['&hml', '&hmr']:
-        mod = format_zmk_param(raw_params[0])
-        tap = format_zmk_param(raw_params[1])
-        primary = tap
+        mod = formatted_params[0]
+        tap = formatted_params[1]
+        line1 = tap
         secondary = mod.split()[0]
-        badge = 'HML' if beh == '&hml' else 'HMR'
+        # User requested: hide HML/HMR badge! Just show the mod key in secondary corner.
+        badge = ''
         badge_type = 'mod'
-        hand = "Left (Home Row Mod)" if beh == '&hml' else "Right (Home Row Mod)"
-        tooltip = f"Tap: {tap} • Hold: {mod} [{hand}]"
+        hand = "Left" if beh == '&hml' else "Right"
+        tooltip = f"Home Row Mod ({hand}): Tap for {tap} • Hold for {mod}"
+
     elif beh == '&hold_tap_layer':
-        layer_idx = int(raw_params[0]) if raw_params[0].isdigit() else raw_params[0]
-        layer_name = layer_names[layer_idx] if isinstance(layer_idx, int) and layer_idx < len(layer_names) else f"Layer {layer_idx}"
-        tap = format_zmk_param(raw_params[1])
-        primary = tap
+        layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
+        layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
+        tap = formatted_params[1]
+        line1 = tap
         secondary = f"L{layer_idx}"
-        badge = 'HT'
+        target_layer = layer_idx
         badge_type = 'layer'
-        tooltip = f"Tap: {tap} • Hold: {layer_name}"
-    elif beh == '&layer' or beh == '&mo':
-        layer_idx = int(raw_params[0]) if raw_params[0].isdigit() else raw_params[0]
-        layer_name = layer_names[layer_idx] if isinstance(layer_idx, int) and layer_idx < len(layer_names) else f"Layer {layer_idx}"
-        primary = layer_name
-        badge = 'MO'
+        tooltip = f"Tap for {tap} • Hold for {layer_name} (Click to switch)"
+
+    elif beh in ['&layer', '&mo']:
+        layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
+        layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
+        line1 = layer_name
+        secondary = f"L{layer_idx}"
+        target_layer = layer_idx
+        # User requested: DO NOT show MO badge on Keypad!
+        badge = ''
         badge_type = 'layer'
-        tooltip = f"Momentary Layer: {layer_name}"
+        tooltip = f"Layer: {layer_name} (Click to switch)"
+
     elif beh == '&to':
-        layer_idx = int(raw_params[0]) if raw_params[0].isdigit() else raw_params[0]
-        layer_name = layer_names[layer_idx] if isinstance(layer_idx, int) and layer_idx < len(layer_names) else f"Layer {layer_idx}"
-        primary = f"To {layer_name}"
-        badge = 'TO'
+        layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
+        layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
+        line1 = "To"
+        line2 = layer_name
+        target_layer = layer_idx
+        badge = f"L{layer_idx}"
         badge_type = 'layer'
         tooltip = f"Switch to {layer_name}"
+
     elif beh == '&tog':
-        layer_idx = int(raw_params[0]) if raw_params[0].isdigit() else raw_params[0]
-        layer_name = layer_names[layer_idx] if isinstance(layer_idx, int) and layer_idx < len(layer_names) else f"Layer {layer_idx}"
-        primary = f"Tog {layer_name}"
-        badge = 'TOG'
+        layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
+        layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
+        line1 = "Tog"
+        line2 = layer_name
+        target_layer = layer_idx
+        badge = f"L{layer_idx}"
         badge_type = 'layer'
         tooltip = f"Toggle {layer_name}"
+
+    elif beh == '&lt':
+        layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
+        layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
+        tap = formatted_params[1] if len(formatted_params) > 1 else 'LT'
+        line1 = tap
+        secondary = f"L{layer_idx}"
+        target_layer = layer_idx
+        badge_type = 'layer'
+        tooltip = f"Tap for {tap} • Hold for {layer_name} (Click to switch)"
+
     elif beh == '&magic':
-        primary = 'Magic'
-        badge = 'SYS'
+        line1 = 'Magic'
+        target_layer = 6
+        secondary = 'L6'
         badge_type = 'sys'
-        tooltip = 'Magic Layer'
+        tooltip = 'Magic Configuration Layer (Click to switch)'
+
     elif beh == 'Custom':
-        custom_str = raw_params[0] if raw_params else ''
+        custom_str = str(raw_params[0].get('value', '')) if raw_params else ''
         raw_binding = custom_str
         if 'td_caps' in custom_str:
-            primary = 'Caps'
+            line1 = 'Caps'
+            secondary = '1x/2x'
             badge = 'TD'
             badge_type = 'td'
             tooltip = 'Tap Dance: 1x Caps Word • 2x Caps Lock'
         elif 'td_mouse' in custom_str:
-            primary = 'Mouse'
+            line1 = 'Spotlight'
+            line2 = 'Mouse'
+            secondary = 'L8'
+            target_layer = 8
             badge = 'TD'
             badge_type = 'td'
-            tooltip = 'Tap Dance: 1x Spotlight • 2x Toggle Mouse Layer'
+            tooltip = 'Tap Dance: 1x Spotlight (⌘ Space) • 2x Toggle Mouse Layer'
         elif 'td_copy_paste_pc' in custom_str:
-            primary = 'Copy/Paste'
+            line1 = 'Copy'
+            line2 = 'Paste (PC)'
             badge = 'TD'
             badge_type = 'td'
-            tooltip = 'Tap Dance (PC): 1x Ctrl+C • 2x Ctrl+V'
+            tooltip = 'Tap Dance: 1x Ctrl+C (Copy) • 2x Ctrl+V (Paste)'
         elif 'td_copy_paste' in custom_str:
-            primary = 'Copy/Paste'
+            line1 = 'Copy'
+            line2 = 'Paste'
             badge = 'TD'
             badge_type = 'td'
-            tooltip = 'Tap Dance: 1x ⌘C • 2x ⌘V'
+            tooltip = 'Tap Dance: 1x ⌘C (Copy) • 2x ⌘V (Paste)'
         elif 'td_media' in custom_str:
-            primary = 'Media'
+            line1 = '⏯'
+            line2 = 'Media'
             badge = 'TD'
             badge_type = 'td'
-            tooltip = 'Tap Dance: 1x Play/Pause • 2x Next • 3x Prev'
+            tooltip = 'Tap Dance: 1x Play/Pause • 2x Next Track • 3x Prev Track'
         elif 'SNIPER_SCRL' in custom_str:
             direction = custom_str.split('_')[-1]
             arrows = {'UP': '↑', 'DOWN': '↓', 'LEFT': '←', 'RIGHT': '→'}
-            primary = f"Scrl {arrows.get(direction, direction)}"
-            badge = 'SNP'
+            line1 = '🎯 Scrl'
+            line2 = arrows.get(direction, direction)
             badge_type = 'mouse'
-            tooltip = f"Sniper Scroll {direction}"
+            tooltip = f"Sniper Precision Scroll {direction}"
         elif 'SNIPER_MOVE' in custom_str:
             direction = custom_str.split('_')[-1]
             arrows = {'UP': '↑', 'DOWN': '↓', 'LEFT': '←', 'RIGHT': '→'}
-            primary = f"Move {arrows.get(direction, direction)}"
-            badge = 'SNP'
+            line1 = '🎯 Move'
+            line2 = arrows.get(direction, direction)
             badge_type = 'mouse'
-            tooltip = f"Sniper Move {direction}"
+            tooltip = f"Sniper Precision Move {direction}"
+        elif 'td_LAYER_Keypad' in custom_str:
+            line1 = 'Keypad'
+            secondary = 'L4'
+            target_layer = 4
+            tooltip = 'Tap: Toggle Keypad • Hold: Momentary Keypad'
         else:
-            primary = custom_str
+            line1 = custom_str
+
     elif beh == '&trans':
-        primary = '▽'
+        line1 = '▽'
         tooltip = 'Transparent (Pass through to lower layer)'
         badge_type = 'trans'
     elif beh == '&none':
-        primary = '—'
+        line1 = '—'
         tooltip = 'None (Inactive)'
         badge_type = 'none'
     elif beh.startswith('&bt'):
-        if beh == '&bt':
-            sub = raw_params[0] if raw_params else ''
-            primary = f"BT {sub}"
-        else:
-            primary = beh.replace('&bt_', 'BT ')
+        sub = formatted_params[0] if formatted_params else ''
+        line1 = f"BT {sub}" if sub else beh.replace('&bt_', 'BT ')
         badge = 'BT'
         badge_type = 'bt'
-        tooltip = f"Bluetooth: {primary}"
+        tooltip = f"Bluetooth: {line1}"
     elif beh == '&out':
-        primary = raw_params[0].replace('OUT_', '') if raw_params else 'OUT'
-        badge = 'OUT'
+        sub = str(raw_params[0].get('value', '')).replace('OUT_', '') if raw_params else 'OUT'
+        line1 = f"OUT {sub}"
         badge_type = 'sys'
-        tooltip = f"Output: {primary}"
+        tooltip = f"Output Selection: {sub}"
     elif beh in ['&bootloader', '&reset']:
-        primary = beh.replace('&', '').capitalize()
-        badge = 'SYS'
+        line1 = beh.replace('&', '').capitalize()
         badge_type = 'sys'
-        tooltip = primary
+        tooltip = line1
     elif beh == '&rgb_ug':
-        primary = raw_params[0].replace('RGB_', '') if raw_params else 'RGB'
-        badge = 'RGB'
+        sub = str(raw_params[0].get('value', '')).replace('RGB_', '') if raw_params else 'RGB'
+        line1 = 'RGB'
+        line2 = sub
         badge_type = 'rgb'
-        tooltip = f"RGB Underglow: {primary}"
+        tooltip = f"RGB Control: {sub}"
     elif beh == '&mmv':
-        direction = raw_params[0].replace('MOVE_', '') if raw_params else ''
+        sub = str(raw_params[0].get('value', '')).replace('MOVE_', '') if raw_params else ''
         arrows = {'UP': '↑', 'DOWN': '↓', 'LEFT': '←', 'RIGHT': '→'}
-        primary = f"Mouse {arrows.get(direction, direction)}"
-        badge = 'MS'
+        line1 = 'Mouse'
+        line2 = arrows.get(sub, sub)
         badge_type = 'mouse'
-        tooltip = f"Mouse Move {direction}"
+        tooltip = f"Mouse Move {sub}"
     elif beh == '&msc':
-        direction = raw_params[0].replace('SCRL_', '') if raw_params else ''
+        sub = str(raw_params[0].get('value', '')).replace('SCRL_', '') if raw_params else ''
         arrows = {'UP': '↑', 'DOWN': '↓', 'LEFT': '←', 'RIGHT': '→'}
-        primary = f"Scrl {arrows.get(direction, direction)}"
-        badge = 'MSC'
+        line1 = 'Scrl'
+        line2 = arrows.get(sub, sub)
         badge_type = 'mouse'
-        tooltip = f"Mouse Scroll {direction}"
+        tooltip = f"Mouse Scroll {sub}"
     elif beh == '&mkp':
-        btn = raw_params[0].replace('CLK', '') if raw_params else ''
-        labels = {'L': 'Left Click', 'R': 'Right Click', 'M': 'Middle Click'}
-        primary = labels.get(btn, f"Click {btn}")
-        badge = 'MKP'
+        sub = str(raw_params[0].get('value', '')).replace('CLK', '') if raw_params else ''
+        labels = {'L': 'L-Click', 'R': 'R-Click', 'M': 'M-Click'}
+        line1 = labels.get(sub, f"Click {sub}")
         badge_type = 'mouse'
-        tooltip = primary
+        tooltip = f"Mouse {line1}"
     else:
-        primary = beh
+        line1 = beh
         tooltip = raw_binding
 
     return {
-        'primary': primary,
+        'line1': line1,
+        'line2': line2,
         'secondary': secondary,
         'badge': badge,
         'badgeType': badge_type,
         'tooltip': tooltip,
+        'targetLayer': target_layer,
         'rawBinding': raw_binding
     }
 
@@ -359,7 +457,7 @@ def build_data():
 
 def generate_html(data):
     json_data = json.dumps(data)
-    
+
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -376,9 +474,9 @@ def generate_html(data):
       --text-muted: #8b949e;
       --accent: #58a6ff;
       --key-bg: #1c2128;
-      --key-border: #3b434e;
-      --key-hover: #262c36;
-      --key-active: #313947;
+      --key-border: #38424d;
+      --key-hover: #262e38;
+      --key-active: #313d4c;
       --homing: #f0883e;
       --badge-mod: #d2a8ff;
       --badge-layer: #7ee787;
@@ -400,7 +498,6 @@ def generate_html(data):
       -webkit-user-select: none;
     }}
 
-    /* Top Navigation Bar */
     header {{
       background: var(--surface);
       border-bottom: 1px solid var(--surface-border);
@@ -447,7 +544,6 @@ def generate_html(data):
       flex-wrap: wrap;
     }}
 
-    /* Toggle Switches & Buttons */
     .btn-group {{
       display: inline-flex;
       background: #090d12;
@@ -474,6 +570,28 @@ def generate_html(data):
       color: #0d1117;
       font-weight: 700;
       box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }}
+
+    .back-layer-btn {{
+      background: #238636;
+      border: 1px solid #2ea043;
+      color: #ffffff;
+      padding: 5px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 5px;
+      animation: fadeIn 0.15s ease-in;
+    }}
+    .back-layer-btn:hover {{
+      background: #2ea043;
+    }}
+    @keyframes fadeIn {{
+      from {{ opacity: 0; transform: translateY(-3px); }}
+      to {{ opacity: 1; transform: translateY(0); }}
     }}
 
     .search-box {{
@@ -505,7 +623,6 @@ def generate_html(data):
       pointer-events: none;
     }}
 
-    /* Layer Bar */
     .layer-bar {{
       background: #11151c;
       border-bottom: 1px solid var(--surface-border);
@@ -551,8 +668,11 @@ def generate_html(data):
       background: rgba(0,0,0,0.25);
       color: #ffffff;
     }}
+    .layer-btn.target-pulse {{
+      border-color: #7ee787 !important;
+      box-shadow: 0 0 8px rgba(126, 231, 135, 0.5);
+    }}
 
-    /* Main Container & SVG Viewport */
     main {{
       flex: 1;
       display: flex;
@@ -576,18 +696,17 @@ def generate_html(data):
     svg#keyboard-svg {{
       width: 100%;
       height: auto;
-      max-height: 72vh;
+      max-height: 74vh;
       display: block;
       overflow: visible;
     }}
 
-    /* SVG Key Styling */
     .key-group {{
       cursor: pointer;
-      transition: transform 0.1s ease;
+      transition: filter 0.1s ease;
     }}
     .key-group:hover {{
-      filter: brightness(1.15);
+      filter: brightness(1.25);
     }}
     .key-cap {{
       fill: var(--key-bg);
@@ -609,7 +728,7 @@ def generate_html(data):
       stroke-width: 1.8;
     }}
     .key-group.selected .key-cap {{
-      fill: #243245;
+      fill: #223247;
       stroke: #58a6ff;
       stroke-width: 2.2;
       filter: drop-shadow(0 0 6px rgba(88,166,255,0.6));
@@ -619,6 +738,10 @@ def generate_html(data):
       stroke-width: 2.5 !important;
       fill: #3b281c !important;
       filter: drop-shadow(0 0 8px #f0883e);
+    }}
+    .key-group.has-layer-link:hover .key-cap {{
+      stroke: var(--badge-layer) !important;
+      stroke-width: 2px !important;
     }}
 
     .key-glow {{
@@ -635,8 +758,6 @@ def generate_html(data):
 
     .key-text-primary {{
       fill: var(--text-bright);
-      font-size: 13px;
-      font-weight: 700;
       text-anchor: middle;
       dominant-baseline: central;
       pointer-events: none;
@@ -644,8 +765,16 @@ def generate_html(data):
     }}
     .key-text-sec {{
       fill: var(--badge-mod);
-      font-size: 10px;
+      font-size: 10.5px;
       font-weight: 700;
+      text-anchor: end;
+      dominant-baseline: text-before-edge;
+      pointer-events: none;
+    }}
+    .key-text-layer-link {{
+      fill: var(--badge-layer);
+      font-size: 9.5px;
+      font-weight: 800;
       text-anchor: end;
       dominant-baseline: text-before-edge;
       pointer-events: none;
@@ -658,8 +787,6 @@ def generate_html(data):
       dominant-baseline: text-before-edge;
       pointer-events: none;
     }}
-    .badge-mod {{ fill: var(--badge-mod); }}
-    .badge-layer {{ fill: var(--badge-layer); }}
     .badge-td {{ fill: var(--badge-td); }}
     .badge-sys {{ fill: var(--badge-sys); }}
     .badge-mouse {{ fill: var(--badge-mouse); }}
@@ -669,7 +796,6 @@ def generate_html(data):
       pointer-events: none;
     }}
 
-    /* Legend & Info Drawer */
     .drawer {{
       background: var(--surface);
       border-top: 1px solid var(--surface-border);
@@ -707,10 +833,27 @@ def generate_html(data):
     .key-meta {{
       font-size: 0.8rem;
       color: var(--text-muted);
-      line-height: 1.3;
+      line-height: 1.35;
     }}
     .key-meta strong {{
       color: var(--text-bright);
+    }}
+    .jump-layer-btn {{
+      background: #1f6feb;
+      border: 1px solid #388bfd;
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-left: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }}
+    .jump-layer-btn:hover {{
+      background: #388bfd;
     }}
 
     .rgb-legend {{
@@ -730,7 +873,6 @@ def generate_html(data):
       vertical-align: middle;
     }}
 
-    /* Zoom Controls Floating */
     .zoom-widget {{
       position: absolute;
       right: 16px;
@@ -764,7 +906,6 @@ def generate_html(data):
       color: #fff;
     }}
 
-    /* Mobile Adaptations */
     @media (max-width: 768px) {{
       header {{ padding: 8px 12px; }}
       .brand-title {{ font-size: 1rem; }}
@@ -779,7 +920,6 @@ def generate_html(data):
 </head>
 <body>
 
-  <!-- Top Header Navigation -->
   <header>
     <div class="brand">
       <svg class="brand-icon" viewBox="0 0 24 24">
@@ -792,18 +932,19 @@ def generate_html(data):
     </div>
 
     <div class="controls">
-      <!-- Keyboard Switcher -->
+      <button class="back-layer-btn" id="btn-back-layer" onclick="returnToPreviousLayer()">
+        ↩ Back to Base (Esc)
+      </button>
+
       <div class="btn-group">
         <button class="btn active" id="btn-glove80" onclick="switchKeyboard('glove80')">Glove80</button>
         <button class="btn" id="btn-go60" onclick="switchKeyboard('go60')">Go60</button>
       </div>
 
-      <!-- Underglow View Toggle -->
       <div class="btn-group">
         <button class="btn active" id="btn-rgb" onclick="toggleRgb()">RGB Underglow: ON</button>
       </div>
 
-      <!-- Quick Search -->
       <div class="search-box">
         <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
         <input type="text" id="search-input" placeholder="Search keys... (/)" oninput="handleSearch(this.value)">
@@ -811,20 +952,13 @@ def generate_html(data):
     </div>
   </header>
 
-  <!-- Layer Tabs Bar -->
-  <div class="layer-bar" id="layer-tabs">
-    <!-- Generated by JS -->
-  </div>
+  <div class="layer-bar" id="layer-tabs"></div>
 
-  <!-- Keyboard Visualization SVG -->
   <main>
     <div class="viewport-container">
-      <svg id="keyboard-svg" viewBox="-20 -20 1080 430" class="rgb-mode">
-        <!-- SVG content rendered by JS -->
-      </svg>
+      <svg id="keyboard-svg" viewBox="-20 -20 1010 475" class="rgb-mode"></svg>
     </div>
 
-    <!-- Floating Zoom Controls -->
     <div class="zoom-widget">
       <button class="zoom-btn" title="Zoom In" onclick="zoom(1.15)">+</button>
       <button class="zoom-btn" title="Zoom Out" onclick="zoom(0.85)">−</button>
@@ -832,15 +966,14 @@ def generate_html(data):
     </div>
   </main>
 
-  <!-- Bottom Key Inspector Drawer & RGB Legend -->
   <div class="drawer">
     <div class="inspector" id="key-inspector">
       <div class="key-pill">
         <span class="key-pill-label" id="insp-label">—</span>
       </div>
       <div class="key-meta">
-        <div id="insp-title">Click or tap any key to inspect full details</div>
-        <div id="insp-detail" style="color: var(--text-muted); font-size: 0.75rem;">Shortcuts: [0-9] Layer • [G] Glove80 • [O] Go60 • [R] Toggle RGB</div>
+        <div id="insp-title">Click or tap any key to inspect full details or navigate layers</div>
+        <div id="insp-detail" style="color: var(--text-muted); font-size: 0.75rem;">Shortcuts: [0-9] Layer • [G] Glove80 • [O] Go60 • [R] Toggle RGB • Click layer keys to switch</div>
       </div>
     </div>
 
@@ -863,6 +996,7 @@ def generate_html(data):
     const KEYBOARDS = JSON.parse(document.getElementById('embedded-data').textContent);
     let currentKb = 'glove80';
     let currentLayer = 0;
+    let layerHistory = [];
     let rgbEnabled = true;
     let selectedKeyIdx = null;
     let currentScale = 1.0;
@@ -876,7 +1010,6 @@ def generate_html(data):
       renderSvg();
       updateHeader();
 
-      // Keyboard shortcuts
       window.addEventListener('keydown', (e) => {{
         if (e.target.tagName === 'INPUT') {{
           if (e.key === 'Escape') {{
@@ -902,10 +1035,14 @@ def generate_html(data):
           e.preventDefault();
           document.getElementById('search-input').focus();
         }} else if (e.key === 'Escape') {{
-          selectedKeyIdx = null;
-          handleSearch('');
-          renderSvg();
-          resetInspector();
+          if (layerHistory.length > 0) {{
+            returnToPreviousLayer();
+          }} else {{
+            selectedKeyIdx = null;
+            handleSearch('');
+            renderSvg();
+            resetInspector();
+          }}
         }}
       }});
     }}
@@ -914,10 +1051,12 @@ def generate_html(data):
       if (currentKb === kb) return;
       currentKb = kb;
       currentLayer = 0;
+      layerHistory = [];
       selectedKeyIdx = null;
       document.getElementById('btn-glove80').classList.toggle('active', kb === 'glove80');
       document.getElementById('btn-go60').classList.toggle('active', kb === 'go60');
       updateHeader();
+      updateBackButton();
       renderLayerTabs();
       renderSvg();
       resetInspector();
@@ -944,6 +1083,7 @@ def generate_html(data):
       bar.innerHTML = '';
       kb.layers.forEach((layer, idx) => {{
         const btn = document.createElement('button');
+        btn.id = `layer-tab-${{idx}}`;
         btn.className = `layer-btn ${{idx === currentLayer ? 'active' : ''}}`;
         btn.innerHTML = `<span class="idx">${{idx}}</span> ${{layer.name}}`;
         btn.onclick = () => setLayer(idx);
@@ -951,12 +1091,42 @@ def generate_html(data):
       }});
     }}
 
-    function setLayer(idx) {{
+    function setLayer(idx, fromKeyLink = false) {{
+      if (fromKeyLink && idx !== currentLayer) {{
+        layerHistory.push(currentLayer);
+      }}
       currentLayer = idx;
+      updateBackButton();
       renderLayerTabs();
       renderSvg();
       if (selectedKeyIdx !== null) {{
         inspectKey(selectedKeyIdx);
+      }}
+    }}
+
+    function returnToPreviousLayer() {{
+      if (layerHistory.length > 0) {{
+        const prev = layerHistory.pop();
+        currentLayer = prev;
+        updateBackButton();
+        renderLayerTabs();
+        renderSvg();
+        if (selectedKeyIdx !== null) inspectKey(selectedKeyIdx);
+      }} else {{
+        setLayer(0);
+      }}
+    }}
+
+    function updateBackButton() {{
+      const btn = document.getElementById('btn-back-layer');
+      if (layerHistory.length > 0) {{
+        const kb = KEYBOARDS[currentKb];
+        const prevIdx = layerHistory[layerHistory.length - 1];
+        const prevName = kb.layers[prevIdx] ? kb.layers[prevIdx].name : 'Base';
+        btn.innerHTML = `↩ Back to ${{prevName}} (Esc)`;
+        btn.style.display = 'inline-flex';
+      }} else {{
+        btn.style.display = 'none';
       }}
     }}
 
@@ -966,62 +1136,97 @@ def generate_html(data):
       const layer = kb.layers[currentLayer];
       const svg = document.getElementById('keyboard-svg');
 
-      // Adjust viewBox based on keyboard
       if (currentKb === 'glove80') {{
-        svg.setAttribute('viewBox', '-15 -15 1025 385');
+        svg.setAttribute('viewBox', '-15 -10 1000 460');
       }} else {{
-        svg.setAttribute('viewBox', '-15 -15 975 365');
+        svg.setAttribute('viewBox', '-15 -10 970 365');
       }}
 
       let html = '';
 
       coords.forEach((c, idx) => {{
-        const key = layer.keys[idx] || {{ primary: '', secondary: '', badge: '', rgbHex: '#000000' }};
+        const key = layer.keys[idx] || {{ line1: '', line2: '', secondary: '', badge: '', rgbHex: '#000000' }};
         const x = c.x * UNIT;
         const y = c.y * UNIT;
         const r = c.r || 0;
         const cx = x + KEY_SIZE / 2;
         const cy = y + KEY_SIZE / 2;
 
+        // Accurate rotation pivot calculation
+        let pivotX = x;
+        let pivotY = y;
+        if (currentKb === 'glove80') {{
+          // In Glove80, left thumb keys pivot around rx=4, right thumb keys pivot around rx=14
+          pivotX = (c.rx !== undefined) ? c.rx * UNIT : x;
+          pivotY = (c.ry !== undefined) ? c.ry * UNIT : y;
+        }} else {{
+          // In Go60, thumb keys pivot around key top-left (c.x * UNIT, c.y * UNIT)
+          pivotX = (c.rx !== undefined) ? c.rx * UNIT : x;
+          pivotY = (c.ry !== undefined) ? c.ry * UNIT : y;
+        }}
+
         const isSelected = selectedKeyIdx === idx;
         const isMatched = searchQuery && (
-          key.primary.toLowerCase().includes(searchQuery) ||
-          key.secondary.toLowerCase().includes(searchQuery) ||
-          key.rawBinding.toLowerCase().includes(searchQuery) ||
-          key.tooltip.toLowerCase().includes(searchQuery)
+          (key.line1 && key.line1.toLowerCase().includes(searchQuery)) ||
+          (key.line2 && key.line2.toLowerCase().includes(searchQuery)) ||
+          (key.secondary && key.secondary.toLowerCase().includes(searchQuery)) ||
+          (key.rawBinding && key.rawBinding.toLowerCase().includes(searchQuery)) ||
+          (key.tooltip && key.tooltip.toLowerCase().includes(searchQuery))
         );
 
         let transClass = '';
-        if (key.primary === '▽') transClass = 'trans';
-        if (key.primary === '—') transClass = 'none';
+        if (key.line1 === '▽') transClass = 'trans';
+        if (key.line1 === '—') transClass = 'none';
 
-        // Check for homing keycaps (F and J on Base layer: keys 26 and 31 for Glove80)
+        // Correct Homing Dots: Glove80 keys 38 (F) & 41 (J); Go60 keys 28 (F) & 31 (J)
         let isHoming = false;
-        if (currentKb === 'glove80' && (idx === 26 || idx === 31)) isHoming = true;
-        if (currentKb === 'go60' && (idx === 16 || idx === 21)) isHoming = true;
+        if (currentKb === 'glove80' && (idx === 38 || idx === 41)) isHoming = true;
+        if (currentKb === 'go60' && (idx === 28 || idx === 31)) isHoming = true;
 
-        const rotAttr = r ? `transform="rotate(${{r}} ${{cx}} ${{cy}})"` : '';
-        const groupClass = `key-group ${{isSelected ? 'selected' : ''}} ${{isMatched ? 'matched' : ''}}`;
+        const hasLayerLink = key.targetLayer !== null && key.targetLayer !== undefined;
+        const rotAttr = r ? `transform="rotate(${{r}} ${{pivotX}} ${{pivotY}})"` : '';
+        const groupClass = `key-group ${{isSelected ? 'selected' : ''}} ${{isMatched ? 'matched' : ''}} ${{hasLayerLink ? 'has-layer-link' : ''}}`;
+
+        // Smart font sizing
+        let primaryFontSize = 13.5;
+        let primaryFontWeight = 700;
+        if (key.line2) {{
+          primaryFontSize = key.line1.length > 5 ? 8.5 : 9.5;
+        }} else if (key.line1.length > 6) {{
+          primaryFontSize = 9.5;
+          primaryFontWeight = 600;
+        }} else if (key.line1.length > 3) {{
+          primaryFontSize = 11;
+        }}
 
         html += `
-          <g class="${{groupClass}}" ${{rotAttr}} onclick="onKeyClick(${{idx}})" data-idx="${{idx}}">
-            <!-- RGB Glow -->
+          <g class="${{groupClass}}" ${{rotAttr}} onclick="onKeyClick(${{idx}})" onmouseenter="onKeyHover(${{idx}})" onmouseleave="onKeyLeave(${{idx}})" data-idx="${{idx}}">
+            <!-- RGB Glow border -->
             <rect class="key-glow" x="${{x-2}}" y="${{y-2}}" width="${{KEY_SIZE+4}}" height="${{KEY_SIZE+4}}" stroke="${{key.rgbHex}}" />
             
-            <!-- Keycap -->
+            <!-- Tactile Keycap -->
             <rect class="key-cap ${{transClass}}" x="${{x}}" y="${{y}}" width="${{KEY_SIZE}}" height="${{KEY_SIZE}}" />
 
-            <!-- Mod / Secondary (Top-Right) -->
-            ${{key.secondary ? `<text class="key-text-sec" x="${{x + KEY_SIZE - 5}}" y="${{y + 5}}">${{escapeHtml(key.secondary)}}</text>` : ''}}
+            <!-- Corner Secondary / Mod / Layer Indicator -->
+            ${{key.secondary ? `
+              <text class="${{hasLayerLink ? 'key-text-layer-link' : 'key-text-sec'}}" x="${{x + KEY_SIZE - 5}}" y="${{y + 4.5}}">${{escapeHtml(key.secondary)}}</text>
+            ` : ''}}
 
-            <!-- Badge (Top-Left) -->
-            ${{key.badge ? `<text class="key-badge badge-${{key.badgeType}}" x="${{x + 5}}" y="${{y + 5}}">${{escapeHtml(key.badge)}}</text>` : ''}}
+            <!-- Badge (Top-Left) - for TD or SYS only -->
+            ${{key.badge ? `
+              <text class="key-badge badge-${{key.badgeType}}" x="${{x + 5}}" y="${{y + 4.5}}">${{escapeHtml(key.badge)}}</text>
+            ` : ''}}
 
-            <!-- Primary Label (Center) -->
-            <text class="key-text-primary" x="${{cx}}" y="${{cy + (key.secondary || key.badge ? 3 : 0)}}">${{escapeHtml(key.primary)}}</text>
+            <!-- Primary Label (Centered, 1 or 2 lines) -->
+            ${{key.line2 ? `
+              <text class="key-text-primary" x="${{cx}}" y="${{cy - 5.5}}" font-size="${{primaryFontSize}}" font-weight="${{primaryFontWeight}}">${{escapeHtml(key.line1)}}</text>
+              <text class="key-text-primary" x="${{cx}}" y="${{cy + 7.5}}" font-size="${{primaryFontSize}}" font-weight="${{primaryFontWeight}}">${{escapeHtml(key.line2)}}</text>
+            ` : `
+              <text class="key-text-primary" x="${{cx}}" y="${{cy + (key.secondary ? 2.5 : 0)}}" font-size="${{primaryFontSize}}" font-weight="${{primaryFontWeight}}">${{escapeHtml(key.line1)}}</text>
+            `}}
 
-            <!-- Homing dot -->
-            ${{isHoming ? `<circle class="homing-dot" cx="${{cx}}" cy="${{y + KEY_SIZE - 6}}" r="1.8"/>` : ''}}
+            <!-- Tactile Homing Dot on F and J keys -->
+            ${{isHoming ? `<circle class="homing-dot" cx="${{cx}}" cy="${{y + KEY_SIZE - 6.5}}" r="1.8"/>` : ''}}
           </g>
         `;
       }});
@@ -1033,6 +1238,31 @@ def generate_html(data):
       selectedKeyIdx = idx;
       renderSvg();
       inspectKey(idx);
+
+      const kb = KEYBOARDS[currentKb];
+      const key = kb.layers[currentLayer].keys[idx];
+      // If key links to another layer, clicking it navigates directly to that layer!
+      if (key && key.targetLayer !== null && key.targetLayer !== undefined) {{
+        setLayer(key.targetLayer, true);
+      }}
+    }}
+
+    function onKeyHover(idx) {{
+      const kb = KEYBOARDS[currentKb];
+      const key = kb.layers[currentLayer].keys[idx];
+      if (key && key.targetLayer !== null && key.targetLayer !== undefined) {{
+        const targetTab = document.getElementById(`layer-tab-${{key.targetLayer}}`);
+        if (targetTab) targetTab.classList.add('target-pulse');
+      }}
+    }}
+
+    function onKeyLeave(idx) {{
+      const kb = KEYBOARDS[currentKb];
+      const key = kb.layers[currentLayer].keys[idx];
+      if (key && key.targetLayer !== null && key.targetLayer !== undefined) {{
+        const targetTab = document.getElementById(`layer-tab-${{key.targetLayer}}`);
+        if (targetTab) targetTab.classList.remove('target-pulse');
+      }}
     }}
 
     function inspectKey(idx) {{
@@ -1041,21 +1271,28 @@ def generate_html(data):
       const layer = kb.layers[currentLayer];
       const key = layer.keys[idx];
 
-      document.getElementById('insp-label').textContent = key.primary || '—';
-      
+      const fullLabel = key.line2 ? `${{key.line1}} ${{key.line2}}` : (key.line1 || '—');
+      document.getElementById('insp-label').textContent = fullLabel;
+
       const titleEl = document.getElementById('insp-title');
       const detailEl = document.getElementById('insp-detail');
 
       let rgbDesc = key.rgbToken !== '___' ? `RGB: <span style="color:${{key.rgbHex}}; font-weight:700;">${{key.rgbToken}}</span>` : 'RGB: Unlit';
 
-      titleEl.innerHTML = `<strong>${{coord.label}}</strong> (Key #${{idx}}) • Layer ${{currentLayer}}: <strong>${{layer.name}}</strong> • ${{rgbDesc}}`;
+      let layerJumpHtml = '';
+      if (key.targetLayer !== null && key.targetLayer !== undefined) {{
+        const targetName = kb.layers[key.targetLayer] ? kb.layers[key.targetLayer].name : `L${{key.targetLayer}}`;
+        layerJumpHtml = `<button class="jump-layer-btn" onclick="setLayer(${{key.targetLayer}}, true)">Go to ${{targetName}} →</button>`;
+      }}
+
+      titleEl.innerHTML = `<strong>${{coord.label}}</strong> (Key #${{idx}}) • Layer ${{currentLayer}}: <strong>${{layer.name}}</strong> • ${{rgbDesc}} ${{layerJumpHtml}}`;
       detailEl.innerHTML = `ZMK: <code style="color:var(--accent); background:#090d12; padding:2px 6px; border-radius:4px;">${{escapeHtml(key.rawBinding)}}</code> • ${{escapeHtml(key.tooltip)}}`;
     }}
 
     function resetInspector() {{
       document.getElementById('insp-label').textContent = '—';
-      document.getElementById('insp-title').textContent = 'Click or tap any key to inspect full details';
-      document.getElementById('insp-detail').textContent = 'Shortcuts: [0-9] Layer • [G] Glove80 • [O] Go60 • [R] Toggle RGB • [/] Search';
+      document.getElementById('insp-title').textContent = 'Click or tap any key to inspect full details or navigate layers';
+      document.getElementById('insp-detail').textContent = 'Shortcuts: [0-9] Layer • [G] Glove80 • [O] Go60 • [R] Toggle RGB • Click layer keys to switch';
     }}
 
     function handleSearch(val) {{
@@ -1091,17 +1328,17 @@ def main():
     print("Building MoErgo Layout Viewer...")
     data = build_data()
     html_content = generate_html(data)
-    
+
     out_path = os.path.join(BASE_DIR, 'viewer', 'index.html')
     with open(out_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
-    
+
     docs_dir = os.path.join(BASE_DIR, 'docs')
     os.makedirs(docs_dir, exist_ok=True)
     docs_path = os.path.join(docs_dir, 'index.html')
     with open(docs_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
-    
+
     size_kb = len(html_content.encode('utf-8')) / 1024
     print(f"Generated standalone viewer: {out_path} and {docs_path} ({size_kb:.1f} KB)")
 
