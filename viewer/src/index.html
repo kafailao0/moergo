@@ -19,6 +19,11 @@
     </div>
 
     <div class="controls">
+      <div class="btn-group">
+        <button class="btn active" id="btn-mode-inspect" onclick="setViewerMode('inspect')">Inspect</button>
+        <button class="btn btn-sim" id="btn-mode-sim" onclick="setViewerMode('simulate')">Simulate</button>
+      </div>
+
       <button class="back-layer-btn" id="btn-back-layer" onclick="returnToPreviousLayer()">
         ↩ Back to Base (Esc)
       </button>
@@ -42,6 +47,12 @@
   <div class="layer-bar" id="layer-tabs"></div>
 
   <main>
+    <div class="sim-banner" id="sim-banner">
+      <span>🕹️ Active Layer Stack:</span>
+      <span id="sim-stack-display"></span>
+      <button class="sim-reset-btn" onclick="resetSimStack()">⟲ Reset Stack</button>
+    </div>
+
     <div class="preview-banner" id="preview-banner">
       <span>👁️ Previewing Layer:</span>
       <span id="preview-layer-name" style="text-decoration: underline;">—</span>

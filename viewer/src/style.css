@@ -103,6 +103,11 @@
       font-weight: 700;
       box-shadow: 0 1px 3px rgba(0,0,0,0.3);
     }
+    .btn-sim.active {
+      background: #8957e5 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 10px rgba(137, 87, 229, 0.5) !important;
+    }
 
     .back-layer-btn {
       background: #238636;
@@ -210,6 +215,29 @@
       border-color: #7ee787 !important;
       box-shadow: 0 0 8px rgba(126, 231, 135, 0.5);
     }
+    .layer-btn.sim-active {
+      background: #1f6feb !important;
+      border-color: #58a6ff !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 8px rgba(88, 166, 255, 0.4);
+    }
+    .layer-btn.sim-active .idx {
+      background: rgba(0,0,0,0.3);
+      color: #fff;
+    }
+    .layer-btn.sim-momentary {
+      background: #9e6a03 !important;
+      border-color: #d29922 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 12px rgba(210, 153, 34, 0.7);
+      animation: tab-pulse 0.6s infinite alternate;
+    }
+    .sim-check-icon {
+      font-size: 10px;
+      font-weight: 900;
+      color: #3fb950;
+      margin-right: 2px;
+    }
 
     .preview-banner {
       position: absolute;
@@ -230,6 +258,49 @@
       z-index: 60;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       pointer-events: none;
+    }
+
+    .sim-banner {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(22, 27, 34, 0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid #8957e5;
+      color: #e6edf3;
+      padding: 5px 16px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 60;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    }
+    .sim-stack-tag {
+      background: rgba(137, 87, 229, 0.25);
+      border: 1px solid #8957e5;
+      color: #d2a8ff;
+      padding: 1px 8px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.74rem;
+    }
+    .sim-reset-btn {
+      background: #21262d;
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+    .sim-reset-btn:hover {
+      color: var(--text-bright);
+      background: #30363d;
     }
 
     main {
