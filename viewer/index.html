@@ -11,6 +11,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="MoErgo Layout">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
   <style>
@@ -70,9 +71,11 @@
       gap: 10px;
     }
     .brand-icon {
-      width: 26px;
-      height: 26px;
-      fill: var(--accent);
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
     }
     .brand-title {
       font-size: 1.15rem;
@@ -777,7 +780,7 @@
       }
       .brand { gap: 6px; }
       .brand-title { font-size: 0.92rem; }
-      .brand-icon { width: 20px; height: 20px; }
+      .brand-icon { width: 22px; height: 22px; border-radius: 5px; }
       .brand-sub { font-size: 0.7rem; padding: 1px 6px; }
       .controls { gap: 6px; }
       .btn { padding: 4px 8px; font-size: 0.72rem; }
@@ -847,8 +850,9 @@
         gap: 6px;
       }
       .brand-icon {
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
       }
       .brand-title {
         font-size: 0.84rem;
@@ -989,15 +993,52 @@
         min-height: 260px;
       }
     }
-  </style>
 
 </style>
 </head>
 <body>
   <header>
     <div class="brand">
-      <svg class="brand-icon" viewBox="0 0 24 24">
-        <path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/>
+      <svg class="brand-icon" viewBox="0 0 100 100" aria-label="MoErgo Layout Logo">
+        <rect x="1" y="1" width="98" height="98" rx="22" fill="#0d1117" stroke="#30363d" stroke-width="2"/>
+        <g transform="translate(14, 22) scale(7.9)">
+          <path d="M -0.4,0.3 Q -0.4,-0.4 0.4,-0.4 L 1.5,-0.4 L 1.8,-0.5 Q 2.0,-0.6 2.3,-0.6 L 8.0,-0.6 Q 8.6,-0.6 8.6,0.0 L 8.6,3.8 L 8.5,5.6 Q 8.4,6.0 8.0,6.0 L 5.0,5.8 L 1.8,4.8 Q 1.5,4.7 1.2,4.6 L -0.2,4.4 Q -0.4,4.3 -0.4,3.9 Z"
+                fill="#1c2128" stroke="#38424d" stroke-width="0.35" stroke-linejoin="round"/>
+          <circle cx="6.8" cy="2.0" r="1.15" fill="#161b22" stroke="#30363d" stroke-width="0.12"/>
+          <circle cx="6.8" cy="2.0" r="0.85" fill="#12151a" stroke="#21262d" stroke-width="0.08"/>
+          <circle cx="6.8" cy="0.8" r="0.08" fill="#484f58"/>
+          <circle cx="6.8" cy="3.2" r="0.08" fill="#484f58"/>
+          <rect x="0" y="0.5" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="0" y="1.5" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="0" y="2.5" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="0" y="3.5" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="1" y="0.5" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="1" y="1.5" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="1" y="2.5" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="1" y="3.5" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="2" y="0" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="2" y="1" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="2" y="2" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="2" y="3" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="2" y="4" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="3" y="0" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="3" y="1" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="3" y="2" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="3" y="3" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="3" y="4" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="4" y="0" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="4" y="1" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="4" y="2" width="0.88" height="0.88" rx="0.22" fill="#00f5d4"/>
+          <rect x="4" y="3" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="4" y="4" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="5" y="0" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="5" y="1" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="5" y="2" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="5" y="3" width="0.88" height="0.88" rx="0.22" fill="#388bfd"/>
+          <rect x="5.2" y="4.1" width="0.88" height="0.88" rx="0.22" fill="#ff7b25" transform="rotate(12.5 5.64 4.54)"/>
+          <rect x="6.4" y="4.4" width="0.88" height="0.88" rx="0.22" fill="#ff7b25" transform="rotate(25.0 6.84 4.84)"/>
+          <rect x="7.5" y="4.95" width="0.88" height="0.88" rx="0.22" fill="#ff7b25" transform="rotate(37.0 7.94 5.39)"/>
+        </g>
       </svg>
       <div>
         <span class="brand-title">MoErgo Layout</span>
