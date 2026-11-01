@@ -13,9 +13,12 @@ Unified ZMK configuration repository for both the **MoErgo Glove80** and **MoErg
 
 The repository includes a web-based visualizer and simulator for exploring layers, composite layer stacks, tap-dances, and per-key RGB underglow:
 
+![MoErgo Layout Visualizer Preview](docs/screenshots/02_glove80_symbol_nav_rgb.png)
+
 - **Build viewer:** `python3 scripts/build_viewer.py`
 - **Serve locally:** `python3 viewer/serve.py 8088` (accessible at `http://localhost:8088/`)
-- For feature details and shortcuts, see [`viewer/README.md`](./viewer/README.md).
+- **Generate screenshots:** `python3 scripts/capture_screenshots.py`
+- For full feature demonstrations, screenshots gallery, and shortcuts, see [`viewer/README.md`](./viewer/README.md).
 
 ## Documentation & Developer Guidelines
 

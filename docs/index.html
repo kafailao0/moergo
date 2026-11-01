@@ -856,12 +856,34 @@ function readUrlParams() {
   if (modeParam && ['simulate', 'inspect'].includes(modeParam.toLowerCase())) {
     viewerMode = modeParam.toLowerCase();
   }
+  const layerParam = params.get('layer');
+  if (layerParam !== null && KEYBOARDS && KEYBOARDS[currentKb]) {
+    const kb = KEYBOARDS[currentKb];
+    let lIdx = parseInt(layerParam, 10);
+    if (isNaN(lIdx)) {
+      lIdx = kb.layers.findIndex(l => l.name.toLowerCase() === layerParam.toLowerCase());
+    }
+    if (lIdx >= 0 && lIdx < kb.layers.length) {
+      if (viewerMode === 'simulate') {
+        if (!simStack.includes(lIdx)) simStack.push(lIdx);
+      } else {
+        currentLayer = lIdx;
+      }
+    }
+  }
 }
 
 function updateUrlParams() {
   const params = new URLSearchParams();
   params.set('kb', currentKb);
   params.set('mode', viewerMode);
+  if (viewerMode === 'inspect') {
+    if (currentLayer !== 0) params.set('layer', currentLayer);
+  } else if (viewerMode === 'simulate') {
+    if (simStack.length > 1) {
+      params.set('layer', simStack[simStack.length - 1]);
+    }
+  }
   const qs = params.toString();
   const newUrl = window.location.pathname + (qs ? '?' + qs : '');
   window.history.replaceState(null, '', newUrl);
@@ -885,7 +907,44 @@ async function init() {
   renderSvg();
   updateHeader();
   resetInspector();
-  triggerRgbFade();
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const rgbParam = urlParams.get('rgb');
+  if (rgbParam === 'on' || rgbParam === 'keep' || rgbParam === '1') {
+    updateRgbUi(true);
+    if (rgbFadeTimer) {
+      clearTimeout(rgbFadeTimer);
+      rgbFadeTimer = null;
+    }
+  } else {
+    triggerRgbFade();
+  }
+
+  const inspParam = urlParams.get('inspect');
+  if (inspParam !== null) {
+    const idx = parseInt(inspParam, 10);
+    if (!isNaN(idx)) {
+      inspectKey(idx);
+      const keyG = document.querySelector(`.key-group[data-idx="${idx}"] rect.key-cap`);
+      if (keyG) {
+        keyG.style.stroke = 'var(--accent)';
+        keyG.style.strokeWidth = '2px';
+      }
+    }
+  }
+
+  const searchParam = urlParams.get('search');
+  if (searchParam) {
+    const sInput = document.getElementById('search-input');
+    if (sInput) sInput.value = searchParam;
+    handleSearch(searchParam);
+  }
+
+  const modalParam = urlParams.get('modal');
+  if (modalParam === 'colors' || urlParams.get('legend') === '1') {
+    toggleLegendModal(true);
+  }
+
   updateUrlParams();
 
   window.addEventListener('keydown', (e) => {
