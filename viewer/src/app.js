@@ -156,6 +156,18 @@ async function init() {
     toggleDrawer(true);
   }
 
+  // Auto-collapse canvas widget on landscape mobile to keep right keys unobstructed
+  if (window.innerHeight <= 450 && window.innerWidth > window.innerHeight) {
+    toggleCanvasWidget(true);
+  }
+
+  const toolsParam = urlParams.get('tools');
+  if (toolsParam === 'open' || toolsParam === '1') {
+    toggleCanvasWidget(false);
+  } else if (toolsParam === '0' || toolsParam === 'collapsed') {
+    toggleCanvasWidget(true);
+  }
+
   updateUrlParams();
 
   window.addEventListener('keydown', (e) => {
@@ -198,6 +210,8 @@ async function init() {
       toggleZenMode();
     } else if (e.key === 'i' || e.key === 'I') {
       toggleDrawer();
+    } else if (e.key === 't' || e.key === 'T') {
+      toggleCanvasWidget();
     } else if (e.key === '/') {
       e.preventDefault();
       document.getElementById('search-input').focus();
@@ -889,6 +903,23 @@ function toggleDrawer(forceState) {
   const btn = document.getElementById('btn-drawer-toggle');
   if (btn) {
     btn.title = drawerCollapsed ? 'Expand Key Inspector (I)' : 'Collapse Key Inspector (I)';
+  }
+}
+
+let canvasWidgetCollapsed = false;
+
+function toggleCanvasWidget(forceState) {
+  const widget = document.getElementById('canvas-widget');
+  if (!widget) return;
+  if (typeof forceState === 'boolean') {
+    canvasWidgetCollapsed = forceState;
+  } else {
+    canvasWidgetCollapsed = !canvasWidgetCollapsed;
+  }
+  widget.classList.toggle('collapsed', canvasWidgetCollapsed);
+  const btn = document.getElementById('btn-widget-toggle');
+  if (btn) {
+    btn.title = canvasWidgetCollapsed ? 'Expand Canvas Tools (T)' : 'Collapse Canvas Tools (T)';
   }
 }
 

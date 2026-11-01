@@ -639,11 +639,37 @@
       border: 1px solid var(--surface-border);
       border-radius: 8px;
       display: flex;
-      flex-direction: column;
-      padding: 3px;
+      flex-direction: row;
+      align-items: center;
+      padding: 3px 5px;
       gap: 3px;
       z-index: 50;
       box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+      opacity: 0.65;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .canvas-widget:hover,
+    .canvas-widget:focus-within {
+      opacity: 1;
+    }
+    .canvas-tools-group {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 3px;
+    }
+    .canvas-widget.collapsed .canvas-tools-group {
+      display: none;
+    }
+    .widget-toggle-btn {
+      color: var(--text-muted);
+    }
+    .widget-toggle-btn:hover {
+      color: var(--accent);
+    }
+    .canvas-widget.collapsed .widget-toggle-btn {
+      color: var(--accent);
+      background: rgba(88, 166, 255, 0.15);
     }
     .canvas-btn {
       background: transparent;
@@ -675,9 +701,10 @@
       opacity: 0.6;
     }
     .canvas-divider {
-      height: 1px;
+      width: 1px;
+      height: 18px;
       background: var(--surface-border);
-      margin: 2px 4px;
+      margin: 1px 3px;
     }
 
     .zen-exit-btn {
@@ -877,14 +904,19 @@
       }
       .canvas-widget {
         bottom: 6px;
-        right: 6px;
-        padding: 2px;
+        right: 8px;
+        padding: 2px 4px;
         gap: 2px;
+        border-radius: 6px;
       }
       .canvas-btn {
         width: 26px;
         height: 26px;
         font-size: 0.85rem;
+      }
+      .canvas-divider {
+        height: 15px;
+        margin: 1px 2px;
       }
 
       .drawer {
