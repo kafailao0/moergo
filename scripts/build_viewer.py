@@ -183,7 +183,42 @@ def format_layer_badge(name):
     }
     return abbrevs.get(name, name)
 
-def parse_key_data(key_obj, layer_names):
+def parse_custom_behavior_annotations(dts_text):
+    """
+    Parses doc-comment annotations from custom_defined_behaviors or keymap behaviors.
+    Format example:
+      /* @viewer: Copy | Paste | @badge: TD | @tooltip: Tap Dance: 1x Ctrl+C • 2x Ctrl+V */
+      td_copy_paste_pc: td_copy_paste_pc { ... };
+    """
+    meta = {}
+    if not dts_text:
+        return meta
+    pattern = re.compile(r'/\*\s*@(?:viewer|label)\b(.*?)\*/\s*([a-zA-Z0-9_]+)\s*:', re.DOTALL)
+    for m in pattern.finditer(dts_text):
+        comment_body = m.group(1).strip()
+        beh_name = m.group(2).strip()
+        info = {'name': beh_name}
+        parts = re.split(r'\|\s*@', comment_body)
+        for idx, part in enumerate(parts):
+            part = part.strip()
+            if idx == 0:
+                val = re.sub(r'^(?:label|viewer)?\s*:\s*', '', part).strip()
+                labels = [l.strip() for l in re.split(r'[|/]', val)]
+                info['line1'] = labels[0] if len(labels) > 0 else ''
+                info['line2'] = labels[1] if len(labels) > 1 else ''
+            else:
+                if ':' in part:
+                    k, v = part.split(':', 1)
+                    k = k.strip()
+                    v = v.strip()
+                    if k == 'target_layer' and v.isdigit():
+                        info[k] = int(v)
+                    else:
+                        info[k] = v
+        meta[beh_name] = info
+    return meta
+
+def parse_key_data(key_obj, layer_names, custom_meta=None):
     beh = str(key_obj.get('value', ''))
     raw_params = key_obj.get('params', [])
     formatted_params = [format_param_recursive(p) for p in raw_params]
@@ -280,7 +315,17 @@ def parse_key_data(key_obj, layer_names):
     elif beh == 'Custom':
         custom_str = str(raw_params[0].get('value', '')) if raw_params else ''
         raw_binding = custom_str
-        if 'td_caps' in custom_str:
+        clean_name = custom_str.lstrip('&')
+        if custom_meta and clean_name in custom_meta:
+            m = custom_meta[clean_name]
+            line1 = m.get('line1', clean_name)
+            line2 = m.get('line2', '')
+            badge = m.get('badge', 'TD')
+            badge_type = m.get('badge_type', 'td')
+            tooltip = m.get('tooltip', f"Custom Behavior: {clean_name}")
+            if 'target_layer' in m:
+                target_layer = m['target_layer']
+        elif 'td_caps' in custom_str:
             line1 = 'Caps'
             secondary = ''
             badge = 'TD'
@@ -296,7 +341,7 @@ def parse_key_data(key_obj, layer_names):
             tooltip = 'Tap Dance: 1x Spotlight (⌘ Space) • 2x Toggle Mouse Layer'
         elif 'td_copy_paste_pc' in custom_str:
             line1 = 'Copy'
-            line2 = 'Paste (PC)'
+            line2 = 'Paste'
             badge = 'TD'
             badge_type = 'td'
             tooltip = 'Tap Dance: 1x Ctrl+C (Copy) • 2x Ctrl+V (Paste)'
@@ -443,13 +488,16 @@ def build_data():
         }
     }
 
+    g80_custom_meta = parse_custom_behavior_annotations(g80_json.get('custom_defined_behaviors', ''))
+    go60_custom_meta = parse_custom_behavior_annotations(go60_json.get('custom_defined_behaviors', ''))
+
     # Process Glove80 layers
     for layer_idx, layer_name in enumerate(keyboards['glove80']['layerNames']):
         raw_layer = g80_json['layers'][layer_idx]
         rgb_tokens = g80_rgb.get(layer_name, ['___'] * 80)
         parsed_keys = []
         for key_idx, key_obj in enumerate(raw_layer):
-            kdata = parse_key_data(key_obj, keyboards['glove80']['layerNames'])
+            kdata = parse_key_data(key_obj, keyboards['glove80']['layerNames'], g80_custom_meta)
             rgb_token = rgb_tokens[key_idx] if key_idx < len(rgb_tokens) else '___'
             rgb_hex = g80_colors.get(rgb_token, '#000000')
             kdata['rgbToken'] = rgb_token
@@ -466,7 +514,7 @@ def build_data():
         rgb_tokens = go60_rgb.get(layer_name, ['___'] * 60)
         parsed_keys = []
         for key_idx, key_obj in enumerate(raw_layer):
-            kdata = parse_key_data(key_obj, keyboards['go60']['layerNames'])
+            kdata = parse_key_data(key_obj, keyboards['go60']['layerNames'], go60_custom_meta)
             rgb_token = rgb_tokens[key_idx] if key_idx < len(rgb_tokens) else '___'
             rgb_hex = go60_colors.get(rgb_token, '#000000')
             kdata['rgbToken'] = rgb_token
