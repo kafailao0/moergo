@@ -351,11 +351,9 @@
       stroke: var(--accent);
       stroke-width: 1.8;
     }
-    .key-group.selected .key-cap {
-      fill: #223247;
-      stroke: #58a6ff;
-      stroke-width: 2.2;
-      filter: drop-shadow(0 0 6px rgba(88,166,255,0.6));
+    .key-group:active .key-cap {
+      filter: brightness(1.35);
+      stroke: var(--accent);
     }
     .key-group.matched .key-cap {
       stroke: #f0883e !important;

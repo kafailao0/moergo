@@ -8,7 +8,6 @@ let momentaryHoverTriggerIdx = null;
 let rgbFadeTimer = null;
 let layerHistory = [];
 let rgbEnabled = true;
-let selectedKeyIdx = null;
 let currentScale = 1.0;
 let searchQuery = '';
 
@@ -99,7 +98,6 @@ function init() {
       } else if (layerHistory.length > 0) {
         returnToPreviousLayer();
       } else {
-        selectedKeyIdx = null;
         handleSearch('');
         renderSvg();
         resetInspector();
@@ -186,7 +184,6 @@ function setViewerMode(mode) {
   }
 
   deactivateHoverMomentary();
-  selectedKeyIdx = null;
   renderLayerTabs();
   renderSvg();
   resetInspector();
@@ -202,7 +199,6 @@ function switchKeyboard(kb) {
   momentaryHoverLayer = null;
   momentaryHoverTriggerIdx = null;
   layerHistory = [];
-  selectedKeyIdx = null;
   document.getElementById('btn-glove80').classList.toggle('active', kb === 'glove80');
   document.getElementById('btn-go60').classList.toggle('active', kb === 'go60');
   updateHeader();
@@ -332,7 +328,6 @@ function resetSimStack() {
   updateLayerTabStates();
   renderSvg();
   triggerRgbFade();
-  if (selectedKeyIdx !== null) inspectKey(selectedKeyIdx);
   updateUrlParams();
 }
 
@@ -357,7 +352,6 @@ function toggleSimLayer(layerIdx) {
   updateLayerTabStates();
   renderSvg();
   triggerRgbFade();
-  if (selectedKeyIdx !== null) inspectKey(selectedKeyIdx);
   updateUrlParams();
 }
 
@@ -440,9 +434,6 @@ function setLayer(idx, fromKeyLink = false) {
   updateBackButton();
   updateLayerTabStates();
   renderSvg();
-  if (selectedKeyIdx !== null) {
-    inspectKey(selectedKeyIdx);
-  }
   updateUrlParams();
 }
 
@@ -453,7 +444,6 @@ function returnToPreviousLayer() {
     updateBackButton();
     updateLayerTabStates();
     renderSvg();
-    if (selectedKeyIdx !== null) inspectKey(selectedKeyIdx);
   } else {
     setLayer(0);
   }
@@ -533,7 +523,6 @@ function renderSvg() {
     let pivotX = (c.rx !== undefined) ? c.rx * UNIT : x;
     let pivotY = (c.ry !== undefined) ? c.ry * UNIT : y;
 
-    const isSelected = selectedKeyIdx === idx;
     const isMatched = searchQuery && (
       (key.line1 && key.line1.toLowerCase().includes(searchQuery)) ||
       (key.line2 && key.line2.toLowerCase().includes(searchQuery)) ||
@@ -553,7 +542,7 @@ function renderSvg() {
 
     const hasLayerLink = key.targetLayer !== null && key.targetLayer !== undefined;
     const rotAttr = r ? `transform="rotate(${r} ${pivotX} ${pivotY})"` : '';
-    const groupClass = `key-group ${isSelected ? 'selected' : ''} ${isMatched ? 'matched' : ''} ${hasLayerLink ? 'has-layer-link' : ''} ${isPassThrough ? 'is-pass-through' : ''}`;
+    const groupClass = `key-group ${isMatched ? 'matched' : ''} ${hasLayerLink ? 'has-layer-link' : ''} ${isPassThrough ? 'is-pass-through' : ''}`;
 
     let primaryFontSize = 13.5;
     let primaryFontWeight = 700;
@@ -618,8 +607,6 @@ function onKeyClick(idx) {
       setLayer(key.targetLayer, true);
       return;
     }
-    selectedKeyIdx = idx;
-    renderSvg();
     inspectKey(idx);
   } else {
     // In Simulation Mode:
@@ -640,7 +627,6 @@ function onKeyClick(idx) {
       updateLayerTabStates();
       renderSvg();
       triggerRgbFade();
-      selectedKeyIdx = idx;
       inspectKey(idx);
       updateUrlParams();
       return;
@@ -648,13 +634,10 @@ function onKeyClick(idx) {
 
     if (key.targetLayer !== null && key.targetLayer !== undefined) {
       toggleSimLayer(key.targetLayer);
-      selectedKeyIdx = idx;
       inspectKey(idx);
       return;
     }
 
-    selectedKeyIdx = idx;
-    renderSvg();
     inspectKey(idx);
   }
 }
