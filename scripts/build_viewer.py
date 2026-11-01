@@ -1096,8 +1096,14 @@ def main():
     with open(out_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
     
+    docs_dir = os.path.join(BASE_DIR, 'docs')
+    os.makedirs(docs_dir, exist_ok=True)
+    docs_path = os.path.join(docs_dir, 'index.html')
+    with open(docs_path, 'w', encoding='utf-8') as f:
+        f.write(html_content)
+    
     size_kb = len(html_content.encode('utf-8')) / 1024
-    print(f"Generated standalone viewer: {out_path} ({size_kb:.1f} KB)")
+    print(f"Generated standalone viewer: {out_path} and {docs_path} ({size_kb:.1f} KB)")
 
 if __name__ == '__main__':
     main()
