@@ -22,6 +22,7 @@ Whenever modifying keyboard layouts, follow these steps sequentially:
 
 ### Step 1: Update the Keymap File (`*.keymap`)
 - Target: `glove80/config/glove80.keymap` or `go60/config/go60.keymap`.
+- Update the layout version in the header comment (e.g., `Layout: Kelvin's Go60 layout v<N>`), incrementing `<N>` after every change.
 - Update custom behaviors (e.g., tap dances, mod-taps, combos) in `/ { behaviors { ... } };`.
 - Update key bindings in `/ { keymap { ... } };` across all relevant layers (`layer_Base`, `layer_PC`, `layer_Gaming`, `layer_SymbolNav`, `layer_Keypad`, etc.).
 
@@ -43,6 +44,7 @@ Whenever modifying keyboard layouts, follow these steps sequentially:
 ### Step 3: Synchronize Layout Editor JSON (`*.json`)
 - Target: `glove80/config/glove80.json` or `go60/config/go60.json`.
 - Keep the MoErgo Layout Editor JSON files synchronized with `.keymap`:
+  - Update the versioned title in `"title"` and the top-level `"notes"` header (e.g., `Kelvin's Go60 layout v<N>`), matching the incremented version in `.keymap`.
   - Update custom behaviors in `custom_behaviors`.
   - Update the layer arrays in `layers`.
   - Update the documentation in the top-level `"notes"` field summarizing new features and layer changes.
