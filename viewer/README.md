@@ -53,9 +53,15 @@ Interactive web-based layout viewer and firmware simulator for the **MoErgo Glov
 - **Doc-Comment Annotations:** Custom behaviors in `custom_defined_behaviors` can be annotated with `/* @viewer: Line1 | Line2 | @badge: TD | @tooltip: ... */` to customize keycap presentation without modifying Python scripts.
 - **Auto-Derivation:** Custom tap dances without explicit comments automatically derive multi-step labels and tooltips directly from their ZMK `bindings = <...>` definitions.
 
-### 6. Search & Keyboard Shortcuts
+### 6. Mobile Landscape & Focus Mode (Zen Mode)
+- **Compact Landscape View:** Automatically compacts the header (30px), prevents layer tab wrapping, and collapses the key inspector into a single-line status bar (24px) when viewed in landscape on smartphones and small viewports.
+- **Scroll-to-Collapse Address Bar:** On mobile touch devices, document scrolling is enabled so swiping upward smoothly scrolls the top logo bar out of view, triggers mobile browser auto-hiding of the native address/navigation bar, and docks the layer tabs to the top edge (`position: sticky`).
+- **Focus / Fullscreen Mode (`[F]` or `⛶`):** Toggles Zen mode, hiding all header/footer chrome and requesting native hardware fullscreen on supported devices. The keyboard layout expands to fill over 90% of the screen.
+- **Collapsible Inspector (`[I]` or `▼`/`▲`):** Toggle the key inspector drawer between full detail mode, compact single-line mode, or collapsed.
+
+### 7. Search & Keyboard Shortcuts
 - Key search (`/` shortcut): Highlights matching keys across the keyboard layout.
-- Fast keyboard shortcuts: `[0-9]` toggle layers, `[M]` toggle mode, `[G]` Glove80, `[O]` Go60, `[C]` Color legend, `[Esc]` reset.
+- Fast keyboard shortcuts: `[0-9]` toggle layers, `[M]` toggle mode, `[G]` Glove80, `[O]` Go60, `[C]` Color legend, `[F]` Focus/Fullscreen mode, `[I]` Toggle inspector drawer, `[Esc]` reset stack or exit Focus mode.
 
 ![Keycode Search and Cross-Layout Highlighting](../docs/screenshots/06_search_and_filter.png)
 

@@ -469,6 +469,49 @@
       box-shadow: 0 -4px 12px rgba(0,0,0,0.25);
       box-sizing: border-box;
       overflow: hidden;
+      transition: height 0.18s ease, min-height 0.18s ease, max-height 0.18s ease, padding 0.18s ease;
+    }
+    .drawer.collapsed {
+      height: 28px;
+      min-height: 28px;
+      max-height: 28px;
+      padding: 2px 14px;
+    }
+    .drawer.collapsed #insp-detail {
+      display: none;
+    }
+    .drawer.collapsed .key-pill {
+      padding: 1px 6px;
+    }
+    .drawer.collapsed .key-pill-label {
+      font-size: 0.85rem;
+    }
+    .drawer.collapsed .key-meta {
+      font-size: 0.74rem;
+      line-height: 1.2;
+    }
+    .drawer-toggle-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-left: auto;
+      transition: all 0.15s ease;
+    }
+    .drawer-toggle-btn:hover {
+      background: #21262d;
+      color: var(--text-bright);
+      border-color: var(--surface-border);
+    }
+    .drawer.collapsed .drawer-toggle-icon {
+      transform: rotate(180deg);
     }
 
     .inspector {
@@ -629,18 +672,74 @@
       background: #30363d;
       color: #fff;
     }
-    .canvas-btn.active#btn-rgb-toggle {
+    .canvas-btn.active#btn-rgb-toggle,
+    .canvas-btn.active#btn-zen {
       color: #58a6ff;
       background: rgba(88, 166, 255, 0.2);
     }
-    .canvas-btn#btn-rgb-toggle:not(.active) {
+    .canvas-btn#btn-rgb-toggle:not(.active),
+    .canvas-btn#btn-zen:not(.active) {
       color: var(--text-muted);
-      opacity: 0.45;
+      opacity: 0.6;
     }
     .canvas-divider {
       height: 1px;
       background: var(--surface-border);
       margin: 2px 4px;
+    }
+
+    .zen-exit-btn {
+      display: none;
+      position: fixed;
+      top: 10px;
+      right: 12px;
+      background: rgba(22, 27, 34, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--surface-border);
+      color: var(--text-bright);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      z-index: 200;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+    .zen-exit-btn:hover {
+      background: #30363d;
+      color: #58a6ff;
+    }
+
+    body.zen-mode header {
+      display: none !important;
+    }
+    body.zen-mode .drawer {
+      display: none !important;
+    }
+    body.zen-mode .zen-exit-btn {
+      display: flex;
+      align-items: center;
+    }
+    body.zen-mode .layer-bar {
+      position: fixed;
+      top: 8px;
+      left: 12px;
+      transform: none;
+      z-index: 150;
+      border-radius: 20px;
+      background: rgba(17, 21, 28, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 3px 8px;
+      border: 1px solid var(--surface-border);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+      max-width: calc(100vw - 140px);
+    }
+    body.zen-mode main {
+      height: 100%;
+      padding: 2px;
     }
 
     @media (max-width: 768px) {
@@ -660,8 +759,9 @@
       .layer-bar {
         padding: 5px 8px;
         gap: 4px;
-        flex-wrap: wrap;
-        overflow-x: visible;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: thin;
       }
       .layer-btn {
         padding: 3px 8px;
@@ -705,6 +805,155 @@
         width: 28px;
         height: 28px;
         font-size: 0.9rem;
+      }
+    }
+
+    /* Landscape mobile & short viewport optimization */
+    @media (max-height: 520px) {
+      header {
+        padding: 3px 10px;
+        gap: 6px;
+        min-height: 30px;
+      }
+      .brand {
+        gap: 6px;
+      }
+      .brand-icon {
+        width: 18px;
+        height: 18px;
+      }
+      .brand-title {
+        font-size: 0.84rem;
+      }
+      .brand-sub {
+        display: none;
+      }
+      .controls {
+        gap: 6px;
+      }
+      .btn {
+        padding: 2px 7px;
+        font-size: 0.7rem;
+      }
+      .back-layer-btn {
+        padding: 2px 7px;
+        font-size: 0.7rem;
+      }
+      .search-box input {
+        width: 65px;
+        padding: 3px 6px 3px 22px;
+        font-size: 0.7rem;
+        height: 24px;
+      }
+      .search-box input:focus {
+        width: 110px;
+      }
+      .search-icon {
+        width: 11px;
+        height: 11px;
+        left: 6px;
+      }
+
+      .layer-bar {
+        padding: 2px 8px;
+        gap: 4px;
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        scrollbar-width: thin;
+      }
+      .layer-btn {
+        padding: 2px 6px;
+        font-size: 0.7rem;
+        height: 22px;
+        border-radius: 4px;
+      }
+      .layer-btn .idx {
+        font-size: 0.62rem;
+        padding: 0 3px;
+      }
+      .sim-reset-tab-btn {
+        padding: 2px 6px;
+        font-size: 0.7rem;
+        height: 22px;
+      }
+
+      main {
+        padding: 2px 6px;
+      }
+      .viewport-container {
+        max-width: 100%;
+      }
+      .canvas-widget {
+        bottom: 6px;
+        right: 6px;
+        padding: 2px;
+        gap: 2px;
+      }
+      .canvas-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 0.85rem;
+      }
+
+      .drawer {
+        padding: 2px 10px;
+        height: 26px;
+        min-height: 26px;
+        max-height: 26px;
+      }
+      .drawer #insp-detail {
+        display: none;
+      }
+      .drawer .key-pill {
+        padding: 1px 6px;
+      }
+      .drawer .key-pill-label {
+        font-size: 0.82rem;
+      }
+      .drawer .key-meta {
+        font-size: 0.72rem;
+        line-height: 1.2;
+      }
+      .drawer-toggle-btn {
+        width: 22px;
+        height: 22px;
+      }
+      .drawer:not(.collapsed) {
+        height: 44px;
+        min-height: 44px;
+        max-height: 44px;
+      }
+      .drawer:not(.collapsed) #insp-detail {
+        display: block;
+        font-size: 0.68rem;
+      }
+    }
+
+    /* Touchscreen landscape: enable document scroll-to-collapse for mobile address bars */
+    @media (hover: none) and (pointer: coarse) and (max-height: 520px) {
+      html {
+        height: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      body {
+        height: auto;
+        min-height: calc(100dvh + 50px);
+        overflow-y: visible;
+        overflow-x: hidden;
+      }
+      header {
+        position: relative;
+        flex-shrink: 0;
+      }
+      .layer-bar {
+        position: sticky;
+        top: 0;
+        z-index: 80;
+      }
+      main {
+        height: calc(100dvh - 28px);
+        min-height: 260px;
       }
     }
   </style>
@@ -760,13 +1009,22 @@
         </svg>
       </button>
       <div class="canvas-divider"></div>
+      <button class="canvas-btn" id="btn-zen" onclick="toggleZenMode()" title="Focus / Fullscreen View (F)">
+        <svg class="canvas-icon" viewBox="0 0 24 24" width="16" height="16">
+          <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+        </svg>
+      </button>
       <button class="canvas-btn" title="Zoom In" onclick="zoom(1.15)">+</button>
       <button class="canvas-btn" title="Zoom Out" onclick="zoom(0.85)">−</button>
       <button class="canvas-btn" title="Reset Fit" onclick="resetZoom()">⟲</button>
     </div>
   </main>
 
-  <div class="drawer">
+  <button class="zen-exit-btn" id="btn-zen-exit" onclick="toggleZenMode()" title="Exit Full View (Esc or F)">
+    ✕ Exit Full View
+  </button>
+
+  <div class="drawer" id="main-drawer">
     <div class="inspector" id="key-inspector">
       <div class="key-pill">
         <span class="key-pill-label" id="insp-label">—</span>
@@ -776,6 +1034,11 @@
         <div id="insp-detail" style="color: var(--text-muted); font-size: 0.75rem;">Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [C] Color Guide • [Esc] Reset Stack</div>
       </div>
     </div>
+    <button class="drawer-toggle-btn" id="btn-drawer-toggle" onclick="toggleDrawer()" title="Collapse / Expand Key Inspector (I)">
+      <svg class="drawer-toggle-icon" viewBox="0 0 24 24" width="16" height="16">
+        <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+      </svg>
+    </button>
   </div>
 
   <div id="legend-modal" class="modal-backdrop" onclick="toggleLegendModal(false)" style="display:none;">
@@ -874,6 +1137,10 @@ function readUrlParams() {
       }
     }
   }
+  const zenParam = params.get('zen');
+  if (zenParam === '1' || zenParam === 'true') {
+    toggleZenMode();
+  }
 }
 
 function updateUrlParams() {
@@ -948,6 +1215,11 @@ async function init() {
     toggleLegendModal(true);
   }
 
+  // Auto-collapse inspector drawer on landscape mobile to maximize layout view
+  if (window.innerHeight <= 520 && window.innerWidth > window.innerHeight) {
+    toggleDrawer(true);
+  }
+
   updateUrlParams();
 
   window.addEventListener('keydown', (e) => {
@@ -986,11 +1258,17 @@ async function init() {
       setViewerMode(viewerMode === 'inspect' ? 'simulate' : 'inspect');
     } else if (e.key === 'c' || e.key === 'C') {
       toggleLegendModal();
+    } else if (e.key === 'f' || e.key === 'F') {
+      toggleZenMode();
+    } else if (e.key === 'i' || e.key === 'I') {
+      toggleDrawer();
     } else if (e.key === '/') {
       e.preventDefault();
       document.getElementById('search-input').focus();
     } else if (e.key === 'Escape') {
-      if (viewerMode === 'simulate') {
+      if (document.body.classList.contains('zen-mode')) {
+        toggleZenMode();
+      } else if (viewerMode === 'simulate') {
         resetSimStack();
       } else if (layerHistory.length > 0) {
         returnToPreviousLayer();
@@ -1660,6 +1938,60 @@ function resetZoom() {
   const svg = document.getElementById('keyboard-svg');
   svg.style.transform = 'scale(1)';
 }
+
+let drawerCollapsed = false;
+
+function toggleDrawer(forceState) {
+  const drawer = document.getElementById('main-drawer');
+  if (!drawer) return;
+  if (typeof forceState === 'boolean') {
+    drawerCollapsed = forceState;
+  } else {
+    drawerCollapsed = !drawerCollapsed;
+  }
+  drawer.classList.toggle('collapsed', drawerCollapsed);
+  const btn = document.getElementById('btn-drawer-toggle');
+  if (btn) {
+    btn.title = drawerCollapsed ? 'Expand Key Inspector (I)' : 'Collapse Key Inspector (I)';
+  }
+}
+
+function toggleZenMode() {
+  document.body.classList.toggle('zen-mode');
+  const isZen = document.body.classList.contains('zen-mode');
+  const btn = document.getElementById('btn-zen');
+  if (btn) {
+    btn.classList.toggle('active', isZen);
+    btn.title = isZen ? 'Exit Full View (Esc or F)' : 'Focus / Fullscreen View (F)';
+  }
+
+  // Request or exit native fullscreen if supported
+  if (isZen) {
+    try {
+      if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else if (document.documentElement.webkitRequestFullscreen && !document.webkitFullscreenElement) {
+        document.documentElement.webkitRequestFullscreen().catch(() => {});
+      }
+    } catch (e) {}
+  } else {
+    try {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      } else if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
+        document.webkitExitFullscreen().catch(() => {});
+      }
+    } catch (e) {}
+  }
+}
+
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement && document.body.classList.contains('zen-mode')) {
+    // Keep zen-mode class in sync if user exits native fullscreen via system gesture
+    const btn = document.getElementById('btn-zen');
+    if (btn) btn.classList.add('active');
+  }
+});
 
 function escapeHtml(text) {
   if (!text) return '';

@@ -73,6 +73,10 @@ function readUrlParams() {
       }
     }
   }
+  const zenParam = params.get('zen');
+  if (zenParam === '1' || zenParam === 'true') {
+    toggleZenMode();
+  }
 }
 
 function updateUrlParams() {
@@ -147,6 +151,11 @@ async function init() {
     toggleLegendModal(true);
   }
 
+  // Auto-collapse inspector drawer on landscape mobile to maximize layout view
+  if (window.innerHeight <= 520 && window.innerWidth > window.innerHeight) {
+    toggleDrawer(true);
+  }
+
   updateUrlParams();
 
   window.addEventListener('keydown', (e) => {
@@ -185,11 +194,17 @@ async function init() {
       setViewerMode(viewerMode === 'inspect' ? 'simulate' : 'inspect');
     } else if (e.key === 'c' || e.key === 'C') {
       toggleLegendModal();
+    } else if (e.key === 'f' || e.key === 'F') {
+      toggleZenMode();
+    } else if (e.key === 'i' || e.key === 'I') {
+      toggleDrawer();
     } else if (e.key === '/') {
       e.preventDefault();
       document.getElementById('search-input').focus();
     } else if (e.key === 'Escape') {
-      if (viewerMode === 'simulate') {
+      if (document.body.classList.contains('zen-mode')) {
+        toggleZenMode();
+      } else if (viewerMode === 'simulate') {
         resetSimStack();
       } else if (layerHistory.length > 0) {
         returnToPreviousLayer();
@@ -859,6 +874,60 @@ function resetZoom() {
   const svg = document.getElementById('keyboard-svg');
   svg.style.transform = 'scale(1)';
 }
+
+let drawerCollapsed = false;
+
+function toggleDrawer(forceState) {
+  const drawer = document.getElementById('main-drawer');
+  if (!drawer) return;
+  if (typeof forceState === 'boolean') {
+    drawerCollapsed = forceState;
+  } else {
+    drawerCollapsed = !drawerCollapsed;
+  }
+  drawer.classList.toggle('collapsed', drawerCollapsed);
+  const btn = document.getElementById('btn-drawer-toggle');
+  if (btn) {
+    btn.title = drawerCollapsed ? 'Expand Key Inspector (I)' : 'Collapse Key Inspector (I)';
+  }
+}
+
+function toggleZenMode() {
+  document.body.classList.toggle('zen-mode');
+  const isZen = document.body.classList.contains('zen-mode');
+  const btn = document.getElementById('btn-zen');
+  if (btn) {
+    btn.classList.toggle('active', isZen);
+    btn.title = isZen ? 'Exit Full View (Esc or F)' : 'Focus / Fullscreen View (F)';
+  }
+
+  // Request or exit native fullscreen if supported
+  if (isZen) {
+    try {
+      if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else if (document.documentElement.webkitRequestFullscreen && !document.webkitFullscreenElement) {
+        document.documentElement.webkitRequestFullscreen().catch(() => {});
+      }
+    } catch (e) {}
+  } else {
+    try {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      } else if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
+        document.webkitExitFullscreen().catch(() => {});
+      }
+    } catch (e) {}
+  }
+}
+
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement && document.body.classList.contains('zen-mode')) {
+    // Keep zen-mode class in sync if user exits native fullscreen via system gesture
+    const btn = document.getElementById('btn-zen');
+    if (btn) btn.classList.add('active');
+  }
+});
 
 function escapeHtml(text) {
   if (!text) return '';
