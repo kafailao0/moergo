@@ -1,7 +1,7 @@
 const KEYBOARDS = JSON.parse(document.getElementById('embedded-data').textContent);
 let currentKb = 'glove80';
 let currentLayer = 0;
-let viewerMode = 'inspect'; // 'inspect' | 'simulate'
+let viewerMode = 'simulate'; // Default mode is Simulate
 let simStack = [0]; // Active layer indices in simulation mode
 let momentaryHeldLayer = null;
 let layerHistory = [];
@@ -71,7 +71,6 @@ function init() {
         simStack.splice(pos, 1);
       }
       momentaryHeldLayer = null;
-      updateSimBanner();
       updateLayerTabStates();
       renderSvg();
     }
@@ -84,18 +83,12 @@ function setViewerMode(mode) {
   document.getElementById('btn-mode-inspect').classList.toggle('active', mode === 'inspect');
   document.getElementById('btn-mode-sim').classList.toggle('active', mode === 'simulate');
 
-  const simBanner = document.getElementById('sim-banner');
-  const previewBanner = document.getElementById('preview-banner');
   const backBtn = document.getElementById('btn-back-layer');
 
   if (mode === 'simulate') {
-    previewBanner.style.display = 'none';
-    simBanner.style.display = 'inline-flex';
     backBtn.style.display = 'none';
     if (!simStack.includes(0)) simStack = [0];
-    updateSimBanner();
   } else {
-    simBanner.style.display = 'none';
     updateBackButton();
   }
 
@@ -117,7 +110,6 @@ function switchKeyboard(kb) {
   document.getElementById('btn-go60').classList.toggle('active', kb === 'go60');
   updateHeader();
   updateBackButton();
-  if (viewerMode === 'simulate') updateSimBanner();
   renderLayerTabs();
   renderSvg();
   resetInspector();
@@ -170,21 +162,9 @@ function resolveCompositeRgb(idx) {
 function resetSimStack() {
   simStack = [0];
   momentaryHeldLayer = null;
-  updateSimBanner();
   updateLayerTabStates();
   renderSvg();
   if (selectedKeyIdx !== null) inspectKey(selectedKeyIdx);
-}
-
-function updateSimBanner() {
-  const display = document.getElementById('sim-stack-display');
-  const kb = KEYBOARDS[currentKb];
-  const tags = simStack.map(idx => {
-    const name = kb.layers[idx] ? kb.layers[idx].name : `L${idx}`;
-    const isMom = (idx === momentaryHeldLayer);
-    return `<span class="sim-stack-tag" style="${isMom ? 'background:#9e6a03; border-color:#d29922; color:#fff;' : ''}">${idx}: ${name}${isMom ? ' (held)' : ''}</span>`;
-  }).join(' ');
-  display.innerHTML = tags;
 }
 
 function toggleSimLayer(layerIdx) {
@@ -201,7 +181,6 @@ function toggleSimLayer(layerIdx) {
     simStack.push(layerIdx);
     simStack.sort((a, b) => a - b);
   }
-  updateSimBanner();
   updateLayerTabStates();
   renderSvg();
   if (selectedKeyIdx !== null) inspectKey(selectedKeyIdx);
@@ -231,10 +210,21 @@ function renderLayerTabs() {
 
     bar.appendChild(btn);
   });
+
+  // If in simulate mode and multiple layers active, add reset button to layer bar
+  if (viewerMode === 'simulate' && simStack.length > 1) {
+    const resetBtn = document.createElement('button');
+    resetBtn.id = 'sim-reset-btn';
+    resetBtn.className = 'sim-reset-tab-btn';
+    resetBtn.innerHTML = '⟲ Reset Stack';
+    resetBtn.onclick = resetSimStack;
+    bar.appendChild(resetBtn);
+  }
 }
 
 function updateLayerTabStates() {
   const kb = KEYBOARDS[currentKb];
+  const bar = document.getElementById('layer-tabs');
   kb.layers.forEach((layer, idx) => {
     const btn = document.getElementById(`layer-tab-${idx}`);
     if (!btn) return;
@@ -249,6 +239,22 @@ function updateLayerTabStates() {
       btn.innerHTML = `<span class="idx">${idx}</span> ${layer.name}`;
     }
   });
+
+  const existingReset = document.getElementById('sim-reset-btn');
+  if (viewerMode === 'simulate') {
+    if (simStack.length > 1 && !existingReset) {
+      const resetBtn = document.createElement('button');
+      resetBtn.id = 'sim-reset-btn';
+      resetBtn.className = 'sim-reset-tab-btn';
+      resetBtn.innerHTML = '⟲ Reset Stack';
+      resetBtn.onclick = resetSimStack;
+      bar.appendChild(resetBtn);
+    } else if (simStack.length <= 1 && existingReset) {
+      existingReset.remove();
+    }
+  } else if (existingReset) {
+    existingReset.remove();
+  }
 }
 
 function setLayer(idx, fromKeyLink = false) {
@@ -453,7 +459,6 @@ function onKeyClick(idx) {
 
     if (key.rawBinding && key.rawBinding.startsWith('&to') && key.targetLayer !== null) {
       simStack = [key.targetLayer];
-      updateSimBanner();
       updateLayerTabStates();
       renderSvg();
       selectedKeyIdx = idx;
@@ -475,6 +480,9 @@ function onKeyClick(idx) {
 }
 
 function onKeyPointerDown(idx) {
+  // Always update footer info for mobile touch
+  inspectKey(idx);
+
   if (viewerMode !== 'simulate') return;
   const { key } = resolveCompositeKey(idx);
 
@@ -484,7 +492,6 @@ function onKeyPointerDown(idx) {
       simStack.push(key.targetLayer);
       simStack.sort((a, b) => a - b);
       momentaryHeldLayer = key.targetLayer;
-      updateSimBanner();
       updateLayerTabStates();
       renderSvg();
     }
@@ -499,17 +506,14 @@ function onKeyPointerUp(idx) {
       simStack.splice(pos, 1);
     }
     momentaryHeldLayer = null;
-    updateSimBanner();
     updateLayerTabStates();
     renderSvg();
   }
 }
 
 function onKeyHover(idx) {
-  // In Inspect Mode: NO JUMPING / NO PREVIEW! Calmly update inspector
-  if (viewerMode === 'inspect') {
-    inspectKey(idx);
-  }
+  // In ALL modes: desktop hover immediately updates the footer info drawer!
+  inspectKey(idx);
 }
 
 function inspectKey(idx) {

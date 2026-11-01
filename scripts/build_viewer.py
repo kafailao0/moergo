@@ -231,12 +231,11 @@ def parse_key_data(key_obj, layer_names):
         layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
         layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
         line1 = layer_name
-        # If primary already displays layer_name, don't repeat in corner
-        secondary = ''
+        secondary = f"L{layer_idx}"
         target_layer = layer_idx
-        badge = ''
+        badge = 'LAYER'
         badge_type = 'layer'
-        tooltip = f"Layer: {layer_name} (Click or hover to view layer)"
+        tooltip = f"Layer: {layer_name} (Click to switch or hold to activate)"
 
     elif beh == '&to':
         layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
@@ -282,7 +281,7 @@ def parse_key_data(key_obj, layer_names):
         raw_binding = custom_str
         if 'td_caps' in custom_str:
             line1 = 'Caps'
-            secondary = '1x/2x'
+            secondary = ''
             badge = 'TD'
             badge_type = 'td'
             tooltip = 'Tap Dance: 1x Caps Word • 2x Caps Lock'
@@ -328,9 +327,11 @@ def parse_key_data(key_obj, layer_names):
             tooltip = f"Sniper Precision Move {direction}"
         elif 'td_LAYER_Keypad' in custom_str:
             line1 = 'Keypad'
-            secondary = 'Keypad'
+            secondary = 'L4'
             target_layer = 4
-            tooltip = 'Tap: Toggle Keypad • Hold: Momentary Keypad'
+            badge = 'LAYER'
+            badge_type = 'layer'
+            tooltip = 'Tap: Toggle Keypad • Hold: Momentary Keypad (Layer 4)'
         else:
             line1 = custom_str
 

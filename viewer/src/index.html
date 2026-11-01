@@ -20,18 +20,18 @@
 
     <div class="controls">
       <div class="btn-group">
-        <button class="btn active" id="btn-mode-inspect" onclick="setViewerMode('inspect')">Inspect</button>
-        <button class="btn btn-sim" id="btn-mode-sim" onclick="setViewerMode('simulate')">Simulate</button>
+        <button class="btn active" id="btn-glove80" onclick="switchKeyboard('glove80')">Glove80</button>
+        <button class="btn" id="btn-go60" onclick="switchKeyboard('go60')">Go60</button>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-sim active" id="btn-mode-sim" onclick="setViewerMode('simulate')">Simulate</button>
+        <button class="btn" id="btn-mode-inspect" onclick="setViewerMode('inspect')">Inspect</button>
       </div>
 
       <button class="back-layer-btn" id="btn-back-layer" onclick="returnToPreviousLayer()">
         ↩ Back to Base (Esc)
       </button>
-
-      <div class="btn-group">
-        <button class="btn active" id="btn-glove80" onclick="switchKeyboard('glove80')">Glove80</button>
-        <button class="btn" id="btn-go60" onclick="switchKeyboard('go60')">Go60</button>
-      </div>
 
       <div class="btn-group">
         <button class="btn active" id="btn-rgb" onclick="toggleRgb()">RGB Underglow: ON</button>
@@ -47,17 +47,6 @@
   <div class="layer-bar" id="layer-tabs"></div>
 
   <main>
-    <div class="sim-banner" id="sim-banner">
-      <span>🕹️ Active Layer Stack:</span>
-      <span id="sim-stack-display"></span>
-      <button class="sim-reset-btn" onclick="resetSimStack()">⟲ Reset Stack</button>
-    </div>
-
-    <div class="preview-banner" id="preview-banner">
-      <span>👁️ Previewing Layer:</span>
-      <span id="preview-layer-name" style="text-decoration: underline;">—</span>
-      <span style="opacity: 0.8; font-weight: normal; font-size: 0.72rem;">(Move away or release to return)</span>
-    </div>
 
     <div class="viewport-container">
       <svg id="keyboard-svg" viewBox="-20 -20 1010 475" class="rgb-mode"></svg>

@@ -260,47 +260,36 @@
       pointer-events: none;
     }
 
-    .sim-banner {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(22, 27, 34, 0.92);
-      backdrop-filter: blur(8px);
-      border: 1px solid #8957e5;
-      color: #e6edf3;
-      padding: 5px 16px;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      display: none;
-      align-items: center;
-      gap: 10px;
-      z-index: 60;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-    }
-    .sim-stack-tag {
-      background: rgba(137, 87, 229, 0.25);
-      border: 1px solid #8957e5;
-      color: #d2a8ff;
-      padding: 1px 8px;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 0.74rem;
-    }
-    .sim-reset-btn {
+    .sim-reset-tab-btn {
       background: #21262d;
       border: 1px solid var(--surface-border);
-      color: var(--text-muted);
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.7rem;
+      color: #d2a8ff;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.76rem;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.12s;
+      margin-left: auto;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
-    .sim-reset-btn:hover {
-      color: var(--text-bright);
-      background: #30363d;
+    .sim-reset-tab-btn:hover {
+      color: #fff;
+      background: #8957e5;
+      border-color: #a371f7;
+    }
+
+    .key-group.has-layer-link .key-cap {
+      stroke: rgba(126, 231, 135, 0.5);
+      stroke-width: 1.4;
+    }
+    .key-group.has-layer-link:hover .key-cap {
+      stroke: var(--badge-layer) !important;
+      stroke-width: 2px !important;
+      filter: drop-shadow(0 0 6px rgba(126, 231, 135, 0.5));
     }
 
     main {
