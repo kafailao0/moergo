@@ -498,6 +498,7 @@ function setLayer(idx, fromKeyLink = false) {
   updateBackButton();
   updateLayerTabStates();
   renderSvg();
+  triggerRgbFade();
   updateUrlParams();
 }
 
@@ -508,6 +509,7 @@ function returnToPreviousLayer() {
     updateBackButton();
     updateLayerTabStates();
     renderSvg();
+    triggerRgbFade();
   } else {
     setLayer(0);
   }
