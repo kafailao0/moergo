@@ -44,6 +44,11 @@
   <div class="layer-bar" id="layer-tabs"></div>
 
   <main>
+    <div class="half-switcher" id="half-switcher">
+      <button class="half-btn active" data-half="both" onclick="setKeyboardHalf('both')">Both</button>
+      <button class="half-btn" data-half="left" onclick="setKeyboardHalf('left')">Left</button>
+      <button class="half-btn" data-half="right" onclick="setKeyboardHalf('right')">Right</button>
+    </div>
 
     <div class="viewport-container">
       <svg id="keyboard-svg" viewBox="-20 -20 1010 475" class="rgb-mode"></svg>

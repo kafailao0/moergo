@@ -9,6 +9,7 @@ let rgbFadeTimer = null;
 let layerHistory = [];
 let rgbEnabled = true;
 let inspectRgbEnabled = true;
+let currentHalf = 'both'; // 'both' | 'left' | 'right'
 let currentScale = 1.0;
 let searchQuery = '';
 
@@ -168,6 +169,35 @@ async function init() {
       deactivateHoverMomentary();
     }
   });
+
+  // Touch swipe support for switching keyboard halves
+  let touchStartX = 0;
+  let touchStartY = 0;
+  const viewport = document.querySelector('.viewport-container');
+  if (viewport) {
+    viewport.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    viewport.addEventListener('touchend', (e) => {
+      if (e.changedTouches.length === 1) {
+        const diffX = e.changedTouches[0].clientX - touchStartX;
+        const diffY = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY) * 1.3) {
+          if (diffX < 0) {
+            if (currentHalf === 'left') setKeyboardHalf('right');
+            else if (currentHalf === 'both') setKeyboardHalf('right');
+          } else {
+            if (currentHalf === 'right') setKeyboardHalf('left');
+            else if (currentHalf === 'both') setKeyboardHalf('left');
+          }
+        }
+      }
+    }, { passive: true });
+  }
 
   window.addEventListener('popstate', () => {
     readUrlParams();
@@ -485,6 +515,21 @@ function updateLayerTabStates() {
   } else if (existingReset) {
     existingReset.remove();
   }
+
+  const activeTabIdx = (viewerMode === 'simulate' && simStack.length > 0) ? simStack[simStack.length - 1] : currentLayer;
+  scrollActiveTabIntoView(activeTabIdx);
+}
+
+function scrollActiveTabIntoView(idx) {
+  const bar = document.getElementById('layer-tabs');
+  const btn = document.getElementById(`layer-tab-${idx}`);
+  if (bar && btn) {
+    const barRect = bar.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    if (btnRect.left < barRect.left || btnRect.right > barRect.right) {
+      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
 }
 
 function setLayer(idx, fromKeyLink = false) {
@@ -524,6 +569,38 @@ function updateBackButton() {
   }
 }
 
+function setKeyboardHalf(half) {
+  currentHalf = half;
+  document.querySelectorAll('.half-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.half === half);
+  });
+  updateSvgViewBox();
+}
+
+function updateSvgViewBox() {
+  const svg = document.getElementById('keyboard-svg');
+  if (!svg) return;
+
+  if (currentKb === 'glove80') {
+    if (currentHalf === 'left') {
+      svg.setAttribute('viewBox', '-15 -10 600 420');
+    } else if (currentHalf === 'right') {
+      svg.setAttribute('viewBox', '375 -10 610 420');
+    } else {
+      svg.setAttribute('viewBox', '-15 -10 1000 460');
+    }
+  } else {
+    // go60
+    if (currentHalf === 'left') {
+      svg.setAttribute('viewBox', '-15 -10 480 340');
+    } else if (currentHalf === 'right') {
+      svg.setAttribute('viewBox', '480 -10 480 360');
+    } else {
+      svg.setAttribute('viewBox', '-15 -10 970 365');
+    }
+  }
+}
+
 function renderSvg() {
   const kb = KEYBOARDS[currentKb];
   const coords = kb.coords;
@@ -531,11 +608,7 @@ function renderSvg() {
   const baseLayer = kb.layers[0];
   const svg = document.getElementById('keyboard-svg');
 
-  if (currentKb === 'glove80') {
-    svg.setAttribute('viewBox', '-15 -10 1000 460');
-  } else {
-    svg.setAttribute('viewBox', '-15 -10 970 365');
-  }
+  updateSvgViewBox();
 
   let html = '';
 
