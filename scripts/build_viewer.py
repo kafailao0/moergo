@@ -537,8 +537,6 @@ def build_data():
     return keyboards
 
 def generate_standalone_html(data):
-    json_data = json.dumps(data)
-
     src_dir = os.path.join(BASE_DIR, 'viewer', 'src')
     with open(os.path.join(src_dir, 'index.html'), 'r', encoding='utf-8') as f:
         html = f.read()
@@ -551,9 +549,8 @@ def generate_standalone_html(data):
     style_tag = f"<style>\n{css}\n</style>"
     html = html.replace('<link rel="stylesheet" href="style.css">', style_tag)
 
-    # Inline Data
-    data_tag = f'<script id="embedded-data" type="application/json">\n{json_data}\n</script>'
-    html = html.replace('<!-- EMBEDDED_DATA_PLACEHOLDER -->', data_tag)
+    # Data placeholder (empty script tag for dynamic data.json fetch)
+    html = html.replace('<!-- EMBEDDED_DATA_PLACEHOLDER -->', '<script id="embedded-data" type="application/json"></script>')
 
     # Inline JS
     js_tag = f"<script>\n{js}\n</script>"
@@ -565,11 +562,19 @@ def main():
     print("Building MoErgo Layout Viewer...")
     data = build_data()
 
-    # Save standalone data.json
+    # Save standalone viewer/data.json
     data_path = os.path.join(BASE_DIR, 'viewer', 'data.json')
     with open(data_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2)
     print(f"Generated data file: {data_path}")
+
+    # Save docs/data.json for GitHub Pages
+    docs_dir = os.path.join(BASE_DIR, 'docs')
+    os.makedirs(docs_dir, exist_ok=True)
+    docs_data_path = os.path.join(docs_dir, 'data.json')
+    with open(docs_data_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2)
+    print(f"Generated docs data file: {docs_data_path}")
 
     html_content = generate_standalone_html(data)
 
@@ -577,14 +582,12 @@ def main():
     with open(out_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
 
-    docs_dir = os.path.join(BASE_DIR, 'docs')
-    os.makedirs(docs_dir, exist_ok=True)
     docs_path = os.path.join(docs_dir, 'index.html')
     with open(docs_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
 
     size_kb = len(html_content.encode('utf-8')) / 1024
-    print(f"Generated standalone viewer: {out_path} and {docs_path} ({size_kb:.1f} KB)")
+    print(f"Generated viewer: {out_path} and {docs_path} ({size_kb:.1f} KB)")
 
 if __name__ == '__main__':
     main()

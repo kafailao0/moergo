@@ -1,4 +1,4 @@
-const KEYBOARDS = JSON.parse(document.getElementById('embedded-data').textContent);
+let KEYBOARDS = null;
 let currentKb = 'glove80';
 let currentLayer = 0;
 let viewerMode = 'simulate'; // Default mode is Simulate
@@ -8,16 +8,52 @@ let momentaryHoverTriggerIdx = null;
 let rgbFadeTimer = null;
 let layerHistory = [];
 let rgbEnabled = true;
+let inspectRgbEnabled = true;
 let currentScale = 1.0;
 let searchQuery = '';
 
 const UNIT = 54;
 const KEY_SIZE = 48;
 
+async function loadData() {
+  const embedded = document.getElementById('embedded-data');
+  if (embedded && embedded.textContent.trim()) {
+    try {
+      KEYBOARDS = JSON.parse(embedded.textContent);
+      return;
+    } catch (e) {
+      console.warn('Failed parsing embedded-data:', e);
+    }
+  }
+
+  try {
+    const res = await fetch('data.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    KEYBOARDS = await res.json();
+  } catch (err) {
+    console.error('Failed to load data.json:', err);
+    const container = document.querySelector('.viewport-container');
+    if (container) {
+      container.innerHTML = `
+        <div style="padding: 32px; text-align: center; color: #ff7b72; background: rgba(22, 27, 34, 0.95); border: 1px solid #30363d; border-radius: 12px; max-width: 520px; margin: 40px auto; box-shadow: 0 8px 24px rgba(0,0,0,0.4);">
+          <h3 style="margin-bottom: 12px; color: #f85149; font-size: 1.15rem;">⚠️ Unable to load layout data</h3>
+          <p style="font-size: 0.88rem; color: #c9d1d9; margin-bottom: 16px; line-height: 1.5;">
+            If you opened this HTML file directly via <code>file://</code>, browser security policies restrict loading external <code>data.json</code>.
+          </p>
+          <p style="font-size: 0.85rem; color: #8b949e; line-height: 1.5;">
+            Please run the local viewer server:<br>
+            <code style="display: inline-block; margin-top: 10px; padding: 6px 14px; background: #090d12; border: 1px solid #30363d; border-radius: 6px; color: #58a6ff; font-family: monospace;">python3 viewer/serve.py 8088</code>
+          </p>
+        </div>
+      `;
+    }
+  }
+}
+
 function readUrlParams() {
   const params = new URLSearchParams(window.location.search);
   const kbParam = params.get('kb');
-  if (kbParam && KEYBOARDS[kbParam.toLowerCase()]) {
+  if (kbParam && KEYBOARDS && KEYBOARDS[kbParam.toLowerCase()]) {
     currentKb = kbParam.toLowerCase();
   }
   const modeParam = params.get('mode');
@@ -35,7 +71,10 @@ function updateUrlParams() {
   window.history.replaceState(null, '', newUrl);
 }
 
-function init() {
+async function init() {
+  await loadData();
+  if (!KEYBOARDS) return;
+
   readUrlParams();
   document.getElementById('btn-glove80').classList.toggle('active', currentKb === 'glove80');
   document.getElementById('btn-go60').classList.toggle('active', currentKb === 'go60');
@@ -44,6 +83,10 @@ function init() {
   const backBtn = document.getElementById('btn-back-layer');
   if (backBtn) {
     backBtn.style.display = (viewerMode === 'simulate' || layerHistory.length === 0) ? 'none' : 'inline-flex';
+  }
+  const rgbBtn = document.getElementById('btn-rgb-toggle');
+  if (rgbBtn) {
+    rgbBtn.style.display = (viewerMode === 'inspect') ? 'flex' : 'none';
   }
 
   renderLayerTabs();
@@ -84,7 +127,11 @@ function init() {
     } else if (e.key === 'o' || e.key === 'O') {
       switchKeyboard('go60');
     } else if (e.key === 'r' || e.key === 'R') {
-      toggleRgb();
+      if (viewerMode === 'inspect') {
+        toggleInspectRgb();
+      } else {
+        triggerRgbFade();
+      }
     } else if (e.key === 'm' || e.key === 'M') {
       setViewerMode(viewerMode === 'inspect' ? 'simulate' : 'inspect');
     } else if (e.key === 'c' || e.key === 'C') {
@@ -137,11 +184,11 @@ function init() {
 }
 
 function triggerRgbFade() {
-  if (!rgbEnabled) return;
   const svg = document.getElementById('keyboard-svg');
   if (!svg) return;
 
   if (viewerMode === 'simulate') {
+    svg.classList.add('rgb-mode');
     svg.classList.remove('rgb-faded'); // Light up immediately on layer change
 
     if (rgbFadeTimer) {
@@ -156,7 +203,7 @@ function triggerRgbFade() {
     }, 1000);
   } else {
     if (rgbFadeTimer) clearTimeout(rgbFadeTimer);
-    svg.classList.remove('rgb-faded');
+    updateInspectRgbUi();
   }
 }
 
@@ -168,6 +215,30 @@ function toggleLegendModal(forceState) {
   modal.style.display = show ? 'flex' : 'none';
 }
 
+function toggleInspectRgb() {
+  inspectRgbEnabled = !inspectRgbEnabled;
+  updateInspectRgbUi();
+}
+
+function updateInspectRgbUi() {
+  const svg = document.getElementById('keyboard-svg');
+  const btn = document.getElementById('btn-rgb-toggle');
+  if (viewerMode === 'inspect') {
+    if (svg) {
+      svg.classList.add('rgb-mode');
+      if (inspectRgbEnabled) {
+        svg.classList.remove('rgb-faded');
+      } else {
+        svg.classList.add('rgb-faded');
+      }
+    }
+  }
+  if (btn) {
+    btn.classList.toggle('active', inspectRgbEnabled);
+    btn.title = `RGB Underglow: ${inspectRgbEnabled ? 'ON' : 'OFF'} (R)`;
+  }
+}
+
 function setViewerMode(mode) {
   if (viewerMode === mode) return;
   viewerMode = mode;
@@ -175,12 +246,16 @@ function setViewerMode(mode) {
   document.getElementById('btn-mode-sim').classList.toggle('active', mode === 'simulate');
 
   const backBtn = document.getElementById('btn-back-layer');
-
   if (mode === 'simulate') {
     if (backBtn) backBtn.style.display = 'none';
     if (!simStack.includes(0)) simStack = [0];
   } else {
     updateBackButton();
+  }
+
+  const rgbBtn = document.getElementById('btn-rgb-toggle');
+  if (rgbBtn) {
+    rgbBtn.style.display = (mode === 'inspect') ? 'flex' : 'none';
   }
 
   deactivateHoverMomentary();
@@ -213,21 +288,7 @@ function switchKeyboard(kb) {
 function updateHeader() {
   const kb = KEYBOARDS[currentKb];
   const match = kb.title.match(/v[0-9]+/);
-  document.getElementById('kb-version').textContent = match ? match[0] : 'v27';
-}
-
-function toggleRgb() {
-  rgbEnabled = !rgbEnabled;
-  const btn = document.getElementById('btn-rgb');
-  const svg = document.getElementById('keyboard-svg');
-  if (btn) {
-    btn.textContent = `RGB: ${rgbEnabled ? 'ON' : 'OFF'}`;
-    btn.classList.toggle('active', rgbEnabled);
-  }
-  if (svg) {
-    svg.classList.toggle('rgb-mode', rgbEnabled);
-  }
-  if (rgbEnabled) triggerRgbFade();
+  document.getElementById('kb-version').textContent = match ? match[0] : 'v28';
 }
 
 function getActiveSimLayers() {
@@ -699,17 +760,25 @@ function inspectKey(idx) {
 
   titleEl.innerHTML = `<strong>${coord.label}</strong> (Key #${idx}) • ${viewerMode === 'simulate' ? 'Active Source Layer' : 'Layer'}: <strong>${displayLayerName}</strong> • ${rgbDesc} ${layerJumpHtml}`;
   detailEl.innerHTML = `ZMK: <code style="color:var(--accent); background:#090d12; padding:2px 6px; border-radius:4px;">${escapeHtml(key.rawBinding)}</code> • ${escapeHtml(key.tooltip)}`;
+
+  const rgbText = (rgbToken && rgbToken !== '___') ? `RGB: ${rgbToken} ${rgbSource}` : 'RGB: Unlit';
+  titleEl.title = `${coord.label} (Key #${idx}) • ${viewerMode === 'simulate' ? 'Active Source Layer' : 'Layer'}: ${displayLayerName} • ${rgbText}`;
+  detailEl.title = `ZMK: ${key.rawBinding} • ${key.tooltip}`;
 }
 
 function resetInspector() {
   document.getElementById('insp-label').textContent = '—';
+  const titleEl = document.getElementById('insp-title');
+  const detailEl = document.getElementById('insp-detail');
   if (viewerMode === 'simulate') {
-    document.getElementById('insp-title').textContent = 'Simulation Mode: Hover momentary layer keys to activate • Click to lock/toggle';
-    document.getElementById('insp-detail').textContent = 'Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [C] Color Guide • [Esc] Reset Stack';
+    titleEl.textContent = 'Simulation Mode: Hover momentary layer keys to activate • Click to lock/toggle';
+    detailEl.textContent = 'Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [C] Color Guide • [Esc] Reset Stack';
   } else {
-    document.getElementById('insp-title').textContent = 'Inspect Mode: Click any key to inspect details or navigate layers';
-    document.getElementById('insp-detail').textContent = 'Shortcuts: [0-9] Layer • [M] Switch to Simulate • [C] Color Guide • [Esc] Back';
+    titleEl.textContent = 'Inspect Mode: Click any key to inspect details or navigate layers';
+    detailEl.textContent = 'Shortcuts: [0-9] Layer • [M] Switch to Simulate • [R] Toggle RGB • [C] Color Guide • [Esc] Back';
   }
+  titleEl.title = '';
+  detailEl.title = '';
 }
 
 function handleSearch(val) {
@@ -734,4 +803,8 @@ function escapeHtml(text) {
   return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-window.onload = init;
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}

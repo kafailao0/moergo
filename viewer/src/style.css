@@ -438,21 +438,28 @@
     .drawer {
       background: var(--surface);
       border-top: 1px solid var(--surface-border);
-      padding: 10px 20px;
+      padding: 8px 18px;
       width: 100%;
+      height: 56px;
+      min-height: 56px;
+      max-height: 56px;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+      gap: 14px;
       box-shadow: 0 -4px 12px rgba(0,0,0,0.25);
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     .inspector {
       display: flex;
       align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
+      gap: 14px;
       flex: 1;
+      min-width: 0;
+      flex-wrap: nowrap;
+      overflow: hidden;
     }
     .key-pill {
       background: #21262d;
@@ -462,6 +469,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-shrink: 0;
     }
     .key-pill-label {
       font-size: 1.05rem;
@@ -470,54 +478,38 @@
       font-family: ui-monospace, SFMono-Regular, monospace;
     }
     .key-meta {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
       line-height: 1.35;
+      min-width: 0;
+      flex: 1;
+      overflow: hidden;
     }
     .key-meta strong {
       color: var(--text-bright);
+    }
+    #insp-title, #insp-detail {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .jump-layer-btn {
       background: #1f6feb;
       border: 1px solid #388bfd;
       color: #fff;
-      padding: 3px 8px;
+      padding: 2px 7px;
       border-radius: 4px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       cursor: pointer;
-      margin-left: 8px;
+      margin-left: 6px;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
+      vertical-align: middle;
     }
     .jump-layer-btn:hover {
       background: #388bfd;
-    }
-
-    .subtle-legend-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      font-weight: 500;
-      padding: 5px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.15s ease;
-      opacity: 0.75;
-      flex-shrink: 0;
-      margin-left: auto;
-    }
-    .subtle-legend-btn:hover {
-      background: #21262d;
-      border-color: var(--surface-border);
-      color: var(--text-bright);
-      opacity: 1;
     }
 
     .modal-backdrop {
@@ -583,12 +575,13 @@
       flex-shrink: 0;
     }
 
-    .zoom-widget {
+    .canvas-widget {
       position: absolute;
       right: 16px;
-      bottom: 70px;
-      background: rgba(22, 27, 34, 0.85);
+      bottom: 16px;
+      background: rgba(22, 27, 34, 0.88);
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border: 1px solid var(--surface-border);
       border-radius: 8px;
       display: flex;
@@ -596,8 +589,9 @@
       padding: 3px;
       gap: 3px;
       z-index: 50;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
     }
-    .zoom-btn {
+    .canvas-btn {
       background: transparent;
       border: none;
       color: var(--text);
@@ -606,14 +600,28 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
       border-radius: 6px;
+      transition: all 0.15s ease;
     }
-    .zoom-btn:hover {
+    .canvas-btn:hover {
       background: #30363d;
       color: #fff;
+    }
+    .canvas-btn.active#btn-rgb-toggle {
+      color: #58a6ff;
+      background: rgba(88, 166, 255, 0.2);
+    }
+    .canvas-btn#btn-rgb-toggle:not(.active) {
+      color: var(--text-muted);
+      opacity: 0.45;
+    }
+    .canvas-divider {
+      height: 1px;
+      background: var(--surface-border);
+      margin: 2px 4px;
     }
 
     @media (max-width: 768px) {
@@ -621,9 +629,8 @@
       .brand-title { font-size: 1rem; }
       .btn { padding: 5px 10px; font-size: 0.75rem; }
       .search-box input { width: 100px; }
-      .drawer { padding: 8px 12px; }
-      .key-pill-label { font-size: 0.95rem; }
-      .subtle-legend-btn { font-size: 0.7rem; padding: 3px 8px; }
-      .zoom-widget { bottom: 90px; right: 10px; }
+      .drawer { padding: 6px 10px; height: 50px; min-height: 50px; max-height: 50px; }
+      .key-pill-label { font-size: 0.9rem; }
+      .canvas-widget { bottom: 10px; right: 10px; }
     }
   </style>

@@ -48,10 +48,17 @@
       <svg id="keyboard-svg" viewBox="-20 -20 1010 475" class="rgb-mode"></svg>
     </div>
 
-    <div class="zoom-widget">
-      <button class="zoom-btn" title="Zoom In" onclick="zoom(1.15)">+</button>
-      <button class="zoom-btn" title="Zoom Out" onclick="zoom(0.85)">−</button>
-      <button class="zoom-btn" title="Reset Fit" onclick="resetZoom()">⟲</button>
+    <div class="canvas-widget">
+      <button class="canvas-btn" id="btn-legend" onclick="toggleLegendModal()" title="RGB Color Guide (C)">🎨</button>
+      <button class="canvas-btn active" id="btn-rgb-toggle" onclick="toggleInspectRgb()" title="Toggle RGB Underglow (R)" style="display:none;">
+        <svg class="canvas-icon" viewBox="0 0 24 24" width="17" height="17">
+          <path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1zM9 19h6v1.5c0 .28-.22.5-.5.5h-5c-.28 0-.5-.22-.5-.5V19z"/>
+        </svg>
+      </button>
+      <div class="canvas-divider"></div>
+      <button class="canvas-btn" title="Zoom In" onclick="zoom(1.15)">+</button>
+      <button class="canvas-btn" title="Zoom Out" onclick="zoom(0.85)">−</button>
+      <button class="canvas-btn" title="Reset Fit" onclick="resetZoom()">⟲</button>
     </div>
   </main>
 
@@ -65,9 +72,6 @@
         <div id="insp-detail" style="color: var(--text-muted); font-size: 0.75rem;">Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [C] Color Guide • [Esc] Reset Stack</div>
       </div>
     </div>
-    <button class="subtle-legend-btn" id="btn-legend" onclick="toggleLegendModal()" title="RGB Color Guide (C)">
-      🎨 Colors
-    </button>
   </div>
 
   <div id="legend-modal" class="modal-backdrop" onclick="toggleLegendModal(false)" style="display:none;">
