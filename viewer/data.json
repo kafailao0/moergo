@@ -1561,8 +1561,8 @@
           {
             "line1": "Keypad",
             "line2": "",
-            "secondary": "L4",
-            "badge": "LAYER",
+            "secondary": "",
+            "badge": "",
             "badgeType": "layer",
             "tooltip": "Layer: Keypad (Click to switch or hold to activate)",
             "targetLayer": 4,
@@ -1993,7 +1993,7 @@
           {
             "line1": "Magic",
             "line2": "",
-            "secondary": "Magic",
+            "secondary": "",
             "badge": "",
             "badgeType": "sys",
             "tooltip": "Magic Configuration Layer (Click or hover to view layer)",
@@ -2209,7 +2209,7 @@
           {
             "line1": "Tog",
             "line2": "Mouse",
-            "secondary": "Mouse",
+            "secondary": "",
             "badge": "",
             "badgeType": "layer",
             "tooltip": "Toggle Mouse (Click or hover to view layer)",
@@ -5421,7 +5421,7 @@
           {
             "line1": "Tog",
             "line2": "Keypad",
-            "secondary": "Keypad",
+            "secondary": "",
             "badge": "",
             "badgeType": "layer",
             "tooltip": "Toggle Keypad (Click or hover to view layer)",
@@ -7987,7 +7987,7 @@
           {
             "line1": "To",
             "line2": "Factory",
-            "secondary": "Factory",
+            "secondary": "",
             "badge": "",
             "badgeType": "layer",
             "tooltip": "Switch to Factory (Click or hover to view layer)",
@@ -8059,7 +8059,7 @@
           {
             "line1": "Tog",
             "line2": "Gaming",
-            "secondary": "Gaming",
+            "secondary": "",
             "badge": "",
             "badgeType": "layer",
             "tooltip": "Toggle Gaming (Click or hover to view layer)",
@@ -8071,7 +8071,7 @@
           {
             "line1": "Tog",
             "line2": "PC",
-            "secondary": "PC",
+            "secondary": "",
             "badge": "",
             "badgeType": "layer",
             "tooltip": "Toggle PC (Click or hover to view layer)",
@@ -9581,8 +9581,8 @@
           {
             "line1": "Sniper",
             "line2": "",
-            "secondary": "L9",
-            "badge": "LAYER",
+            "secondary": "",
+            "badge": "",
             "badgeType": "layer",
             "tooltip": "Layer: Sniper (Click to switch or hold to activate)",
             "targetLayer": 9,
@@ -9929,7 +9929,7 @@
           {
             "line1": "Tog",
             "line2": "Mouse",
-            "secondary": "Mouse",
+            "secondary": "",
             "badge": "",
             "badgeType": "layer",
             "tooltip": "Toggle Mouse (Click or hover to view layer)",
@@ -12045,8 +12045,8 @@
           {
             "line1": "Keypad",
             "line2": "",
-            "secondary": "L4",
-            "badge": "LAYER",
+            "secondary": "",
+            "badge": "",
             "badgeType": "layer",
             "tooltip": "Layer: Keypad (Click to switch or hold to activate)",
             "targetLayer": 4,
@@ -12477,7 +12477,7 @@
           {
             "line1": "Magic",
             "line2": "",
-            "secondary": "Magic",
+            "secondary": "",
             "badge": "",
             "badgeType": "sys",
             "tooltip": "Magic Configuration Layer (Click or hover to view layer)",
@@ -14945,7 +14945,7 @@
           {
             "line1": "Tog",
             "line2": "Keypad",
-            "secondary": "Keypad",
+            "secondary": "",
             "badge": "",
             "badgeType": "layer",
             "tooltip": "Toggle Keypad (Click or hover to view layer)",
@@ -16959,7 +16959,7 @@
           {
             "line1": "To",
             "line2": "Factory",
-            "secondary": "Factory",
+            "secondary": "",
             "badge": "",
             "badgeType": "layer",
             "tooltip": "Switch to Factory (Click or hover to view layer)",
@@ -17043,7 +17043,7 @@
           {
             "line1": "Tog",
             "line2": "Gaming",
-            "secondary": "Gaming",
+            "secondary": "",
             "badge": "",
             "badgeType": "layer",
             "tooltip": "Toggle Gaming (Click or hover to view layer)",
@@ -17055,7 +17055,7 @@
           {
             "line1": "Tog",
             "line2": "PC",
-            "secondary": "PC",
+            "secondary": "",
             "badge": "",
             "badgeType": "layer",
             "tooltip": "Toggle PC (Click or hover to view layer)",

@@ -383,10 +383,14 @@
       fill: none;
       stroke-width: 2.8;
       opacity: 0;
-      transition: opacity 0.2s ease;
+      transition: opacity 0.8s ease;
+      pointer-events: none;
     }
     .rgb-mode .key-glow {
       opacity: 0.95;
+    }
+    .rgb-mode.rgb-faded .key-glow {
+      opacity: 0 !important;
     }
 
     .key-text-primary {
@@ -439,10 +443,8 @@
       padding: 12px 20px;
       width: 100%;
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
-      gap: 14px;
+      gap: 16px;
       box-shadow: 0 -4px 12px rgba(0,0,0,0.25);
     }
 
@@ -451,6 +453,7 @@
       align-items: center;
       gap: 16px;
       flex-wrap: wrap;
+      flex: 1;
     }
     .key-pill {
       background: #21262d;
@@ -493,21 +496,67 @@
       background: #388bfd;
     }
 
-    .rgb-legend {
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-card {
+      background: #161b22;
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 18px 22px;
+      width: 90%;
+      max-width: 440px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      color: var(--text-bright);
+    }
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .modal-close:hover {
+      color: #fff;
+      background: #30363d;
+    }
+    .modal-legend-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.84rem;
+      color: var(--text);
+    }
+    .legend-row {
       display: flex;
       align-items: center;
       gap: 10px;
-      flex-wrap: wrap;
-      font-size: 0.75rem;
-      color: var(--text-muted);
     }
     .rgb-dot {
-      width: 9px;
-      height: 9px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       display: inline-block;
-      margin-right: 3px;
-      vertical-align: middle;
+      flex-shrink: 0;
     }
 
     .zoom-widget {

@@ -4,6 +4,9 @@ let currentLayer = 0;
 let viewerMode = 'simulate'; // Default mode is Simulate
 let simStack = [0]; // Active layer indices in simulation mode
 let momentaryHeldLayer = null;
+let momentaryHoverLayer = null;
+let momentaryHoverTriggerIdx = null;
+let rgbFadeTimer = null;
 let layerHistory = [];
 let rgbEnabled = true;
 let selectedKeyIdx = null;
@@ -18,6 +21,7 @@ function init() {
   renderSvg();
   updateHeader();
   resetInspector();
+  triggerRgbFade(); // Light up RGB on startup and fade after 3s
 
   window.addEventListener('keydown', (e) => {
     if (e.target.tagName === 'INPUT') {
@@ -28,6 +32,13 @@ function init() {
       }
       return;
     }
+
+    const modal = document.getElementById('legend-modal');
+    if (e.key === 'Escape' && modal && modal.style.display !== 'none') {
+      toggleLegendModal(false);
+      return;
+    }
+
     if (e.key >= '0' && e.key <= '9') {
       const idx = parseInt(e.key);
       const kb = KEYBOARDS[currentKb];
@@ -46,6 +57,8 @@ function init() {
       toggleRgb();
     } else if (e.key === 'm' || e.key === 'M') {
       setViewerMode(viewerMode === 'inspect' ? 'simulate' : 'inspect');
+    } else if (e.key === 'c' || e.key === 'C') {
+      toggleLegendModal();
     } else if (e.key === '/') {
       e.preventDefault();
       document.getElementById('search-input').focus();
@@ -63,7 +76,24 @@ function init() {
     }
   });
 
-  // Global pointerup to release momentary held layers in simulation mode
+  // Global pointermove for hover momentary layer exit detection
+  document.addEventListener('pointermove', (e) => {
+    if (momentaryHoverTriggerIdx !== null) {
+      const targetKey = e.target.closest('[data-idx]');
+      const hoveredIdx = targetKey ? parseInt(targetKey.getAttribute('data-idx'), 10) : null;
+      if (hoveredIdx !== momentaryHoverTriggerIdx) {
+        deactivateHoverMomentary();
+      }
+    }
+  });
+
+  document.addEventListener('mouseleave', () => {
+    if (momentaryHoverTriggerIdx !== null) {
+      deactivateHoverMomentary();
+    }
+  });
+
+  // Global pointerup to release touch/mouse held layers in simulation mode
   document.addEventListener('pointerup', () => {
     if (viewerMode === 'simulate' && momentaryHeldLayer !== null) {
       const pos = simStack.indexOf(momentaryHeldLayer);
@@ -73,8 +103,41 @@ function init() {
       momentaryHeldLayer = null;
       updateLayerTabStates();
       renderSvg();
+      triggerRgbFade();
     }
   });
+}
+
+function triggerRgbFade() {
+  if (!rgbEnabled) return;
+  const svg = document.getElementById('keyboard-svg');
+  if (!svg) return;
+
+  if (viewerMode === 'simulate') {
+    svg.classList.remove('rgb-faded'); // Light up immediately on layer change
+
+    if (rgbFadeTimer) {
+      clearTimeout(rgbFadeTimer);
+    }
+
+    // Fade out after exactly 3 seconds, matching physical Glove80 firmware fade-delay
+    rgbFadeTimer = setTimeout(() => {
+      if (viewerMode === 'simulate') {
+        svg.classList.add('rgb-faded');
+      }
+    }, 3000);
+  } else {
+    if (rgbFadeTimer) clearTimeout(rgbFadeTimer);
+    svg.classList.remove('rgb-faded');
+  }
+}
+
+function toggleLegendModal(forceState) {
+  const modal = document.getElementById('legend-modal');
+  if (!modal) return;
+  const isHidden = modal.style.display === 'none';
+  const show = (forceState !== undefined) ? forceState : isHidden;
+  modal.style.display = show ? 'flex' : 'none';
 }
 
 function setViewerMode(mode) {
@@ -92,10 +155,12 @@ function setViewerMode(mode) {
     updateBackButton();
   }
 
+  deactivateHoverMomentary();
   selectedKeyIdx = null;
   renderLayerTabs();
   renderSvg();
   resetInspector();
+  triggerRgbFade();
 }
 
 function switchKeyboard(kb) {
@@ -104,6 +169,8 @@ function switchKeyboard(kb) {
   currentLayer = 0;
   simStack = [0];
   momentaryHeldLayer = null;
+  momentaryHoverLayer = null;
+  momentaryHoverTriggerIdx = null;
   layerHistory = [];
   selectedKeyIdx = null;
   document.getElementById('btn-glove80').classList.toggle('active', kb === 'glove80');
@@ -113,6 +180,7 @@ function switchKeyboard(kb) {
   renderLayerTabs();
   renderSvg();
   resetInspector();
+  triggerRgbFade();
 }
 
 function updateHeader() {
@@ -125,9 +193,10 @@ function toggleRgb() {
   rgbEnabled = !rgbEnabled;
   const btn = document.getElementById('btn-rgb');
   const svg = document.getElementById('keyboard-svg');
-  btn.textContent = `RGB Underglow: ${rgbEnabled ? 'ON' : 'OFF'}`;
+  btn.textContent = `RGB: ${rgbEnabled ? 'ON' : 'OFF'}`;
   btn.classList.toggle('active', rgbEnabled);
   svg.classList.toggle('rgb-mode', rgbEnabled);
+  if (rgbEnabled) triggerRgbFade();
 }
 
 function resolveCompositeKey(idx) {
@@ -159,11 +228,46 @@ function resolveCompositeRgb(idx) {
   return { rgbToken: '___', rgbHex: '#000000', rgbSourceLayer: null };
 }
 
+function activateHoverMomentary(idx, targetLayer) {
+  if (viewerMode !== 'simulate') return;
+  // If layer is already permanently active, no need to momentary trigger
+  if (simStack.includes(targetLayer) && momentaryHoverLayer !== targetLayer) return;
+  if (momentaryHoverLayer === targetLayer) return;
+
+  deactivateHoverMomentary();
+
+  if (!simStack.includes(targetLayer)) {
+    simStack.push(targetLayer);
+    simStack.sort((a, b) => a - b);
+    momentaryHoverLayer = targetLayer;
+    momentaryHoverTriggerIdx = idx;
+    updateLayerTabStates();
+    renderSvg();
+    triggerRgbFade();
+  }
+}
+
+function deactivateHoverMomentary() {
+  if (momentaryHoverLayer === null) return;
+  const pos = simStack.indexOf(momentaryHoverLayer);
+  if (pos !== -1) {
+    simStack.splice(pos, 1);
+  }
+  momentaryHoverLayer = null;
+  momentaryHoverTriggerIdx = null;
+  updateLayerTabStates();
+  renderSvg();
+  triggerRgbFade();
+}
+
 function resetSimStack() {
   simStack = [0];
   momentaryHeldLayer = null;
+  momentaryHoverLayer = null;
+  momentaryHoverTriggerIdx = null;
   updateLayerTabStates();
   renderSvg();
+  triggerRgbFade();
   if (selectedKeyIdx !== null) inspectKey(selectedKeyIdx);
 }
 
@@ -174,6 +278,11 @@ function toggleSimLayer(layerIdx) {
     }
     return;
   }
+  // Clear any temporary hover momentary state for this layer before locking
+  if (momentaryHoverLayer === layerIdx) {
+    momentaryHoverLayer = null;
+    momentaryHoverTriggerIdx = null;
+  }
   const pos = simStack.indexOf(layerIdx);
   if (pos !== -1) {
     simStack.splice(pos, 1);
@@ -183,6 +292,7 @@ function toggleSimLayer(layerIdx) {
   }
   updateLayerTabStates();
   renderSvg();
+  triggerRgbFade();
   if (selectedKeyIdx !== null) inspectKey(selectedKeyIdx);
 }
 
@@ -197,7 +307,7 @@ function renderLayerTabs() {
 
     if (viewerMode === 'simulate') {
       const isSimActive = simStack.includes(idx);
-      const isMom = (momentaryHeldLayer === idx);
+      const isMom = (momentaryHeldLayer === idx || momentaryHoverLayer === idx);
       btn.className = `layer-btn ${isSimActive ? 'sim-active' : ''} ${isMom ? 'sim-momentary' : ''}`;
       btn.innerHTML = `${isSimActive ? '<span class="sim-check-icon">✓</span>' : ''}<span class="idx">${idx}</span> ${layer.name}`;
       btn.onclick = () => toggleSimLayer(idx);
@@ -230,7 +340,7 @@ function updateLayerTabStates() {
     if (!btn) return;
     if (viewerMode === 'simulate') {
       const isSimActive = simStack.includes(idx);
-      const isMom = (momentaryHeldLayer === idx);
+      const isMom = (momentaryHeldLayer === idx || momentaryHoverLayer === idx);
       btn.className = `layer-btn ${isSimActive ? 'sim-active' : ''} ${isMom ? 'sim-momentary' : ''}`;
       btn.innerHTML = `${isSimActive ? '<span class="sim-check-icon">✓</span>' : ''}<span class="idx">${idx}</span> ${layer.name}`;
     } else {
@@ -461,6 +571,7 @@ function onKeyClick(idx) {
       simStack = [key.targetLayer];
       updateLayerTabStates();
       renderSvg();
+      triggerRgbFade();
       selectedKeyIdx = idx;
       inspectKey(idx);
       return;
@@ -480,7 +591,7 @@ function onKeyClick(idx) {
 }
 
 function onKeyPointerDown(idx) {
-  // Always update footer info for mobile touch
+  // Always update footer info immediately for mobile touch
   inspectKey(idx);
 
   if (viewerMode !== 'simulate') return;
@@ -494,6 +605,7 @@ function onKeyPointerDown(idx) {
       momentaryHeldLayer = key.targetLayer;
       updateLayerTabStates();
       renderSvg();
+      triggerRgbFade();
     }
   }
 }
@@ -508,12 +620,21 @@ function onKeyPointerUp(idx) {
     momentaryHeldLayer = null;
     updateLayerTabStates();
     renderSvg();
+    triggerRgbFade();
   }
 }
 
 function onKeyHover(idx) {
   // In ALL modes: desktop hover immediately updates the footer info drawer!
   inspectKey(idx);
+
+  // In Simulation Mode: hovering over a momentary layer key triggers it live!
+  if (viewerMode === 'simulate') {
+    const { key } = resolveCompositeKey(idx);
+    if (key && key.targetLayer !== null && key.targetLayer !== undefined && !key.rawBinding.startsWith('&tog') && !key.rawBinding.startsWith('&to')) {
+      activateHoverMomentary(idx, key.targetLayer);
+    }
+  }
 }
 
 function inspectKey(idx) {
@@ -565,11 +686,11 @@ function inspectKey(idx) {
 function resetInspector() {
   document.getElementById('insp-label').textContent = '—';
   if (viewerMode === 'simulate') {
-    document.getElementById('insp-title').textContent = 'Simulation Mode: Press & hold layer keys on the board to stack, or click to toggle';
-    document.getElementById('insp-detail').textContent = 'Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [Esc] Reset Stack • [G/O] Glove80/Go60';
+    document.getElementById('insp-title').textContent = 'Simulation Mode: Hover momentary layer keys to activate • Click to lock/toggle';
+    document.getElementById('insp-detail').textContent = 'Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [C] Color Guide • [Esc] Reset Stack';
   } else {
     document.getElementById('insp-title').textContent = 'Inspect Mode: Click any key to inspect details or navigate layers';
-    document.getElementById('insp-detail').textContent = 'Shortcuts: [0-9] Layer • [M] Switch to Simulate • [Esc] Back • [G/O] Glove80/Go60 • [R] RGB';
+    document.getElementById('insp-detail').textContent = 'Shortcuts: [0-9] Layer • [M] Switch to Simulate • [C] Color Guide • [Esc] Back';
   }
 }
 

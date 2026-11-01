@@ -231,9 +231,9 @@ def parse_key_data(key_obj, layer_names):
         layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
         layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
         line1 = layer_name
-        secondary = f"L{layer_idx}"
+        secondary = ''
         target_layer = layer_idx
-        badge = 'LAYER'
+        badge = ''
         badge_type = 'layer'
         tooltip = f"Layer: {layer_name} (Click to switch or hold to activate)"
 
@@ -243,7 +243,7 @@ def parse_key_data(key_obj, layer_names):
         line1 = "To"
         line2 = layer_name
         target_layer = layer_idx
-        secondary = format_layer_badge(layer_name)
+        secondary = ''
         badge = ''
         badge_type = 'layer'
         tooltip = f"Switch to {layer_name} (Click or hover to view layer)"
@@ -254,7 +254,7 @@ def parse_key_data(key_obj, layer_names):
         line1 = "Tog"
         line2 = layer_name
         target_layer = layer_idx
-        secondary = format_layer_badge(layer_name)
+        secondary = ''
         badge = ''
         badge_type = 'layer'
         tooltip = f"Toggle {layer_name} (Click or hover to view layer)"
@@ -272,7 +272,8 @@ def parse_key_data(key_obj, layer_names):
     elif beh == '&magic':
         line1 = 'Magic'
         target_layer = 6
-        secondary = 'Magic'
+        secondary = ''
+        badge = ''
         badge_type = 'sys'
         tooltip = 'Magic Configuration Layer (Click or hover to view layer)'
 
@@ -288,7 +289,7 @@ def parse_key_data(key_obj, layer_names):
         elif 'td_mouse' in custom_str:
             line1 = 'Spotlight'
             line2 = 'Mouse'
-            secondary = 'Mouse'
+            secondary = ''
             target_layer = 8
             badge = 'TD'
             badge_type = 'td'
@@ -327,9 +328,9 @@ def parse_key_data(key_obj, layer_names):
             tooltip = f"Sniper Precision Move {direction}"
         elif 'td_LAYER_Keypad' in custom_str:
             line1 = 'Keypad'
-            secondary = 'L4'
+            secondary = ''
             target_layer = 4
-            badge = 'LAYER'
+            badge = ''
             badge_type = 'layer'
             tooltip = 'Tap: Toggle Keypad • Hold: Momentary Keypad (Layer 4)'
         else:
@@ -387,6 +388,10 @@ def parse_key_data(key_obj, layer_names):
     else:
         line1 = beh
         tooltip = raw_binding
+
+    # Deduplicate secondary label if it repeats line1 or line2
+    if secondary and (secondary == line1 or secondary == line2 or (line2 and secondary in line2)):
+        secondary = ''
 
     return {
         'line1': line1,

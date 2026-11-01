@@ -34,7 +34,8 @@
       </button>
 
       <div class="btn-group">
-        <button class="btn active" id="btn-rgb" onclick="toggleRgb()">RGB Underglow: ON</button>
+        <button class="btn active" id="btn-rgb" onclick="toggleRgb()">RGB: ON</button>
+        <button class="btn" id="btn-legend" onclick="toggleLegendModal()" title="RGB Color Guide">🎨 Colors</button>
       </div>
 
       <div class="search-box">
@@ -65,19 +66,27 @@
         <span class="key-pill-label" id="insp-label">—</span>
       </div>
       <div class="key-meta">
-        <div id="insp-title">Hover or click any key to inspect details and preview layers</div>
-        <div id="insp-detail" style="color: var(--text-muted); font-size: 0.75rem;">Shortcuts: [0-9] Layer • [G] Glove80 • [O] Go60 • [R] Toggle RGB • Hover layer keys to preview</div>
+        <div id="insp-title">Hover any key to inspect details • Click to lock/toggle</div>
+        <div id="insp-detail" style="color: var(--text-muted); font-size: 0.75rem;">Shortcuts: [0-9] Toggle Layer • [M] Mode • [G] Glove80 • [O] Go60 • [R] RGB • [Esc] Reset</div>
       </div>
     </div>
+  </div>
 
-    <div class="rgb-legend">
-      <span><span class="rgb-dot" style="background:#FF00FF"></span>Nav/Arrows</span>
-      <span><span class="rgb-dot" style="background:#00FFFF"></span>Function/Fn</span>
-      <span><span class="rgb-dot" style="background:#FF5500"></span>Symbols</span>
-      <span><span class="rgb-dot" style="background:#FFBF00"></span>Brackets/RGB</span>
-      <span><span class="rgb-dot" style="background:#00FF00"></span>Keypad/Numpad</span>
-      <span><span class="rgb-dot" style="background:#FF0000"></span>System/Lock</span>
-      <span><span class="rgb-dot" style="background:#0066FF"></span>PC/Bluetooth</span>
+  <div id="legend-modal" class="modal-backdrop" onclick="toggleLegendModal(false)" style="display:none;">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <span style="font-weight:700; font-size:1rem;">🎨 RGB Underglow Colors</span>
+        <button class="modal-close" onclick="toggleLegendModal(false)">✕</button>
+      </div>
+      <div class="modal-legend-grid">
+        <div class="legend-row"><span class="rgb-dot" style="background:#FF00FF"></span><div><strong>Magenta:</strong> Navigation & Vim Arrows (HJKL)</div></div>
+        <div class="legend-row"><span class="rgb-dot" style="background:#00FFFF"></span><div><strong>Cyan:</strong> Function Keys (F1-F12) & Media Controls</div></div>
+        <div class="legend-row"><span class="rgb-dot" style="background:#FF5500"></span><div><strong>Orange:</strong> Symbols & Math Operators</div></div>
+        <div class="legend-row"><span class="rgb-dot" style="background:#FFBF00"></span><div><strong>Gold:</strong> Brackets, Quotes, Scroll & RGB</div></div>
+        <div class="legend-row"><span class="rgb-dot" style="background:#00FF00"></span><div><strong>Green:</strong> Keypad / Numpad Digit Block</div></div>
+        <div class="legend-row"><span class="rgb-dot" style="background:#FF0000"></span><div><strong>Red:</strong> Locks, Deletion & System/Exit Keys</div></div>
+        <div class="legend-row"><span class="rgb-dot" style="background:#0066FF"></span><div><strong>Blue:</strong> PC Overlay & Bluetooth</div></div>
+      </div>
     </div>
   </div>
 
