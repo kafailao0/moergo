@@ -29,8 +29,13 @@
   "layers": [
     [
       {
-        "value": "&td_magic",
-        "params": []
+        "value": "Custom",
+        "params": [
+          {
+            "value": "&td_magic",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&kp",
