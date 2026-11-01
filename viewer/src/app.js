@@ -505,7 +505,7 @@ function renderLayerTabs() {
       const isSimActive = simStack.includes(idx);
       const isMom = (momentaryHoverLayer === idx);
       btn.className = `layer-btn ${isSimActive ? 'sim-active' : ''} ${isMom ? 'sim-momentary' : ''}`;
-      btn.innerHTML = `${isSimActive ? '<span class="sim-check-icon">✓</span>' : ''}<span class="idx">${idx}</span> ${layer.name}`;
+      btn.innerHTML = `<span class="idx">${idx}</span> ${layer.name}`;
       btn.onclick = () => toggleSimLayer(idx);
     } else {
       const isActive = (idx === currentLayer);
@@ -538,7 +538,7 @@ function updateLayerTabStates() {
       const isSimActive = simStack.includes(idx);
       const isMom = (momentaryHoverLayer === idx);
       btn.className = `layer-btn ${isSimActive ? 'sim-active' : ''} ${isMom ? 'sim-momentary' : ''}`;
-      btn.innerHTML = `${isSimActive ? '<span class="sim-check-icon">✓</span>' : ''}<span class="idx">${idx}</span> ${layer.name}`;
+      btn.innerHTML = `<span class="idx">${idx}</span> ${layer.name}`;
     } else {
       const isActive = (idx === currentLayer);
       btn.className = `layer-btn ${isActive ? 'active' : ''}`;
