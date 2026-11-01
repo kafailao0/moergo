@@ -83,7 +83,6 @@ def format_param_recursive(p):
 
     if val in mod_prefixes and sub_params:
         sub_formatted = ''.join(format_param_recursive(sp) for sp in sub_params)
-        # If sub_formatted is a word like SPACE, insert a space: e.g. "⌘ Space"
         if len(sub_formatted) > 1 and sub_formatted[0].isalnum():
             return f"{mod_prefixes[val]} {sub_formatted}"
         return f"{mod_prefixes[val]}{sub_formatted}"
@@ -159,6 +158,7 @@ def format_param_recursive(p):
     return base_aliases.get(val, val)
 
 def stringify_param(p):
+    """Stringifies nested parameters for raw binding display."""
     if isinstance(p, dict):
         val = str(p.get('value', ''))
         sub = p.get('params', [])
@@ -166,6 +166,22 @@ def stringify_param(p):
             return f"{val}({', '.join(stringify_param(sp) for sp in sub)})"
         return val
     return str(p)
+
+def format_layer_badge(name):
+    """Format layer name for keycap corner badge."""
+    abbrevs = {
+        'SymbolNav': 'SymNav',
+        'NumRow': 'NumRow',
+        'Keypad': 'Keypad',
+        'Magic': 'Magic',
+        'Mouse': 'Mouse',
+        'Sniper': 'Sniper',
+        'Gaming': 'Gaming',
+        'Factory': 'Factory',
+        'Base': 'Base',
+        'PC': 'PC'
+    }
+    return abbrevs.get(name, name)
 
 def parse_key_data(key_obj, layer_names):
     beh = str(key_obj.get('value', ''))
@@ -195,7 +211,6 @@ def parse_key_data(key_obj, layer_names):
         tap = formatted_params[1]
         line1 = tap
         secondary = mod.split()[0]
-        # User requested: hide HML/HMR badge! Just show the mod key in secondary corner.
         badge = ''
         badge_type = 'mod'
         hand = "Left" if beh == '&hml' else "Right"
@@ -206,21 +221,22 @@ def parse_key_data(key_obj, layer_names):
         layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
         tap = formatted_params[1]
         line1 = tap
-        secondary = f"L{layer_idx}"
+        # User requested: Show layer name instead of L1/L2
+        secondary = format_layer_badge(layer_name)
         target_layer = layer_idx
         badge_type = 'layer'
-        tooltip = f"Tap for {tap} • Hold for {layer_name} (Click to switch)"
+        tooltip = f"Tap for {tap} • Hold for {layer_name} (Click or hover to view layer)"
 
     elif beh in ['&layer', '&mo']:
         layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
         layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
         line1 = layer_name
-        secondary = f"L{layer_idx}"
+        # If primary already displays layer_name, don't repeat in corner
+        secondary = ''
         target_layer = layer_idx
-        # User requested: DO NOT show MO badge on Keypad!
         badge = ''
         badge_type = 'layer'
-        tooltip = f"Layer: {layer_name} (Click to switch)"
+        tooltip = f"Layer: {layer_name} (Click or hover to view layer)"
 
     elif beh == '&to':
         layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
@@ -228,9 +244,10 @@ def parse_key_data(key_obj, layer_names):
         line1 = "To"
         line2 = layer_name
         target_layer = layer_idx
-        badge = f"L{layer_idx}"
+        secondary = format_layer_badge(layer_name)
+        badge = ''
         badge_type = 'layer'
-        tooltip = f"Switch to {layer_name}"
+        tooltip = f"Switch to {layer_name} (Click or hover to view layer)"
 
     elif beh == '&tog':
         layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
@@ -238,26 +255,27 @@ def parse_key_data(key_obj, layer_names):
         line1 = "Tog"
         line2 = layer_name
         target_layer = layer_idx
-        badge = f"L{layer_idx}"
+        secondary = format_layer_badge(layer_name)
+        badge = ''
         badge_type = 'layer'
-        tooltip = f"Toggle {layer_name}"
+        tooltip = f"Toggle {layer_name} (Click or hover to view layer)"
 
     elif beh == '&lt':
         layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
         layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
         tap = formatted_params[1] if len(formatted_params) > 1 else 'LT'
         line1 = tap
-        secondary = f"L{layer_idx}"
+        secondary = format_layer_badge(layer_name)
         target_layer = layer_idx
         badge_type = 'layer'
-        tooltip = f"Tap for {tap} • Hold for {layer_name} (Click to switch)"
+        tooltip = f"Tap for {tap} • Hold for {layer_name} (Click or hover to view layer)"
 
     elif beh == '&magic':
         line1 = 'Magic'
         target_layer = 6
-        secondary = 'L6'
+        secondary = 'Magic'
         badge_type = 'sys'
-        tooltip = 'Magic Configuration Layer (Click to switch)'
+        tooltip = 'Magic Configuration Layer (Click or hover to view layer)'
 
     elif beh == 'Custom':
         custom_str = str(raw_params[0].get('value', '')) if raw_params else ''
@@ -271,7 +289,7 @@ def parse_key_data(key_obj, layer_names):
         elif 'td_mouse' in custom_str:
             line1 = 'Spotlight'
             line2 = 'Mouse'
-            secondary = 'L8'
+            secondary = 'Mouse'
             target_layer = 8
             badge = 'TD'
             badge_type = 'td'
@@ -310,7 +328,7 @@ def parse_key_data(key_obj, layer_names):
             tooltip = f"Sniper Precision Move {direction}"
         elif 'td_LAYER_Keypad' in custom_str:
             line1 = 'Keypad'
-            secondary = 'L4'
+            secondary = 'Keypad'
             target_layer = 4
             tooltip = 'Tap: Toggle Keypad • Hold: Momentary Keypad'
         else:
@@ -318,11 +336,11 @@ def parse_key_data(key_obj, layer_names):
 
     elif beh == '&trans':
         line1 = '▽'
-        tooltip = 'Transparent (Pass through to lower layer)'
+        tooltip = 'Pass through (inherits key from Base layer)'
         badge_type = 'trans'
     elif beh == '&none':
         line1 = '—'
-        tooltip = 'None (Inactive)'
+        tooltip = 'None (Inactive / Blocked)'
         badge_type = 'none'
     elif beh.startswith('&bt'):
         sub = formatted_params[0] if formatted_params else ''
@@ -477,7 +495,6 @@ def generate_html(data):
       --key-border: #38424d;
       --key-hover: #262e38;
       --key-active: #313d4c;
-      --homing: #f0883e;
       --badge-mod: #d2a8ff;
       --badge-layer: #7ee787;
       --badge-td: #ffa657;
@@ -668,9 +685,36 @@ def generate_html(data):
       background: rgba(0,0,0,0.25);
       color: #ffffff;
     }}
+    .layer-btn.preview-active {{
+      background: #238636 !important;
+      border-color: #7ee787 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 10px rgba(126, 231, 135, 0.6);
+    }}
     .layer-btn.target-pulse {{
       border-color: #7ee787 !important;
       box-shadow: 0 0 8px rgba(126, 231, 135, 0.5);
+    }}
+
+    .preview-banner {{
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(35, 134, 54, 0.9);
+      backdrop-filter: blur(6px);
+      border: 1px solid #7ee787;
+      color: #ffffff;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      z-index: 60;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      pointer-events: none;
     }}
 
     main {{
@@ -720,6 +764,11 @@ def generate_html(data):
       opacity: 0.45;
       stroke-dasharray: 2, 2;
     }}
+    .key-cap.pass-through {{
+      opacity: 0.7;
+      stroke-dasharray: 2.5, 2.5;
+      fill: #141920;
+    }}
     .key-cap.none {{
       opacity: 0.2;
     }}
@@ -742,6 +791,15 @@ def generate_html(data):
     .key-group.has-layer-link:hover .key-cap {{
       stroke: var(--badge-layer) !important;
       stroke-width: 2px !important;
+    }}
+
+    .key-group.is-pass-through .key-text-primary {{
+      fill: #8b949e !important;
+      font-style: italic;
+    }}
+    .key-group.is-pass-through .key-text-sec {{
+      fill: #8b949e !important;
+      opacity: 0.7;
     }}
 
     .key-glow {{
@@ -773,11 +831,11 @@ def generate_html(data):
     }}
     .key-text-layer-link {{
       fill: var(--badge-layer);
-      font-size: 9.5px;
       font-weight: 800;
       text-anchor: end;
       dominant-baseline: text-before-edge;
       pointer-events: none;
+      letter-spacing: -0.2px;
     }}
     .key-badge {{
       font-size: 8px;
@@ -791,9 +849,13 @@ def generate_html(data):
     .badge-sys {{ fill: var(--badge-sys); }}
     .badge-mouse {{ fill: var(--badge-mouse); }}
 
-    .homing-dot {{
-      fill: var(--homing);
+    .trans-watermark {{
+      fill: #6e7681;
+      font-size: 8px;
+      font-weight: 700;
       pointer-events: none;
+      text-anchor: start;
+      dominant-baseline: text-before-edge;
     }}
 
     .drawer {{
@@ -955,6 +1017,12 @@ def generate_html(data):
   <div class="layer-bar" id="layer-tabs"></div>
 
   <main>
+    <div class="preview-banner" id="preview-banner">
+      <span>👁️ Previewing Layer:</span>
+      <span id="preview-layer-name" style="text-decoration: underline;">—</span>
+      <span style="opacity: 0.8; font-weight: normal; font-size: 0.72rem;">(Move away or release to return)</span>
+    </div>
+
     <div class="viewport-container">
       <svg id="keyboard-svg" viewBox="-20 -20 1010 475" class="rgb-mode"></svg>
     </div>
@@ -972,8 +1040,8 @@ def generate_html(data):
         <span class="key-pill-label" id="insp-label">—</span>
       </div>
       <div class="key-meta">
-        <div id="insp-title">Click or tap any key to inspect full details or navigate layers</div>
-        <div id="insp-detail" style="color: var(--text-muted); font-size: 0.75rem;">Shortcuts: [0-9] Layer • [G] Glove80 • [O] Go60 • [R] Toggle RGB • Click layer keys to switch</div>
+        <div id="insp-title">Hover or click any key to inspect details and preview layers</div>
+        <div id="insp-detail" style="color: var(--text-muted); font-size: 0.75rem;">Shortcuts: [0-9] Layer • [G] Glove80 • [O] Go60 • [R] Toggle RGB • Hover layer keys to preview</div>
       </div>
     </div>
 
@@ -996,6 +1064,7 @@ def generate_html(data):
     const KEYBOARDS = JSON.parse(document.getElementById('embedded-data').textContent);
     let currentKb = 'glove80';
     let currentLayer = 0;
+    let previewLayer = null;
     let layerHistory = [];
     let rgbEnabled = true;
     let selectedKeyIdx = null;
@@ -1035,7 +1104,11 @@ def generate_html(data):
           e.preventDefault();
           document.getElementById('search-input').focus();
         }} else if (e.key === 'Escape') {{
-          if (layerHistory.length > 0) {{
+          if (previewLayer !== null) {{
+            previewLayer = null;
+            updatePreviewBanner();
+            renderSvg();
+          }} else if (layerHistory.length > 0) {{
             returnToPreviousLayer();
           }} else {{
             selectedKeyIdx = null;
@@ -1051,12 +1124,14 @@ def generate_html(data):
       if (currentKb === kb) return;
       currentKb = kb;
       currentLayer = 0;
+      previewLayer = null;
       layerHistory = [];
       selectedKeyIdx = null;
       document.getElementById('btn-glove80').classList.toggle('active', kb === 'glove80');
       document.getElementById('btn-go60').classList.toggle('active', kb === 'go60');
       updateHeader();
       updateBackButton();
+      updatePreviewBanner();
       renderLayerTabs();
       renderSvg();
       resetInspector();
@@ -1081,12 +1156,32 @@ def generate_html(data):
       const kb = KEYBOARDS[currentKb];
       const bar = document.getElementById('layer-tabs');
       bar.innerHTML = '';
+      const displayLayer = (previewLayer !== null) ? previewLayer : currentLayer;
+
       kb.layers.forEach((layer, idx) => {{
         const btn = document.createElement('button');
         btn.id = `layer-tab-${{idx}}`;
-        btn.className = `layer-btn ${{idx === currentLayer ? 'active' : ''}}`;
+        const isActive = (idx === currentLayer && previewLayer === null);
+        const isPreview = (idx === previewLayer);
+        btn.className = `layer-btn ${{isActive ? 'active' : ''}} ${{isPreview ? 'preview-active' : ''}}`;
         btn.innerHTML = `<span class="idx">${{idx}}</span> ${{layer.name}}`;
         btn.onclick = () => setLayer(idx);
+        btn.onmouseenter = () => {{
+          if (idx !== currentLayer) {{
+            previewLayer = idx;
+            renderLayerTabs();
+            renderSvg();
+            updatePreviewBanner();
+          }}
+        }};
+        btn.onmouseleave = () => {{
+          if (previewLayer === idx) {{
+            previewLayer = null;
+            renderLayerTabs();
+            renderSvg();
+            updatePreviewBanner();
+          }}
+        }};
         bar.appendChild(btn);
       }});
     }}
@@ -1096,7 +1191,9 @@ def generate_html(data):
         layerHistory.push(currentLayer);
       }}
       currentLayer = idx;
+      previewLayer = null;
       updateBackButton();
+      updatePreviewBanner();
       renderLayerTabs();
       renderSvg();
       if (selectedKeyIdx !== null) {{
@@ -1108,7 +1205,9 @@ def generate_html(data):
       if (layerHistory.length > 0) {{
         const prev = layerHistory.pop();
         currentLayer = prev;
+        previewLayer = null;
         updateBackButton();
+        updatePreviewBanner();
         renderLayerTabs();
         renderSvg();
         if (selectedKeyIdx !== null) inspectKey(selectedKeyIdx);
@@ -1130,10 +1229,25 @@ def generate_html(data):
       }}
     }}
 
+    function updatePreviewBanner() {{
+      const banner = document.getElementById('preview-banner');
+      const nameEl = document.getElementById('preview-layer-name');
+      if (previewLayer !== null) {{
+        const kb = KEYBOARDS[currentKb];
+        const layerName = kb.layers[previewLayer] ? kb.layers[previewLayer].name : `L${{previewLayer}}`;
+        nameEl.textContent = `${{previewLayer}}: ${{layerName}}`;
+        banner.style.display = 'inline-flex';
+      }} else {{
+        banner.style.display = 'none';
+      }}
+    }}
+
     function renderSvg() {{
       const kb = KEYBOARDS[currentKb];
       const coords = kb.coords;
-      const layer = kb.layers[currentLayer];
+      const displayLayer = (previewLayer !== null) ? previewLayer : currentLayer;
+      const layer = kb.layers[displayLayer];
+      const baseLayer = kb.layers[0];
       const svg = document.getElementById('keyboard-svg');
 
       if (currentKb === 'glove80') {{
@@ -1145,24 +1259,35 @@ def generate_html(data):
       let html = '';
 
       coords.forEach((c, idx) => {{
-        const key = layer.keys[idx] || {{ line1: '', line2: '', secondary: '', badge: '', rgbHex: '#000000' }};
+        const rawKey = layer.keys[idx] || {{ line1: '', line2: '', secondary: '', badge: '', rgbHex: '#000000', rawBinding: '' }};
         const x = c.x * UNIT;
         const y = c.y * UNIT;
         const r = c.r || 0;
         const cx = x + KEY_SIZE / 2;
         const cy = y + KEY_SIZE / 2;
 
-        // Accurate rotation pivot calculation
-        let pivotX = x;
-        let pivotY = y;
-        if (currentKb === 'glove80') {{
-          // In Glove80, left thumb keys pivot around rx=4, right thumb keys pivot around rx=14
-          pivotX = (c.rx !== undefined) ? c.rx * UNIT : x;
-          pivotY = (c.ry !== undefined) ? c.ry * UNIT : y;
-        }} else {{
-          // In Go60, thumb keys pivot around key top-left (c.x * UNIT, c.y * UNIT)
-          pivotX = (c.rx !== undefined) ? c.rx * UNIT : x;
-          pivotY = (c.ry !== undefined) ? c.ry * UNIT : y;
+        let pivotX = (c.rx !== undefined) ? c.rx * UNIT : x;
+        let pivotY = (c.ry !== undefined) ? c.ry * UNIT : y;
+
+        // Pass-through (&trans) key resolution to Base layer
+        const isTrans = (rawKey.line1 === '▽' || rawKey.rawBinding === '&trans');
+        let key = rawKey;
+        let isPassThrough = false;
+
+        if (isTrans && displayLayer !== 0 && baseLayer && baseLayer.keys[idx]) {{
+          const baseK = baseLayer.keys[idx];
+          if (baseK && baseK.line1 !== '▽' && baseK.rawBinding !== '&trans') {{
+            isPassThrough = true;
+            key = {{
+              ...rawKey,
+              line1: baseK.line1,
+              line2: baseK.line2,
+              secondary: baseK.secondary,
+              badge: '',
+              tooltip: `Pass-through (Inherited from Base: ${{baseK.tooltip || baseK.line1}})`,
+              rawBinding: `&trans (Inherits Base: ${{baseK.rawBinding}})`
+            }};
+          }}
         }}
 
         const isSelected = selectedKeyIdx === idx;
@@ -1174,45 +1299,58 @@ def generate_html(data):
           (key.tooltip && key.tooltip.toLowerCase().includes(searchQuery))
         );
 
-        let transClass = '';
-        if (key.line1 === '▽') transClass = 'trans';
-        if (key.line1 === '—') transClass = 'none';
-
-        // Correct Homing Dots: Glove80 keys 38 (F) & 41 (J); Go60 keys 28 (F) & 31 (J)
-        let isHoming = false;
-        if (currentKb === 'glove80' && (idx === 38 || idx === 41)) isHoming = true;
-        if (currentKb === 'go60' && (idx === 28 || idx === 31)) isHoming = true;
+        let capClass = 'key-cap';
+        if (isPassThrough) {{
+          capClass += ' pass-through';
+        }} else if (key.line1 === '▽') {{
+          capClass += ' trans';
+        }} else if (key.line1 === '—') {{
+          capClass += ' none';
+        }}
 
         const hasLayerLink = key.targetLayer !== null && key.targetLayer !== undefined;
         const rotAttr = r ? `transform="rotate(${{r}} ${{pivotX}} ${{pivotY}})"` : '';
-        const groupClass = `key-group ${{isSelected ? 'selected' : ''}} ${{isMatched ? 'matched' : ''}} ${{hasLayerLink ? 'has-layer-link' : ''}}`;
+        const groupClass = `key-group ${{isSelected ? 'selected' : ''}} ${{isMatched ? 'matched' : ''}} ${{hasLayerLink ? 'has-layer-link' : ''}} ${{isPassThrough ? 'is-pass-through' : ''}}`;
 
-        // Smart font sizing
         let primaryFontSize = 13.5;
         let primaryFontWeight = 700;
         if (key.line2) {{
           primaryFontSize = key.line1.length > 5 ? 8.5 : 9.5;
         }} else if (key.line1.length > 6) {{
-          primaryFontSize = 9.5;
+          primaryFontSize = 9;
           primaryFontWeight = 600;
         }} else if (key.line1.length > 3) {{
           primaryFontSize = 11;
         }}
 
+        const secFontSize = (key.secondary && key.secondary.length > 5) ? '7.8px' : '9px';
+
         html += `
-          <g class="${{groupClass}}" ${{rotAttr}} onclick="onKeyClick(${{idx}})" onmouseenter="onKeyHover(${{idx}})" onmouseleave="onKeyLeave(${{idx}})" data-idx="${{idx}}">
+          <g class="${{groupClass}}" ${{rotAttr}}
+             onclick="onKeyClick(${{idx}})"
+             onmouseenter="onKeyHover(${{idx}})"
+             onmouseleave="onKeyLeave(${{idx}})"
+             onpointerdown="onKeyPointerDown(${{idx}})"
+             onpointerup="onKeyPointerUp(${{idx}})"
+             data-idx="${{idx}}">
+
             <!-- RGB Glow border -->
             <rect class="key-glow" x="${{x-2}}" y="${{y-2}}" width="${{KEY_SIZE+4}}" height="${{KEY_SIZE+4}}" stroke="${{key.rgbHex}}" />
-            
-            <!-- Tactile Keycap -->
-            <rect class="key-cap ${{transClass}}" x="${{x}}" y="${{y}}" width="${{KEY_SIZE}}" height="${{KEY_SIZE}}" />
 
-            <!-- Corner Secondary / Mod / Layer Indicator -->
+            <!-- Tactile Keycap -->
+            <rect class="${{capClass}}" x="${{x}}" y="${{y}}" width="${{KEY_SIZE}}" height="${{KEY_SIZE}}" />
+
+            <!-- Pass-through watermark icon -->
+            ${{isPassThrough ? `<text class="trans-watermark" x="${{x + 4}}" y="${{y + 10}}">▽</text>` : ''}}
+
+            <!-- Corner Secondary / Mod / Layer Name -->
             ${{key.secondary ? `
-              <text class="${{hasLayerLink ? 'key-text-layer-link' : 'key-text-sec'}}" x="${{x + KEY_SIZE - 5}}" y="${{y + 4.5}}">${{escapeHtml(key.secondary)}}</text>
+              <text class="${{hasLayerLink ? 'key-text-layer-link' : 'key-text-sec'}}"
+                    x="${{x + KEY_SIZE - 4}}" y="${{y + 4.5}}"
+                    font-size="${{secFontSize}}">${{escapeHtml(key.secondary)}}</text>
             ` : ''}}
 
-            <!-- Badge (Top-Left) - for TD or SYS only -->
+            <!-- Badge (Top-Left) -->
             ${{key.badge ? `
               <text class="key-badge badge-${{key.badgeType}}" x="${{x + 5}}" y="${{y + 4.5}}">${{escapeHtml(key.badge)}}</text>
             ` : ''}}
@@ -1224,9 +1362,6 @@ def generate_html(data):
             ` : `
               <text class="key-text-primary" x="${{cx}}" y="${{cy + (key.secondary ? 2.5 : 0)}}" font-size="${{primaryFontSize}}" font-weight="${{primaryFontWeight}}">${{escapeHtml(key.line1)}}</text>
             `}}
-
-            <!-- Tactile Homing Dot on F and J keys -->
-            ${{isHoming ? `<circle class="homing-dot" cx="${{cx}}" cy="${{y + KEY_SIZE - 6.5}}" r="1.8"/>` : ''}}
           </g>
         `;
       }});
@@ -1236,39 +1371,64 @@ def generate_html(data):
 
     function onKeyClick(idx) {{
       selectedKeyIdx = idx;
-      renderSvg();
-      inspectKey(idx);
-
       const kb = KEYBOARDS[currentKb];
       const key = kb.layers[currentLayer].keys[idx];
-      // If key links to another layer, clicking it navigates directly to that layer!
-      if (key && key.targetLayer !== null && key.targetLayer !== undefined) {{
+
+      // If key links to another layer, switch permanently
+      if (key && key.targetLayer !== null && key.targetLayer !== undefined && key.targetLayer !== currentLayer) {{
         setLayer(key.targetLayer, true);
+        return;
       }}
+
+      renderSvg();
+      inspectKey(idx);
     }}
 
     function onKeyHover(idx) {{
       const kb = KEYBOARDS[currentKb];
       const key = kb.layers[currentLayer].keys[idx];
-      if (key && key.targetLayer !== null && key.targetLayer !== undefined) {{
-        const targetTab = document.getElementById(`layer-tab-${{key.targetLayer}}`);
-        if (targetTab) targetTab.classList.add('target-pulse');
+      if (key && key.targetLayer !== null && key.targetLayer !== undefined && key.targetLayer !== currentLayer) {{
+        previewLayer = key.targetLayer;
+        renderLayerTabs();
+        renderSvg();
+        updatePreviewBanner();
       }}
     }}
 
     function onKeyLeave(idx) {{
+      if (previewLayer !== null) {{
+        previewLayer = null;
+        renderLayerTabs();
+        renderSvg();
+        updatePreviewBanner();
+      }}
+    }}
+
+    function onKeyPointerDown(idx) {{
       const kb = KEYBOARDS[currentKb];
       const key = kb.layers[currentLayer].keys[idx];
-      if (key && key.targetLayer !== null && key.targetLayer !== undefined) {{
-        const targetTab = document.getElementById(`layer-tab-${{key.targetLayer}}`);
-        if (targetTab) targetTab.classList.remove('target-pulse');
+      if (key && key.targetLayer !== null && key.targetLayer !== undefined && key.targetLayer !== currentLayer) {{
+        previewLayer = key.targetLayer;
+        renderLayerTabs();
+        renderSvg();
+        updatePreviewBanner();
+      }}
+    }}
+
+    function onKeyPointerUp(idx) {{
+      if (previewLayer !== null) {{
+        previewLayer = null;
+        renderLayerTabs();
+        renderSvg();
+        updatePreviewBanner();
       }}
     }}
 
     function inspectKey(idx) {{
       const kb = KEYBOARDS[currentKb];
       const coord = kb.coords[idx];
-      const layer = kb.layers[currentLayer];
+      const displayLayer = (previewLayer !== null) ? previewLayer : currentLayer;
+      const layer = kb.layers[displayLayer];
       const key = layer.keys[idx];
 
       const fullLabel = key.line2 ? `${{key.line1}} ${{key.line2}}` : (key.line1 || '—');
@@ -1281,18 +1441,18 @@ def generate_html(data):
 
       let layerJumpHtml = '';
       if (key.targetLayer !== null && key.targetLayer !== undefined) {{
-        const targetName = kb.layers[key.targetLayer] ? kb.layers[key.targetLayer].name : `L${{key.targetLayer}}`;
+        const targetName = kb.layers[key.targetLayer] ? kb.layers[key.targetLayer].name : `Layer ${{key.targetLayer}}`;
         layerJumpHtml = `<button class="jump-layer-btn" onclick="setLayer(${{key.targetLayer}}, true)">Go to ${{targetName}} →</button>`;
       }}
 
-      titleEl.innerHTML = `<strong>${{coord.label}}</strong> (Key #${{idx}}) • Layer ${{currentLayer}}: <strong>${{layer.name}}</strong> • ${{rgbDesc}} ${{layerJumpHtml}}`;
+      titleEl.innerHTML = `<strong>${{coord.label}}</strong> (Key #${{idx}}) • Layer ${{displayLayer}}: <strong>${{layer.name}}</strong> • ${{rgbDesc}} ${{layerJumpHtml}}`;
       detailEl.innerHTML = `ZMK: <code style="color:var(--accent); background:#090d12; padding:2px 6px; border-radius:4px;">${{escapeHtml(key.rawBinding)}}</code> • ${{escapeHtml(key.tooltip)}}`;
     }}
 
     function resetInspector() {{
       document.getElementById('insp-label').textContent = '—';
-      document.getElementById('insp-title').textContent = 'Click or tap any key to inspect full details or navigate layers';
-      document.getElementById('insp-detail').textContent = 'Shortcuts: [0-9] Layer • [G] Glove80 • [O] Go60 • [R] Toggle RGB • Click layer keys to switch';
+      document.getElementById('insp-title').textContent = 'Hover or click any key to inspect details and preview layers';
+      document.getElementById('insp-detail').textContent = 'Shortcuts: [0-9] Layer • [G] Glove80 • [O] Go60 • [R] Toggle RGB • Hover layer keys to preview';
     }}
 
     function handleSearch(val) {{
