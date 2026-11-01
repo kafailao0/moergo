@@ -178,7 +178,7 @@ def format_layer_badge(name):
         return abbrevs[name]
     return name[:6] if len(name) > 6 else name
 
-def parse_custom_behavior_annotations(dts_text):
+def parse_custom_behavior_annotations(dts_text, layer_names=None):
     """
     Parses doc-comment annotations from custom_defined_behaviors or keymap behaviors.
     Format example:
@@ -227,13 +227,18 @@ def parse_custom_behavior_annotations(dts_text):
             if bm:
                 raw_bindings = re.findall(r'<([^>]+)>', bm.group(1))
                 formatted_steps = []
+                target_l = None
                 for rb in raw_bindings:
-                    # Clean binding tokens (e.g. &kp LG(C) -> Copy, etc.)
                     parts = rb.split(None, 1)
                     param = parts[1] if len(parts) > 1 else parts[0]
                     formatted_steps.append(format_param_recursive(param))
+                    if layer_names and target_l is None:
+                        for l_idx, l_name in enumerate(layer_names):
+                            if l_name.lower() in rb.lower() or f"layer_{l_name.lower()}" in rb.lower():
+                                target_l = l_idx
+                                break
 
-                meta[beh_name] = {
+                info = {
                     'name': beh_name,
                     'line1': formatted_steps[0] if len(formatted_steps) > 0 else beh_name,
                     'line2': formatted_steps[1] if len(formatted_steps) > 1 else '',
@@ -241,6 +246,9 @@ def parse_custom_behavior_annotations(dts_text):
                     'badge_type': 'td',
                     'tooltip': f"Tap Dance: {' • '.join(f'{i+1}x {s}' for i, s in enumerate(formatted_steps))}"
                 }
+                if target_l is not None:
+                    info['target_layer'] = target_l
+                meta[beh_name] = info
 
     return meta
 
@@ -341,6 +349,13 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
     elif beh == 'Custom':
         custom_str = str(raw_params[0].get('value', '')) if raw_params else ''
         raw_binding = custom_str
+
+        # If custom string wraps a standard command like '&msc SNIPER_SCRL_LEFT' or '&mmv ...'
+        if custom_str.startswith('&') and ' ' in custom_str:
+            parts = custom_str.split(None, 1)
+            sub_key_obj = {'value': parts[0], 'params': [{'value': parts[1], 'params': []}]}
+            return parse_key_data(sub_key_obj, layer_names, custom_meta)
+
         clean_name = custom_str.lstrip('&')
         if custom_meta and clean_name in custom_meta:
             m = custom_meta[clean_name]
@@ -351,52 +366,6 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
             tooltip = m.get('tooltip', f"Custom Behavior: {clean_name}")
             if 'target_layer' in m:
                 target_layer = m['target_layer']
-        elif 'td_caps' in custom_str:
-            line1 = 'Caps'
-            secondary = ''
-            badge = 'TD'
-            badge_type = 'td'
-            tooltip = 'Tap Dance: 1x Caps Word • 2x Caps Lock'
-        elif 'td_mouse' in custom_str:
-            line1 = 'Spotlight'
-            line2 = 'Mouse'
-            secondary = ''
-            target_layer = 8
-            badge = 'TD'
-            badge_type = 'td'
-            tooltip = 'Tap Dance: 1x Spotlight (⌘ Space) • 2x Toggle Mouse Layer'
-        elif 'td_copy_paste_pc' in custom_str:
-            line1 = 'Copy'
-            line2 = 'Paste'
-            badge = 'TD'
-            badge_type = 'td'
-            tooltip = 'Tap Dance: 1x Ctrl+C (Copy) • 2x Ctrl+V (Paste)'
-        elif 'td_copy_paste' in custom_str:
-            line1 = 'Copy'
-            line2 = 'Paste'
-            badge = 'TD'
-            badge_type = 'td'
-            tooltip = 'Tap Dance: 1x ⌘C (Copy) • 2x ⌘V (Paste)'
-        elif 'td_media' in custom_str:
-            line1 = '⏯'
-            line2 = 'Media'
-            badge = 'TD'
-            badge_type = 'td'
-            tooltip = 'Tap Dance: 1x Play/Pause • 2x Next Track • 3x Prev Track'
-        elif 'SNIPER_SCRL' in custom_str:
-            direction = custom_str.split('_')[-1]
-            arrows = {'UP': '↑', 'DOWN': '↓', 'LEFT': '←', 'RIGHT': '→'}
-            line1 = '🎯 Scrl'
-            line2 = arrows.get(direction, direction)
-            badge_type = 'mouse'
-            tooltip = f"Sniper Precision Scroll {direction}"
-        elif 'SNIPER_MOVE' in custom_str:
-            direction = custom_str.split('_')[-1]
-            arrows = {'UP': '↑', 'DOWN': '↓', 'LEFT': '←', 'RIGHT': '→'}
-            line1 = '🎯 Move'
-            line2 = arrows.get(direction, direction)
-            badge_type = 'mouse'
-            tooltip = f"Sniper Precision Move {direction}"
         elif 'td_layer_' in custom_str.lower():
             m = re.search(r'td_layer_([a-zA-Z0-9_]+)', custom_str, re.IGNORECASE)
             layer_match = m.group(1) if m else ''
@@ -414,7 +383,8 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
             badge_type = 'layer'
             tooltip = f"Layer: {l_name} (Tap: Toggle • Hold: Momentary)"
         else:
-            line1 = custom_str
+            line1 = clean_name
+            tooltip = custom_str
 
     elif beh == '&trans':
         line1 = '▽'
@@ -446,19 +416,23 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
         badge_type = 'rgb'
         tooltip = f"RGB Control: {sub}"
     elif beh == '&mmv':
-        sub = str(raw_params[0].get('value', '')).replace('MOVE_', '') if raw_params else ''
+        sub = str(raw_params[0].get('value', '')) if raw_params else ''
+        direction = sub.split('_')[-1]
         arrows = {'UP': '↑', 'DOWN': '↓', 'LEFT': '←', 'RIGHT': '→'}
-        line1 = 'Mouse'
-        line2 = arrows.get(sub, sub)
+        is_sniper = 'SNIPER' in sub
+        line1 = '🎯 Move' if is_sniper else 'Mouse'
+        line2 = arrows.get(direction, direction)
         badge_type = 'mouse'
-        tooltip = f"Mouse Move {sub}"
+        tooltip = f"{'Sniper Precision ' if is_sniper else 'Mouse '}Move {direction}"
     elif beh == '&msc':
-        sub = str(raw_params[0].get('value', '')).replace('SCRL_', '') if raw_params else ''
+        sub = str(raw_params[0].get('value', '')) if raw_params else ''
+        direction = sub.split('_')[-1]
         arrows = {'UP': '↑', 'DOWN': '↓', 'LEFT': '←', 'RIGHT': '→'}
-        line1 = 'Scrl'
-        line2 = arrows.get(sub, sub)
+        is_sniper = 'SNIPER' in sub
+        line1 = '🎯 Scrl' if is_sniper else 'Scrl'
+        line2 = arrows.get(direction, direction)
         badge_type = 'mouse'
-        tooltip = f"Mouse Scroll {sub}"
+        tooltip = f"{'Sniper Precision ' if is_sniper else 'Mouse '}Scroll {direction}"
     elif beh == '&mkp':
         sub = str(raw_params[0].get('value', '')).replace('CLK', '') if raw_params else ''
         labels = {'L': 'L-Click', 'R': 'R-Click', 'M': 'M-Click'}
@@ -523,8 +497,8 @@ def build_data():
         }
     }
 
-    g80_custom_meta = parse_custom_behavior_annotations(g80_json.get('custom_defined_behaviors', ''))
-    go60_custom_meta = parse_custom_behavior_annotations(go60_json.get('custom_defined_behaviors', ''))
+    g80_custom_meta = parse_custom_behavior_annotations(g80_json.get('custom_defined_behaviors', ''), keyboards['glove80']['layerNames'])
+    go60_custom_meta = parse_custom_behavior_annotations(go60_json.get('custom_defined_behaviors', ''), keyboards['go60']['layerNames'])
 
     # Process Glove80 layers
     for layer_idx, layer_name in enumerate(keyboards['glove80']['layerNames']):
