@@ -48,7 +48,11 @@ Whenever modifying keyboard layouts, follow these steps sequentially:
   - Update the documentation in the top-level `"notes"` field summarizing new features and layer changes.
 - Keeping JSON in sync guarantees layouts can be imported into the MoErgo web GUI without losing custom modifications.
 
-### Step 4: Build Firmware (ON EXPLICIT REQUEST ONLY)
+### Step 4: Commit Changes to Git
+- **Commit after every change**: Always create a git commit immediately after making any change, fix, refactor, or cleanup.
+- Write concise, descriptive commit messages describing the changes (e.g. `Remove unused lt_tab behavior from Glove80 keymap and JSON`).
+
+### Step 5: Build Firmware (ON EXPLICIT REQUEST ONLY)
 > [!IMPORTANT]
 > **DO NOT build or flash firmware automatically.**
 > Only compile (`./glove80/build.sh`, `./go60/build.sh`) or flash firmware when the user explicitly instructs you to do so.
@@ -66,7 +70,7 @@ Whenever modifying keyboard layouts, follow these steps sequentially:
   Done: /home/.../glove80/glove80.uf2 (888832 bytes) in 3m 42s
   ```
 
-### Step 5: Flash Firmware to BOTH Halves
+### Step 6: Flash Firmware to BOTH Halves
 - Enter bootloader mode on **both halves**:
   - **Left half:** Hold `Magic` + tap `ESC` (or double-click physical reset button). Mounts as `GLV80LHBOOT`.
   - **Right half:** Hold `Magic` + tap `'` (or double-click physical reset button). Mounts as `GLV80RHBOOT`.
