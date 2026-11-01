@@ -7,9 +7,6 @@ let momentaryHoverLayer = null;
 let momentaryHoverTriggerIdx = null;
 let rgbFadeTimer = null;
 let layerHistory = [];
-let rgbEnabled = true;
-let inspectRgbEnabled = true;
-let currentHalf = 'both'; // 'both' | 'left' | 'right'
 let currentScale = 1.0;
 let searchQuery = '';
 
@@ -85,10 +82,6 @@ async function init() {
   if (backBtn) {
     backBtn.style.display = (viewerMode === 'simulate' || layerHistory.length === 0) ? 'none' : 'inline-flex';
   }
-  const rgbBtn = document.getElementById('btn-rgb-toggle');
-  if (rgbBtn) {
-    rgbBtn.style.display = (viewerMode === 'inspect') ? 'flex' : 'none';
-  }
 
   renderLayerTabs();
   renderSvg();
@@ -128,11 +121,7 @@ async function init() {
     } else if (e.key === 'o' || e.key === 'O') {
       switchKeyboard('go60');
     } else if (e.key === 'r' || e.key === 'R') {
-      if (viewerMode === 'inspect') {
-        toggleInspectRgb();
-      } else {
-        triggerRgbFade();
-      }
+      toggleRgb();
     } else if (e.key === 'm' || e.key === 'M') {
       setViewerMode(viewerMode === 'inspect' ? 'simulate' : 'inspect');
     } else if (e.key === 'c' || e.key === 'C') {
@@ -170,35 +159,6 @@ async function init() {
     }
   });
 
-  // Touch swipe support for switching keyboard halves
-  let touchStartX = 0;
-  let touchStartY = 0;
-  const viewport = document.querySelector('.viewport-container');
-  if (viewport) {
-    viewport.addEventListener('touchstart', (e) => {
-      if (e.touches.length === 1) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      }
-    }, { passive: true });
-
-    viewport.addEventListener('touchend', (e) => {
-      if (e.changedTouches.length === 1) {
-        const diffX = e.changedTouches[0].clientX - touchStartX;
-        const diffY = e.changedTouches[0].clientY - touchStartY;
-        if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY) * 1.3) {
-          if (diffX < 0) {
-            if (currentHalf === 'left') setKeyboardHalf('right');
-            else if (currentHalf === 'both') setKeyboardHalf('right');
-          } else {
-            if (currentHalf === 'right') setKeyboardHalf('left');
-            else if (currentHalf === 'both') setKeyboardHalf('left');
-          }
-        }
-      }
-    }, { passive: true });
-  }
-
   window.addEventListener('popstate', () => {
     readUrlParams();
     document.getElementById('btn-glove80').classList.toggle('active', currentKb === 'glove80');
@@ -213,27 +173,54 @@ async function init() {
   });
 }
 
+function updateRgbUi(isLit) {
+  const svg = document.getElementById('keyboard-svg');
+  const btn = document.getElementById('btn-rgb-toggle');
+  if (svg) {
+    svg.classList.add('rgb-mode');
+    if (isLit) {
+      svg.classList.remove('rgb-faded');
+    } else {
+      svg.classList.add('rgb-faded');
+    }
+  }
+  if (btn) {
+    btn.classList.toggle('active', isLit);
+    btn.title = `RGB Underglow: ${isLit ? 'ON' : 'OFF'} (R)`;
+  }
+}
+
 function triggerRgbFade() {
   const svg = document.getElementById('keyboard-svg');
   if (!svg) return;
 
-  if (viewerMode === 'simulate') {
-    svg.classList.add('rgb-mode');
-    svg.classList.remove('rgb-faded'); // Light up immediately on layer change
+  if (rgbFadeTimer) {
+    clearTimeout(rgbFadeTimer);
+    rgbFadeTimer = null;
+  }
 
+  updateRgbUi(true);
+
+  // Fade out after exactly 1 second (1000ms) in both Simulate and Inspect modes
+  rgbFadeTimer = setTimeout(() => {
+    updateRgbUi(false);
+    rgbFadeTimer = null;
+  }, 1000);
+}
+
+function toggleRgb() {
+  const svg = document.getElementById('keyboard-svg');
+  if (!svg) return;
+
+  const isCurrentlyLit = !svg.classList.contains('rgb-faded');
+  if (isCurrentlyLit) {
     if (rgbFadeTimer) {
       clearTimeout(rgbFadeTimer);
+      rgbFadeTimer = null;
     }
-
-    // Fade out after exactly 1 second (1000ms)
-    rgbFadeTimer = setTimeout(() => {
-      if (viewerMode === 'simulate') {
-        svg.classList.add('rgb-faded');
-      }
-    }, 1000);
+    updateRgbUi(false);
   } else {
-    if (rgbFadeTimer) clearTimeout(rgbFadeTimer);
-    updateInspectRgbUi();
+    triggerRgbFade();
   }
 }
 
@@ -243,30 +230,6 @@ function toggleLegendModal(forceState) {
   const isHidden = modal.style.display === 'none';
   const show = (forceState !== undefined) ? forceState : isHidden;
   modal.style.display = show ? 'flex' : 'none';
-}
-
-function toggleInspectRgb() {
-  inspectRgbEnabled = !inspectRgbEnabled;
-  updateInspectRgbUi();
-}
-
-function updateInspectRgbUi() {
-  const svg = document.getElementById('keyboard-svg');
-  const btn = document.getElementById('btn-rgb-toggle');
-  if (viewerMode === 'inspect') {
-    if (svg) {
-      svg.classList.add('rgb-mode');
-      if (inspectRgbEnabled) {
-        svg.classList.remove('rgb-faded');
-      } else {
-        svg.classList.add('rgb-faded');
-      }
-    }
-  }
-  if (btn) {
-    btn.classList.toggle('active', inspectRgbEnabled);
-    btn.title = `RGB Underglow: ${inspectRgbEnabled ? 'ON' : 'OFF'} (R)`;
-  }
 }
 
 function setViewerMode(mode) {
@@ -281,11 +244,6 @@ function setViewerMode(mode) {
     if (!simStack.includes(0)) simStack = [0];
   } else {
     updateBackButton();
-  }
-
-  const rgbBtn = document.getElementById('btn-rgb-toggle');
-  if (rgbBtn) {
-    rgbBtn.style.display = (mode === 'inspect') ? 'flex' : 'none';
   }
 
   deactivateHoverMomentary();
@@ -569,38 +527,6 @@ function updateBackButton() {
   }
 }
 
-function setKeyboardHalf(half) {
-  currentHalf = half;
-  document.querySelectorAll('.half-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.half === half);
-  });
-  updateSvgViewBox();
-}
-
-function updateSvgViewBox() {
-  const svg = document.getElementById('keyboard-svg');
-  if (!svg) return;
-
-  if (currentKb === 'glove80') {
-    if (currentHalf === 'left') {
-      svg.setAttribute('viewBox', '-15 -10 600 420');
-    } else if (currentHalf === 'right') {
-      svg.setAttribute('viewBox', '375 -10 610 420');
-    } else {
-      svg.setAttribute('viewBox', '-15 -10 1000 460');
-    }
-  } else {
-    // go60
-    if (currentHalf === 'left') {
-      svg.setAttribute('viewBox', '-15 -10 480 340');
-    } else if (currentHalf === 'right') {
-      svg.setAttribute('viewBox', '480 -10 480 360');
-    } else {
-      svg.setAttribute('viewBox', '-15 -10 970 365');
-    }
-  }
-}
-
 function renderSvg() {
   const kb = KEYBOARDS[currentKb];
   const coords = kb.coords;
@@ -608,7 +534,9 @@ function renderSvg() {
   const baseLayer = kb.layers[0];
   const svg = document.getElementById('keyboard-svg');
 
-  updateSvgViewBox();
+  if (svg) {
+    svg.setAttribute('viewBox', currentKb === 'glove80' ? '-15 -10 1000 460' : '-15 -10 970 365');
+  }
 
   let html = '';
 
