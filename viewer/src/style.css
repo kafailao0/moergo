@@ -440,10 +440,11 @@
     .drawer {
       background: var(--surface);
       border-top: 1px solid var(--surface-border);
-      padding: 12px 20px;
+      padding: 10px 20px;
       width: 100%;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 16px;
       box-shadow: 0 -4px 12px rgba(0,0,0,0.25);
     }
@@ -494,6 +495,31 @@
     }
     .jump-layer-btn:hover {
       background: #388bfd;
+    }
+
+    .subtle-legend-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      opacity: 0.75;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+    .subtle-legend-btn:hover {
+      background: #21262d;
+      border-color: var(--surface-border);
+      color: var(--text-bright);
+      opacity: 1;
     }
 
     .modal-backdrop {
@@ -599,7 +625,7 @@
       .search-box input { width: 100px; }
       .drawer { padding: 8px 12px; }
       .key-pill-label { font-size: 0.95rem; }
-      .rgb-legend { display: none; }
+      .subtle-legend-btn { font-size: 0.7rem; padding: 3px 8px; }
       .zoom-widget { bottom: 90px; right: 10px; }
     }
   </style>

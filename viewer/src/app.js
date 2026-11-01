@@ -243,13 +243,39 @@ function getActiveSimLayers() {
   return simStack;
 }
 
+function isLayerTriggerKey(idx, targetLayer) {
+  const kb = KEYBOARDS[currentKb];
+  if (!kb || !kb.layers) return false;
+  // Check if any layer below targetLayer has this key configured to trigger targetLayer
+  for (let l = 0; l < targetLayer; l++) {
+    const k = kb.layers[l] && kb.layers[l].keys[idx];
+    if (k && k.targetLayer === targetLayer) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function resolveCompositeKey(idx) {
   const kb = KEYBOARDS[currentKb];
   const activeLayers = getActiveSimLayers();
   for (let i = activeLayers.length - 1; i >= 0; i--) {
     const layerIdx = activeLayers[i];
+
+    // If this layer was temporarily previewed by hovering over key `idx`,
+    // do not let this previewed layer overwrite key `idx` itself.
+    if (layerIdx === momentaryHoverLayer && idx === momentaryHoverTriggerIdx) {
+      continue;
+    }
+
     const key = kb.layers[layerIdx] && kb.layers[layerIdx].keys[idx];
     if (key && key.rawBinding !== '&trans' && key.line1 !== '▽') {
+      // If the key on this active layer is &none, but this key position was the trigger
+      // for this active layer from a lower layer (e.g. Magic key on Base triggering Magic layer),
+      // allow it to fall through so the trigger key stays visible and can toggle the layer off!
+      if (key.rawBinding === '&none' && isLayerTriggerKey(idx, layerIdx)) {
+        continue;
+      }
       return { key, sourceLayer: layerIdx };
     }
   }
@@ -262,6 +288,9 @@ function resolveCompositeRgb(idx) {
   const activeLayers = getActiveSimLayers();
   for (let i = activeLayers.length - 1; i >= 0; i--) {
     const layerIdx = activeLayers[i];
+    if (layerIdx === momentaryHoverLayer && idx === momentaryHoverTriggerIdx) {
+      continue;
+    }
     const key = kb.layers[layerIdx] && kb.layers[layerIdx].keys[idx];
     if (key && key.rgbToken && key.rgbToken !== '___') {
       return {
@@ -594,6 +623,13 @@ function onKeyClick(idx) {
     inspectKey(idx);
   } else {
     // In Simulation Mode:
+    // If clicking the key that triggered a momentary hover preview, clear the temporary hover state
+    // so toggleSimLayer cleanly manages the permanent simStack
+    if (momentaryHoverTriggerIdx === idx) {
+      momentaryHoverLayer = null;
+      momentaryHoverTriggerIdx = null;
+    }
+
     const { key } = resolveCompositeKey(idx);
 
     // Explicit &to switch (e.g. &to 7 Factory layer)

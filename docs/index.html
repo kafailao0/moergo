@@ -447,10 +447,11 @@
     .drawer {
       background: var(--surface);
       border-top: 1px solid var(--surface-border);
-      padding: 12px 20px;
+      padding: 10px 20px;
       width: 100%;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 16px;
       box-shadow: 0 -4px 12px rgba(0,0,0,0.25);
     }
@@ -501,6 +502,31 @@
     }
     .jump-layer-btn:hover {
       background: #388bfd;
+    }
+
+    .subtle-legend-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      opacity: 0.75;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+    .subtle-legend-btn:hover {
+      background: #21262d;
+      border-color: var(--surface-border);
+      color: var(--text-bright);
+      opacity: 1;
     }
 
     .modal-backdrop {
@@ -606,7 +632,7 @@
       .search-box input { width: 100px; }
       .drawer { padding: 8px 12px; }
       .key-pill-label { font-size: 0.95rem; }
-      .rgb-legend { display: none; }
+      .subtle-legend-btn { font-size: 0.7rem; padding: 3px 8px; }
       .zoom-widget { bottom: 90px; right: 10px; }
     }
   </style>
@@ -640,8 +666,6 @@
         ↩ Back to Base (Esc)
       </button>
 
-      <button class="btn" id="btn-legend" onclick="toggleLegendModal()" title="RGB Color Guide">🎨 Colors</button>
-
       <div class="search-box">
         <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
         <input type="text" id="search-input" placeholder="Search keys... (/)" oninput="handleSearch(this.value)">
@@ -671,9 +695,12 @@
       </div>
       <div class="key-meta">
         <div id="insp-title">Hover any key to inspect details • Click to lock/toggle</div>
-        <div id="insp-detail" style="color: var(--text-muted); font-size: 0.75rem;">Shortcuts: [0-9] Toggle Layer • [M] Mode • [G] Glove80 • [O] Go60 • [R] RGB • [Esc] Reset</div>
+        <div id="insp-detail" style="color: var(--text-muted); font-size: 0.75rem;">Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [C] Color Guide • [Esc] Reset Stack</div>
       </div>
     </div>
+    <button class="subtle-legend-btn" id="btn-legend" onclick="toggleLegendModal()" title="RGB Color Guide (C)">
+      🎨 Colors
+    </button>
   </div>
 
   <div id="legend-modal" class="modal-backdrop" onclick="toggleLegendModal(false)" style="display:none;">
@@ -944,13 +971,39 @@ function getActiveSimLayers() {
   return simStack;
 }
 
+function isLayerTriggerKey(idx, targetLayer) {
+  const kb = KEYBOARDS[currentKb];
+  if (!kb || !kb.layers) return false;
+  // Check if any layer below targetLayer has this key configured to trigger targetLayer
+  for (let l = 0; l < targetLayer; l++) {
+    const k = kb.layers[l] && kb.layers[l].keys[idx];
+    if (k && k.targetLayer === targetLayer) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function resolveCompositeKey(idx) {
   const kb = KEYBOARDS[currentKb];
   const activeLayers = getActiveSimLayers();
   for (let i = activeLayers.length - 1; i >= 0; i--) {
     const layerIdx = activeLayers[i];
+
+    // If this layer was temporarily previewed by hovering over key `idx`,
+    // do not let this previewed layer overwrite key `idx` itself.
+    if (layerIdx === momentaryHoverLayer && idx === momentaryHoverTriggerIdx) {
+      continue;
+    }
+
     const key = kb.layers[layerIdx] && kb.layers[layerIdx].keys[idx];
     if (key && key.rawBinding !== '&trans' && key.line1 !== '▽') {
+      // If the key on this active layer is &none, but this key position was the trigger
+      // for this active layer from a lower layer (e.g. Magic key on Base triggering Magic layer),
+      // allow it to fall through so the trigger key stays visible and can toggle the layer off!
+      if (key.rawBinding === '&none' && isLayerTriggerKey(idx, layerIdx)) {
+        continue;
+      }
       return { key, sourceLayer: layerIdx };
     }
   }
@@ -963,6 +1016,9 @@ function resolveCompositeRgb(idx) {
   const activeLayers = getActiveSimLayers();
   for (let i = activeLayers.length - 1; i >= 0; i--) {
     const layerIdx = activeLayers[i];
+    if (layerIdx === momentaryHoverLayer && idx === momentaryHoverTriggerIdx) {
+      continue;
+    }
     const key = kb.layers[layerIdx] && kb.layers[layerIdx].keys[idx];
     if (key && key.rgbToken && key.rgbToken !== '___') {
       return {
@@ -1295,6 +1351,13 @@ function onKeyClick(idx) {
     inspectKey(idx);
   } else {
     // In Simulation Mode:
+    // If clicking the key that triggered a momentary hover preview, clear the temporary hover state
+    // so toggleSimLayer cleanly manages the permanent simStack
+    if (momentaryHoverTriggerIdx === idx) {
+      momentaryHoverLayer = null;
+      momentaryHoverTriggerIdx = null;
+    }
+
     const { key } = resolveCompositeKey(idx);
 
     // Explicit &to switch (e.g. &to 7 Factory layer)
