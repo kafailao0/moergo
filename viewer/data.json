@@ -1,8 +1,8 @@
 {
   "glove80": {
     "name": "Glove80",
-    "title": "Kelvin's Glove80 layout v29",
-    "notes": "Kelvin's Glove80 layout v29.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 1), td_caps (Row 2), ESC (Row 3), Magic (Row 4), Mouse layer toggle (Row 5).\n- Right Outer Column (Punctuation & Nav): AeroSpace Maximize Cmd+Ctrl+M (Row 1), Hyphen - (Row 2), Quote ' (Row 3), Underscore _ (Row 4), End (Row 5).\n- Thumb Cluster:\n  - Left Lower (Outer to Inner): LSHFT, BSPC (pure instant key; DEL on SymbolNav), TAB (hold for NumRow).\n  - Right Lower (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n  - Left Upper (Outer to Inner): LCTRL, LALT, LGUI.\n  - Right Upper (Inner to Outer): Volume Down, Volume Up, Media (Tap: Play/Pause, 2x: Next, 3x: Prev; Combo Vol Dn+Up: Mute).\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 4, Mouse toggle, Globe, Copy/Paste tap-dance, Left, Right on bottom-left; Down, Up, Cmd+Space, Home, End on bottom-right; AeroSpace Maximize Cmd+Ctrl+M on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-row shortcuts to Ctrl+C/V tap-dance).\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, moves LGUI to left of Z, puts BSPC/SPACE/DEL(hold SymbolNav for F1-F5) on bottom-left, and uses LSHFT (pass-through), LCTRL, Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, PageUp/PageDown below F12, and DEL on Left Thumb T5.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. Lower right thumb Enter keys (0 removed). Left pinky toggles off.\n- NumRow: Hold Left Thumb T6 (TAB) for home-row numbers 1-0 on A-G / H-;.\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls, Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n- Mouse / Sniper: Mouse toggle key enters mouse layer; home-row HJKL mouse movement; hold A for Sniper precision mode.\n\nPer-Key RGB (underglow-layer):\n- Caps Lock status: td_caps glows red when Caps Lock is active (in Base & NumRow).\n- Momentary layers (SymbolNav, NumRow, Magic, Mouse, Sniper) and Keypad stay color-coded while active (PageUp/PageDown light up Magenta; Keypad right thumbs light up Orange).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (Gaming only lights up modified keys, avoiding ghost RGB on pass-through W and LSHFT).",
+    "title": "Kelvin's Glove80 layout v30",
+    "notes": "Kelvin's Glove80 layout v30.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 1), td_caps (Row 2), ESC (Row 3), Magic (Row 4), Mouse layer toggle (Row 5).\n- Right Outer Column (Punctuation & Nav): AeroSpace Maximize Cmd+Ctrl+M (Row 1), Hyphen - (Row 2), Quote ' (Row 3), Underscore _ (Row 4), End (Row 5).\n- Thumb Cluster:\n  - Left Lower (Outer to Inner): LSHFT, BSPC (pure instant key; DEL on SymbolNav), TAB (hold for NumRow).\n  - Right Lower (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n  - Left Upper (Outer to Inner): LCTRL, LALT, LGUI.\n  - Right Upper (Inner to Outer): Volume Down, Volume Up, Media (Tap: Play/Pause, 2x: Next, 3x: Prev; Combo Vol Dn+Up: Mute).\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 4, Mouse toggle, Globe, Copy/Paste tap-dance, Left, Right on bottom-left; Down, Up, Cmd+Space, Home, End on bottom-right; AeroSpace Maximize Cmd+Ctrl+M on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-row shortcuts to Ctrl+C/V tap-dance).\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, moves LGUI to left of Z, puts BSPC/SPACE/DEL(hold SymbolNav for F1-F5) on bottom-left, and uses LSHFT (pass-through), LCTRL, Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, PageUp/PageDown below F12, and DEL on Left Thumb T5.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T6 (TAB) for home-row numbers 1-0 on A-G / H-;.\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls, Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n- Mouse / Sniper: Mouse toggle key enters mouse layer; home-row HJKL mouse movement; hold A for Sniper precision mode.\n\nPer-Key RGB (underglow-layer):\n- Caps Lock status: td_caps glows red when Caps Lock is active (in Base & NumRow).\n- Momentary layers (SymbolNav, NumRow, Magic, Mouse, Sniper) and Keypad stay color-coded while active (PageUp/PageDown light up Magenta; Keypad right thumbs light up Orange).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (Gaming only lights up modified keys, avoiding ghost RGB on pass-through W and LSHFT).",
     "keyCount": 80,
     "coords": [
       {
@@ -1052,19 +1052,7 @@
         "___",
         "___",
         "___",
-        "ORG",
-        "GRN",
-        "GRN",
-        "GRN",
-        "ORG",
-        "ORG",
         "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "RED",
         "GRN",
         "GRN",
         "GRN",
@@ -1077,12 +1065,6 @@
         "___",
         "___",
         "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "GRN",
         "GRN",
         "GRN",
         "GRN",
@@ -1097,12 +1079,30 @@
         "___",
         "___",
         "___",
+        "___",
+        "___",
+        "___",
         "ORG",
+        "GRN",
+        "GRN",
+        "GRN",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
         "ORG",
         "GRN",
         "ORG",
-        "RED",
-        "ORG",
+        "___",
+        "___",
         "___"
       ],
       "NumRow": [
@@ -5635,16 +5635,16 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "=",
+            "line1": "\u2014",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: =",
+            "badgeType": "none",
+            "tooltip": "None (Inactive / Blocked)",
             "targetLayer": null,
-            "rawBinding": "&kp KP_EQUAL",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rawBinding": "&none",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "7",
@@ -5779,16 +5779,16 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Bksp",
+            "line1": "\u2014",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: Bksp",
+            "badgeType": "none",
+            "tooltip": "None (Inactive / Blocked)",
             "targetLayer": null,
-            "rawBinding": "&kp BSPC",
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rawBinding": "&none",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "4",
@@ -5995,16 +5995,16 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "0",
+            "line1": "=",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: 0",
+            "tooltip": "Key: =",
             "targetLayer": null,
-            "rawBinding": "&kp KP_N0",
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rawBinding": "&kp KP_EQUAL",
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "1",
@@ -6043,28 +6043,28 @@
             "rgbHex": "#00FF00"
           },
           {
-            "line1": ".",
+            "line1": "\u2014",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: .",
+            "badgeType": "none",
+            "tooltip": "None (Inactive / Blocked)",
             "targetLayer": null,
-            "rawBinding": "&kp KP_DOT",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rawBinding": "&none",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
-            "line1": "\u21b5",
+            "line1": "\u2014",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: \u21b5",
+            "badgeType": "none",
+            "tooltip": "None (Inactive / Blocked)",
             "targetLayer": null,
-            "rawBinding": "&kp KP_ENTER",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rawBinding": "&none",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u2014",
@@ -6175,16 +6175,16 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "\u21b5",
+            "line1": "\u25bd",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: \u21b5",
+            "badgeType": "trans",
+            "tooltip": "Pass through (inherits key from Base layer)",
             "targetLayer": null,
-            "rawBinding": "&kp KP_ENTER",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rawBinding": "&trans",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u21b5",
@@ -6223,28 +6223,28 @@
             "rgbHex": "#FF5500"
           },
           {
-            "line1": "Bksp",
+            "line1": "\u2014",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: Bksp",
+            "badgeType": "none",
+            "tooltip": "None (Inactive / Blocked)",
             "targetLayer": null,
-            "rawBinding": "&kp BSPC",
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rawBinding": "&none",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
-            "line1": "\u21b5",
+            "line1": "\u2014",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: \u21b5",
+            "badgeType": "none",
+            "tooltip": "None (Inactive / Blocked)",
             "targetLayer": null,
-            "rawBinding": "&kp KP_ENTER",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rawBinding": "&none",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u2014",
@@ -11089,8 +11089,8 @@
   },
   "go60": {
     "name": "Go60",
-    "title": "Kelvin's Go60 layout v29",
-    "notes": "Kelvin's Go60 layout v29.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 0), td_caps (Row 1), ESC (Row 2), Magic (Row 3).\n- Right Outer Column (Punctuation): AeroSpace Maximize Cmd+Ctrl+M (Row 0), Hyphen - (Row 1), Quote ' (Row 2), Underscore _ (Row 3).\n- Bottom Row:\n  - Left (under X, C, V): td_copy_paste (tap for Cmd+C, double-tap for Cmd+V), Left, Right.\n  - Right (under M, ,, .): Down, Up, Cmd+Space.\n- Thumb Cluster (identical to Glove80 lower thumb cluster):\n  - Left (Outer to Inner): LSHFT, BSPC (pure instant key; DEL on SymbolNav), TAB (hold for NumRow).\n  - Right (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 3, Copy/Paste tap-dance, Left, Right on bottom-left; Down, Up, Cmd+Space on bottom-right; AeroSpace Maximize Cmd+Ctrl+M on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-row shortcuts to Ctrl+C/V tap-dance).\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts BSPC/SPACE/DEL(hold SymbolNav for F1-F5) on bottom-left, and uses LSHFT (pass-through), LCTRL, Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, PageUp/PageDown below F12, and DEL on Left Thumb T2.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. Right thumb Enter keys (0 removed). Left pinky toggles off.\n- NumRow: Hold Left Thumb T3 (TAB) for home-row numbers 1-0 on A-G / H-;.\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls, Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n\nPer-Key RGB (underglow-layer):\n- Caps Lock status: td_caps glows red when Caps Lock is active (in Base & NumRow).\n- Momentary layers (SymbolNav, NumRow, Magic) and Keypad stay color-coded while active (PageUp/PageDown light up Magenta; Keypad right thumbs light up Orange).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (Gaming only lights up modified keys, avoiding ghost RGB on pass-through W and LSHFT).",
+    "title": "Kelvin's Go60 layout v30",
+    "notes": "Kelvin's Go60 layout v30.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 0), td_caps (Row 1), ESC (Row 2), Magic (Row 3).\n- Right Outer Column (Punctuation): AeroSpace Maximize Cmd+Ctrl+M (Row 0), Hyphen - (Row 1), Quote ' (Row 2), Underscore _ (Row 3).\n- Bottom Row:\n  - Left (under X, C, V): td_copy_paste (tap for Cmd+C, double-tap for Cmd+V), Left, Right.\n  - Right (under M, ,, .): Down, Up, Cmd+Space.\n- Thumb Cluster (identical to Glove80 lower thumb cluster):\n  - Left (Outer to Inner): LSHFT, BSPC (pure instant key; DEL on SymbolNav), TAB (hold for NumRow).\n  - Right (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 3, Copy/Paste tap-dance, Left, Right on bottom-left; Down, Up, Cmd+Space on bottom-right; AeroSpace Maximize Cmd+Ctrl+M on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-row shortcuts to Ctrl+C/V tap-dance).\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts BSPC/SPACE/DEL(hold SymbolNav for F1-F5) on bottom-left, and uses LSHFT (pass-through), LCTRL, Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, PageUp/PageDown below F12, and DEL on Left Thumb T2.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T3 (TAB) for home-row numbers 1-0 on A-G / H-;.\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls, Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n\nPer-Key RGB (underglow-layer):\n- Caps Lock status: td_caps glows red when Caps Lock is active (in Base & NumRow).\n- Momentary layers (SymbolNav, NumRow, Magic) and Keypad stay color-coded while active (PageUp/PageDown light up Magenta; Keypad right thumbs light up Orange).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (Gaming only lights up modified keys, avoiding ghost RGB on pass-through W and LSHFT).",
     "keyCount": 60,
     "coords": [
       {
@@ -11870,19 +11870,7 @@
         "___",
         "___",
         "___",
-        "ORG",
-        "GRN",
-        "GRN",
-        "GRN",
-        "ORG",
-        "ORG",
         "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "RED",
         "GRN",
         "GRN",
         "GRN",
@@ -11894,7 +11882,7 @@
         "___",
         "___",
         "___",
-        "GRN",
+        "___",
         "GRN",
         "GRN",
         "GRN",
@@ -11903,14 +11891,26 @@
         "___",
         "___",
         "___",
+        "___",
+        "___",
+        "___",
+        "ORG",
+        "GRN",
+        "GRN",
+        "GRN",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
         "GRN",
         "ORG",
-        "RED",
         "___",
         "___",
         "___",
         "___",
-        "ORG",
+        "___",
+        "___",
         "ORG"
       ],
       "NumRow": [
@@ -15159,16 +15159,16 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "=",
+            "line1": "\u2014",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: =",
+            "badgeType": "none",
+            "tooltip": "None (Inactive / Blocked)",
             "targetLayer": null,
-            "rawBinding": "&kp KP_EQUAL",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rawBinding": "&none",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "7",
@@ -15303,16 +15303,16 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Bksp",
+            "line1": "\u2014",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: Bksp",
+            "badgeType": "none",
+            "tooltip": "None (Inactive / Blocked)",
             "targetLayer": null,
-            "rawBinding": "&kp BSPC",
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rawBinding": "&none",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "4",
@@ -15447,16 +15447,16 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "0",
+            "line1": "=",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: 0",
+            "tooltip": "Key: =",
             "targetLayer": null,
-            "rawBinding": "&kp KP_N0",
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rawBinding": "&kp KP_EQUAL",
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "1",
@@ -15495,28 +15495,28 @@
             "rgbHex": "#00FF00"
           },
           {
-            "line1": ".",
+            "line1": "\u2014",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: .",
+            "badgeType": "none",
+            "tooltip": "None (Inactive / Blocked)",
             "targetLayer": null,
-            "rawBinding": "&kp KP_DOT",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rawBinding": "&none",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
-            "line1": "\u21b5",
+            "line1": "\u2014",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: \u21b5",
+            "badgeType": "none",
+            "tooltip": "None (Inactive / Blocked)",
             "targetLayer": null,
-            "rawBinding": "&kp KP_ENTER",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rawBinding": "&none",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u2014",
@@ -15579,26 +15579,14 @@
             "rgbHex": "#FF5500"
           },
           {
-            "line1": "Bksp",
+            "line1": "\u2014",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: Bksp",
+            "badgeType": "none",
+            "tooltip": "None (Inactive / Blocked)",
             "targetLayer": null,
-            "rawBinding": "&kp BSPC",
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
-          },
-          {
-            "line1": "\u25bd",
-            "line2": "",
-            "secondary": "",
-            "badge": "",
-            "badgeType": "trans",
-            "tooltip": "Pass through (inherits key from Base layer)",
-            "targetLayer": null,
-            "rawBinding": "&trans",
+            "rawBinding": "&none",
             "rgbToken": "___",
             "rgbHex": "#000000"
           },
@@ -15639,16 +15627,28 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "\u21b5",
+            "line1": "\u25bd",
             "line2": "",
             "secondary": "",
             "badge": "",
-            "badgeType": "",
-            "tooltip": "Key: \u21b5",
+            "badgeType": "trans",
+            "tooltip": "Pass through (inherits key from Base layer)",
             "targetLayer": null,
-            "rawBinding": "&kp KP_ENTER",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rawBinding": "&trans",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
+          },
+          {
+            "line1": "\u25bd",
+            "line2": "",
+            "secondary": "",
+            "badge": "",
+            "badgeType": "trans",
+            "tooltip": "Pass through (inherits key from Base layer)",
+            "targetLayer": null,
+            "rawBinding": "&trans",
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u21b5",
