@@ -172,16 +172,11 @@ def format_layer_badge(name):
     abbrevs = {
         'SymbolNav': 'SymNav',
         'NumRow': 'NumRow',
-        'Keypad': 'Keypad',
-        'Magic': 'Magic',
-        'Mouse': 'Mouse',
-        'Sniper': 'Sniper',
-        'Gaming': 'Gaming',
-        'Factory': 'Factory',
-        'Base': 'Base',
-        'PC': 'PC'
+        'Keypad': 'Keypad'
     }
-    return abbrevs.get(name, name)
+    if name in abbrevs:
+        return abbrevs[name]
+    return name[:6] if len(name) > 6 else name
 
 def parse_custom_behavior_annotations(dts_text):
     """
@@ -189,10 +184,15 @@ def parse_custom_behavior_annotations(dts_text):
     Format example:
       /* @viewer: Copy | Paste | @badge: TD | @tooltip: Tap Dance: 1x Ctrl+C • 2x Ctrl+V */
       td_copy_paste_pc: td_copy_paste_pc { ... };
+
+    If no annotation comment exists, attempts auto-derivation for tap-dance behaviors
+    based on their bindings.
     """
     meta = {}
     if not dts_text:
         return meta
+
+    # 1. Parse explicit /* @viewer: ... */ comments
     pattern = re.compile(r'/\*\s*@(?:viewer|label)\b(.*?)\*/\s*([a-zA-Z0-9_]+)\s*:', re.DOTALL)
     for m in pattern.finditer(dts_text):
         comment_body = m.group(1).strip()
@@ -216,6 +216,32 @@ def parse_custom_behavior_annotations(dts_text):
                     else:
                         info[k] = v
         meta[beh_name] = info
+
+    # 2. Auto-derive tap-dance behaviors without explicit annotations
+    beh_block_pattern = re.compile(r'([a-zA-Z0-9_]+)\s*:\s*([a-zA-Z0-9_]+)\s*\{([^}]+)\};', re.DOTALL)
+    for m in beh_block_pattern.finditer(dts_text):
+        beh_name = m.group(1).strip()
+        body = m.group(3)
+        if beh_name not in meta and 'zmk,behavior-tap-dance' in body:
+            bm = re.search(r'bindings\s*=\s*([^;]+);', body)
+            if bm:
+                raw_bindings = re.findall(r'<([^>]+)>', bm.group(1))
+                formatted_steps = []
+                for rb in raw_bindings:
+                    # Clean binding tokens (e.g. &kp LG(C) -> Copy, etc.)
+                    parts = rb.split(None, 1)
+                    param = parts[1] if len(parts) > 1 else parts[0]
+                    formatted_steps.append(format_param_recursive(param))
+
+                meta[beh_name] = {
+                    'name': beh_name,
+                    'line1': formatted_steps[0] if len(formatted_steps) > 0 else beh_name,
+                    'line2': formatted_steps[1] if len(formatted_steps) > 1 else '',
+                    'badge': 'TD',
+                    'badge_type': 'td',
+                    'tooltip': f"Tap Dance: {' • '.join(f'{i+1}x {s}' for i, s in enumerate(formatted_steps))}"
+                }
+
     return meta
 
 def parse_key_data(key_obj, layer_names, custom_meta=None):
@@ -306,7 +332,7 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
 
     elif beh == '&magic':
         line1 = 'Magic'
-        target_layer = 6
+        target_layer = layer_names.index('Magic') if 'Magic' in layer_names else None
         secondary = ''
         badge = ''
         badge_type = 'sys'
@@ -371,13 +397,22 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
             line2 = arrows.get(direction, direction)
             badge_type = 'mouse'
             tooltip = f"Sniper Precision Move {direction}"
-        elif 'td_LAYER_Keypad' in custom_str:
-            line1 = 'Keypad'
+        elif 'td_layer_' in custom_str.lower():
+            m = re.search(r'td_layer_([a-zA-Z0-9_]+)', custom_str, re.IGNORECASE)
+            layer_match = m.group(1) if m else ''
+            l_idx = None
+            l_name = layer_match
+            for idx, ln in enumerate(layer_names):
+                if ln.lower() == layer_match.lower():
+                    l_idx = idx
+                    l_name = ln
+                    break
+            line1 = l_name
             secondary = ''
-            target_layer = 4
+            target_layer = l_idx
             badge = ''
             badge_type = 'layer'
-            tooltip = 'Tap: Toggle Keypad • Hold: Momentary Keypad (Layer 4)'
+            tooltip = f"Layer: {l_name} (Tap: Toggle • Hold: Momentary)"
         else:
             line1 = custom_str
 
