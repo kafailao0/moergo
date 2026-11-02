@@ -58,6 +58,11 @@ Whenever modifying keyboard layouts, follow these steps sequentially:
   ```
 - This regenerates [`viewer/data.json`](file:///home/kafailao/keyboard/moergo/viewer/data.json), [`viewer/index.html`](file:///home/kafailao/keyboard/moergo/viewer/index.html) (served locally on port 8088), and [`docs/index.html`](file:///home/kafailao/keyboard/moergo/docs/index.html).
 - For viewer features, keyboard shortcuts, and simulation modes, see [`viewer/README.md`](file:///home/kafailao/keyboard/moergo/viewer/README.md).
+- **Screenshots Policy (ON EXPLICIT USER REQUEST ONLY)**:
+  > [!IMPORTANT]
+  > **DO NOT update screenshots automatically (`scripts/capture_screenshots.py`).**
+  > Capturing screenshots launches headless Chromium across multiple layouts and modes, which is slow and resource-intensive (~1 minute).
+  > Whenever the viewer is changed visually, **always ask the user** whether they want to update the screenshots in `docs/screenshots/`. Only run `python3 scripts/capture_screenshots.py` if the user explicitly confirms or requests it.
 
 ### Step 5: Commit and Push Changes to Git
 - **Commit after every change**: Always create a git commit immediately after making any change, fix, refactor, or cleanup.
