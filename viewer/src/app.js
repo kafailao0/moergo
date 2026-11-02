@@ -1199,36 +1199,9 @@ function toggleZenMode() {
   const btn = document.getElementById('btn-zen');
   if (btn) {
     btn.classList.toggle('active', isZen);
-    btn.title = isZen ? 'Exit Full View (Esc or F)' : 'Focus / Fullscreen View (F)';
-  }
-
-  // Request or exit native fullscreen if supported
-  if (isZen) {
-    try {
-      if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(() => {});
-      } else if (document.documentElement.webkitRequestFullscreen && !document.webkitFullscreenElement) {
-        document.documentElement.webkitRequestFullscreen().catch(() => {});
-      }
-    } catch (e) {}
-  } else {
-    try {
-      if (document.fullscreenElement && document.exitFullscreen) {
-        document.exitFullscreen().catch(() => {});
-      } else if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
-        document.webkitExitFullscreen().catch(() => {});
-      }
-    } catch (e) {}
+    btn.title = isZen ? 'Exit Full View (Esc or F)' : 'Focus / Full View (F)';
   }
 }
-
-document.addEventListener('fullscreenchange', () => {
-  if (!document.fullscreenElement && document.body.classList.contains('zen-mode')) {
-    // Keep zen-mode class in sync if user exits native fullscreen via system gesture
-    const btn = document.getElementById('btn-zen');
-    if (btn) btn.classList.add('active');
-  }
-});
 
 function escapeHtml(text) {
   if (!text) return '';
