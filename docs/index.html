@@ -719,39 +719,11 @@
       margin: 1px 3px;
     }
 
-    .zen-exit-btn {
-      display: none;
-      position: fixed;
-      top: 10px;
-      right: 12px;
-      background: rgba(22, 27, 34, 0.88);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid var(--surface-border);
-      color: var(--text-bright);
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-size: 0.76rem;
-      font-weight: 700;
-      cursor: pointer;
-      z-index: 200;
-      transition: all 0.15s ease;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
-    }
-    .zen-exit-btn:hover {
-      background: #30363d;
-      color: #58a6ff;
-    }
-
     body.zen-mode header {
       display: none !important;
     }
     body.zen-mode .drawer {
       display: none !important;
-    }
-    body.zen-mode .zen-exit-btn {
-      display: flex;
-      align-items: center;
     }
     body.zen-mode .layer-bar {
       position: fixed;
@@ -766,7 +738,7 @@
       padding: 3px 8px;
       border: 1px solid var(--surface-border);
       box-shadow: 0 4px 18px rgba(0,0,0,0.5);
-      max-width: calc(100vw - 140px);
+      max-width: calc(100vw - 24px);
     }
     body.zen-mode main {
       height: 100%;
@@ -1100,10 +1072,6 @@
       </div>
     </div>
   </main>
-
-  <button class="zen-exit-btn" id="btn-zen-exit" onclick="toggleZenMode()" title="Exit Full View (Esc or F)">
-    ✕ Exit Full View
-  </button>
 
   <div class="drawer" id="main-drawer">
     <div class="inspector" id="key-inspector">
