@@ -191,6 +191,7 @@
       border-bottom: 1px solid var(--surface-border);
       padding: 8px 16px;
       display: flex;
+      flex-wrap: wrap;
       gap: 6px;
       overflow-x: auto;
       scrollbar-width: thin;
@@ -791,9 +792,8 @@
       .layer-bar {
         padding: 5px 8px;
         gap: 4px;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        scrollbar-width: thin;
+        flex-wrap: wrap;
+        overflow-x: visible;
       }
       .layer-btn {
         padding: 3px 8px;
@@ -808,6 +808,9 @@
         padding: 3px 8px;
         font-size: 0.72rem;
         margin-left: 0;
+      }
+      body.zen-mode .layer-bar {
+        border-radius: 10px;
       }
 
       main {
@@ -908,6 +911,9 @@
         padding: 2px 6px;
         font-size: 0.7rem;
         height: 22px;
+      }
+      body.zen-mode .layer-bar {
+        border-radius: 20px;
       }
 
       main {
