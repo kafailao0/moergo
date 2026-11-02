@@ -2297,15 +2297,15 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Copy",
-            "line2": "Paste",
+            "line1": "\ud83d\udccb",
+            "line2": "",
             "secondary": "",
             "badge": "TD",
             "badgeType": "td",
             "tooltip": "Tap Dance: 1x \u2318C (Copy) \u2022 2x \u2318V (Paste)",
             "targetLayer": null,
             "rawBinding": "&td_copy_paste",
-            "icon": null,
+            "icon": "clipboard",
             "rgbToken": "___",
             "rgbHex": "#000000"
           },
@@ -3342,15 +3342,15 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Copy",
-            "line2": "Paste",
+            "line1": "\ud83d\udccb",
+            "line2": "",
             "secondary": "",
             "badge": "TD",
             "badgeType": "td",
             "tooltip": "Tap Dance: 1x Ctrl+C (Copy) \u2022 2x Ctrl+V (Paste)",
             "targetLayer": null,
             "rawBinding": "&td_copy_paste_pc",
-            "icon": null,
+            "icon": "clipboard",
             "rgbToken": "BLU",
             "rgbHex": "#0066FF"
           },
@@ -13467,15 +13467,15 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Copy",
-            "line2": "Paste",
+            "line1": "\ud83d\udccb",
+            "line2": "",
             "secondary": "",
             "badge": "TD",
             "badgeType": "td",
             "tooltip": "Tap Dance: 1x \u2318C (Copy) \u2022 2x \u2318V (Paste)",
             "targetLayer": null,
             "rawBinding": "&td_copy_paste",
-            "icon": null,
+            "icon": "clipboard",
             "rgbToken": "___",
             "rgbHex": "#000000"
           },
@@ -14252,15 +14252,15 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Copy",
-            "line2": "Paste",
+            "line1": "\ud83d\udccb",
+            "line2": "",
             "secondary": "",
             "badge": "TD",
             "badgeType": "td",
             "tooltip": "Tap Dance: 1x Ctrl+C (Copy) \u2022 2x Ctrl+V (Paste)",
             "targetLayer": null,
             "rawBinding": "&td_copy_paste_pc",
-            "icon": null,
+            "icon": "clipboard",
             "rgbToken": "BLU",
             "rgbHex": "#0066FF"
           },

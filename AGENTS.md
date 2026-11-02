@@ -22,7 +22,9 @@ Whenever modifying keyboard layouts, follow these steps sequentially:
 
 ### Step 1: Update the Keymap File (`*.keymap`)
 - Target: `glove80/config/glove80.keymap` or `go60/config/go60.keymap`.
-- Update the layout version in the header comment (e.g., `Layout: Kelvin's Go60 layout v<N>`), incrementing `<N>` after every change.
+- **Version Number Policy**:
+  - Update the layout version in the header comment (e.g., `Layout: Kelvin's Go60 layout v<N>`), incrementing `<N>` whenever firmware behavior, bindings, macros, or RGB layer maps change.
+  - **DO NOT bump the version number if the firmware isn't changed** (e.g., when only updating viewer visuals, `@viewer` doc-comment annotations, styles, or viewer code).
 - Update custom behaviors (e.g., tap dances, mod-taps, combos) in `/ { behaviors { ... } };`.
 - Update key bindings in `/ { keymap { ... } };` across all relevant layers (`layer_Base`, `layer_PC`, `layer_Gaming`, `layer_SymbolNav`, `layer_Keypad`, etc.).
 

@@ -406,7 +406,7 @@
             bindings = <&kp LG(LA(LS(N4)))>, <&kp LG(LA(LS(N2)))>, <&kp LG(LA(LS(N3)))>;
         };
 
-        /* @viewer: Copy | Paste | @badge: TD | @tooltip: Tap Dance: 1x ⌘C (Copy) • 2x ⌘V (Paste) */
+        /* @viewer: 📋 | @badge: TD | @icon: clipboard | @tooltip: Tap Dance: 1x ⌘C (Copy) • 2x ⌘V (Paste) */
         td_copy_paste: td_copy_paste {
             compatible = "zmk,behavior-tap-dance";
             label = "TD_COPY_PASTE";
@@ -415,7 +415,7 @@
             bindings = <&kp LG(C)>, <&kp LG(V)>;
         };
 
-        /* @viewer: Copy | Paste | @badge: TD | @tooltip: Tap Dance: 1x Ctrl+C (Copy) • 2x Ctrl+V (Paste) */
+        /* @viewer: 📋 | @badge: TD | @icon: clipboard | @tooltip: Tap Dance: 1x Ctrl+C (Copy) • 2x Ctrl+V (Paste) */
         td_copy_paste_pc: td_copy_paste_pc {
             compatible = "zmk,behavior-tap-dance";
             label = "TD_COPY_PASTE_PC";
