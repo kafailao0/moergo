@@ -946,12 +946,9 @@
 
       .drawer {
         padding: 2px 10px;
-        height: 26px;
-        min-height: 26px;
-        max-height: 26px;
-      }
-      .drawer #insp-detail {
-        display: none;
+        height: 42px;
+        min-height: 42px;
+        max-height: 42px;
       }
       .drawer .key-pill {
         padding: 1px 6px;
@@ -963,18 +960,21 @@
         font-size: 0.72rem;
         line-height: 1.2;
       }
+      .drawer #insp-detail {
+        font-size: 0.68rem;
+      }
       .drawer-toggle-btn {
         width: 22px;
         height: 22px;
       }
-      .drawer:not(.collapsed) {
-        height: 44px;
-        min-height: 44px;
-        max-height: 44px;
+      .drawer.collapsed {
+        height: 24px;
+        min-height: 24px;
+        max-height: 24px;
+        padding: 1px 10px;
       }
-      .drawer:not(.collapsed) #insp-detail {
-        display: block;
-        font-size: 0.68rem;
+      .drawer.collapsed #insp-detail {
+        display: none;
       }
     }
 
@@ -2127,8 +2127,8 @@ function clampPan(animated = false) {
   if (currentScale <= 1.0) {
     currentPanX = 0;
     currentPanY = 0;
-    if (currentScale < 1.0) {
-      currentScale = 1.0;
+    if (currentScale < MIN_SCALE) {
+      currentScale = MIN_SCALE;
     }
     applyTransform(animated);
     return;
@@ -2145,9 +2145,12 @@ function clampPan(animated = false) {
 }
 
 function zoom(factor) {
-  currentScale = Math.min(MAX_SCALE, Math.max(1.0, currentScale * factor));
-  if (currentScale <= 1.0) {
+  currentScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, currentScale * factor));
+  if (Math.abs(currentScale - 1.0) < 0.03) {
     currentScale = 1.0;
+    currentPanX = 0;
+    currentPanY = 0;
+  } else if (currentScale < 1.0) {
     currentPanX = 0;
     currentPanY = 0;
   } else {

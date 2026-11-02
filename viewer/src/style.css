@@ -929,12 +929,9 @@
 
       .drawer {
         padding: 2px 10px;
-        height: 26px;
-        min-height: 26px;
-        max-height: 26px;
-      }
-      .drawer #insp-detail {
-        display: none;
+        height: 42px;
+        min-height: 42px;
+        max-height: 42px;
       }
       .drawer .key-pill {
         padding: 1px 6px;
@@ -946,18 +943,21 @@
         font-size: 0.72rem;
         line-height: 1.2;
       }
+      .drawer #insp-detail {
+        font-size: 0.68rem;
+      }
       .drawer-toggle-btn {
         width: 22px;
         height: 22px;
       }
-      .drawer:not(.collapsed) {
-        height: 44px;
-        min-height: 44px;
-        max-height: 44px;
+      .drawer.collapsed {
+        height: 24px;
+        min-height: 24px;
+        max-height: 24px;
+        padding: 1px 10px;
       }
-      .drawer:not(.collapsed) #insp-detail {
-        display: block;
-        font-size: 0.68rem;
+      .drawer.collapsed #insp-detail {
+        display: none;
       }
     }
 

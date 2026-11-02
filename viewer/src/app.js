@@ -988,8 +988,8 @@ function clampPan(animated = false) {
   if (currentScale <= 1.0) {
     currentPanX = 0;
     currentPanY = 0;
-    if (currentScale < 1.0) {
-      currentScale = 1.0;
+    if (currentScale < MIN_SCALE) {
+      currentScale = MIN_SCALE;
     }
     applyTransform(animated);
     return;
@@ -1006,9 +1006,12 @@ function clampPan(animated = false) {
 }
 
 function zoom(factor) {
-  currentScale = Math.min(MAX_SCALE, Math.max(1.0, currentScale * factor));
-  if (currentScale <= 1.0) {
+  currentScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, currentScale * factor));
+  if (Math.abs(currentScale - 1.0) < 0.03) {
     currentScale = 1.0;
+    currentPanX = 0;
+    currentPanY = 0;
+  } else if (currentScale < 1.0) {
     currentPanX = 0;
     currentPanY = 0;
   } else {
