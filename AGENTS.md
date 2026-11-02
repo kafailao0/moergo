@@ -52,16 +52,19 @@ Whenever modifying keyboard layouts, follow these steps sequentially:
 - Keeping JSON in sync guarantees layouts can be imported into the MoErgo web GUI without losing custom modifications.
 
 ### Step 4: Rebuild the Interactive Layout Viewer
-- Whenever `.keymap` or `.json` files are modified, always regenerate the viewer data and standalone HTML:
+- Whenever `.keymap`, `.json`, or viewer source files (`viewer/src/*`) are modified, always regenerate the viewer data and standalone HTML:
   ```bash
   python3 scripts/build_viewer.py
   ```
 - This regenerates [`viewer/data.json`](file:///home/kafailao/keyboard/moergo/viewer/data.json), [`viewer/index.html`](file:///home/kafailao/keyboard/moergo/viewer/index.html) (served locally on port 8088), and [`docs/index.html`](file:///home/kafailao/keyboard/moergo/docs/index.html).
 - For viewer features, keyboard shortcuts, and simulation modes, see [`viewer/README.md`](file:///home/kafailao/keyboard/moergo/viewer/README.md).
 
-### Step 5: Commit Changes to Git
+### Step 5: Commit and Push Changes to Git
 - **Commit after every change**: Always create a git commit immediately after making any change, fix, refactor, or cleanup.
 - Write concise, descriptive commit messages describing the changes (e.g. `Remove unused lt_tab behavior from Glove80 keymap and JSON`).
+- **Automatic GitHub Push for Viewer Changes**:
+  > [!IMPORTANT]
+  > Whenever the layout viewer is changed (including changes to `viewer/`, `docs/`, `scripts/build_viewer.py`, or layout updates in `*.keymap` and `*.json`), **ALWAYS automatically push to GitHub (`git push`)** immediately after committing. This ensures the GitHub Pages live viewer is kept up-to-date automatically without waiting for explicit push requests.
 
 ### Step 6: Build Firmware (ON EXPLICIT REQUEST ONLY)
 > [!IMPORTANT]
