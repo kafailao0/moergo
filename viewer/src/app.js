@@ -949,11 +949,14 @@ function inspectKey(idx) {
     layerJumpHtml = `<button class="jump-layer-btn" onclick="setLayer(${key.targetLayer}, true)">Go to ${targetName} →</button>`;
   }
 
-  titleEl.innerHTML = `<strong>${coord.label}</strong> (Key #${idx}) • ${viewerMode === 'simulate' ? 'Active Source Layer' : 'Layer'}: <strong>${displayLayerName}</strong> • ${rgbDesc} ${layerJumpHtml}`;
+  const isMobile = window.innerWidth <= 768;
+  const layerLabel = (viewerMode === 'simulate' && !isMobile) ? 'Active Source Layer' : 'Layer';
+
+  titleEl.innerHTML = `<strong>${coord.label}</strong> (Key #${idx}) • ${layerLabel}: <strong>${displayLayerName}</strong> • ${rgbDesc} ${layerJumpHtml}`;
   detailEl.innerHTML = `ZMK: <code style="color:var(--accent); background:#090d12; padding:2px 6px; border-radius:4px;">${escapeHtml(key.rawBinding)}</code> • ${escapeHtml(key.tooltip)}`;
 
   const rgbText = (rgbToken && rgbToken !== '___') ? `RGB: ${rgbToken} ${rgbSource}` : 'RGB: Unlit';
-  titleEl.title = `${coord.label} (Key #${idx}) • ${viewerMode === 'simulate' ? 'Active Source Layer' : 'Layer'}: ${displayLayerName} • ${rgbText}`;
+  titleEl.title = `${coord.label} (Key #${idx}) • ${layerLabel}: ${displayLayerName} • ${rgbText}`;
   detailEl.title = `ZMK: ${key.rawBinding} • ${key.tooltip}`;
 }
 
@@ -961,12 +964,21 @@ function resetInspector() {
   document.getElementById('insp-label').textContent = '—';
   const titleEl = document.getElementById('insp-title');
   const detailEl = document.getElementById('insp-detail');
+  const isMobile = window.innerWidth <= 768;
   if (viewerMode === 'simulate') {
-    titleEl.textContent = 'Simulation Mode: Hover momentary layer keys to activate • Click to lock/toggle';
-    detailEl.textContent = 'Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [C] Color Guide • [Esc] Reset Stack';
+    titleEl.textContent = isMobile
+      ? 'Simulation Mode: Tap momentary layer keys to activate'
+      : 'Simulation Mode: Hover momentary layer keys to activate • Click to lock/toggle';
+    detailEl.textContent = isMobile
+      ? 'Tap any key to inspect • Tap top buttons to switch layers'
+      : 'Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [C] Color Guide • [Esc] Reset Stack';
   } else {
-    titleEl.textContent = 'Inspect Mode: Click any key to inspect details or navigate layers';
-    detailEl.textContent = 'Shortcuts: [0-9] Layer • [M] Switch to Simulate • [R] Toggle RGB • [C] Color Guide • [Esc] Back';
+    titleEl.textContent = isMobile
+      ? 'Inspect Mode: Tap any key to inspect details'
+      : 'Inspect Mode: Click any key to inspect details or navigate layers';
+    detailEl.textContent = isMobile
+      ? 'Tap any key to inspect • Tap top buttons to switch layers'
+      : 'Shortcuts: [0-9] Layer • [M] Switch to Simulate • [R] Toggle RGB • [C] Color Guide • [Esc] Back';
   }
   titleEl.title = '';
   detailEl.title = '';
@@ -1247,6 +1259,10 @@ function initCanvasGestures() {
   window.addEventListener('resize', () => {
     if (currentScale > 1.0) {
       clampPan(false);
+    }
+    const labelEl = document.getElementById('insp-label');
+    if (labelEl && labelEl.textContent === '—') {
+      resetInspector();
     }
   });
 }

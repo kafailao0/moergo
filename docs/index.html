@@ -823,18 +823,85 @@
 
       .drawer {
         padding: 6px 12px;
-        height: 48px;
-        min-height: 48px;
-        max-height: 48px;
+        height: auto;
+        min-height: 64px;
+        max-height: 120px;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .drawer.collapsed {
+        height: 28px;
+        min-height: 28px;
+        max-height: 28px;
+        padding: 2px 10px;
+        align-items: center;
+      }
+      .drawer.collapsed #insp-detail {
+        display: none;
+      }
+      .drawer.collapsed .key-pill {
+        padding: 1px 6px;
+        margin-top: 0;
+      }
+      .drawer.collapsed .key-pill-label {
+        font-size: 0.82rem;
+      }
+      .drawer.collapsed .key-meta {
+        font-size: 0.72rem;
+        line-height: 1.2;
+        max-height: none;
+        overflow: hidden;
+      }
+      .drawer.collapsed #insp-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0;
+      }
+      .inspector {
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .drawer.collapsed .inspector {
+        align-items: center;
       }
       .key-pill {
         padding: 3px 8px;
+        margin-top: 2px;
       }
       .key-pill-label {
         font-size: 0.88rem;
       }
+      .drawer-toggle-btn {
+        margin-top: 2px;
+      }
+      .drawer.collapsed .drawer-toggle-btn {
+        margin-top: 0;
+      }
       .key-meta {
-        font-size: 0.72rem;
+        font-size: 0.73rem;
+        line-height: 1.35;
+        overflow-y: auto;
+        max-height: 105px;
+        padding-right: 2px;
+        scrollbar-width: thin;
+      }
+      #insp-title, #insp-detail {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        word-break: break-word;
+      }
+      #insp-title {
+        font-weight: 500;
+        margin-bottom: 2px;
+      }
+      .jump-layer-btn {
+        display: inline-block;
+        margin-top: 2px;
+        margin-left: 4px;
+        padding: 2px 7px;
+        font-size: 0.7rem;
       }
       .canvas-widget {
         bottom: 8px;
@@ -949,9 +1016,16 @@
         height: 42px;
         min-height: 42px;
         max-height: 42px;
+        align-items: center;
+        gap: 8px;
+      }
+      .inspector {
+        align-items: center;
+        gap: 8px;
       }
       .drawer .key-pill {
         padding: 1px 6px;
+        margin-top: 0;
       }
       .drawer .key-pill-label {
         font-size: 0.82rem;
@@ -959,19 +1033,33 @@
       .drawer .key-meta {
         font-size: 0.72rem;
         line-height: 1.2;
+        max-height: none;
+        overflow: hidden;
+      }
+      .drawer #insp-title,
+      .drawer #insp-detail {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0;
       }
       .drawer #insp-detail {
         font-size: 0.68rem;
       }
+      .drawer .jump-layer-btn {
+        margin-top: 0;
+      }
       .drawer-toggle-btn {
         width: 22px;
         height: 22px;
+        margin-top: 0;
       }
       .drawer.collapsed {
         height: 24px;
         min-height: 24px;
         max-height: 24px;
         padding: 1px 10px;
+        align-items: center;
       }
       .drawer.collapsed #insp-detail {
         display: none;
@@ -1094,7 +1182,7 @@
       </div>
       <div class="key-meta">
         <div id="insp-title">Hover any key to inspect details • Click to lock/toggle</div>
-        <div id="insp-detail" style="color: var(--text-muted); font-size: 0.75rem;">Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [C] Color Guide • [Esc] Reset Stack</div>
+        <div id="insp-detail">Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [C] Color Guide • [Esc] Reset Stack</div>
       </div>
     </div>
     <button class="drawer-toggle-btn" id="btn-drawer-toggle" onclick="toggleDrawer()" title="Collapse / Expand Key Inspector (I)">
@@ -2091,11 +2179,14 @@ function inspectKey(idx) {
     layerJumpHtml = `<button class="jump-layer-btn" onclick="setLayer(${key.targetLayer}, true)">Go to ${targetName} →</button>`;
   }
 
-  titleEl.innerHTML = `<strong>${coord.label}</strong> (Key #${idx}) • ${viewerMode === 'simulate' ? 'Active Source Layer' : 'Layer'}: <strong>${displayLayerName}</strong> • ${rgbDesc} ${layerJumpHtml}`;
+  const isMobile = window.innerWidth <= 768;
+  const layerLabel = (viewerMode === 'simulate' && !isMobile) ? 'Active Source Layer' : 'Layer';
+
+  titleEl.innerHTML = `<strong>${coord.label}</strong> (Key #${idx}) • ${layerLabel}: <strong>${displayLayerName}</strong> • ${rgbDesc} ${layerJumpHtml}`;
   detailEl.innerHTML = `ZMK: <code style="color:var(--accent); background:#090d12; padding:2px 6px; border-radius:4px;">${escapeHtml(key.rawBinding)}</code> • ${escapeHtml(key.tooltip)}`;
 
   const rgbText = (rgbToken && rgbToken !== '___') ? `RGB: ${rgbToken} ${rgbSource}` : 'RGB: Unlit';
-  titleEl.title = `${coord.label} (Key #${idx}) • ${viewerMode === 'simulate' ? 'Active Source Layer' : 'Layer'}: ${displayLayerName} • ${rgbText}`;
+  titleEl.title = `${coord.label} (Key #${idx}) • ${layerLabel}: ${displayLayerName} • ${rgbText}`;
   detailEl.title = `ZMK: ${key.rawBinding} • ${key.tooltip}`;
 }
 
@@ -2103,12 +2194,21 @@ function resetInspector() {
   document.getElementById('insp-label').textContent = '—';
   const titleEl = document.getElementById('insp-title');
   const detailEl = document.getElementById('insp-detail');
+  const isMobile = window.innerWidth <= 768;
   if (viewerMode === 'simulate') {
-    titleEl.textContent = 'Simulation Mode: Hover momentary layer keys to activate • Click to lock/toggle';
-    detailEl.textContent = 'Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [C] Color Guide • [Esc] Reset Stack';
+    titleEl.textContent = isMobile
+      ? 'Simulation Mode: Tap momentary layer keys to activate'
+      : 'Simulation Mode: Hover momentary layer keys to activate • Click to lock/toggle';
+    detailEl.textContent = isMobile
+      ? 'Tap any key to inspect • Tap top buttons to switch layers'
+      : 'Shortcuts: [0-9] Toggle Layer • [M] Switch to Inspect • [C] Color Guide • [Esc] Reset Stack';
   } else {
-    titleEl.textContent = 'Inspect Mode: Click any key to inspect details or navigate layers';
-    detailEl.textContent = 'Shortcuts: [0-9] Layer • [M] Switch to Simulate • [R] Toggle RGB • [C] Color Guide • [Esc] Back';
+    titleEl.textContent = isMobile
+      ? 'Inspect Mode: Tap any key to inspect details'
+      : 'Inspect Mode: Click any key to inspect details or navigate layers';
+    detailEl.textContent = isMobile
+      ? 'Tap any key to inspect • Tap top buttons to switch layers'
+      : 'Shortcuts: [0-9] Layer • [M] Switch to Simulate • [R] Toggle RGB • [C] Color Guide • [Esc] Back';
   }
   titleEl.title = '';
   detailEl.title = '';
@@ -2389,6 +2489,10 @@ function initCanvasGestures() {
   window.addEventListener('resize', () => {
     if (currentScale > 1.0) {
       clampPan(false);
+    }
+    const labelEl = document.getElementById('insp-label');
+    if (labelEl && labelEl.textContent === '—') {
+      resetInspector();
     }
   });
 }
