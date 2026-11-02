@@ -73,6 +73,21 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 8px;
+      padding: 3px 6px;
+      margin: -3px -6px;
+      transition: background 0.15s ease, opacity 0.15s ease;
+    }
+    .brand:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .brand:hover .brand-icon {
+      transform: scale(1.05);
+    }
+    .brand:active {
+      opacity: 0.75;
     }
     .brand-icon {
       width: 28px;
@@ -80,6 +95,14 @@
       border-radius: 6px;
       flex-shrink: 0;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      transition: transform 0.25s ease;
+    }
+    .brand-icon.refreshing {
+      animation: spin-logo 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
+    }
+    @keyframes spin-logo {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
     .brand-title {
       font-size: 1.15rem;
@@ -521,6 +544,10 @@
     .drawer.collapsed .key-pill-label {
       font-size: 0.85rem;
     }
+    .drawer.collapsed .insp-key-icon {
+      width: 14px;
+      height: 14px;
+    }
     .drawer.collapsed .key-meta {
       font-size: 0.74rem;
       line-height: 1.2;
@@ -573,6 +600,26 @@
       font-weight: 800;
       color: var(--text-bright);
       font-family: ui-monospace, SFMono-Regular, monospace;
+      display: inline-flex;
+      align-items: center;
+      line-height: 1;
+    }
+    .insp-pill-content {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .insp-key-icon {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      flex-shrink: 0;
+      color: var(--text-bright);
+      stroke: currentColor;
+      vertical-align: middle;
+    }
+    .insp-pill-text {
+      display: inline-block;
     }
     .key-meta {
       font-size: 0.78rem;
@@ -670,6 +717,61 @@
       border-radius: 50%;
       display: inline-block;
       flex-shrink: 0;
+    }
+    .modal-legend-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 68px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+    .toast {
+      background: #1c2128;
+      border: 1px solid var(--accent);
+      color: var(--text-bright);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      pointer-events: auto;
+      animation: toast-in 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+    .toast-btn {
+      background: var(--accent);
+      color: #0d1117;
+      border: none;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+    .toast-btn:hover {
+      opacity: 0.85;
+    }
+    @keyframes toast-in {
+      from { transform: translateY(12px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     .canvas-widget {
@@ -846,6 +948,10 @@
       .drawer.collapsed .key-pill-label {
         font-size: 0.82rem;
       }
+      .drawer.collapsed .insp-key-icon {
+        width: 13px;
+        height: 13px;
+      }
       .drawer.collapsed .key-meta {
         font-size: 0.72rem;
         line-height: 1.2;
@@ -871,6 +977,10 @@
       }
       .key-pill-label {
         font-size: 0.88rem;
+      }
+      .drawer .insp-key-icon {
+        width: 15px;
+        height: 15px;
       }
       .drawer-toggle-btn {
         margin-top: 2px;
@@ -1030,6 +1140,10 @@
       .drawer .key-pill-label {
         font-size: 0.82rem;
       }
+      .drawer .insp-key-icon {
+        width: 14px;
+        height: 14px;
+      }
       .drawer .key-meta {
         font-size: 0.72rem;
         line-height: 1.2;
@@ -1072,7 +1186,7 @@
 </head>
 <body>
   <header>
-    <div class="brand">
+    <div class="brand" onclick="refreshApp()" onkeydown="if(event.key==='Enter'||event.key===' ')refreshApp()" title="Click to check for updates &amp; refresh app" role="button" tabindex="0">
       <svg class="brand-icon" viewBox="0 0 100 100" aria-label="MoErgo Layout Logo">
         <rect x="1" y="1" width="98" height="98" rx="22" fill="#0d1117" stroke="#30363d" stroke-width="2"/>
         <g transform="translate(14, 22) scale(7.9)">
@@ -1211,20 +1325,55 @@
         ⌨️ Special Key Icons
       </div>
       <div class="modal-legend-grid" style="margin-top: 8px;">
-        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">⌫</span><div><strong>Backspace:</strong> Erase previous character</div></div>
-        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">⎋</span><div><strong>Escape:</strong> Cancel, exit, or deselect</div></div>
-        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">⇥</span><div><strong>Tab:</strong> Tabular space / indent</div></div>
-        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">↵</span><div><strong>Enter / Return:</strong> Submit or new line</div></div>
-        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">⌦</span><div><strong>Delete:</strong> Forward erase character</div></div>
-        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">␣</span><div><strong>Space:</strong> Spacebar character</div></div>
-        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">⇪</span><div><strong>Caps Lock:</strong> Capital letters lock</div></div>
-        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">📷</span><div><strong>Screenshot:</strong> Screen capture & CleanShot X</div></div>
-        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">🚀</span><div><strong>Launcher:</strong> App launcher / Gemini (⌘␣)</div></div>
-        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">📋</span><div><strong>Clipboard:</strong> Copy (1x) & Paste (2x)</div></div>
+        <div class="legend-row">
+          <svg class="modal-legend-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
+          <div><strong>Backspace:</strong> Erase previous character</div>
+        </div>
+        <div class="legend-row">
+          <svg class="modal-legend-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12 4.5 4.5"/><polyline points="11 4.5 4.5 4.5 4.5 11"/><path d="M7 16A7.5 7.5 0 1 0 16 7"/></svg>
+          <div><strong>Escape:</strong> Cancel, exit, or deselect</div>
+        </div>
+        <div class="legend-row">
+          <svg class="modal-legend-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h12"/><polyline points="11 7 16 12 11 17"/><line x1="20" y1="5" x2="20" y2="19"/></svg>
+          <div><strong>Tab:</strong> Tabular space / indent</div>
+        </div>
+        <div class="legend-row">
+          <svg class="modal-legend-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 10 4 15 9 20"/><path d="M20 5v6a4 4 0 0 1-4 4H4"/></svg>
+          <div><strong>Enter / Return:</strong> Submit or new line</div>
+        </div>
+        <div class="legend-row">
+          <svg class="modal-legend-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h13l7 8-7 8H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><line x1="7" y1="9" x2="13" y2="15"/><line x1="13" y1="9" x2="7" y2="15"/></svg>
+          <div><strong>Delete:</strong> Forward erase character</div>
+        </div>
+        <div class="legend-row">
+          <svg class="modal-legend-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/></svg>
+          <div><strong>Space:</strong> Spacebar character</div>
+        </div>
+        <div class="legend-row">
+          <svg class="modal-legend-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 5.5 10.5h3.5v5h6v-5h3.5z"/><line x1="5.5" y1="19" x2="18.5" y2="19"/></svg>
+          <div><strong>Caps Lock:</strong> Capital letters lock</div>
+        </div>
+        <div class="legend-row">
+          <svg class="modal-legend-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <div><strong>Screenshot:</strong> Screen capture &amp; CleanShot X</div>
+        </div>
+        <div class="legend-row">
+          <svg class="modal-legend-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+          <div><strong>Launcher:</strong> App launcher / Gemini (⌘␣)</div>
+        </div>
+        <div class="legend-row">
+          <svg class="modal-legend-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+          <div><strong>Clipboard:</strong> Copy (1x) &amp; Paste (2x)</div>
+        </div>
+        <div class="legend-row">
+          <svg class="modal-legend-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          <div><strong>WM:</strong> Window Manager actions</div>
+        </div>
       </div>
     </div>
   </div>
 
+  <div id="toast-container" class="toast-container"></div>
 
   <script id="embedded-data" type="application/json"></script>
   <script>
@@ -1868,26 +2017,27 @@ const ICON_PATHS = {
   window: `<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>`
 };
 
-const FRIENDLY_NAMES = {
-  backspace: '⌫ Bksp',
-  escape: '⎋ Esc',
-  tab: '⇥ Tab',
-  enter: '↵ Enter',
-  delete: '⌦ Del',
-  space: '␣ Space',
-  caps: '⇪ Caps',
-  vol_up: '🔊 Vol +',
-  vol_down: '🔉 Vol -',
-  mute: '🔇 Mute',
-  bri_up: '🔆 Bri +',
-  bri_down: '🔅 Bri -',
-  prtsc: '📷 PrtSc',
-  screenshot: '📷 Screenshot',
-  rocket: '🚀 Launcher',
-  clipboard: '📋 Clipboard',
+const FRIENDLY_LABELS = {
+  backspace: 'Bksp',
+  escape: 'Esc',
+  tab: 'Tab',
+  enter: 'Enter',
+  delete: 'Del',
+  space: 'Space',
+  caps: 'Caps',
+  vol_up: 'Vol +',
+  vol_down: 'Vol -',
+  mute: 'Mute',
+  bri_up: 'Bri +',
+  bri_down: 'Bri -',
+  prtsc: 'PrtSc',
+  screenshot: 'Screenshot',
+  rocket: 'Launcher',
+  clipboard: 'Clipboard',
   ins: 'Ins',
-  window: '🪟 WM'
+  window: 'WM'
 };
+const FRIENDLY_NAMES = FRIENDLY_LABELS;
 
 const ICON_SEARCH_ALIASES = {
   backspace: ['backspace', 'bksp', 'bspc', 'del', 'erase'],
@@ -1912,10 +2062,37 @@ const ICON_SEARCH_ALIASES = {
 
 function getInspectorLabel(key) {
   if (!key) return '—';
-  if (key.icon && FRIENDLY_NAMES[key.icon]) {
-    return FRIENDLY_NAMES[key.icon];
+  if (key.icon && FRIENDLY_LABELS[key.icon]) {
+    return FRIENDLY_LABELS[key.icon];
   }
   return key.line2 ? `${key.line1} ${key.line2}` : (key.line1 || '—');
+}
+
+function renderInspectorPill(key) {
+  const pillEl = document.getElementById('insp-label');
+  if (!pillEl) return;
+
+  if (!key) {
+    pillEl.textContent = '—';
+    return;
+  }
+
+  if (key.icon && ICON_PATHS[key.icon]) {
+    const label = FRIENDLY_LABELS[key.icon] || (key.line2 ? `${key.line1} ${key.line2}` : key.line1) || '';
+    pillEl.innerHTML = `
+      <span class="insp-pill-content">
+        <svg class="key-icon insp-key-icon icon-${key.icon}" viewBox="0 0 24 24" width="18" height="18"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          ${ICON_PATHS[key.icon]}
+        </svg>
+        ${label ? `<span class="insp-pill-text">${escapeHtml(label)}</span>` : ''}
+      </span>
+    `;
+    return;
+  }
+
+  const fullLabel = key.line2 ? `${key.line1} ${key.line2}` : (key.line1 || '—');
+  pillEl.textContent = fullLabel;
 }
 
 function renderKeyPrimary(key, cx, cy, primaryFontSize, primaryFontWeight) {
@@ -2166,8 +2343,7 @@ function inspectKey(idx) {
     rgbSource = '';
   }
 
-  const fullLabel = getInspectorLabel(key);
-  document.getElementById('insp-label').textContent = fullLabel;
+  renderInspectorPill(key);
 
   const titleEl = document.getElementById('insp-title');
   const detailEl = document.getElementById('insp-detail');
@@ -2194,7 +2370,7 @@ function inspectKey(idx) {
 }
 
 function resetInspector() {
-  document.getElementById('insp-label').textContent = '—';
+  renderInspectorPill(null);
   const titleEl = document.getElementById('insp-title');
   const detailEl = document.getElementById('insp-detail');
   const isMobile = window.innerWidth <= 768;
@@ -2549,6 +2725,86 @@ function escapeHtml(text) {
   return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+let updateToastTimeout = null;
+
+function showToast(message, actionLabel = null, onAction = null, durationMs = 3500) {
+  let container = document.getElementById('toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toast-container';
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+  }
+
+  container.innerHTML = '';
+  if (updateToastTimeout) {
+    clearTimeout(updateToastTimeout);
+    updateToastTimeout = null;
+  }
+
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+
+  const textSpan = document.createElement('span');
+  textSpan.textContent = message;
+  toast.appendChild(textSpan);
+
+  if (actionLabel && onAction) {
+    const btn = document.createElement('button');
+    btn.className = 'toast-btn';
+    btn.textContent = actionLabel;
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      onAction();
+    };
+    toast.appendChild(btn);
+  }
+
+  container.appendChild(toast);
+
+  if (durationMs > 0) {
+    updateToastTimeout = setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s ease';
+      setTimeout(() => {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 300);
+    }, durationMs);
+  }
+}
+
+async function refreshApp() {
+  const brandIcon = document.querySelector('.brand-icon');
+  if (brandIcon) brandIcon.classList.add('refreshing');
+
+  showToast('Checking for updates & refreshing...', null, null, 2500);
+
+  try {
+    if ('serviceWorker' in navigator) {
+      const reg = await navigator.serviceWorker.getRegistration();
+      if (reg) {
+        await reg.update();
+        if (reg.waiting) {
+          reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+        }
+      }
+    }
+    if ('caches' in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k)));
+    }
+  } catch (err) {
+    console.warn('App refresh error:', err);
+  }
+
+  setTimeout(() => {
+    window.location.reload();
+  }, 400);
+}
+
+window.refreshApp = refreshApp;
+window.showToast = showToast;
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
@@ -2560,8 +2816,37 @@ if (document.readyState === 'loading') {
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
-          .then(reg => console.log('PWA ServiceWorker registered:', reg.scope))
+          .then(reg => {
+            console.log('PWA ServiceWorker registered:', reg.scope);
+            // Check for updates when switching back to the app window
+            window.addEventListener('focus', () => reg.update().catch(() => {}));
+            
+            // Listen for waiting background updates
+            reg.addEventListener('updatefound', () => {
+              const newWorker = reg.installing;
+              if (newWorker) {
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    if (window.showToast) {
+                      window.showToast('✨ Layout update available', 'Refresh', () => {
+                        newWorker.postMessage({ type: 'SKIP_WAITING' });
+                        window.location.reload();
+                      }, 0);
+                    }
+                  }
+                });
+              }
+            });
+          })
           .catch(err => console.warn('PWA ServiceWorker failed:', err));
+      });
+
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+          refreshing = true;
+          window.location.reload();
+        }
       });
     }
   </script>

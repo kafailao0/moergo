@@ -638,26 +638,27 @@ const ICON_PATHS = {
   window: `<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>`
 };
 
-const FRIENDLY_NAMES = {
-  backspace: '⌫ Bksp',
-  escape: '⎋ Esc',
-  tab: '⇥ Tab',
-  enter: '↵ Enter',
-  delete: '⌦ Del',
-  space: '␣ Space',
-  caps: '⇪ Caps',
-  vol_up: '🔊 Vol +',
-  vol_down: '🔉 Vol -',
-  mute: '🔇 Mute',
-  bri_up: '🔆 Bri +',
-  bri_down: '🔅 Bri -',
-  prtsc: '📷 PrtSc',
-  screenshot: '📷 Screenshot',
-  rocket: '🚀 Launcher',
-  clipboard: '📋 Clipboard',
+const FRIENDLY_LABELS = {
+  backspace: 'Bksp',
+  escape: 'Esc',
+  tab: 'Tab',
+  enter: 'Enter',
+  delete: 'Del',
+  space: 'Space',
+  caps: 'Caps',
+  vol_up: 'Vol +',
+  vol_down: 'Vol -',
+  mute: 'Mute',
+  bri_up: 'Bri +',
+  bri_down: 'Bri -',
+  prtsc: 'PrtSc',
+  screenshot: 'Screenshot',
+  rocket: 'Launcher',
+  clipboard: 'Clipboard',
   ins: 'Ins',
-  window: '🪟 WM'
+  window: 'WM'
 };
+const FRIENDLY_NAMES = FRIENDLY_LABELS;
 
 const ICON_SEARCH_ALIASES = {
   backspace: ['backspace', 'bksp', 'bspc', 'del', 'erase'],
@@ -682,10 +683,37 @@ const ICON_SEARCH_ALIASES = {
 
 function getInspectorLabel(key) {
   if (!key) return '—';
-  if (key.icon && FRIENDLY_NAMES[key.icon]) {
-    return FRIENDLY_NAMES[key.icon];
+  if (key.icon && FRIENDLY_LABELS[key.icon]) {
+    return FRIENDLY_LABELS[key.icon];
   }
   return key.line2 ? `${key.line1} ${key.line2}` : (key.line1 || '—');
+}
+
+function renderInspectorPill(key) {
+  const pillEl = document.getElementById('insp-label');
+  if (!pillEl) return;
+
+  if (!key) {
+    pillEl.textContent = '—';
+    return;
+  }
+
+  if (key.icon && ICON_PATHS[key.icon]) {
+    const label = FRIENDLY_LABELS[key.icon] || (key.line2 ? `${key.line1} ${key.line2}` : key.line1) || '';
+    pillEl.innerHTML = `
+      <span class="insp-pill-content">
+        <svg class="key-icon insp-key-icon icon-${key.icon}" viewBox="0 0 24 24" width="18" height="18"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          ${ICON_PATHS[key.icon]}
+        </svg>
+        ${label ? `<span class="insp-pill-text">${escapeHtml(label)}</span>` : ''}
+      </span>
+    `;
+    return;
+  }
+
+  const fullLabel = key.line2 ? `${key.line1} ${key.line2}` : (key.line1 || '—');
+  pillEl.textContent = fullLabel;
 }
 
 function renderKeyPrimary(key, cx, cy, primaryFontSize, primaryFontWeight) {
@@ -936,8 +964,7 @@ function inspectKey(idx) {
     rgbSource = '';
   }
 
-  const fullLabel = getInspectorLabel(key);
-  document.getElementById('insp-label').textContent = fullLabel;
+  renderInspectorPill(key);
 
   const titleEl = document.getElementById('insp-title');
   const detailEl = document.getElementById('insp-detail');
@@ -964,7 +991,7 @@ function inspectKey(idx) {
 }
 
 function resetInspector() {
-  document.getElementById('insp-label').textContent = '—';
+  renderInspectorPill(null);
   const titleEl = document.getElementById('insp-title');
   const detailEl = document.getElementById('insp-detail');
   const isMobile = window.innerWidth <= 768;
@@ -1318,6 +1345,86 @@ function escapeHtml(text) {
   if (!text) return '';
   return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
+
+let updateToastTimeout = null;
+
+function showToast(message, actionLabel = null, onAction = null, durationMs = 3500) {
+  let container = document.getElementById('toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toast-container';
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+  }
+
+  container.innerHTML = '';
+  if (updateToastTimeout) {
+    clearTimeout(updateToastTimeout);
+    updateToastTimeout = null;
+  }
+
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+
+  const textSpan = document.createElement('span');
+  textSpan.textContent = message;
+  toast.appendChild(textSpan);
+
+  if (actionLabel && onAction) {
+    const btn = document.createElement('button');
+    btn.className = 'toast-btn';
+    btn.textContent = actionLabel;
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      onAction();
+    };
+    toast.appendChild(btn);
+  }
+
+  container.appendChild(toast);
+
+  if (durationMs > 0) {
+    updateToastTimeout = setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s ease';
+      setTimeout(() => {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 300);
+    }, durationMs);
+  }
+}
+
+async function refreshApp() {
+  const brandIcon = document.querySelector('.brand-icon');
+  if (brandIcon) brandIcon.classList.add('refreshing');
+
+  showToast('Checking for updates & refreshing...', null, null, 2500);
+
+  try {
+    if ('serviceWorker' in navigator) {
+      const reg = await navigator.serviceWorker.getRegistration();
+      if (reg) {
+        await reg.update();
+        if (reg.waiting) {
+          reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+        }
+      }
+    }
+    if ('caches' in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k)));
+    }
+  } catch (err) {
+    console.warn('App refresh error:', err);
+  }
+
+  setTimeout(() => {
+    window.location.reload();
+  }, 400);
+}
+
+window.refreshApp = refreshApp;
+window.showToast = showToast;
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
