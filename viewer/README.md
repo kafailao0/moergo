@@ -60,6 +60,13 @@ Interactive web-based layout viewer and firmware simulator for the **MoErgo Glov
 - **Collapsible Inspector (`[I]` or `▼`/`▲`):** Toggle the key inspector drawer between full detail mode, compact single-line mode, or collapsed.
 - **Horizontal & Minimizable Canvas Tools (`[T]` or `⚙️`):** The floating tools (Legend, RGB, Fullscreen, Zoom) are laid out horizontally at the bottom right with idle translucency (opacity 0.65). A gear toggle collapses the entire toolstrip into a single 26×26px button so the rightmost keys (`F9`, `F10`, `Home`, `End`) are never obstructed.
 
+### 7. Crisp Vector Keycap Icons
+- **Special Key Icons:** Replaces crowded text labels with crisp, hardware-inspired SVG vector icons for special editing and control keys:
+  - Backspace (`⌫`), Escape (`⎋`), Tab (`↹`), Enter / Return (`↵`), Delete (`⌦`), Space (`␣`), and Caps Lock (`⇪`).
+  - Audio & system controls: Volume Up / Down (`🔊` / `🔉`), Mute (`🔇`), Brightness Up / Down (`🔆` / `🔅`), and Print Screen (`📷`).
+- **Smart Search Aliasing:** Typing standard text aliases (e.g. `backspace` / `bksp`, `return` / `enter`, `del` / `delete`, `esc` / `escape`, `space`, `caps`, `vol`, `bri`) instantly highlights the corresponding icon keys across all layers.
+- **Key Inspector & Legend Reference:** Clicking any keycap displays the icon with its full descriptive name in the inspector drawer, and the modal guide (`[C]`) includes an icon reference.
+
 ### 8. Progressive Web App (PWA) & Offline Support
 - **Installable Home Screen App:** Includes a Web App Manifest (`manifest.json`) and service worker (`sw.js`) that allows installing the visualizer directly to your home screen or desktop application drawer from Chrome, Edge, and Safari.
 - **Offline First:** All HTML, layout data (`data.json`), and SVG icons are cached locally, allowing the visualizer to load instantly and run completely offline without an active network connection.

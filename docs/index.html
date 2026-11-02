@@ -431,6 +431,22 @@
       pointer-events: none;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
+    .key-icon {
+      color: var(--text-bright);
+      pointer-events: none;
+      overflow: visible;
+      transition: color 0.15s ease;
+    }
+    .key-group:hover .key-icon {
+      color: #ffffff;
+    }
+    .key-group.is-pass-through .key-icon {
+      color: #8b949e;
+      opacity: 0.82;
+    }
+    .key-group:active .key-icon {
+      color: var(--accent);
+    }
     .key-text-sec {
       fill: var(--badge-mod);
       font-size: 10.5px;
@@ -1118,6 +1134,18 @@
         <div class="legend-row"><span class="rgb-dot" style="background:#FF0000"></span><div><strong>Red:</strong> Locks, Deletion & System/Exit Keys</div></div>
         <div class="legend-row"><span class="rgb-dot" style="background:#0066FF"></span><div><strong>Blue:</strong> PC Overlay & Bluetooth</div></div>
       </div>
+      <div class="modal-section-title" style="margin-top: 14px; font-weight: 700; font-size: 0.88rem; color: var(--text-bright); border-top: 1px solid var(--surface-border); padding-top: 12px;">
+        ⌨️ Special Key Icons
+      </div>
+      <div class="modal-legend-grid" style="margin-top: 8px;">
+        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">⌫</span><div><strong>Backspace:</strong> Erase previous character</div></div>
+        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">⎋</span><div><strong>Escape:</strong> Cancel, exit, or deselect</div></div>
+        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">⇥</span><div><strong>Tab:</strong> Tabular space / indent</div></div>
+        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">↵</span><div><strong>Enter / Return:</strong> Submit or new line</div></div>
+        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">⌦</span><div><strong>Delete:</strong> Forward erase character</div></div>
+        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">␣</span><div><strong>Space:</strong> Spacebar character</div></div>
+        <div class="legend-row"><span style="font-size: 1.1rem; width: 20px; text-align: center; color: var(--accent);">⇪</span><div><strong>Caps Lock:</strong> Capital letters lock</div></div>
+      </div>
     </div>
   </div>
 
@@ -1752,6 +1780,125 @@ function updateBackButton() {
   }
 }
 
+// Crisp vector SVG icon paths (24x24 viewBox, stroke-width 2, rounded caps & joins)
+const ICON_PATHS = {
+  backspace: `<path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/>`,
+  delete: `<path d="M3 4h13l7 8-7 8H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><line x1="7" y1="9" x2="13" y2="15"/><line x1="13" y1="9" x2="7" y2="15"/>`,
+  escape: `<path d="M12 12 4.5 4.5"/><polyline points="11 4.5 4.5 4.5 4.5 11"/><path d="M7 16A7.5 7.5 0 1 0 16 7"/>`,
+  tab: `<line x1="4" y1="8" x2="15" y2="8"/><polyline points="11 5 15 8 11 11"/><line x1="19" y1="4" x2="19" y2="12"/><line x1="20" y1="16" x2="9" y2="16"/><polyline points="13 13 9 16 13 19"/><line x1="5" y1="12" x2="5" y2="20"/>`,
+  enter: `<polyline points="9 10 4 15 9 20"/><path d="M20 5v6a4 4 0 0 1-4 4H4"/>`,
+  space: `<path d="M5 9v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/>`,
+  caps: `<polyline points="6 11 12 5 18 11"/><line x1="12" y1="5" x2="12" y2="14"/><line x1="6" y1="18" x2="18" y2="18"/>`,
+  vol_up: `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/>`,
+  vol_down: `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/>`,
+  mute: `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/>`,
+  bri_up: `<circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>`,
+  bri_down: `<circle cx="12" cy="12" r="3"/><line x1="12" y1="4" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="20"/><line x1="4" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="20" y2="12"/>`,
+  prtsc: `<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>`,
+  ins: `<rect x="4" y="4" width="16" height="16" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>`
+};
+
+function getKeyIcon(key) {
+  if (!key) return null;
+  if (key.icon && ICON_PATHS[key.icon]) return key.icon;
+
+  const l1 = (key.line1 || '').trim();
+  const raw = (key.rawBinding || '').trim();
+
+  if (l1 === 'Bksp' || l1 === 'Backspace' || l1 === '⌫' || raw.includes('BSPC') || raw.includes('BACKSPACE')) return 'backspace';
+  if (l1 === 'Esc' || l1 === 'Escape' || l1 === '⎋' || raw === '&kp ESC') return 'escape';
+  if (l1 === 'Tab' || l1 === '⇥' || raw.includes('TAB')) return 'tab';
+  if (l1 === 'Enter' || l1 === 'Return' || l1 === '↵' || l1 === '⏎' || raw.includes('RET') || raw.includes('ENTER')) return 'enter';
+  if (l1 === 'Del' || l1 === 'Delete' || l1 === '⌦' || raw.includes('DEL')) return 'delete';
+  if (l1 === 'Space' || l1 === '␣' || raw === '&kp SPACE') return 'space';
+  if (l1 === 'Caps' || l1 === 'CAPS' || l1 === '⇪' || raw === '&td_caps') return 'caps';
+  if ((l1 === 'Vol' && key.line2 === '+') || raw.includes('C_VOL_UP')) return 'vol_up';
+  if ((l1 === 'Vol' && key.line2 === '-') || raw.includes('C_VOL_DN')) return 'vol_down';
+  if (l1 === 'Mute' || raw.includes('C_MUTE')) return 'mute';
+  if ((l1 === 'Bri' && key.line2 === '+') || raw.includes('C_BRI_UP')) return 'bri_up';
+  if ((l1 === 'Bri' && key.line2 === '-') || raw.includes('C_BRI_DN')) return 'bri_down';
+  if (l1 === 'PrtSc' || raw.includes('PSCRN')) return 'prtsc';
+  if (l1 === 'Ins' || raw.includes('INS')) return 'ins';
+
+  return null;
+}
+
+function getInspectorLabel(key) {
+  if (!key) return '—';
+  const icon = getKeyIcon(key);
+  const friendlyNames = {
+    backspace: '⌫ Bksp',
+    escape: '⎋ Esc',
+    tab: '⇥ Tab',
+    enter: '↵ Enter',
+    delete: '⌦ Del',
+    space: '␣ Space',
+    caps: '⇪ Caps',
+    vol_up: '🔊 Vol +',
+    vol_down: '🔉 Vol -',
+    mute: '🔇 Mute',
+    bri_up: '🔆 Bri +',
+    bri_down: '🔅 Bri -',
+    prtsc: '📷 PrtSc',
+    ins: 'Ins'
+  };
+  if (icon && friendlyNames[icon]) {
+    return friendlyNames[icon];
+  }
+  if (key.line1 === '⌘' && key.line2 === 'Space') {
+    return '⌘␣ Spotlight';
+  }
+  return key.line2 ? `${key.line1} ${key.line2}` : (key.line1 || '—');
+}
+
+function renderKeyPrimary(key, cx, cy, primaryFontSize, primaryFontWeight) {
+  const icon = getKeyIcon(key);
+
+  // 1. Full-key icon
+  if (icon && ICON_PATHS[icon]) {
+    const size = 20;
+    const half = size / 2;
+    // Shift slightly down if secondary label exists in top-right corner
+    const offsetY = key.secondary ? 2.5 : 0;
+    const ix = cx - half;
+    const iy = cy + offsetY - half;
+
+    return `
+      <svg class="key-icon icon-${icon}" x="${ix}" y="${iy}" width="${size}" height="${size}"
+           viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        ${ICON_PATHS[icon]}
+      </svg>
+    `;
+  }
+
+  // 2. Multi-line label where line2 is Space (e.g. "⌘ Space" Spotlight)
+  if (key.line2) {
+    if (key.line2 === 'Space') {
+      const size = 15;
+      const half = size / 2;
+      return `
+        <text class="key-text-primary" x="${cx}" y="${cy - 6.5}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line1)}</text>
+        <svg class="key-icon icon-space" x="${cx - half}" y="${cy + 1.5}" width="${size}" height="${size}"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          ${ICON_PATHS['space']}
+        </svg>
+      `;
+    }
+
+    return `
+      <text class="key-text-primary" x="${cx}" y="${cy - 5.5}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line1)}</text>
+      <text class="key-text-primary" x="${cx}" y="${cy + 7.5}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line2)}</text>
+    `;
+  }
+
+  // 3. Standard 1-line text
+  return `
+    <text class="key-text-primary" x="${cx}" y="${cy + (key.secondary ? 2.5 : 0)}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line1)}</text>
+  `;
+}
+
 function renderSvg() {
   const kb = KEYBOARDS[currentKb];
   const coords = kb.coords;
@@ -1794,6 +1941,7 @@ function renderSvg() {
             line2: baseK.line2,
             secondary: baseK.secondary,
             badge: '',
+            icon: baseK.icon,
             tooltip: `Pass-through (Inherited from Base: ${baseK.tooltip || baseK.line1})`,
             rawBinding: `&trans (Inherits Base: ${baseK.rawBinding})`
           };
@@ -1810,12 +1958,32 @@ function renderSvg() {
     let pivotX = (c.rx !== undefined) ? c.rx * UNIT : x;
     let pivotY = (c.ry !== undefined) ? c.ry * UNIT : y;
 
+    const icon = getKeyIcon(key);
+    const iconSearchAliases = {
+      backspace: ['backspace', 'bksp', 'bspc', 'del', 'delete', 'erase'],
+      escape: ['escape', 'esc'],
+      tab: ['tab', 'tabulator'],
+      enter: ['enter', 'return', 'ret'],
+      delete: ['delete', 'del', 'forward delete'],
+      space: ['space', 'spacebar'],
+      caps: ['caps', 'capslock', 'caps lock', 'capital'],
+      vol_up: ['vol', 'volume', 'louder'],
+      vol_down: ['vol', 'volume', 'quieter'],
+      mute: ['mute', 'silence', 'audio'],
+      bri_up: ['bri', 'brightness', 'light'],
+      bri_down: ['bri', 'brightness', 'dim'],
+      prtsc: ['prtsc', 'print', 'screen', 'screenshot', 'capture'],
+      ins: ['ins', 'insert']
+    };
+
     const isMatched = searchQuery && (
       (key.line1 && key.line1.toLowerCase().includes(searchQuery)) ||
       (key.line2 && key.line2.toLowerCase().includes(searchQuery)) ||
       (key.secondary && key.secondary.toLowerCase().includes(searchQuery)) ||
       (key.rawBinding && key.rawBinding.toLowerCase().includes(searchQuery)) ||
-      (key.tooltip && key.tooltip.toLowerCase().includes(searchQuery))
+      (key.tooltip && key.tooltip.toLowerCase().includes(searchQuery)) ||
+      (icon && icon.toLowerCase().includes(searchQuery)) ||
+      (icon && iconSearchAliases[icon] && iconSearchAliases[icon].some(alias => alias.includes(searchQuery)))
     );
 
     let capClass = 'key-cap';
@@ -1871,13 +2039,8 @@ function renderSvg() {
           <text class="key-badge badge-${key.badgeType}" x="${x + 5}" y="${y + 4.5}">${escapeHtml(key.badge)}</text>
         ` : ''}
 
-        <!-- Primary Label (Centered, 1 or 2 lines) -->
-        ${key.line2 ? `
-          <text class="key-text-primary" x="${cx}" y="${cy - 5.5}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line1)}</text>
-          <text class="key-text-primary" x="${cx}" y="${cy + 7.5}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line2)}</text>
-        ` : `
-          <text class="key-text-primary" x="${cx}" y="${cy + (key.secondary ? 2.5 : 0)}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line1)}</text>
-        `}
+        <!-- Primary Label (Centered Icon or Text) -->
+        ${renderKeyPrimary(key, cx, cy, primaryFontSize, primaryFontWeight)}
       </g>
     `;
   });
@@ -1970,7 +2133,7 @@ function inspectKey(idx) {
     rgbSource = '';
   }
 
-  const fullLabel = key.line2 ? `${key.line1} ${key.line2}` : (key.line1 || '—');
+  const fullLabel = getInspectorLabel(key);
   document.getElementById('insp-label').textContent = fullLabel;
 
   const titleEl = document.getElementById('insp-title');

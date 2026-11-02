@@ -339,6 +339,14 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
         badge_type = 'layer'
         tooltip = f"Tap for {tap} • Hold for {layer_name} (Click or hover to view layer)"
 
+    elif beh == '&mt':
+        mod = formatted_params[0] if len(formatted_params) > 0 else ''
+        tap = formatted_params[1] if len(formatted_params) > 1 else ''
+        line1 = tap
+        secondary = mod.split()[0] if mod else ''
+        badge_type = 'mod'
+        tooltip = f"Mod-Tap: Tap for {tap} • Hold for {mod}"
+
     elif beh == '&magic':
         line1 = 'Magic'
         target_layer = layer_names.index('Magic') if 'Magic' in layer_names else None
@@ -448,6 +456,41 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
     if secondary and (secondary == line1 or secondary == line2 or (line2 and secondary in line2)):
         secondary = ''
 
+    # Assign icon identifiers for special keys (Bksp, Esc, Tab, Enter, Del, Space, Caps, etc.)
+    icon = None
+    icon_map = {
+        'BSPC': 'backspace', 'BACKSPACE': 'backspace', 'Bksp': 'backspace',
+        'ESC': 'escape', 'ESCAPE': 'escape', 'Esc': 'escape',
+        'TAB': 'tab', 'Tab': 'tab',
+        'RET': 'enter', 'ENTER': 'enter', 'Enter': 'enter', 'KP_ENTER': 'enter',
+        'DEL': 'delete', 'DELETE': 'delete', 'Del': 'delete',
+        'SPACE': 'space', 'Space': 'space',
+        'CAPS': 'caps', 'CAPSLOCK': 'caps', 'Caps': 'caps',
+        'C_VOL_UP': 'vol_up',
+        'C_VOL_DN': 'vol_down',
+        'C_MUTE': 'mute', 'Mute': 'mute',
+        'C_BRI_UP': 'bri_up',
+        'C_BRI_DN': 'bri_down',
+        'PSCRN': 'prtsc', 'PrtSc': 'prtsc',
+        'INS': 'ins',
+    }
+
+    if line1 in icon_map:
+        icon = icon_map[line1]
+    elif raw_params:
+        p0 = str(raw_params[0].get('value', '')) if isinstance(raw_params[0], dict) else str(raw_params[0])
+        if p0 in icon_map:
+            icon = icon_map[p0]
+        elif len(raw_params) > 1:
+            p1 = str(raw_params[1].get('value', '')) if isinstance(raw_params[1], dict) else str(raw_params[1])
+            if p1 in icon_map:
+                icon = icon_map[p1]
+
+    if beh == 'Custom':
+        custom_str = str(raw_params[0].get('value', '')) if raw_params else ''
+        if 'td_caps' in custom_str:
+            icon = 'caps'
+
     return {
         'line1': line1,
         'line2': line2,
@@ -456,7 +499,8 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
         'badgeType': badge_type,
         'tooltip': tooltip,
         'targetLayer': target_layer,
-        'rawBinding': raw_binding
+        'rawBinding': raw_binding,
+        'icon': icon
     }
 
 def build_data():

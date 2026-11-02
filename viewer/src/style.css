@@ -414,6 +414,22 @@
       pointer-events: none;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
+    .key-icon {
+      color: var(--text-bright);
+      pointer-events: none;
+      overflow: visible;
+      transition: color 0.15s ease;
+    }
+    .key-group:hover .key-icon {
+      color: #ffffff;
+    }
+    .key-group.is-pass-through .key-icon {
+      color: #8b949e;
+      opacity: 0.82;
+    }
+    .key-group:active .key-icon {
+      color: var(--accent);
+    }
     .key-text-sec {
       fill: var(--badge-mod);
       font-size: 10.5px;
