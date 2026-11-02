@@ -1725,7 +1725,7 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Caps",
+            "line1": "\u21ea",
             "line2": "",
             "secondary": "",
             "badge": "TD",
@@ -1881,12 +1881,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Esc",
+            "line1": "\u238b",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Esc",
+            "tooltip": "Key: Escape",
             "targetLayer": null,
             "rawBinding": "&kp ESC",
             "icon": "escape",
@@ -2154,12 +2154,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Vol",
-            "line2": "-",
+            "line1": "\ud83d\udd09",
+            "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Vol -",
+            "tooltip": "Key: Volume Down",
             "targetLayer": null,
             "rawBinding": "&kp C_VOL_DN",
             "icon": "vol_down",
@@ -2167,12 +2167,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Vol",
-            "line2": "+",
+            "line1": "\ud83d\udd0a",
+            "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Vol +",
+            "tooltip": "Key: Volume Up",
             "targetLayer": null,
             "rawBinding": "&kp C_VOL_UP",
             "icon": "vol_up",
@@ -2349,12 +2349,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Bksp",
+            "line1": "\u232b",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Bksp",
+            "tooltip": "Key: Backspace",
             "targetLayer": null,
             "rawBinding": "&kp BSPC",
             "icon": "backspace",
@@ -2362,12 +2362,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Tab",
+            "line1": "\u21e5",
             "line2": "",
             "secondary": "NumRow",
             "badge": "",
             "badgeType": "layer",
-            "tooltip": "Tap for Tab \u2022 Hold for NumRow (Click or hover to view layer)",
+            "tooltip": "Tap for \u21e5 \u2022 Hold for NumRow (Click or hover to view layer)",
             "targetLayer": 5,
             "rawBinding": "&lt 5 TAB",
             "icon": "tab",
@@ -2375,7 +2375,7 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Enter",
+            "line1": "\u21b5",
             "line2": "",
             "secondary": "",
             "badge": "",
@@ -2388,12 +2388,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Del",
+            "line1": "\u2326",
             "line2": "",
             "secondary": "SymNav",
             "badge": "",
             "badgeType": "layer",
-            "tooltip": "Tap for Del \u2022 Hold for SymbolNav (Click or hover to view layer)",
+            "tooltip": "Tap for \u2326 \u2022 Hold for SymbolNav (Click or hover to view layer)",
             "targetLayer": 3,
             "rawBinding": "&hold_tap_layer 3 DEL",
             "icon": "delete",
@@ -2401,7 +2401,7 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Space",
+            "line1": "\u2423",
             "line2": "",
             "secondary": "",
             "badge": "",
@@ -2440,12 +2440,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "\u2318",
-            "line2": "Space",
+            "line1": "\u2318\u2423",
+            "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: \u2318 Space",
+            "tooltip": "Key: \u2318\u2423",
             "targetLayer": null,
             "rawBinding": "&kp LG(SPACE)",
             "icon": null,
@@ -3815,7 +3815,7 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Tab",
+            "line1": "\u21e5",
             "line2": "",
             "secondary": "",
             "badge": "",
@@ -4387,12 +4387,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Bksp",
+            "line1": "\u232b",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Bksp",
+            "tooltip": "Key: Backspace",
             "targetLayer": null,
             "rawBinding": "&kp BSPC",
             "icon": "backspace",
@@ -4400,7 +4400,7 @@
             "rgbHex": "#FF5500"
           },
           {
-            "line1": "Space",
+            "line1": "\u2423",
             "line2": "",
             "secondary": "",
             "badge": "",
@@ -4413,12 +4413,12 @@
             "rgbHex": "#FF5500"
           },
           {
-            "line1": "Del",
+            "line1": "\u2326",
             "line2": "",
             "secondary": "SymNav",
             "badge": "",
             "badgeType": "layer",
-            "tooltip": "Tap for Del \u2022 Hold for SymbolNav (Click or hover to view layer)",
+            "tooltip": "Tap for \u2326 \u2022 Hold for SymbolNav (Click or hover to view layer)",
             "targetLayer": 3,
             "rawBinding": "&lt 3 DEL",
             "icon": "delete",
@@ -4452,12 +4452,12 @@
             "rgbHex": "#FF5500"
           },
           {
-            "line1": "Enter",
+            "line1": "\u21b5",
             "line2": "",
             "secondary": "\u2325",
             "badge": "",
             "badgeType": "mod",
-            "tooltip": "Mod-Tap: Tap for Enter \u2022 Hold for \u2325",
+            "tooltip": "Mod-Tap: Tap for \u21b5 \u2022 Hold for \u2325",
             "targetLayer": null,
             "rawBinding": "&mt LALT RET",
             "icon": "enter",
@@ -5484,12 +5484,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Del",
+            "line1": "\u2326",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Del",
+            "tooltip": "Key: Delete",
             "targetLayer": null,
             "rawBinding": "&kp DEL",
             "icon": "delete",
@@ -6586,7 +6586,7 @@
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: \u21b5",
+            "tooltip": "Key: Enter",
             "targetLayer": null,
             "rawBinding": "&kp KP_ENTER",
             "icon": "enter",
@@ -8086,12 +8086,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Vol",
-            "line2": "-",
+            "line1": "\ud83d\udd09",
+            "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Vol -",
+            "tooltip": "Key: Volume Down",
             "targetLayer": null,
             "rawBinding": "&kp C_VOL_DN",
             "icon": "vol_down",
@@ -8099,12 +8099,12 @@
             "rgbHex": "#00FFFF"
           },
           {
-            "line1": "Vol",
-            "line2": "+",
+            "line1": "\ud83d\udd0a",
+            "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Vol +",
+            "tooltip": "Key: Volume Up",
             "targetLayer": null,
             "rawBinding": "&kp C_VOL_UP",
             "icon": "vol_up",
@@ -8112,7 +8112,7 @@
             "rgbHex": "#00FFFF"
           },
           {
-            "line1": "Mute",
+            "line1": "\ud83d\udd07",
             "line2": "",
             "secondary": "",
             "badge": "",
@@ -8476,12 +8476,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Bri",
-            "line2": "-",
+            "line1": "\ud83d\udd05",
+            "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Bri -",
+            "tooltip": "Key: Brightness Down",
             "targetLayer": null,
             "rawBinding": "&kp C_BRI_DN",
             "icon": "bri_down",
@@ -8489,12 +8489,12 @@
             "rgbHex": "#00FFFF"
           },
           {
-            "line1": "Bri",
-            "line2": "+",
+            "line1": "\ud83d\udd06",
+            "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Bri +",
+            "tooltip": "Key: Brightness Up",
             "targetLayer": null,
             "rawBinding": "&kp C_BRI_UP",
             "icon": "bri_up",
@@ -8689,7 +8689,7 @@
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Ins",
+            "tooltip": "Key: Insert",
             "targetLayer": null,
             "rawBinding": "&kp INS",
             "icon": "ins",
@@ -8710,12 +8710,12 @@
             "rgbHex": "#FF0000"
           },
           {
-            "line1": "PrtSc",
+            "line1": "\ud83d\udcf7",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: PrtSc",
+            "tooltip": "Key: Print Screen",
             "targetLayer": null,
             "rawBinding": "&kp PSCRN",
             "icon": "prtsc",
@@ -10527,12 +10527,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Esc",
+            "line1": "\u238b",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Esc",
+            "tooltip": "Key: Escape",
             "targetLayer": null,
             "rawBinding": "&kp ESC",
             "icon": "escape",
@@ -12999,7 +12999,7 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Caps",
+            "line1": "\u21ea",
             "line2": "",
             "secondary": "",
             "badge": "TD",
@@ -13155,12 +13155,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Esc",
+            "line1": "\u238b",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Esc",
+            "tooltip": "Key: Escape",
             "targetLayer": null,
             "rawBinding": "&kp ESC",
             "icon": "escape",
@@ -13532,12 +13532,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "\u2318",
-            "line2": "Space",
+            "line1": "\u2318\u2423",
+            "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: \u2318 Space",
+            "tooltip": "Key: \u2318\u2423",
             "targetLayer": null,
             "rawBinding": "&kp LG(SPACE)",
             "icon": null,
@@ -13558,12 +13558,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Bksp",
+            "line1": "\u232b",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Bksp",
+            "tooltip": "Key: Backspace",
             "targetLayer": null,
             "rawBinding": "&kp BSPC",
             "icon": "backspace",
@@ -13571,12 +13571,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Tab",
+            "line1": "\u21e5",
             "line2": "",
             "secondary": "NumRow",
             "badge": "",
             "badgeType": "layer",
-            "tooltip": "Tap for Tab \u2022 Hold for NumRow (Click or hover to view layer)",
+            "tooltip": "Tap for \u21e5 \u2022 Hold for NumRow (Click or hover to view layer)",
             "targetLayer": 5,
             "rawBinding": "&lt 5 TAB",
             "icon": "tab",
@@ -13584,7 +13584,7 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Enter",
+            "line1": "\u21b5",
             "line2": "",
             "secondary": "",
             "badge": "",
@@ -13597,12 +13597,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Del",
+            "line1": "\u2326",
             "line2": "",
             "secondary": "SymNav",
             "badge": "",
             "badgeType": "layer",
-            "tooltip": "Tap for Del \u2022 Hold for SymbolNav (Click or hover to view layer)",
+            "tooltip": "Tap for \u2326 \u2022 Hold for SymbolNav (Click or hover to view layer)",
             "targetLayer": 3,
             "rawBinding": "&hold_tap_layer 3 DEL",
             "icon": "delete",
@@ -13610,7 +13610,7 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Space",
+            "line1": "\u2423",
             "line2": "",
             "secondary": "",
             "badge": "",
@@ -14569,7 +14569,7 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Tab",
+            "line1": "\u21e5",
             "line2": "",
             "secondary": "",
             "badge": "",
@@ -15037,12 +15037,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Bksp",
+            "line1": "\u232b",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Bksp",
+            "tooltip": "Key: Backspace",
             "targetLayer": null,
             "rawBinding": "&kp BSPC",
             "icon": "backspace",
@@ -15050,7 +15050,7 @@
             "rgbHex": "#FF5500"
           },
           {
-            "line1": "Space",
+            "line1": "\u2423",
             "line2": "",
             "secondary": "",
             "badge": "",
@@ -15063,12 +15063,12 @@
             "rgbHex": "#FF5500"
           },
           {
-            "line1": "Del",
+            "line1": "\u2326",
             "line2": "",
             "secondary": "SymNav",
             "badge": "",
             "badgeType": "layer",
-            "tooltip": "Tap for Del \u2022 Hold for SymbolNav (Click or hover to view layer)",
+            "tooltip": "Tap for \u2326 \u2022 Hold for SymbolNav (Click or hover to view layer)",
             "targetLayer": 3,
             "rawBinding": "&lt 3 DEL",
             "icon": "delete",
@@ -15141,12 +15141,12 @@
             "rgbHex": "#FF5500"
           },
           {
-            "line1": "Enter",
+            "line1": "\u21b5",
             "line2": "",
             "secondary": "\u2325",
             "badge": "",
             "badgeType": "mod",
-            "tooltip": "Mod-Tap: Tap for Enter \u2022 Hold for \u2325",
+            "tooltip": "Mod-Tap: Tap for \u21b5 \u2022 Hold for \u2325",
             "targetLayer": null,
             "rawBinding": "&mt LALT RET",
             "icon": "enter",
@@ -15913,12 +15913,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Del",
+            "line1": "\u2326",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Del",
+            "tooltip": "Key: Delete",
             "targetLayer": null,
             "rawBinding": "&kp DEL",
             "icon": "delete",
@@ -16755,7 +16755,7 @@
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: \u21b5",
+            "tooltip": "Key: Enter",
             "targetLayer": null,
             "rawBinding": "&kp KP_ENTER",
             "icon": "enter",
@@ -17800,12 +17800,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Vol",
-            "line2": "-",
+            "line1": "\ud83d\udd09",
+            "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Vol -",
+            "tooltip": "Key: Volume Down",
             "targetLayer": null,
             "rawBinding": "&kp C_VOL_DN",
             "icon": "vol_down",
@@ -17813,12 +17813,12 @@
             "rgbHex": "#00FFFF"
           },
           {
-            "line1": "Vol",
-            "line2": "+",
+            "line1": "\ud83d\udd0a",
+            "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Vol +",
+            "tooltip": "Key: Volume Up",
             "targetLayer": null,
             "rawBinding": "&kp C_VOL_UP",
             "icon": "vol_up",
@@ -17826,7 +17826,7 @@
             "rgbHex": "#00FFFF"
           },
           {
-            "line1": "Mute",
+            "line1": "\ud83d\udd07",
             "line2": "",
             "secondary": "",
             "badge": "",
@@ -18112,12 +18112,12 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "Bri",
-            "line2": "-",
+            "line1": "\ud83d\udd05",
+            "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Bri -",
+            "tooltip": "Key: Brightness Down",
             "targetLayer": null,
             "rawBinding": "&kp C_BRI_DN",
             "icon": "bri_down",
@@ -18125,12 +18125,12 @@
             "rgbHex": "#00FFFF"
           },
           {
-            "line1": "Bri",
-            "line2": "+",
+            "line1": "\ud83d\udd06",
+            "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Bri +",
+            "tooltip": "Key: Brightness Up",
             "targetLayer": null,
             "rawBinding": "&kp C_BRI_UP",
             "icon": "bri_up",
@@ -18221,7 +18221,7 @@
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: Ins",
+            "tooltip": "Key: Insert",
             "targetLayer": null,
             "rawBinding": "&kp INS",
             "icon": "ins",
@@ -18242,12 +18242,12 @@
             "rgbHex": "#FF0000"
           },
           {
-            "line1": "PrtSc",
+            "line1": "\ud83d\udcf7",
             "line2": "",
             "secondary": "",
             "badge": "",
             "badgeType": "",
-            "tooltip": "Key: PrtSc",
+            "tooltip": "Key: Print Screen",
             "targetLayer": null,
             "rawBinding": "&kp PSCRN",
             "icon": "prtsc",

@@ -379,7 +379,7 @@
             quick-tap-ms = <175>;
         };
 
-        /* @viewer: Caps | @badge: TD | @tooltip: Tap Dance: 1x Caps Word • 2x Caps Lock */
+        /* @viewer: ⇪ | @badge: TD | @icon: caps | @tooltip: Tap Dance: 1x Caps Word • 2x Caps Lock */
         td_caps: td_caps {
             compatible = "zmk,behavior-tap-dance";
             label = "TD_CAPS";

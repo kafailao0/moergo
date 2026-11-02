@@ -14,6 +14,30 @@ import shutil
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Unified key metadata mapping: keycode -> (display_symbol, friendly_name, icon_id)
+KEY_METADATA = {
+    'BSPC': ('⌫', 'Backspace', 'backspace'),
+    'BACKSPACE': ('⌫', 'Backspace', 'backspace'),
+    'DEL': ('⌦', 'Delete', 'delete'),
+    'DELETE': ('⌦', 'Delete', 'delete'),
+    'ESC': ('⎋', 'Escape', 'escape'),
+    'ESCAPE': ('⎋', 'Escape', 'escape'),
+    'TAB': ('⇥', 'Tab', 'tab'),
+    'RET': ('↵', 'Enter', 'enter'),
+    'ENTER': ('↵', 'Enter', 'enter'),
+    'KP_ENTER': ('↵', 'Enter', 'enter'),
+    'SPACE': ('␣', 'Space', 'space'),
+    'CAPS': ('⇪', 'Caps Lock', 'caps'),
+    'CAPSLOCK': ('⇪', 'Caps Lock', 'caps'),
+    'C_VOL_UP': ('🔊', 'Volume Up', 'vol_up'),
+    'C_VOL_DN': ('🔉', 'Volume Down', 'vol_down'),
+    'C_MUTE': ('🔇', 'Mute', 'mute'),
+    'C_BRI_UP': ('🔆', 'Brightness Up', 'bri_up'),
+    'C_BRI_DN': ('🔅', 'Brightness Down', 'bri_down'),
+    'PSCRN': ('📷', 'Print Screen', 'prtsc'),
+    'INS': ('Ins', 'Insert', 'ins'),
+}
+
 def parse_rgb_from_keymap(keymap_path):
     with open(keymap_path, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -119,12 +143,12 @@ def format_param_recursive(p):
         'PERIOD': '.', 'DOT': '.',
         'SLASH': '/', 'FSLH': '/',
         'QUESTION': '?', 'QMARK': '?',
-        'SPACE': 'Space',
-        'TAB': 'Tab',
-        'ENTER': 'Enter', 'RET': 'Enter',
-        'BACKSPACE': 'Bksp', 'BSPC': 'Bksp',
-        'DELETE': 'Del', 'DEL': 'Del',
-        'ESCAPE': 'Esc', 'ESC': 'Esc',
+        'SPACE': '␣',
+        'TAB': '⇥',
+        'ENTER': '↵', 'RET': '↵',
+        'BACKSPACE': '⌫', 'BSPC': '⌫',
+        'DELETE': '⌦', 'DEL': '⌦',
+        'ESCAPE': '⎋', 'ESC': '⎋',
         'PAGE_UP': 'PgUp', 'PG_UP': 'PgUp',
         'PAGE_DOWN': 'PgDn', 'PG_DN': 'PgDn',
         'HOME': 'Home',
@@ -137,7 +161,7 @@ def format_param_recursive(p):
         'LALT': '⌥', 'RALT': '⌥', 'LOPT': '⌥', 'ROPT': '⌥',
         'LCTRL': '⌃', 'RCTRL': '⌃',
         'LSHFT': '⇧', 'RSHFT': '⇧',
-        'CAPS': 'Caps', 'CAPSLOCK': 'Caps',
+        'CAPS': '⇪', 'CAPSLOCK': '⇪',
         'C_VOL_UP': 'Vol +', 'C_VOL_DN': 'Vol -', 'C_MUTE': 'Mute',
         'C_BRI_UP': 'Bri +', 'C_BRI_DN': 'Bri -',
         'C_PLAY_PAUSE': '⏯', 'C_PP': '⏯',
@@ -267,14 +291,22 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
     target_layer = None
     raw_binding = beh + (' ' + ' '.join(stringify_param(p) for p in raw_params) if raw_params else '')
 
+    icon = None
+
     if beh == '&kp':
+        p0 = str(raw_params[0].get('value', '')) if (raw_params and isinstance(raw_params[0], dict)) else str(raw_params[0]) if raw_params else ''
         primary_text = formatted_params[0] if formatted_params else ''
-        if ' ' in primary_text and len(primary_text) > 4:
+        if p0 in KEY_METADATA:
+            line1 = KEY_METADATA[p0][0]
+            icon = KEY_METADATA[p0][2]
+            tooltip = f"Key: {KEY_METADATA[p0][1]}"
+        elif ' ' in primary_text and len(primary_text) > 4:
             parts = primary_text.split(None, 1)
             line1, line2 = parts[0], parts[1]
+            tooltip = f"Key: {primary_text}"
         else:
             line1 = primary_text
-        tooltip = f"Key: {primary_text}"
+            tooltip = f"Key: {primary_text}"
 
     elif beh in ['&hml', '&hmr']:
         mod = formatted_params[0]
@@ -286,16 +318,34 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
         hand = "Left" if beh == '&hml' else "Right"
         tooltip = f"Home Row Mod ({hand}): Tap for {tap} • Hold for {mod}"
 
-    elif beh == '&hold_tap_layer':
-        layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
-        layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
-        tap = formatted_params[1]
-        line1 = tap
-        # User requested: Show layer name instead of L1/L2
-        secondary = format_layer_badge(layer_name)
-        target_layer = layer_idx
-        badge_type = 'layer'
-        tooltip = f"Tap for {tap} • Hold for {layer_name} (Click or hover to view layer)"
+    elif beh in ['&hold_tap_layer', '&lt', '&mt']:
+        layer_idx = int(raw_params[0].get('value', 0)) if (raw_params and str(raw_params[0].get('value', '')).isdigit()) else 0
+        tap_p = raw_params[1] if len(raw_params) > 1 else ''
+        tap_val = str(tap_p.get('value', '')) if isinstance(tap_p, dict) else str(tap_p)
+        tap_formatted = formatted_params[1] if len(formatted_params) > 1 else 'TAP'
+
+        line1 = tap_formatted
+        if tap_val in KEY_METADATA:
+            line1 = KEY_METADATA[tap_val][0]
+            icon = KEY_METADATA[tap_val][2]
+
+        if beh == '&hold_tap_layer':
+            layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
+            secondary = format_layer_badge(layer_name)
+            target_layer = layer_idx
+            badge_type = 'layer'
+            tooltip = f"Tap for {tap_formatted} • Hold for {layer_name} (Click or hover to view layer)"
+        elif beh == '&lt':
+            layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
+            secondary = format_layer_badge(layer_name)
+            target_layer = layer_idx
+            badge_type = 'layer'
+            tooltip = f"Tap for {tap_formatted} • Hold for {layer_name} (Click or hover to view layer)"
+        elif beh == '&mt':
+            mod = formatted_params[0] if len(formatted_params) > 0 else ''
+            secondary = mod.split()[0] if mod else ''
+            badge_type = 'mod'
+            tooltip = f"Mod-Tap: Tap for {tap_formatted} • Hold for {mod}"
 
     elif beh in ['&layer', '&mo']:
         layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
@@ -329,24 +379,6 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
         badge_type = 'layer'
         tooltip = f"Toggle {layer_name} (Click or hover to view layer)"
 
-    elif beh == '&lt':
-        layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
-        layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
-        tap = formatted_params[1] if len(formatted_params) > 1 else 'LT'
-        line1 = tap
-        secondary = format_layer_badge(layer_name)
-        target_layer = layer_idx
-        badge_type = 'layer'
-        tooltip = f"Tap for {tap} • Hold for {layer_name} (Click or hover to view layer)"
-
-    elif beh == '&mt':
-        mod = formatted_params[0] if len(formatted_params) > 0 else ''
-        tap = formatted_params[1] if len(formatted_params) > 1 else ''
-        line1 = tap
-        secondary = mod.split()[0] if mod else ''
-        badge_type = 'mod'
-        tooltip = f"Mod-Tap: Tap for {tap} • Hold for {mod}"
-
     elif beh == '&magic':
         line1 = 'Magic'
         target_layer = layer_names.index('Magic') if 'Magic' in layer_names else None
@@ -375,6 +407,13 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
             tooltip = m.get('tooltip', f"Custom Behavior: {clean_name}")
             if 'target_layer' in m:
                 target_layer = m['target_layer']
+            if 'icon' in m:
+                icon = m['icon']
+            else:
+                for sym, _, ic in KEY_METADATA.values():
+                    if line1 == sym:
+                        icon = ic
+                        break
         elif 'td_layer_' in custom_str.lower():
             m = re.search(r'td_layer_([a-zA-Z0-9_]+)', custom_str, re.IGNORECASE)
             layer_match = m.group(1) if m else ''
@@ -455,41 +494,6 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
     # Deduplicate secondary label if it repeats line1 or line2
     if secondary and (secondary == line1 or secondary == line2 or (line2 and secondary in line2)):
         secondary = ''
-
-    # Assign icon identifiers for special keys (Bksp, Esc, Tab, Enter, Del, Space, Caps, etc.)
-    icon = None
-    icon_map = {
-        'BSPC': 'backspace', 'BACKSPACE': 'backspace', 'Bksp': 'backspace',
-        'ESC': 'escape', 'ESCAPE': 'escape', 'Esc': 'escape',
-        'TAB': 'tab', 'Tab': 'tab',
-        'RET': 'enter', 'ENTER': 'enter', 'Enter': 'enter', 'KP_ENTER': 'enter',
-        'DEL': 'delete', 'DELETE': 'delete', 'Del': 'delete',
-        'SPACE': 'space', 'Space': 'space',
-        'CAPS': 'caps', 'CAPSLOCK': 'caps', 'Caps': 'caps',
-        'C_VOL_UP': 'vol_up',
-        'C_VOL_DN': 'vol_down',
-        'C_MUTE': 'mute', 'Mute': 'mute',
-        'C_BRI_UP': 'bri_up',
-        'C_BRI_DN': 'bri_down',
-        'PSCRN': 'prtsc', 'PrtSc': 'prtsc',
-        'INS': 'ins',
-    }
-
-    if line1 in icon_map:
-        icon = icon_map[line1]
-    elif raw_params:
-        p0 = str(raw_params[0].get('value', '')) if isinstance(raw_params[0], dict) else str(raw_params[0])
-        if p0 in icon_map:
-            icon = icon_map[p0]
-        elif len(raw_params) > 1:
-            p1 = str(raw_params[1].get('value', '')) if isinstance(raw_params[1], dict) else str(raw_params[1])
-            if p1 in icon_map:
-                icon = icon_map[p1]
-
-    if beh == 'Custom':
-        custom_str = str(raw_params[0].get('value', '')) if raw_params else ''
-        if 'td_caps' in custom_str:
-            icon = 'caps'
 
     return {
         'line1': line1,

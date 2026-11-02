@@ -644,67 +644,51 @@ const ICON_PATHS = {
   ins: `<rect x="4" y="4" width="16" height="16" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>`
 };
 
-function getKeyIcon(key) {
-  if (!key) return null;
-  if (key.icon && ICON_PATHS[key.icon]) return key.icon;
+const FRIENDLY_NAMES = {
+  backspace: '⌫ Bksp',
+  escape: '⎋ Esc',
+  tab: '⇥ Tab',
+  enter: '↵ Enter',
+  delete: '⌦ Del',
+  space: '␣ Space',
+  caps: '⇪ Caps',
+  vol_up: '🔊 Vol +',
+  vol_down: '🔉 Vol -',
+  mute: '🔇 Mute',
+  bri_up: '🔆 Bri +',
+  bri_down: '🔅 Bri -',
+  prtsc: '📷 PrtSc',
+  ins: 'Ins'
+};
 
-  const l1 = (key.line1 || '').trim();
-  const raw = (key.rawBinding || '').trim();
-
-  if (l1 === 'Bksp' || l1 === 'Backspace' || l1 === '⌫' || raw.includes('BSPC') || raw.includes('BACKSPACE')) return 'backspace';
-  if (l1 === 'Esc' || l1 === 'Escape' || l1 === '⎋' || raw === '&kp ESC') return 'escape';
-  if (l1 === 'Tab' || l1 === '⇥' || raw.includes('TAB')) return 'tab';
-  if (l1 === 'Enter' || l1 === 'Return' || l1 === '↵' || l1 === '⏎' || raw.includes('RET') || raw.includes('ENTER')) return 'enter';
-  if (l1 === 'Del' || l1 === 'Delete' || l1 === '⌦' || raw.includes('DEL')) return 'delete';
-  if (l1 === 'Space' || l1 === '␣' || raw === '&kp SPACE') return 'space';
-  if (l1 === 'Caps' || l1 === 'CAPS' || l1 === '⇪' || raw === '&td_caps') return 'caps';
-  if ((l1 === 'Vol' && key.line2 === '+') || raw.includes('C_VOL_UP')) return 'vol_up';
-  if ((l1 === 'Vol' && key.line2 === '-') || raw.includes('C_VOL_DN')) return 'vol_down';
-  if (l1 === 'Mute' || raw.includes('C_MUTE')) return 'mute';
-  if ((l1 === 'Bri' && key.line2 === '+') || raw.includes('C_BRI_UP')) return 'bri_up';
-  if ((l1 === 'Bri' && key.line2 === '-') || raw.includes('C_BRI_DN')) return 'bri_down';
-  if (l1 === 'PrtSc' || raw.includes('PSCRN')) return 'prtsc';
-  if (l1 === 'Ins' || raw.includes('INS')) return 'ins';
-
-  return null;
-}
+const ICON_SEARCH_ALIASES = {
+  backspace: ['backspace', 'bksp', 'bspc', 'del', 'erase'],
+  escape: ['escape', 'esc'],
+  tab: ['tab', 'tabulator'],
+  enter: ['enter', 'return', 'ret'],
+  delete: ['delete', 'del', 'forward delete'],
+  space: ['space', 'spacebar'],
+  caps: ['caps', 'capslock', 'caps lock', 'capital'],
+  vol_up: ['vol', 'volume', 'louder'],
+  vol_down: ['vol', 'volume', 'quieter'],
+  mute: ['mute', 'silence', 'audio'],
+  bri_up: ['bri', 'brightness', 'light'],
+  bri_down: ['bri', 'brightness', 'dim'],
+  prtsc: ['prtsc', 'print', 'screen', 'screenshot', 'capture'],
+  ins: ['ins', 'insert']
+};
 
 function getInspectorLabel(key) {
   if (!key) return '—';
-  const icon = getKeyIcon(key);
-  const friendlyNames = {
-    backspace: '⌫ Bksp',
-    escape: '⎋ Esc',
-    tab: '⇥ Tab',
-    enter: '↵ Enter',
-    delete: '⌦ Del',
-    space: '␣ Space',
-    caps: '⇪ Caps',
-    vol_up: '🔊 Vol +',
-    vol_down: '🔉 Vol -',
-    mute: '🔇 Mute',
-    bri_up: '🔆 Bri +',
-    bri_down: '🔅 Bri -',
-    prtsc: '📷 PrtSc',
-    ins: 'Ins'
-  };
-  if (icon && friendlyNames[icon]) {
-    return friendlyNames[icon];
-  }
-  if (key.line1 === '⌘' && key.line2 === 'Space') {
-    return '⌘␣ Spotlight';
-  }
-  if (key.line1 === '⏯' && key.line2 && key.line2.includes('⏮')) {
-    return '⏯ Media (⏮ ⏭)';
+  if (key.icon && FRIENDLY_NAMES[key.icon]) {
+    return FRIENDLY_NAMES[key.icon];
   }
   return key.line2 ? `${key.line1} ${key.line2}` : (key.line1 || '—');
 }
 
 function renderKeyPrimary(key, cx, cy, primaryFontSize, primaryFontWeight) {
-  const icon = getKeyIcon(key);
-
-  // 1. Full-key icon
-  if (icon && ICON_PATHS[icon]) {
+  // 1. Single action key with dedicated vector icon
+  if (key.icon && ICON_PATHS[key.icon] && !key.line2) {
     const size = 20;
     const half = size / 2;
     // Shift slightly down if secondary label exists in top-right corner
@@ -713,43 +697,23 @@ function renderKeyPrimary(key, cx, cy, primaryFontSize, primaryFontWeight) {
     const iy = cy + offsetY - half;
 
     return `
-      <svg class="key-icon icon-${icon}" x="${ix}" y="${iy}" width="${size}" height="${size}"
+      <svg class="key-icon icon-${key.icon}" x="${ix}" y="${iy}" width="${size}" height="${size}"
            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
            stroke-linecap="round" stroke-linejoin="round">
-        ${ICON_PATHS[icon]}
+        ${ICON_PATHS[key.icon]}
       </svg>
     `;
   }
 
-  // 2. Multi-line label special cases (e.g. "⌘ Space" Spotlight, "⏯ ⏮ ⏭" Media)
+  // 2. Generic 2-line label
   if (key.line2) {
-    if (key.line2 === 'Space') {
-      const size = 15;
-      const half = size / 2;
-      return `
-        <text class="key-text-primary" x="${cx}" y="${cy - 6.5}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line1)}</text>
-        <svg class="key-icon icon-space" x="${cx - half}" y="${cy + 1.5}" width="${size}" height="${size}"
-             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round">
-          ${ICON_PATHS['space']}
-        </svg>
-      `;
-    }
-
-    if (key.line1 === '⏯' && key.line2.includes('⏮')) {
-      return `
-        <text class="key-text-primary" x="${cx}" y="${cy - 5.5}" font-size="11.5" font-weight="${primaryFontWeight}">${escapeHtml(key.line1)}</text>
-        <text class="key-text-primary" x="${cx}" y="${cy + 7.5}" font-size="9.5" font-weight="${primaryFontWeight}">${escapeHtml(key.line2)}</text>
-      `;
-    }
-
     return `
       <text class="key-text-primary" x="${cx}" y="${cy - 5.5}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line1)}</text>
       <text class="key-text-primary" x="${cx}" y="${cy + 7.5}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line2)}</text>
     `;
   }
 
-  // 3. Standard 1-line text
+  // 3. Generic 1-line label
   return `
     <text class="key-text-primary" x="${cx}" y="${cy + (key.secondary ? 2.5 : 0)}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line1)}</text>
   `;
@@ -814,32 +778,13 @@ function renderSvg() {
     let pivotX = (c.rx !== undefined) ? c.rx * UNIT : x;
     let pivotY = (c.ry !== undefined) ? c.ry * UNIT : y;
 
-    const icon = getKeyIcon(key);
-    const iconSearchAliases = {
-      backspace: ['backspace', 'bksp', 'bspc', 'del', 'delete', 'erase'],
-      escape: ['escape', 'esc'],
-      tab: ['tab', 'tabulator'],
-      enter: ['enter', 'return', 'ret'],
-      delete: ['delete', 'del', 'forward delete'],
-      space: ['space', 'spacebar'],
-      caps: ['caps', 'capslock', 'caps lock', 'capital'],
-      vol_up: ['vol', 'volume', 'louder'],
-      vol_down: ['vol', 'volume', 'quieter'],
-      mute: ['mute', 'silence', 'audio'],
-      bri_up: ['bri', 'brightness', 'light'],
-      bri_down: ['bri', 'brightness', 'dim'],
-      prtsc: ['prtsc', 'print', 'screen', 'screenshot', 'capture'],
-      ins: ['ins', 'insert']
-    };
-
     const isMatched = searchQuery && (
       (key.line1 && key.line1.toLowerCase().includes(searchQuery)) ||
       (key.line2 && key.line2.toLowerCase().includes(searchQuery)) ||
       (key.secondary && key.secondary.toLowerCase().includes(searchQuery)) ||
       (key.rawBinding && key.rawBinding.toLowerCase().includes(searchQuery)) ||
       (key.tooltip && key.tooltip.toLowerCase().includes(searchQuery)) ||
-      (icon && icon.toLowerCase().includes(searchQuery)) ||
-      (icon && iconSearchAliases[icon] && iconSearchAliases[icon].some(alias => alias.includes(searchQuery)))
+      (key.icon && (key.icon.toLowerCase().includes(searchQuery) || (ICON_SEARCH_ALIASES[key.icon] && ICON_SEARCH_ALIASES[key.icon].some(alias => alias.includes(searchQuery)))))
     );
 
     let capClass = 'key-cap';
