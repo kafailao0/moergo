@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, viewport-fit=cover">
   <title>MoErgo Layout Visualizer</title>
   <meta name="description" content="Interactive layout visualizer and simulator for MoErgo Glove80 and Go60 keyboards">
   <meta name="theme-color" content="#161b22">
@@ -48,6 +48,10 @@
       flex-direction: column;
       user-select: none;
       -webkit-user-select: none;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-left: env(safe-area-inset-left, 0px);
     }
 
     header {
@@ -754,8 +758,8 @@
     }
     body.zen-mode .layer-bar {
       position: fixed;
-      top: 8px;
-      left: 12px;
+      top: max(8px, env(safe-area-inset-top, 0px));
+      left: max(12px, env(safe-area-inset-left, 0px));
       transform: none;
       z-index: 150;
       border-radius: 20px;
@@ -765,7 +769,7 @@
       padding: 3px 8px;
       border: 1px solid var(--surface-border);
       box-shadow: 0 4px 18px rgba(0,0,0,0.5);
-      max-width: calc(100vw - 24px);
+      max-width: calc(100vw - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
     }
     body.zen-mode main {
       height: 100%;
@@ -862,7 +866,8 @@
         font-size: 0.84rem;
       }
       .brand-sub {
-        display: none;
+        font-size: 0.68rem;
+        padding: 1px 5px;
       }
       .controls {
         gap: 6px;
@@ -973,33 +978,7 @@
       }
     }
 
-    /* Touchscreen landscape: enable document scroll-to-collapse for mobile address bars */
-    @media (hover: none) and (pointer: coarse) and (max-height: 520px) {
-      html {
-        height: auto;
-        overflow-y: auto;
-        overflow-x: hidden;
-      }
-      body {
-        height: auto;
-        min-height: calc(100dvh + 50px);
-        overflow-y: visible;
-        overflow-x: hidden;
-      }
-      header {
-        position: relative;
-        flex-shrink: 0;
-      }
-      .layer-bar {
-        position: sticky;
-        top: 0;
-        z-index: 80;
-      }
-      main {
-        height: calc(100dvh - 28px);
-        min-height: 260px;
-      }
-    }
+
 
 </style>
 </head>
@@ -1315,16 +1294,6 @@ async function init() {
   const modalParam = urlParams.get('modal');
   if (modalParam === 'colors' || urlParams.get('legend') === '1') {
     toggleLegendModal(true);
-  }
-
-  // Auto-collapse inspector drawer on landscape mobile to maximize layout view
-  if (window.innerHeight <= 520 && window.innerWidth > window.innerHeight) {
-    toggleDrawer(true);
-  }
-
-  // Auto-collapse canvas widget on landscape mobile to keep right keys unobstructed
-  if (window.innerHeight <= 450 && window.innerWidth > window.innerHeight) {
-    toggleCanvasWidget(true);
   }
 
   const toolsParam = urlParams.get('tools');

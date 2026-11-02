@@ -157,16 +157,6 @@ async function init() {
     toggleLegendModal(true);
   }
 
-  // Auto-collapse inspector drawer on landscape mobile to maximize layout view
-  if (window.innerHeight <= 520 && window.innerWidth > window.innerHeight) {
-    toggleDrawer(true);
-  }
-
-  // Auto-collapse canvas widget on landscape mobile to keep right keys unobstructed
-  if (window.innerHeight <= 450 && window.innerWidth > window.innerHeight) {
-    toggleCanvasWidget(true);
-  }
-
   const toolsParam = urlParams.get('tools');
   if (toolsParam === 'open' || toolsParam === '1') {
     toggleCanvasWidget(false);
