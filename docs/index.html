@@ -1788,7 +1788,7 @@ const ICON_PATHS = {
   tab: `<path d="M4 12h12"/><polyline points="11 7 16 12 11 17"/><line x1="20" y1="5" x2="20" y2="19"/>`,
   enter: `<polyline points="9 10 4 15 9 20"/><path d="M20 5v6a4 4 0 0 1-4 4H4"/>`,
   space: `<path d="M5 9v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/>`,
-  caps: `<polyline points="6 11 12 5 18 11"/><line x1="12" y1="5" x2="12" y2="14"/><line x1="6" y1="18" x2="18" y2="18"/>`,
+  caps: `<path d="M12 4 5.5 10.5h3.5v5h6v-5h3.5z"/><line x1="5.5" y1="19" x2="18.5" y2="19"/>`,
   vol_up: `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/>`,
   vol_down: `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/>`,
   mute: `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/>`,
@@ -1848,6 +1848,9 @@ function getInspectorLabel(key) {
   if (key.line1 === '⌘' && key.line2 === 'Space') {
     return '⌘␣ Spotlight';
   }
+  if (key.line1 === '⏯' && key.line2 && key.line2.includes('⏮')) {
+    return '⏯ Media (⏮ ⏭)';
+  }
   return key.line2 ? `${key.line1} ${key.line2}` : (key.line1 || '—');
 }
 
@@ -1872,7 +1875,7 @@ function renderKeyPrimary(key, cx, cy, primaryFontSize, primaryFontWeight) {
     `;
   }
 
-  // 2. Multi-line label where line2 is Space (e.g. "⌘ Space" Spotlight)
+  // 2. Multi-line label special cases (e.g. "⌘ Space" Spotlight, "⏯ ⏮ ⏭" Media)
   if (key.line2) {
     if (key.line2 === 'Space') {
       const size = 15;
@@ -1884,6 +1887,13 @@ function renderKeyPrimary(key, cx, cy, primaryFontSize, primaryFontWeight) {
              stroke-linecap="round" stroke-linejoin="round">
           ${ICON_PATHS['space']}
         </svg>
+      `;
+    }
+
+    if (key.line1 === '⏯' && key.line2.includes('⏮')) {
+      return `
+        <text class="key-text-primary" x="${cx}" y="${cy - 5.5}" font-size="11.5" font-weight="${primaryFontWeight}">${escapeHtml(key.line1)}</text>
+        <text class="key-text-primary" x="${cx}" y="${cy + 7.5}" font-size="9.5" font-weight="${primaryFontWeight}">${escapeHtml(key.line2)}</text>
       `;
     }
 
