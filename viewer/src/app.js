@@ -10,18 +10,8 @@ let layerHistory = [];
 let currentScale = 1.0;
 let currentPanX = 0;
 let currentPanY = 0;
-let lastDefaultScale = 1.0;
 const MIN_SCALE = 0.6;
 const MAX_SCALE = 4.0;
-
-function isMobileLandscape() {
-  return window.matchMedia('(max-height: 520px) and (orientation: landscape)').matches ||
-         (window.innerHeight <= 520 && window.innerWidth > window.innerHeight);
-}
-
-function getDefaultScale() {
-  return isMobileLandscape() ? 0.85 : 1.0;
-}
 let isTouchDragging = false;
 let searchQuery = '';
 
@@ -130,10 +120,6 @@ async function init() {
   updateHeader();
   resetInspector();
 
-  currentScale = getDefaultScale();
-  lastDefaultScale = currentScale;
-  applyTransform(false);
-
   const urlParams = new URLSearchParams(window.location.search);
   const rgbParam = urlParams.get('rgb');
   if (rgbParam === 'on' || rgbParam === 'keep' || rgbParam === '1') {
@@ -238,7 +224,7 @@ async function init() {
     } else if (e.key === 'Escape') {
       if (document.body.classList.contains('zen-mode')) {
         toggleZenMode();
-      } else if (currentScale > getDefaultScale() + 0.05 || currentPanX !== 0 || currentPanY !== 0) {
+      } else if (currentScale > 1.05 || currentPanX !== 0 || currentPanY !== 0) {
         resetZoom();
       } else if (viewerMode === 'simulate') {
         resetSimStack();
@@ -1001,7 +987,7 @@ function applyTransform(animated = false) {
   svg.style.transform = `translate(${currentPanX}px, ${currentPanY}px) scale(${currentScale})`;
 
   if (container) {
-    container.classList.toggle('is-zoomed', currentScale > getDefaultScale() + 0.05);
+    container.classList.toggle('is-zoomed', currentScale > 1.05);
   }
 }
 
@@ -1009,12 +995,11 @@ function clampPan(animated = false) {
   const container = document.getElementById('viewport-container') || document.querySelector('.viewport-container');
   if (!container) return;
 
-  const defScale = getDefaultScale();
-  if (currentScale <= defScale) {
+  if (currentScale <= 1.0) {
     currentPanX = 0;
     currentPanY = 0;
-    if (currentScale < MIN_SCALE) {
-      currentScale = MIN_SCALE;
+    if (currentScale < 1.0) {
+      currentScale = 1.0;
     }
     applyTransform(animated);
     return;
@@ -1031,13 +1016,9 @@ function clampPan(animated = false) {
 }
 
 function zoom(factor) {
-  const defScale = getDefaultScale();
-  currentScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, currentScale * factor));
-  if (Math.abs(currentScale - defScale) < 0.03) {
-    currentScale = defScale;
-    currentPanX = 0;
-    currentPanY = 0;
-  } else if (currentScale <= defScale) {
+  currentScale = Math.min(MAX_SCALE, Math.max(1.0, currentScale * factor));
+  if (currentScale <= 1.0) {
+    currentScale = 1.0;
     currentPanX = 0;
     currentPanY = 0;
   } else {
@@ -1047,8 +1028,7 @@ function zoom(factor) {
 }
 
 function resetZoom() {
-  currentScale = getDefaultScale();
-  lastDefaultScale = currentScale;
+  currentScale = 1.0;
   currentPanX = 0;
   currentPanY = 0;
   applyTransform(true);
@@ -1187,22 +1167,22 @@ function initCanvasGestures() {
     if (e.ctrlKey) {
       // Trackpad pinch-to-zoom or Ctrl+Wheel
       const factor = Math.exp(-e.deltaY * 0.01);
-      const defScale = getDefaultScale();
-      const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, currentScale * factor));
+      const newScale = Math.min(MAX_SCALE, Math.max(1.0, currentScale * factor));
       if (newScale !== currentScale) {
         const scaleRatio = newScale / currentScale;
         currentScale = newScale;
-        if (currentScale > defScale) {
+        if (currentScale > 1.0) {
           currentPanX = currentPanX + (1 - scaleRatio) * (mouseX - currentPanX);
           currentPanY = currentPanY + (1 - scaleRatio) * (mouseY - currentPanY);
           clampPan(false);
         } else {
+          currentScale = 1.0;
           currentPanX = 0;
           currentPanY = 0;
         }
         applyTransform(false);
       }
-    } else if (currentScale > getDefaultScale()) {
+    } else if (currentScale > 1.0) {
       // Two-finger scroll on trackpad or mouse wheel pan when zoomed in
       currentPanX -= e.deltaX;
       currentPanY -= e.deltaY;
@@ -1221,7 +1201,7 @@ function initCanvasGestures() {
 
   container.addEventListener('mousedown', (e) => {
     if (e.button === 0 || e.button === 1) {
-      if (currentScale > getDefaultScale() || e.button === 1) {
+      if (currentScale > 1.0 || e.button === 1) {
         isMouseDown = true;
         mouseStartX = e.clientX;
         mouseStartY = e.clientY;
@@ -1263,12 +1243,7 @@ function initCanvasGestures() {
   });
 
   window.addEventListener('resize', () => {
-    const newDef = getDefaultScale();
-    if (Math.abs(currentScale - lastDefaultScale) < 0.02 && currentPanX === 0 && currentPanY === 0) {
-      currentScale = newDef;
-      lastDefaultScale = newDef;
-      applyTransform(false);
-    } else if (currentScale > newDef) {
+    if (currentScale > 1.0) {
       clampPan(false);
     }
   });
