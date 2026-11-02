@@ -8,6 +8,11 @@ let momentaryHoverTriggerIdx = null;
 let rgbFadeTimer = null;
 let layerHistory = [];
 let currentScale = 1.0;
+let currentPanX = 0;
+let currentPanY = 0;
+const MIN_SCALE = 0.6;
+const MAX_SCALE = 4.0;
+let isTouchDragging = false;
 let searchQuery = '';
 
 const UNIT = 54;
@@ -111,6 +116,7 @@ async function init() {
 
   renderLayerTabs();
   renderSvg();
+  initCanvasGestures();
   updateHeader();
   resetInspector();
 
@@ -218,6 +224,8 @@ async function init() {
     } else if (e.key === 'Escape') {
       if (document.body.classList.contains('zen-mode')) {
         toggleZenMode();
+      } else if (currentScale > 1.05 || currentPanX !== 0 || currentPanY !== 0) {
+        resetZoom();
       } else if (viewerMode === 'simulate') {
         resetSimStack();
       } else if (layerHistory.length > 0) {
@@ -350,6 +358,7 @@ function switchKeyboard(kb) {
   momentaryHoverLayer = null;
   momentaryHoverTriggerIdx = null;
   layerHistory = [];
+  resetZoom();
   document.getElementById('btn-glove80').classList.toggle('active', kb === 'glove80');
   document.getElementById('btn-go60').classList.toggle('active', kb === 'go60');
   updateHeader();
@@ -751,6 +760,7 @@ function renderSvg() {
 }
 
 function onKeyClick(idx) {
+  if (isTouchDragging) return;
   const kb = KEYBOARDS[currentKb];
 
   if (viewerMode === 'inspect') {
@@ -795,6 +805,7 @@ function onKeyClick(idx) {
 }
 
 function onKeyHover(idx) {
+  if (isTouchDragging) return;
   // In ALL modes: desktop hover immediately updates the footer info drawer!
   inspectKey(idx);
 
@@ -877,16 +888,275 @@ function handleSearch(val) {
   renderSvg();
 }
 
-function zoom(factor) {
-  currentScale *= factor;
+function applyTransform(animated = false) {
   const svg = document.getElementById('keyboard-svg');
-  svg.style.transform = `scale(${currentScale})`;
+  const container = document.getElementById('viewport-container') || document.querySelector('.viewport-container');
+  if (!svg) return;
+
+  svg.style.transition = animated ? 'transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1)' : 'none';
+  svg.style.transform = `translate(${currentPanX}px, ${currentPanY}px) scale(${currentScale})`;
+
+  if (container) {
+    container.classList.toggle('is-zoomed', currentScale > 1.05);
+  }
+}
+
+function clampPan(animated = false) {
+  const container = document.getElementById('viewport-container') || document.querySelector('.viewport-container');
+  if (!container) return;
+
+  if (currentScale <= 1.0) {
+    currentPanX = 0;
+    currentPanY = 0;
+    if (currentScale < 1.0) {
+      currentScale = 1.0;
+    }
+    applyTransform(animated);
+    return;
+  }
+
+  const rect = container.getBoundingClientRect();
+  const maxPanX = Math.max(60, (rect.width * (currentScale - 0.7)) / 2 + 80);
+  const maxPanY = Math.max(50, (rect.height * (currentScale - 0.7)) / 2 + 60);
+
+  currentPanX = Math.min(maxPanX, Math.max(-maxPanX, currentPanX));
+  currentPanY = Math.min(maxPanY, Math.max(-maxPanY, currentPanY));
+
+  applyTransform(animated);
+}
+
+function zoom(factor) {
+  currentScale = Math.min(MAX_SCALE, Math.max(1.0, currentScale * factor));
+  if (currentScale <= 1.0) {
+    currentScale = 1.0;
+    currentPanX = 0;
+    currentPanY = 0;
+  } else {
+    clampPan(false);
+  }
+  applyTransform(true);
 }
 
 function resetZoom() {
   currentScale = 1.0;
-  const svg = document.getElementById('keyboard-svg');
-  svg.style.transform = 'scale(1)';
+  currentPanX = 0;
+  currentPanY = 0;
+  applyTransform(true);
+}
+
+function initCanvasGestures() {
+  const container = document.getElementById('viewport-container') || document.querySelector('.viewport-container');
+  if (!container) return;
+
+  // Touch tracking state
+  let touchMode = 'none'; // 'none' | 'pan' | 'pinch'
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchStartPanX = 0;
+  let touchStartPanY = 0;
+  let touchMoved = false;
+  let touchDragTimer = null;
+
+  let pinchInitialDist = 0;
+  let pinchInitialScale = 1.0;
+  let pinchInitialPanX = 0;
+  let pinchInitialPanY = 0;
+  let pinchInitialFocal = { x: 0, y: 0 };
+
+  container.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      touchMode = 'pan';
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchStartPanX = currentPanX;
+      touchStartPanY = currentPanY;
+      touchMoved = false;
+    } else if (e.touches.length === 2) {
+      touchMode = 'pinch';
+      touchMoved = true;
+      isTouchDragging = true;
+      if (touchDragTimer) clearTimeout(touchDragTimer);
+
+      pinchInitialDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      pinchInitialScale = currentScale;
+      pinchInitialPanX = currentPanX;
+      pinchInitialPanY = currentPanY;
+      pinchInitialFocal = {
+        x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+        y: (e.touches[0].clientY + e.touches[1].clientY) / 2
+      };
+      if (e.cancelable) e.preventDefault();
+    }
+  }, { passive: false });
+
+  container.addEventListener('touchmove', (e) => {
+    if (touchMode === 'pinch' && e.touches.length === 2) {
+      if (e.cancelable) e.preventDefault();
+      touchMoved = true;
+      isTouchDragging = true;
+
+      const currentDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      if (pinchInitialDist <= 0) return;
+
+      const scaleFactor = currentDist / pinchInitialDist;
+      const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, pinchInitialScale * scaleFactor));
+      currentScale = newScale;
+
+      const currentFocal = {
+        x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+        y: (e.touches[0].clientY + e.touches[1].clientY) / 2
+      };
+
+      const rect = container.getBoundingClientRect();
+      const focalRelX = pinchInitialFocal.x - (rect.left + rect.width / 2);
+      const focalRelY = pinchInitialFocal.y - (rect.top + rect.height / 2);
+      const scaleRatio = newScale / pinchInitialScale;
+
+      currentPanX = pinchInitialPanX + (currentFocal.x - pinchInitialFocal.x) + (1 - scaleRatio) * focalRelX;
+      currentPanY = pinchInitialPanY + (currentFocal.y - pinchInitialFocal.y) + (1 - scaleRatio) * focalRelY;
+
+      applyTransform(false);
+    } else if (touchMode === 'pan' && e.touches.length === 1) {
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      const dist = Math.hypot(dx, dy);
+
+      if (!touchMoved && dist > 7) {
+        touchMoved = true;
+        isTouchDragging = true;
+        if (touchDragTimer) clearTimeout(touchDragTimer);
+      }
+
+      if (touchMoved) {
+        if (e.cancelable) e.preventDefault();
+        currentPanX = touchStartPanX + dx;
+        currentPanY = touchStartPanY + dy;
+        applyTransform(false);
+      }
+    }
+  }, { passive: false });
+
+  const endTouch = (e) => {
+    if (e.touches.length === 0) {
+      if (touchMoved) {
+        isTouchDragging = true;
+        if (touchDragTimer) clearTimeout(touchDragTimer);
+        touchDragTimer = setTimeout(() => {
+          isTouchDragging = false;
+        }, 150);
+        clampPan(true);
+      }
+      touchMode = 'none';
+      touchMoved = false;
+    } else if (e.touches.length === 1) {
+      touchMode = 'pan';
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchStartPanX = currentPanX;
+      touchStartPanY = currentPanY;
+      touchMoved = false;
+    }
+  };
+
+  container.addEventListener('touchend', endTouch);
+  container.addEventListener('touchcancel', endTouch);
+
+  // Desktop Trackpad Pinch-to-zoom & Pan / Wheel support
+  container.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const rect = container.getBoundingClientRect();
+    const mouseX = e.clientX - (rect.left + rect.width / 2);
+    const mouseY = e.clientY - (rect.top + rect.height / 2);
+
+    if (e.ctrlKey) {
+      // Trackpad pinch-to-zoom or Ctrl+Wheel
+      const factor = Math.exp(-e.deltaY * 0.01);
+      const newScale = Math.min(MAX_SCALE, Math.max(1.0, currentScale * factor));
+      if (newScale !== currentScale) {
+        const scaleRatio = newScale / currentScale;
+        currentScale = newScale;
+        if (currentScale > 1.0) {
+          currentPanX = currentPanX + (1 - scaleRatio) * (mouseX - currentPanX);
+          currentPanY = currentPanY + (1 - scaleRatio) * (mouseY - currentPanY);
+          clampPan(false);
+        } else {
+          currentScale = 1.0;
+          currentPanX = 0;
+          currentPanY = 0;
+        }
+        applyTransform(false);
+      }
+    } else if (currentScale > 1.0) {
+      // Two-finger scroll on trackpad or mouse wheel pan when zoomed in
+      currentPanX -= e.deltaX;
+      currentPanY -= e.deltaY;
+      clampPan(false);
+      applyTransform(false);
+    }
+  }, { passive: false });
+
+  // Desktop Mouse Drag to pan when zoomed in
+  let isMouseDown = false;
+  let mouseStartX = 0;
+  let mouseStartY = 0;
+  let mouseStartPanX = 0;
+  let mouseStartPanY = 0;
+  let mouseMoved = false;
+
+  container.addEventListener('mousedown', (e) => {
+    if (e.button === 0 || e.button === 1) {
+      if (currentScale > 1.0 || e.button === 1) {
+        isMouseDown = true;
+        mouseStartX = e.clientX;
+        mouseStartY = e.clientY;
+        mouseStartPanX = currentPanX;
+        mouseStartPanY = currentPanY;
+        mouseMoved = false;
+      }
+    }
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isMouseDown) return;
+    const dx = e.clientX - mouseStartX;
+    const dy = e.clientY - mouseStartY;
+    if (!mouseMoved && Math.hypot(dx, dy) > 5) {
+      mouseMoved = true;
+      isTouchDragging = true;
+      container.classList.add('is-panning');
+    }
+    if (mouseMoved) {
+      currentPanX = mouseStartPanX + dx;
+      currentPanY = mouseStartPanY + dy;
+      applyTransform(false);
+    }
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isMouseDown) {
+      isMouseDown = false;
+      container.classList.remove('is-panning');
+      if (mouseMoved) {
+        if (touchDragTimer) clearTimeout(touchDragTimer);
+        touchDragTimer = setTimeout(() => {
+          isTouchDragging = false;
+        }, 150);
+        clampPan(true);
+      }
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (currentScale > 1.0) {
+      clampPan(false);
+    }
+  });
 }
 
 let drawerCollapsed = false;

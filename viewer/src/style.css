@@ -315,6 +315,15 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .viewport-container.is-zoomed {
+      cursor: grab;
+    }
+    .viewport-container.is-zoomed.is-panning {
+      cursor: grabbing;
     }
 
     svg#keyboard-svg {
@@ -323,7 +332,8 @@
       max-height: 100%;
       display: block;
       overflow: visible;
-      transition: transform 0.2s ease;
+      transform-origin: center center;
+      touch-action: none;
     }
 
     .key-group {
@@ -726,6 +736,9 @@
     body.zen-mode main {
       height: 100%;
       padding: 2px;
+    }
+    body.zen-mode .viewport-container {
+      max-width: 100%;
     }
 
     @media (max-width: 768px) {
