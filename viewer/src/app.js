@@ -506,9 +506,9 @@ const LAYER_ICONS = {
 };
 
 function getLayerTabHtml(idx, layerName) {
-  const icon = LAYER_ICONS[layerName];
+  const icon = LAYER_ICONS[layerName] || `<rect x="3" y="5" width="18" height="14" rx="2"/><line x1="7" y1="12" x2="17" y2="12"/>`;
   const iconHtml = icon ? `<svg class="layer-icon" viewBox="0 0 24 24">${icon}</svg>` : '';
-  return `<span class="idx">${idx}</span>${iconHtml}<span>${layerName}</span>`;
+  return `<span class="idx">${idx}</span>${iconHtml}`;
 }
 
 function renderLayerTabs() {
@@ -519,6 +519,8 @@ function renderLayerTabs() {
   kb.layers.forEach((layer, idx) => {
     const btn = document.createElement('button');
     btn.id = `layer-tab-${idx}`;
+    btn.title = `${idx}: ${layer.name}`;
+    btn.setAttribute('aria-label', `Layer ${idx}: ${layer.name}`);
 
     if (viewerMode === 'simulate') {
       const isSimActive = simStack.includes(idx);
@@ -553,6 +555,8 @@ function updateLayerTabStates() {
   kb.layers.forEach((layer, idx) => {
     const btn = document.getElementById(`layer-tab-${idx}`);
     if (!btn) return;
+    btn.title = `${idx}: ${layer.name}`;
+    btn.setAttribute('aria-label', `Layer ${idx}: ${layer.name}`);
     if (viewerMode === 'simulate') {
       const isSimActive = simStack.includes(idx);
       const isMom = (momentaryHoverLayer === idx);
