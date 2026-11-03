@@ -231,7 +231,7 @@
       background: var(--surface);
       border: 1px solid var(--surface-border);
       color: var(--text);
-      padding: 6px 10px;
+      padding: 5px 9px;
       border-radius: 6px;
       font-size: 0.8rem;
       font-weight: 600;
@@ -240,14 +240,13 @@
       transition: all 0.12s ease;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
     .layer-btn .idx {
-      font-size: 0.7rem;
+      font-size: 0.72rem;
+      font-weight: 700;
       color: var(--text-muted);
-      background: rgba(255,255,255,0.06);
-      padding: 1px 5px;
-      border-radius: 4px;
+      line-height: 1;
     }
     .layer-btn .layer-icon {
       width: 14px;
@@ -268,13 +267,15 @@
       background: #21262d;
       color: var(--text-bright);
     }
+    .layer-btn:hover .idx {
+      color: var(--text);
+    }
     .layer-btn.active {
       background: #1f6feb;
       border-color: #58a6ff;
       color: #ffffff;
     }
     .layer-btn.active .idx {
-      background: rgba(0,0,0,0.25);
       color: #ffffff;
     }
     .layer-btn.preview-active {
@@ -294,8 +295,7 @@
       box-shadow: 0 0 8px rgba(88, 166, 255, 0.4);
     }
     .layer-btn.sim-active .idx {
-      background: rgba(0,0,0,0.3);
-      color: #fff;
+      color: #ffffff;
     }
     .layer-btn.sim-momentary {
       background: #9e6a03 !important;
@@ -948,17 +948,17 @@
         overflow-x: visible;
       }
       .layer-btn {
-        padding: 3px 8px;
+        padding: 3px 6px;
         font-size: 0.72rem;
         border-radius: 5px;
+        gap: 4px;
       }
       .layer-btn .layer-icon {
         width: 13px;
         height: 13px;
       }
       .layer-btn .idx {
-        font-size: 0.65rem;
-        padding: 1px 4px;
+        font-size: 0.68rem;
       }
       .sim-reset-tab-btn {
         padding: 3px 8px;
@@ -1130,18 +1130,18 @@
         scrollbar-width: thin;
       }
       .layer-btn {
-        padding: 2px 6px;
+        padding: 2px 5px;
         font-size: 0.7rem;
         height: 22px;
         border-radius: 4px;
+        gap: 3px;
       }
       .layer-btn .layer-icon {
         width: 12px;
         height: 12px;
       }
       .layer-btn .idx {
-        font-size: 0.62rem;
-        padding: 0 3px;
+        font-size: 0.65rem;
       }
       .sim-reset-tab-btn {
         padding: 2px 6px;
