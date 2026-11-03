@@ -81,16 +81,16 @@ def main():
     print("\033[1;36m" + "-" * 70 + "\033[0m")
 
     summary_layers = [
-        ("Layer 0: Base", "Option 1: Keyboard (rect + keys) | Option 2: Home Key | Option 3: Split Ergo Duo"),
-        ("Layer 1: PC", "Option 1: Windows 4-Grid | Option 2: PC Monitor | Option 3: Command Terminal >_"),
-        ("Layer 2: Gaming", "Option 1: Gamepad Controller | Option 2: Arcade D-Pad | Option 3: Trophy"),
-        ("Layer 3: SymbolNav", "Option 1: Nav Compass | Option 2: Code Brackets </> | Option 3: 4-Way Arrows Diamond"),
-        ("Layer 4: Keypad", "Option 1: Pocket Calculator | Option 2: 3x3 Matrix | Option 3: Math Signs + - ="),
-        ("Layer 5: NumRow", "Option 1: Hash Sign # | Option 2: Sequential 1-2-3 | Option 3: Keycap Strip"),
-        ("Layer 6: Magic", "Option 1: Magic Wand ✨ | Option 2: Sparkle Constellation | Option 3: System Dial Burst"),
-        ("Layer 7: Factory", "Option 1: Factory Building | Option 2: Tuning Tools | Option 3: Microcontroller IC"),
-        ("Layer 8: Mouse", "Option 1: Ergo Mouse Body | Option 2: Cursor Pointer | Option 3: Trackball Mouse"),
-        ("Layer 9: Sniper", "Option 1: Target Reticle | Option 2: Concentric Bullseye | Option 3: Precision Optic Scope"),
+        ("Layer 0: Base [CHOSEN]", "Option 1: Keyboard (rect + keys) ✓"),
+        ("Layer 1: PC (Linux)", "Option 1: Linux Tux Penguin | Option 2: Shell Prompt >_ | Option 3: Linux Workstation"),
+        ("Layer 2: Gaming [CHOSEN]", "Option 1: Gamepad Controller ✓"),
+        ("Layer 3: SymbolNav [CHOSEN]", "Option 2: Code Brackets </> ✓"),
+        ("Layer 4: Keypad [CHOSEN]", "Option 1: Pocket Calculator ✓"),
+        ("Layer 5: NumRow", "Option 1: Normal Font 123 | Option 2: Keycap Pill 123 | Option 3: Hash Sign #"),
+        ("Layer 6: Magic", "Option 1: Lucide Magic Wand | Option 2: Star-Tipped Wand | Option 3: Radiance Wand Burst"),
+        ("Layer 7: Factory [CHOSEN]", "Option 1: Factory Building ✓"),
+        ("Layer 8: Mouse [CHOSEN]", "Option 1: Ergo Mouse Body ✓"),
+        ("Layer 9: Sniper [CHOSEN]", "Option 1: Target Reticle ✓"),
     ]
 
     for title, opts in summary_layers:
