@@ -658,8 +658,28 @@ const ICON_PATHS = {
   window: `<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>`,
   globe: `<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`,
   window_prev: `<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><polyline points="13 12 9.5 15.5 13 19"/>`,
-  window_next: `<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><polyline points="11 12 14.5 15.5 11 19"/>`
+  window_next: `<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><polyline points="11 12 14.5 15.5 11 19"/>`,
+  // Layer Icons (also usable directly on keycaps)
+  layer_base: LAYER_ICONS['Base'],
+  layer_pc: LAYER_ICONS['PC'],
+  layer_gaming: LAYER_ICONS['Gaming'],
+  layer_symbolnav: LAYER_ICONS['SymbolNav'],
+  layer_keypad: LAYER_ICONS['Keypad'],
+  layer_numrow: LAYER_ICONS['NumRow'],
+  layer_magic: LAYER_ICONS['Magic'],
+  layer_factory: LAYER_ICONS['Factory'],
+  layer_mouse: LAYER_ICONS['Mouse'],
+  layer_sniper: LAYER_ICONS['Sniper']
 };
+
+// Aliases for layer tab headers and keycaps
+ICON_PATHS.mouse = ICON_PATHS.layer_mouse;
+ICON_PATHS.keypad = ICON_PATHS.layer_keypad;
+ICON_PATHS.gaming = ICON_PATHS.layer_gaming;
+ICON_PATHS.magic = ICON_PATHS.layer_magic;
+ICON_PATHS.pc = ICON_PATHS.layer_pc;
+ICON_PATHS.sniper = ICON_PATHS.layer_sniper;
+ICON_PATHS.factory = ICON_PATHS.layer_factory;
 
 const FRIENDLY_LABELS = {
   backspace: 'Bksp',
@@ -682,7 +702,17 @@ const FRIENDLY_LABELS = {
   window: 'WM',
   globe: 'Browser',
   window_prev: 'WM Prev',
-  window_next: 'WM Next'
+  window_next: 'WM Next',
+  layer_base: 'Base Layer',
+  layer_pc: 'PC (Linux)',
+  layer_gaming: 'Gaming',
+  layer_symbolnav: 'SymbolNav',
+  layer_keypad: 'Keypad',
+  layer_numrow: 'NumRow',
+  layer_magic: 'Magic',
+  layer_factory: 'Factory',
+  layer_mouse: 'Mouse',
+  layer_sniper: 'Sniper'
 };
 const FRIENDLY_NAMES = FRIENDLY_LABELS;
 
@@ -707,7 +737,17 @@ const ICON_SEARCH_ALIASES = {
   window: ['window', 'wm', 'workspace', 'maximize', 'tile', 'window manager'],
   globe: ['globe', 'browser', 'web', 'internet', 'history', 'back', 'forward', 'url'],
   window_prev: ['window prev', 'prev window', 'prev workspace', 'wm prev', 'window'],
-  window_next: ['window next', 'next window', 'next workspace', 'wm next', 'window']
+  window_next: ['window next', 'next window', 'next workspace', 'wm next', 'window'],
+  layer_base: ['base', 'layer base', 'default'],
+  layer_pc: ['pc', 'linux', 'windows', 'layer pc', 'tog pc'],
+  layer_gaming: ['gaming', 'game', 'wasd', 'layer gaming', 'tog gaming'],
+  layer_symbolnav: ['symbolnav', 'symbols', 'nav', 'navigation', 'layer symbolnav'],
+  layer_keypad: ['keypad', 'numpad', 'calc', 'calculator', 'layer keypad', 'tog keypad'],
+  layer_numrow: ['numrow', 'number row', 'numbers', 'layer numrow'],
+  layer_magic: ['magic', 'bluetooth', 'rgb', 'reset', 'bootloader', 'layer magic'],
+  layer_factory: ['factory', 'test', 'diagnostics', 'layer factory'],
+  layer_mouse: ['mouse', 'cursor', 'trackball', 'layer mouse', 'tog mouse'],
+  layer_sniper: ['sniper', 'precision', 'slow mouse', 'layer sniper']
 };
 
 function getInspectorLabel(key) {

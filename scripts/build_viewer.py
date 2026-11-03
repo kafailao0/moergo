@@ -274,6 +274,8 @@ def parse_custom_behavior_annotations(dts_text, layer_names=None):
                 }
                 if target_l is not None:
                     info['target_layer'] = target_l
+                    if layer_names and target_l < len(layer_names):
+                        info['icon'] = f"layer_{layer_names[target_l].lower()}"
                 meta[beh_name] = info
 
     return meta
@@ -354,30 +356,33 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
         line1 = layer_name
         secondary = ''
         target_layer = layer_idx
-        badge = ''
-        badge_type = 'layer'
-        tooltip = f"Layer: {layer_name} (Click to switch or hold to activate)"
+        badge = 'TD' if beh == '&layer' else ''
+        badge_type = 'td' if beh == '&layer' else 'layer'
+        icon = f"layer_{layer_name.lower()}"
+        tooltip = f"Layer: {layer_name} ({'Tap: Toggle • Hold: Momentary' if beh == '&layer' else 'Hold to activate'})"
 
     elif beh == '&to':
         layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
         layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
-        line1 = "To"
-        line2 = layer_name
+        line1 = layer_name
+        line2 = ''
         target_layer = layer_idx
         secondary = ''
-        badge = ''
-        badge_type = 'layer'
+        badge = 'To'
+        badge_type = 'to'
+        icon = f"layer_{layer_name.lower()}"
         tooltip = f"Switch to {layer_name} (Click or hover to view layer)"
 
     elif beh == '&tog':
         layer_idx = int(raw_params[0].get('value', 0)) if str(raw_params[0].get('value', '')).isdigit() else 0
         layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
-        line1 = "Tog"
-        line2 = layer_name
+        line1 = layer_name
+        line2 = ''
         target_layer = layer_idx
         secondary = ''
-        badge = ''
-        badge_type = 'layer'
+        badge = 'Tog'
+        badge_type = 'tog'
+        icon = f"layer_{layer_name.lower()}"
         tooltip = f"Toggle {layer_name} (Click or hover to view layer)"
 
     elif beh == '&magic':
@@ -386,6 +391,7 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
         secondary = ''
         badge = ''
         badge_type = 'sys'
+        icon = 'layer_magic'
         tooltip = 'Magic Configuration Layer (Click or hover to view layer)'
 
     elif beh == 'Custom':
@@ -410,6 +416,8 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
                 target_layer = m['target_layer']
             if 'icon' in m:
                 icon = m['icon']
+            elif target_layer is not None and layer_names and target_layer < len(layer_names):
+                icon = f"layer_{layer_names[target_layer].lower()}"
             else:
                 for sym, _, ic in KEY_METADATA.values():
                     if line1 == sym:
@@ -428,8 +436,9 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
             line1 = l_name
             secondary = ''
             target_layer = l_idx
-            badge = ''
-            badge_type = 'layer'
+            badge = 'TD'
+            badge_type = 'td'
+            icon = f"layer_{l_name.lower()}"
             tooltip = f"Layer: {l_name} (Tap: Toggle • Hold: Momentary)"
         else:
             line1 = clean_name

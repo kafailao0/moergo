@@ -13,6 +13,8 @@
       --badge-mod: #d2a8ff;
       --badge-layer: #7ee787;
       --badge-td: #ffa657;
+      --badge-tog: #7ee787;
+      --badge-to: #58a6ff;
       --badge-sys: #ff7b72;
       --badge-mouse: #79c0ff;
     }
@@ -463,6 +465,10 @@
       overflow: visible;
       transition: color 0.15s ease;
     }
+    .key-icon text {
+      fill: currentColor;
+      stroke: none;
+    }
     .key-group:hover .key-icon {
       color: #ffffff;
     }
@@ -498,6 +504,9 @@
       pointer-events: none;
     }
     .badge-td { fill: var(--badge-td); }
+    .badge-tog { fill: var(--badge-tog); }
+    .badge-to { fill: var(--badge-to); }
+    .badge-layer { fill: var(--badge-layer); }
     .badge-sys { fill: var(--badge-sys); }
     .badge-mouse { fill: var(--badge-mouse); }
 
