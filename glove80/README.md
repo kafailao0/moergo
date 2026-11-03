@@ -71,11 +71,14 @@ Alternatively, download `glove80.uf2` manually from the **Actions** tab on your 
 
 1. **Connect via USB**: Ensure each keyboard half you wish to flash is connected to your PC with a USB-C cable (they can be connected at the same time or flashed one by one).
 2. **Trigger Bootloader Mode** on **each half**:
-   * **Via Keymap**: Hold the `Magic` key (bottom-left corner key on Base or Lower) and tap:
-     * **Left half:** The `ESC` key (outermost key on the home row)
-     * **Right half:** The `'` (`SQT`) key (outermost key on the home row)
-   * **Via Hardware Reset**: Double-click the physical reset button located on the thumb cluster with a pin or paperclip.
-3. The keyboard LEDs will flash/pulse, and each half will mount as an external USB mass storage drive:
+   * **Via Keymap**: Hold the `Magic` key (bottom-left corner key on Base) and tap:
+     * **Left half:** **Caps Lock** (`td_caps` / Row 2 left outer key)
+     * **Right half:** **Hyphen** (`-` / Row 2 right outer key)
+     *(Note: Tapping `ESC` or `'` while holding `Magic` triggers `&sys_reset` (reboot), not bootloader).*
+   * **Via Hardware Power-Up** (official MoErgo method; Glove80 has no physical reset pinhole button):
+     * **Left half:** With USB connected, hold **Magic + E** and switch power **ON**.
+     * **Right half:** With USB connected, hold **I + PgDn** and switch power **ON**.
+3. The keyboard LEDs will flash/pulse red, and each half will mount as an external USB mass storage drive:
    * Left half: **`GLV80LHBOOT`**
    * Right half: **`GLV80RHBOOT`**
 

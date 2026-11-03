@@ -93,8 +93,14 @@ Whenever modifying keyboard layouts, follow these steps sequentially:
 
 ### Step 7: Flash Firmware to BOTH Halves
 - Enter bootloader mode on **both halves**:
-  - **Left half:** Hold `Magic` + tap `ESC` (or double-click physical reset button). Mounts as `GLV80LHBOOT`.
-  - **Right half:** Hold `Magic` + tap `'` (or double-click physical reset button). Mounts as `GLV80RHBOOT`.
+  - **Via Keymap**:
+    - **Left half:** Hold `Magic` + tap **Caps Lock** (`td_caps` / Row 2 left outer key). Mounts as `GLV80LHBOOT`.
+    - **Right half:** Hold `Magic` + tap **Hyphen** (`-` / Row 2 right outer key). Mounts as `GLV80RHBOOT`.
+    *(Note: Holding Magic and tapping `ESC` or `'` triggers `&sys_reset` (reboot), NOT bootloader!)*
+  - **Via Hardware Power-Up** (official MoErgo method; Glove80 has no physical reset button):
+    - **Left half:** Connect USB to left half, hold **Magic + E**, and switch power **ON**.
+    - **Right half:** Connect USB to right half, hold **I + PgDn**, and switch power **ON**.
+    *(Pulsing red LED next to power switch indicates bootloader mode).*
 - Flash using the helper script:
   ```bash
   ./glove80/flash.sh
