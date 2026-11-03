@@ -680,6 +680,9 @@ ICON_PATHS.magic = ICON_PATHS.layer_magic;
 ICON_PATHS.pc = ICON_PATHS.layer_pc;
 ICON_PATHS.sniper = ICON_PATHS.layer_sniper;
 ICON_PATHS.factory = ICON_PATHS.layer_factory;
+ICON_PATHS.numrow = ICON_PATHS.layer_numrow;
+ICON_PATHS.symbolnav = ICON_PATHS.layer_symbolnav;
+ICON_PATHS.base = ICON_PATHS.layer_base;
 
 const FRIENDLY_LABELS = {
   backspace: 'Bksp',
@@ -753,7 +756,11 @@ const ICON_SEARCH_ALIASES = {
 function getInspectorLabel(key) {
   if (!key) return '—';
   if (key.icon && FRIENDLY_LABELS[key.icon]) {
-    return FRIENDLY_LABELS[key.icon];
+    const baseLabel = FRIENDLY_LABELS[key.icon];
+    if (key.badgeType === 'lt' && key.secondary) {
+      return `${baseLabel} / ${key.secondary}`;
+    }
+    return baseLabel;
   }
   return key.line2 ? `${key.line1} ${key.line2}` : (key.line1 || '—');
 }
@@ -768,7 +775,10 @@ function renderInspectorPill(key) {
   }
 
   if (key.icon && ICON_PATHS[key.icon]) {
-    const label = FRIENDLY_LABELS[key.icon] || (key.line2 ? `${key.line1} ${key.line2}` : key.line1) || '';
+    let label = FRIENDLY_LABELS[key.icon] || (key.line2 ? `${key.line1} ${key.line2}` : key.line1) || '';
+    if (key.badgeType === 'lt' && key.secondary) {
+      label = `${label} / ${key.secondary}`;
+    }
     pillEl.innerHTML = `
       <span class="insp-pill-content">
         <svg class="key-icon insp-key-icon icon-${key.icon}" viewBox="0 0 24 24" width="18" height="18"
@@ -929,7 +939,7 @@ function renderSvg() {
 
         <!-- Corner Secondary / Mod / Layer Name -->
         ${key.secondary ? `
-          <text class="${hasLayerLink ? 'key-text-layer-link' : 'key-text-sec'}"
+          <text class="${hasLayerLink && key.badgeType !== 'lt' ? 'key-text-layer-link' : 'key-text-sec'}"
                 x="${x + KEY_SIZE - 4}" y="${y + 4.5}"
                 font-size="${secFontSize}">${escapeHtml(key.secondary)}</text>
         ` : ''}

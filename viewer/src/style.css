@@ -509,6 +509,7 @@
     .badge-layer { fill: var(--badge-layer); }
     .badge-sys { fill: var(--badge-sys); }
     .badge-mouse { fill: var(--badge-mouse); }
+    .badge-lt { fill: var(--badge-layer); }
 
     .trans-watermark {
       fill: #6e7681;
