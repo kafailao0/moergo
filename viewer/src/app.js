@@ -115,6 +115,7 @@ async function init() {
   }
 
   renderLayerTabs();
+  initLayerTooltips();
   renderSvg();
   initCanvasGestures();
   updateHeader();
@@ -334,6 +335,7 @@ function setViewerMode(mode) {
 
   deactivateHoverMomentary();
   renderLayerTabs();
+  initLayerTooltips();
   renderSvg();
   resetInspector();
   triggerRgbFade();
@@ -354,6 +356,7 @@ function switchKeyboard(kb) {
   updateHeader();
   updateBackButton();
   renderLayerTabs();
+  initLayerTooltips();
   renderSvg();
   resetInspector();
   triggerRgbFade();
@@ -511,7 +514,95 @@ function getLayerTabHtml(idx, layerName) {
   return `<span class="idx">${idx}</span>${iconHtml}`;
 }
 
+let layerTooltipEl = null;
+let activeLayerTooltipBtn = null;
+
+function getLayerTooltipEl() {
+  if (!layerTooltipEl) {
+    layerTooltipEl = document.getElementById('layer-tooltip');
+    if (!layerTooltipEl) {
+      layerTooltipEl = document.createElement('div');
+      layerTooltipEl.id = 'layer-tooltip';
+      layerTooltipEl.className = 'layer-tooltip';
+      document.body.appendChild(layerTooltipEl);
+    }
+  }
+  return layerTooltipEl;
+}
+
+function showLayerTooltip(btn) {
+  const text = btn.getAttribute('data-tooltip');
+  if (!text) return;
+  const tip = getLayerTooltipEl();
+  tip.textContent = text;
+  tip.style.display = 'block';
+
+  const rect = btn.getBoundingClientRect();
+  const tipWidth = tip.offsetWidth;
+  let left = rect.left + (rect.width / 2) - (tipWidth / 2);
+  left = Math.max(8, Math.min(window.innerWidth - tipWidth - 8, left));
+  let top = rect.bottom + 6;
+  if (top + tip.offsetHeight > window.innerHeight - 8) {
+    top = rect.top - tip.offsetHeight - 6;
+  }
+
+  tip.style.left = `${Math.round(left)}px`;
+  tip.style.top = `${Math.round(top)}px`;
+}
+
+function hideLayerTooltip() {
+  activeLayerTooltipBtn = null;
+  const tip = getLayerTooltipEl();
+  if (tip) {
+    tip.style.display = 'none';
+  }
+}
+
+function initLayerTooltips() {
+  const bar = document.getElementById('layer-tabs');
+  if (!bar || bar.hasAttribute('data-tooltip-init')) return;
+  bar.setAttribute('data-tooltip-init', 'true');
+
+  bar.addEventListener('mouseover', (e) => {
+    const btn = e.target.closest('.layer-btn');
+    if (btn) {
+      if (btn !== activeLayerTooltipBtn) {
+        activeLayerTooltipBtn = btn;
+        showLayerTooltip(btn);
+      }
+    } else {
+      hideLayerTooltip();
+    }
+  });
+
+  bar.addEventListener('mouseout', (e) => {
+    const btn = e.target.closest('.layer-btn');
+    if (btn && (!e.relatedTarget || !btn.contains(e.relatedTarget))) {
+      hideLayerTooltip();
+    }
+  });
+
+  bar.addEventListener('click', () => {
+    hideLayerTooltip();
+  });
+
+  bar.addEventListener('scroll', () => {
+    hideLayerTooltip();
+  }, { passive: true });
+
+  window.addEventListener('scroll', () => {
+    hideLayerTooltip();
+  }, { passive: true });
+
+  window.addEventListener('touchstart', (e) => {
+    if (!e.target.closest('#layer-tabs')) {
+      hideLayerTooltip();
+    }
+  }, { passive: true });
+}
+
 function renderLayerTabs() {
+  hideLayerTooltip();
   const kb = KEYBOARDS[currentKb];
   const bar = document.getElementById('layer-tabs');
   bar.innerHTML = '';
@@ -519,7 +610,7 @@ function renderLayerTabs() {
   kb.layers.forEach((layer, idx) => {
     const btn = document.createElement('button');
     btn.id = `layer-tab-${idx}`;
-    btn.title = `${idx}: ${layer.name}`;
+    btn.setAttribute('data-tooltip', `Layer ${idx}: ${layer.name}`);
     btn.setAttribute('aria-label', `Layer ${idx}: ${layer.name}`);
 
     if (viewerMode === 'simulate') {
@@ -547,6 +638,8 @@ function renderLayerTabs() {
     resetBtn.onclick = resetSimStack;
     bar.appendChild(resetBtn);
   }
+
+  initLayerTooltips();
 }
 
 function updateLayerTabStates() {
@@ -555,7 +648,7 @@ function updateLayerTabStates() {
   kb.layers.forEach((layer, idx) => {
     const btn = document.getElementById(`layer-tab-${idx}`);
     if (!btn) return;
-    btn.title = `${idx}: ${layer.name}`;
+    btn.setAttribute('data-tooltip', `Layer ${idx}: ${layer.name}`);
     btn.setAttribute('aria-label', `Layer ${idx}: ${layer.name}`);
     if (viewerMode === 'simulate') {
       const isSimActive = simStack.includes(idx);

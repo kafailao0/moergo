@@ -203,12 +203,23 @@
       border-bottom: 1px solid var(--surface-border);
       padding: 8px 16px;
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap !important;
       gap: 6px;
       overflow-x: auto;
       scrollbar-width: thin;
       scrollbar-color: var(--surface-border) transparent;
       flex-shrink: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+    .layer-bar::-webkit-scrollbar {
+      height: 4px;
+    }
+    .layer-bar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .layer-bar::-webkit-scrollbar-thumb {
+      background: var(--surface-border);
+      border-radius: 2px;
     }
     .layer-btn {
       background: var(--surface);
@@ -224,6 +235,7 @@
       display: flex;
       align-items: center;
       gap: 5px;
+      flex-shrink: 0;
     }
     .layer-btn .idx {
       font-size: 0.72rem;
@@ -323,11 +335,29 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
+      flex-shrink: 0;
     }
     .sim-reset-tab-btn:hover {
       color: #fff;
       background: #8957e5;
       border-color: #a371f7;
+    }
+
+    .layer-tooltip {
+      position: fixed;
+      z-index: 2000;
+      pointer-events: none;
+      background: #1c2128;
+      color: #f0f6fc;
+      border: 1px solid var(--surface-border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      white-space: nowrap;
+      display: none;
+      line-height: 1.2;
     }
 
     .key-group.has-layer-link .key-cap {
@@ -901,6 +931,8 @@
       border: 1px solid var(--surface-border);
       box-shadow: 0 4px 18px rgba(0,0,0,0.5);
       max-width: calc(100vw - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+      flex-wrap: nowrap !important;
+      overflow-x: auto;
     }
     body.zen-mode main {
       height: 100%;
@@ -927,8 +959,8 @@
       .layer-bar {
         padding: 5px 8px;
         gap: 4px;
-        flex-wrap: wrap;
-        overflow-x: visible;
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
       }
       .layer-btn {
         padding: 3px 6px;
