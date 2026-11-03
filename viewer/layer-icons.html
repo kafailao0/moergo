@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layer Icons Design Lab - MoErgo Layout Viewer</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+    :root {
+      --bg: #0b0d13;
+      --surface: #161b22;
+      --surface-hover: #21262d;
+      --surface-border: #30363d;
+      --text: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --accent-green: #238636;
+      --accent-purple: #bc8cff;
+      --accent-orange: #ff7b72;
+      --accent-gold: #d29922;
+      --active-tab-bg: #1f2937;
+      --active-tab-border: #388bfd;
+      --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-stack);
+      line-height: 1.5;
+      padding-bottom: 90px;
+    }
+
+    header {
+      background: #11151c;
+      border-bottom: 1px solid var(--surface-border);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #1f6feb 0%, #388bfd 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .brand h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .brand p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text-bright);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover {
+      background: var(--surface-hover);
+      border-color: #8b949e;
+    }
+
+    .btn-primary {
+      background: #238636;
+      border-color: #2ea043;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #2ea043;
+    }
+
+    /* Live Preview Bar */
+    .preview-section {
+      background: #10141d;
+      border-bottom: 1px solid var(--surface-border);
+      padding: 16px 24px;
+      position: sticky;
+      top: 65px;
+      z-index: 90;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .preview-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .preview-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-pill {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-pill.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Actual Layer Bar emulation */
+    .layer-bar-emu {
+      background: #11151c;
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      overflow-x: auto;
+    }
+
+    .layer-btn-emu {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.12s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .layer-btn-emu .idx {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.06);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    .layer-btn-emu .layer-icon-svg {
+      width: 15px;
+      height: 15px;
+      stroke-width: 2.2;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .layer-btn-emu:hover {
+      background: #21262d;
+      border-color: #58a6ff;
+      color: var(--text-bright);
+    }
+
+    .layer-btn-emu.active {
+      background: #1f2937;
+      border-color: #388bfd;
+      color: #58a6ff;
+      box-shadow: 0 0 10px rgba(56, 139, 253, 0.25);
+    }
+
+    .layer-btn-emu.active .idx {
+      background: rgba(56, 139, 253, 0.25);
+      color: #58a6ff;
+    }
+
+    .layer-btn-emu.active .layer-icon-svg {
+      stroke: #58a6ff;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    /* Presets Banner */
+    .presets-bar {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .presets-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .presets-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .preset-btn {
+      background: #1c2128;
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .preset-btn:hover {
+      border-color: #58a6ff;
+      color: #58a6ff;
+    }
+
+    .preset-btn.active {
+      background: rgba(56, 139, 253, 0.15);
+      border-color: #388bfd;
+      color: #58a6ff;
+    }
+
+    /* Layer Card */
+    .layer-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      transition: border-color 0.2s;
+    }
+
+    .layer-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .layer-badge-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .layer-num {
+      background: #1f2937;
+      color: #58a6ff;
+      border: 1px solid #388bfd44;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    .layer-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .layer-meta-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid var(--surface-border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-muted);
+    }
+
+    .pill-rgb {
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .layer-desc {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* Option Cards Grid */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .option-card {
+      background: #11151c;
+      border: 1.5px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 16px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-card:hover {
+      background: #171c26;
+      border-color: #58a6ff66;
+    }
+
+    .option-card.selected {
+      background: rgba(56, 139, 253, 0.08);
+      border-color: #388bfd;
+      box-shadow: 0 0 16px rgba(56, 139, 253, 0.2);
+    }
+
+    .option-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .option-label-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .option-number-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.08);
+      color: var(--text-muted);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .option-card.selected .option-number-badge {
+      background: #388bfd;
+      color: #fff;
+    }
+
+    .option-name {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    .radio-circle {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--surface-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .option-card.selected .radio-circle {
+      border-color: #388bfd;
+      background: #388bfd;
+    }
+
+    .radio-circle::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: transparent;
+    }
+
+    .option-card.selected .radio-circle::after {
+      background: #fff;
+    }
+
+    /* Icon Display area */
+    .icon-showcase {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 16px;
+      background: rgba(0,0,0,0.25);
+      border-radius: 8px;
+      border: 1px dashed rgba(255,255,255,0.07);
+    }
+
+    .icon-scale-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .icon-scale-label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .icon-svg-lg {
+      width: 40px;
+      height: 40px;
+      stroke: #58a6ff;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-svg-md {
+      width: 24px;
+      height: 24px;
+      stroke: var(--text-bright);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-svg-sm {
+      width: 16px;
+      height: 16px;
+      stroke: var(--text);
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .option-rationale {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Bottom Action Bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #11151c;
+      border-top: 1px solid var(--surface-border);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      z-index: 100;
+      box-shadow: 0 -8px 24px rgba(0,0,0,0.5);
+    }
+
+    .bottom-summary {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bottom-summary strong {
+      color: var(--text-bright);
+    }
+
+    .bottom-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--surface-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-size: 1.05rem;
+      color: var(--text-bright);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal-code {
+      background: #0b0d13;
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #79c0ff;
+      white-space: pre-wrap;
+      max-height: 350px;
+      overflow-y: auto;
+    }
+
+    .modal-footer {
+      padding: 14px 20px;
+      border-top: 1px solid var(--surface-border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .preview-section {
+        position: relative;
+        top: 0;
+      }
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <line x1="6" y1="8" x2="6.01" y2="8"/>
+          <line x1="10" y1="8" x2="10.01" y2="8"/>
+          <line x1="14" y1="8" x2="14.01" y2="8"/>
+          <line x1="18" y1="8" x2="18.01" y2="8"/>
+          <line x1="8" y1="16" x2="16" y2="16"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Layer Icons Design Lab</h1>
+        <p>Interactive Design Showcase & Selector for MoErgo Glove80 & Go60</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <a href="index.html" class="btn">
+        <span>← Back to Layout Viewer</span>
+      </a>
+      <button class="btn btn-primary" onclick="openExportModal()">
+        <span>Export Selection</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Live Sticky Preview Bar -->
+  <section class="preview-section">
+    <div class="preview-header">
+      <div class="preview-title">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="12 6 12 12 16 14"/></svg>
+        <span>Live Layer Bar Preview</span>
+      </div>
+      <div class="preview-controls">
+        <span style="font-size:0.75rem; color:var(--text-muted); margin-right:4px;">Keyboard:</span>
+        <button class="btn-pill active" id="btn-kb-glove80" onclick="switchPreviewKb('glove80')">Glove80 (10)</button>
+        <button class="btn-pill" id="btn-kb-go60" onclick="switchPreviewKb('go60')">Go60 (8)</button>
+        <div style="width:1px; height:16px; background:var(--surface-border); margin:0 6px;"></div>
+        <span style="font-size:0.75rem; color:var(--text-muted); margin-right:4px;">Mode:</span>
+        <button class="btn-pill active" id="btn-mode-simulate" onclick="switchPreviewMode('simulate')">Simulate</button>
+        <button class="btn-pill" id="btn-mode-inspect" onclick="switchPreviewMode('inspect')">Inspect</button>
+      </div>
+    </div>
+    <div class="layer-bar-emu" id="preview-layer-bar">
+      <!-- Generated via JS -->
+    </div>
+  </section>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- Preset Selection Bar -->
+    <div class="presets-bar">
+      <div class="presets-label">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#58a6ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span>Design Presets:</span>
+      </div>
+      <div class="presets-group">
+        <button class="preset-btn active" id="preset-btn-A" onclick="applyPreset('A')">Preset A: Lucide Standard</button>
+        <button class="preset-btn" id="preset-btn-B" onclick="applyPreset('B')">Preset B: Hardware & Code Focus</button>
+        <button class="preset-btn" id="preset-btn-C" onclick="applyPreset('C')">Preset C: Expressive & Compact</button>
+      </div>
+    </div>
+
+    <!-- Layers Grid -->
+    <div id="layers-container">
+      <!-- Injected via JavaScript -->
+    </div>
+
+  </main>
+
+  <!-- Bottom Floating Action Bar -->
+  <div class="bottom-bar">
+    <div class="bottom-summary" id="bottom-summary">
+      <span>Selected: <strong>10 / 10</strong> layers configured</span>
+    </div>
+    <div class="bottom-actions">
+      <button class="btn" onclick="copySelectedConfigJson()">Copy JSON</button>
+      <button class="btn btn-primary" onclick="openExportModal()">Review & Apply Snippet</button>
+    </div>
+  </div>
+
+  <!-- Export Modal -->
+  <div class="modal-backdrop" id="export-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Selected Layer Icons Configuration</h3>
+        <button class="modal-close" onclick="closeExportModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">
+          Here is your chosen configuration for all layers. You can copy this object directly into <code>viewer/src/app.js</code> or import it as needed.
+        </p>
+        <div class="modal-code" id="export-code-snippet"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeExportModal()">Close</button>
+        <button class="btn btn-primary" onclick="copyModalCode()">Copy to Clipboard</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 30 Clean SVG Vector Icon Definitions (Lucide / Feather 24x24 standard)
+    const ICON_DEFINITIONS = {
+      // Layer 0: Base
+      'base_keyboard': {
+        name: 'Keyboard',
+        svg: `<rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="10" y1="8" x2="10.01" y2="8"/><line x1="14" y1="8" x2="14.01" y2="8"/><line x1="18" y1="8" x2="18.01" y2="8"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="10" y1="12" x2="10.01" y2="12"/><line x1="14" y1="12" x2="14.01" y2="12"/><line x1="18" y1="12" x2="18.01" y2="12"/><line x1="8" y1="16" x2="16" y2="16"/>`,
+        rationale: 'Direct alphanumeric keyboard metaphor with home row and spacebar.'
+      },
+      'base_home': {
+        name: 'Home Anchor',
+        svg: `<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>`,
+        rationale: 'Home base metaphor — the root layer everything resets or defaults to.'
+      },
+      'base_split': {
+        name: 'Split Ergo Duo',
+        svg: `<path d="M4 5h5a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M14 5h5a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><line x1="6.5" y1="9" x2="7.5" y2="9"/><line x1="16.5" y1="9" x2="17.5" y2="9"/><line x1="6.5" y1="13" x2="7.5" y2="13"/><line x1="16.5" y1="13" x2="17.5" y2="13"/>`,
+        rationale: 'Unique Glove80/Go60 split form factor with angled left and right halves.'
+      },
+
+      // Layer 1: PC
+      'pc_grid': {
+        name: 'Windows 4-Grid',
+        svg: `<rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/>`,
+        rationale: 'Instant recognition as Windows / PC mode with modern clean quad panes.'
+      },
+      'pc_monitor': {
+        name: 'Desktop Workstation',
+        svg: `<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>`,
+        rationale: 'Desktop PC monitor display representing standard desktop workstation OS.'
+      },
+      'pc_terminal': {
+        name: 'Command Console',
+        svg: `<rect x="3" y="4" width="18" height="16" rx="2"/><polyline points="7 10 10 12 7 14"/><line x1="12" y1="14" x2="16" y2="14"/>`,
+        rationale: 'Terminal console window with command prompt >_ representing power-user PC mode.'
+      },
+
+      // Layer 2: Gaming
+      'gaming_gamepad': {
+        name: 'Gamepad Controller',
+        svg: `<line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="6"/>`,
+        rationale: 'Classic gamepad silhouette with D-pad cross and action buttons.'
+      },
+      'gaming_dpad': {
+        name: 'Arcade D-Pad',
+        svg: `<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6V3z"/>`,
+        rationale: 'Bold geometric 4-way directional cross representing WASD / arcade movement.'
+      },
+      'gaming_trophy': {
+        name: 'Gaming Trophy',
+        svg: `<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7"/><path d="M14 14.66V17c0 .55.45 1 1 1h2"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>`,
+        rationale: 'Esports victory trophy representing competitive gameplay.'
+      },
+
+      // Layer 3: SymbolNav
+      'sym_compass': {
+        name: 'Navigation Compass',
+        svg: `<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>`,
+        rationale: 'Precision directional compass capturing both navigation and exploration.'
+      },
+      'sym_brackets': {
+        name: 'Code Brackets </>',
+        svg: `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/>`,
+        rationale: 'Code angle brackets with slash — the canonical developer symbol layer icon.'
+      },
+      'sym_arrows': {
+        name: '4-Way Arrows Diamond',
+        svg: `<polyline points="12 2 12 22"/><polyline points="17 7 12 2 7 7"/><polyline points="2 12 22 12"/><polyline points="7 17 12 22 17 17"/>`,
+        rationale: 'Direct Up/Down/Left/Right arrow cluster for navigation and page movement.'
+      },
+
+      // Layer 4: Keypad
+      'kp_calc': {
+        name: 'Pocket Calculator',
+        svg: `<rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/>`,
+        rationale: 'Calculator with numeric LCD screen, 10-key grid, and vertical Enter key.'
+      },
+      'kp_matrix': {
+        name: '3x3 Keypad Matrix',
+        svg: `<rect x="3" y="3" width="4" height="4" rx="1"/><rect x="10" y="3" width="4" height="4" rx="1"/><rect x="17" y="3" width="4" height="4" rx="1"/><rect x="3" y="10" width="4" height="4" rx="1"/><rect x="10" y="10" width="4" height="4" rx="1"/><rect x="17" y="10" width="4" height="4" rx="1"/><rect x="3" y="17" width="4" height="4" rx="1"/><rect x="10" y="17" width="4" height="4" rx="1"/><rect x="17" y="17" width="4" height="4" rx="1"/>`,
+        rationale: 'Clean geometric 9-key numpad array, razor-sharp at compact sizes.'
+      },
+      'kp_math': {
+        name: 'Arithmetic Operators',
+        svg: `<line x1="5" y1="7" x2="11" y2="7"/><line x1="8" y1="4" x2="8" y2="10"/><line x1="14" y1="7" x2="19" y2="7"/><line x1="5" y1="16" x2="11" y2="16"/><line x1="14" y1="14" x2="19" y2="14"/><line x1="14" y1="18" x2="19" y2="18"/>`,
+        rationale: 'Mathematical calculation operators (+, -, =, /) for accounting.'
+      },
+
+      // Layer 5: NumRow
+      'num_hash': {
+        name: 'Hash Octothorpe #',
+        svg: `<line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/>`,
+        rationale: 'The universal number sign #. Extremely clear and uncluttered in layer tabs.'
+      },
+      'num_digits': {
+        name: 'Sequential 1-2-3',
+        svg: `<path d="M3 17V7l-2 2"/><path d="M8 11a2.5 2.5 0 0 1 5 0c0 2-3 4-3 6h4"/><path d="M17 7h4l-2.5 4a2.5 2.5 0 0 1 2.5 4c0 1.5-1.5 2-3 2h-1.5"/>`,
+        rationale: 'Stylized sequential digits 1-2-3 representing number row access.'
+      },
+      'num_strip': {
+        name: 'Number Row Strip',
+        svg: `<rect x="2" y="7" width="20" height="10" rx="2"/><line x1="7" y1="7" x2="7" y2="17"/><line x1="12" y1="7" x2="12" y2="17"/><line x1="17" y1="7" x2="17" y2="17"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="9.5" cy="12" r="1" fill="currentColor"/><circle cx="14.5" cy="12" r="1" fill="currentColor"/><circle cx="19.5" cy="12" r="1" fill="currentColor"/>`,
+        rationale: 'Keycap row banner with 4 positions representing the top number row.'
+      },
+
+      // Layer 6: Magic
+      'magic_wand': {
+        name: 'Magic Wand ✨',
+        svg: `<path d="m15 4-1 1 3 3 1-1a2 2 0 0 0 0-2.83l-.17-.17a2 2 0 0 0-2.83 0z"/><path d="M14 8 3 19l2 2 11-11"/><line x1="9" y1="2" x2="9" y2="5"/><line x1="2" y1="9" x2="5" y2="9"/><line x1="20" y1="14" x2="20" y2="17"/><line x1="17" y1="20" x2="20" y2="20"/>`,
+        rationale: 'Magic wand casting sparks. Matches the official ZMK layer nomenclature.'
+      },
+      'magic_sparkles': {
+        name: 'Sparkle Cluster',
+        svg: `<path d="m12 3 1.9 5.6L19.5 10.5l-5.6 1.9L12 18l-1.9-5.6L4.5 10.5l5.6-1.9z"/><path d="m18 15 .8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/><path d="m5 4 .5 1.5 1.5.5-1.5.5L5 8l-.5-1.5L3 6l1.5-.5z"/>`,
+        rationale: 'Playful multi-star constellation representing RGB lighting effects and magic.'
+      },
+      'magic_gear_sparkle': {
+        name: 'System Gear & Burst',
+        svg: `<path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/><circle cx="12" cy="12" r="4"/>`,
+        rationale: 'Radiating system control dial for Bluetooth profiles, battery, and reset.'
+      },
+
+      // Layer 7: Factory
+      'fac_building': {
+        name: 'Industrial Factory',
+        svg: `<path d="M2 20h20"/><path d="M20 20V8l-6 4V8l-6 4V4H2v16h18z"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="6" y1="16" x2="6.01" y2="16"/>`,
+        rationale: 'Classic factory silhouette with sawtooth roof and industrial chimneys.'
+      },
+      'fac_tools': {
+        name: 'Calibration Tools',
+        svg: `<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>`,
+        rationale: 'Wrench and calibration tool representing factory test and maintenance.'
+      },
+      'fac_chip': {
+        name: 'Hardware IC Chip',
+        svg: `<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>`,
+        rationale: 'Microchip circuit representing low-level hardware diagnostics.'
+      },
+
+      // Layer 8: Mouse
+      'mouse_body': {
+        name: 'Ergonomic Mouse',
+        svg: `<rect x="5" y="2" width="14" height="20" rx="7"/><line x1="12" y1="6" x2="12" y2="10"/>`,
+        rationale: 'Minimalist ergonomic mouse with central scroll wheel notch.'
+      },
+      'mouse_pointer': {
+        name: 'Cursor Arrow',
+        svg: `<path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><line x1="13" y1="13" x2="19" y2="19"/>`,
+        rationale: 'Direct OS cursor pointer arrow indicating mouse movement.'
+      },
+      'mouse_split': {
+        name: 'Trackball Mouse',
+        svg: `<rect x="5" y="2" width="14" height="20" rx="7"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="12" y1="2" x2="12" y2="9"/><circle cx="12" cy="14" r="2"/>`,
+        rationale: 'Split left/right buttons with optical trackball sensor.'
+      },
+
+      // Layer 9: Sniper
+      'sniper_crosshair': {
+        name: 'Crosshair Reticle',
+        svg: `<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/>`,
+        rationale: 'Tactical target reticle with outer calibration notches.'
+      },
+      'sniper_target': {
+        name: 'Concentric Bullseye',
+        svg: `<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor"/>`,
+        rationale: 'Concentric precision bullseye with solid center aim point.'
+      },
+      'sniper_scope': {
+        name: 'Precision Optic Scope',
+        svg: `<circle cx="12" cy="12" r="9"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="10" y1="7" x2="14" y2="7"/><line x1="10" y1="17" x2="14" y2="17"/><line x1="7" y1="10" x2="7" y2="14"/><line x1="17" y1="10" x2="17" y2="14"/>`,
+        rationale: 'Rifle sniper optic with windage and elevation hash ticks.'
+      }
+    };
+
+    // Metadata for each layer
+    const LAYERS_METADATA = [
+      {
+        id: 'Base',
+        index: 0,
+        name: 'Base',
+        scope: 'Glove80 & Go60',
+        rgb: '___ (Neutral / Pass-through)',
+        desc: 'Primary typing layer with standard QWERTY, home row modifiers (LGUI, LALT, LCTL, LSFT), and ergo thumb clusters.',
+        options: ['base_keyboard', 'base_home', 'base_split']
+      },
+      {
+        id: 'PC',
+        index: 1,
+        name: 'PC',
+        scope: 'Glove80 & Go60',
+        rgb: 'BLU (#0066FF)',
+        desc: 'Windows OS compatibility layer. Swaps Cmd/Alt to provide native Windows keyboard shortcuts and ergonomics.',
+        options: ['pc_grid', 'pc_monitor', 'pc_terminal']
+      },
+      {
+        id: 'Gaming',
+        index: 2,
+        name: 'Gaming',
+        scope: 'Glove80 & Go60',
+        rgb: '___ / Accent',
+        desc: 'Low-latency gaming layer with WASD cluster. Disables thumb GUI / Command keys to avoid accidental desktop interruptions.',
+        options: ['gaming_gamepad', 'gaming_dpad', 'gaming_trophy']
+      },
+      {
+        id: 'SymbolNav',
+        index: 3,
+        name: 'SymbolNav',
+        scope: 'Glove80 & Go60',
+        rgb: 'MAG (#FF00FF) & ORG',
+        desc: 'Dual-purpose symbol & navigation layer. Left hand houses code brackets and operators; right hand houses arrow cluster and PgUp/PgDn.',
+        options: ['sym_compass', 'sym_brackets', 'sym_arrows']
+      },
+      {
+        id: 'Keypad',
+        index: 4,
+        name: 'Keypad',
+        scope: 'Glove80 & Go60',
+        rgb: 'GRN (#00FF00)',
+        desc: 'Dedicated 10-key numeric keypad block with arithmetic math operators (+, -, *, /) and dedicated Enter key.',
+        options: ['kp_calc', 'kp_matrix', 'kp_math']
+      },
+      {
+        id: 'NumRow',
+        index: 5,
+        name: 'NumRow',
+        scope: 'Glove80 & Go60',
+        rgb: 'CYN (#00FFFF) / Pass-through',
+        desc: 'Direct number row and function key activation layer for fast numeric or F1-F12 entry.',
+        options: ['num_hash', 'num_digits', 'num_strip']
+      },
+      {
+        id: 'Magic',
+        index: 6,
+        name: 'Magic',
+        scope: 'Glove80 & Go60',
+        rgb: 'GLD (#FFBF00) & RED',
+        desc: 'ZMK system hardware layer: Bluetooth device profile pairing (BT 0-4), USB toggle, RGB backlight effects, battery status, and bootloader reset.',
+        options: ['magic_wand', 'magic_sparkles', 'magic_gear_sparkle']
+      },
+      {
+        id: 'Factory',
+        index: 7,
+        name: 'Factory',
+        scope: 'Glove80 & Go60',
+        rgb: 'RED (#FF0000)',
+        desc: 'Factory testing and hardware diagnostics layer for switch actuation verification and test routines.',
+        options: ['fac_building', 'fac_tools', 'fac_chip']
+      },
+      {
+        id: 'Mouse',
+        index: 8,
+        name: 'Mouse',
+        scope: 'Glove80 Only',
+        rgb: 'CYN / Pass-through',
+        desc: 'Mouse emulation layer. Controls cursor movement (Up/Down/Left/Right), Left/Middle/Right clicks, and vertical scroll wheel.',
+        options: ['mouse_body', 'mouse_pointer', 'mouse_split']
+      },
+      {
+        id: 'Sniper',
+        index: 9,
+        name: 'Sniper',
+        scope: 'Glove80 Only',
+        rgb: 'GLD / Pass-through',
+        desc: 'Ultra-low-speed mouse sniper mode. Scales cursor movement down for pixel-perfect targeting and delicate design work.',
+        options: ['sniper_crosshair', 'sniper_target', 'sniper_scope']
+      }
+    ];
+
+    // Presets
+    const PRESETS = {
+      'A': {
+        name: 'Preset A: Lucide Standard',
+        choices: {
+          Base: 'base_keyboard',
+          PC: 'pc_grid',
+          Gaming: 'gaming_gamepad',
+          SymbolNav: 'sym_compass',
+          Keypad: 'kp_calc',
+          NumRow: 'num_hash',
+          Magic: 'magic_wand',
+          Factory: 'fac_building',
+          Mouse: 'mouse_body',
+          Sniper: 'sniper_crosshair'
+        }
+      },
+      'B': {
+        name: 'Preset B: Hardware & Code Focus',
+        choices: {
+          Base: 'base_split',
+          PC: 'pc_monitor',
+          Gaming: 'gaming_dpad',
+          SymbolNav: 'sym_brackets',
+          Keypad: 'kp_matrix',
+          NumRow: 'num_digits',
+          Magic: 'magic_sparkles',
+          Factory: 'fac_tools',
+          Mouse: 'mouse_pointer',
+          Sniper: 'sniper_scope'
+        }
+      },
+      'C': {
+        name: 'Preset C: Expressive & Compact',
+        choices: {
+          Base: 'base_home',
+          PC: 'pc_terminal',
+          Gaming: 'gaming_trophy',
+          SymbolNav: 'sym_arrows',
+          Keypad: 'kp_math',
+          NumRow: 'num_strip',
+          Magic: 'magic_gear_sparkle',
+          Factory: 'fac_chip',
+          Mouse: 'mouse_split',
+          Sniper: 'sniper_target'
+        }
+      }
+    };
+
+    // State
+    let currentChoices = { ...PRESETS['A'].choices };
+    let previewKb = 'glove80';
+    let previewMode = 'simulate';
+    let activePreviewLayer = 0;
+
+    // Initialize from LocalStorage if available
+    try {
+      const saved = localStorage.getItem('moergo_layer_icons_selection');
+      if (saved) {
+        currentChoices = Object.assign(currentChoices, JSON.parse(saved));
+      }
+    } catch (e) {}
+
+    // Render Function
+    function renderLayers() {
+      const container = document.getElementById('layers-container');
+      container.innerHTML = '';
+
+      LAYERS_METADATA.forEach(layer => {
+        const card = document.createElement('div');
+        card.className = 'layer-card';
+        card.id = `layer-card-${layer.id}`;
+
+        const isGloveOnly = (layer.scope === 'Glove80 Only');
+        const currentSelectedKey = currentChoices[layer.id];
+
+        let optionsHtml = '';
+        layer.options.forEach((optKey, idx) => {
+          const opt = ICON_DEFINITIONS[optKey];
+          const isSelected = (currentSelectedKey === optKey);
+
+          optionsHtml += `
+            <div class="option-card ${isSelected ? 'selected' : ''}" onclick="selectOption('${layer.id}', '${optKey}')">
+              <div class="option-top">
+                <div class="option-label-group">
+                  <span class="option-number-badge">Option ${idx + 1}</span>
+                  <span class="option-name">${opt.name}</span>
+                </div>
+                <div class="radio-circle"></div>
+              </div>
+
+              <div class="icon-showcase">
+                <div class="icon-scale-box">
+                  <svg class="icon-svg-lg" viewBox="0 0 24 24">${opt.svg}</svg>
+                  <span class="icon-scale-label">40px</span>
+                </div>
+                <div class="icon-scale-box">
+                  <svg class="icon-svg-md" viewBox="0 0 24 24">${opt.svg}</svg>
+                  <span class="icon-scale-label">24px</span>
+                </div>
+                <div class="icon-scale-box">
+                  <svg class="icon-svg-sm" viewBox="0 0 24 24">${opt.svg}</svg>
+                  <span class="icon-scale-label">16px tab</span>
+                </div>
+              </div>
+
+              <p class="option-rationale">${opt.rationale}</p>
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="layer-card-header">
+            <div class="layer-badge-group">
+              <span class="layer-num">Layer ${layer.index}</span>
+              <span class="layer-title">${layer.name}</span>
+            </div>
+            <div class="layer-meta-pills">
+              <span class="pill" style="${isGloveOnly ? 'color:#d29922; border-color:#d2992244;' : 'color:#58a6ff; border-color:#58a6ff44;'}">${layer.scope}</span>
+              <span class="pill pill-rgb">RGB: ${layer.rgb}</span>
+            </div>
+          </div>
+          <p class="layer-desc">${layer.desc}</p>
+          <div class="options-grid">
+            ${optionsHtml}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      renderPreviewLayerBar();
+      updateSummary();
+    }
+
+    // Render Preview Layer Bar
+    function renderPreviewLayerBar() {
+      const bar = document.getElementById('preview-layer-bar');
+      bar.innerHTML = '';
+
+      const maxLayers = (previewKb === 'go60') ? 8 : 10;
+      const layersToRender = LAYERS_METADATA.slice(0, maxLayers);
+
+      layersToRender.forEach(layer => {
+        const btn = document.createElement('button');
+        const isActive = (activePreviewLayer === layer.index);
+        btn.className = `layer-btn-emu ${isActive ? 'active' : ''}`;
+        btn.id = `prev-tab-${layer.index}`;
+
+        const chosenKey = currentChoices[layer.id];
+        const iconDef = ICON_DEFINITIONS[chosenKey];
+        const svgContent = iconDef ? iconDef.svg : '';
+
+        btn.innerHTML = `
+          <span class="idx">${layer.index}</span>
+          <svg class="layer-icon-svg" viewBox="0 0 24 24">${svgContent}</svg>
+          <span>${layer.name}</span>
+        `;
+
+        btn.onclick = () => {
+          activePreviewLayer = layer.index;
+          renderPreviewLayerBar();
+          // scroll to layer card
+          const targetCard = document.getElementById(`layer-card-${layer.id}`);
+          if (targetCard) {
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        };
+
+        bar.appendChild(btn);
+      });
+    }
+
+    function selectOption(layerId, optKey) {
+      currentChoices[layerId] = optKey;
+      try {
+        localStorage.setItem('moergo_layer_icons_selection', JSON.stringify(currentChoices));
+      } catch (e) {}
+
+      // Check which preset button to highlight
+      updatePresetButtonState();
+
+      renderLayers();
+    }
+
+    function applyPreset(presetKey) {
+      const preset = PRESETS[presetKey];
+      if (!preset) return;
+      currentChoices = { ...preset.choices };
+      try {
+        localStorage.setItem('moergo_layer_icons_selection', JSON.stringify(currentChoices));
+      } catch (e) {}
+
+      document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`preset-btn-${presetKey}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      renderLayers();
+    }
+
+    function updatePresetButtonState() {
+      ['A', 'B', 'C'].forEach(pKey => {
+        const p = PRESETS[pKey];
+        const match = Object.keys(p.choices).every(k => p.choices[k] === currentChoices[k]);
+        const btn = document.getElementById(`preset-btn-${pKey}`);
+        if (btn) {
+          if (match) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+    }
+
+    function switchPreviewKb(kb) {
+      previewKb = kb;
+      document.getElementById('btn-kb-glove80').classList.toggle('active', kb === 'glove80');
+      document.getElementById('btn-kb-go60').classList.toggle('active', kb === 'go60');
+      if (kb === 'go60' && activePreviewLayer >= 8) {
+        activePreviewLayer = 0;
+      }
+      renderPreviewLayerBar();
+    }
+
+    function switchPreviewMode(mode) {
+      previewMode = mode;
+      document.getElementById('btn-mode-simulate').classList.toggle('active', mode === 'simulate');
+      document.getElementById('btn-mode-inspect').classList.toggle('active', mode === 'inspect');
+      renderPreviewLayerBar();
+    }
+
+    function updateSummary() {
+      const count = Object.keys(currentChoices).length;
+      document.getElementById('bottom-summary').innerHTML = `
+        <span>Selected: <strong>${count} / 10</strong> layers configured</span>
+      `;
+    }
+
+    function generateSnippet() {
+      const result = {};
+      Object.keys(currentChoices).forEach(layerId => {
+        const optKey = currentChoices[layerId];
+        const def = ICON_DEFINITIONS[optKey];
+        result[layerId] = {
+          icon_id: optKey,
+          name: def.name,
+          svg_path: def.svg
+        };
+      });
+      return result;
+    }
+
+    function openExportModal() {
+      const config = generateSnippet();
+      const jsSnippet = `// MoErgo Layout Viewer - Selected Layer Vector Icons\nconst LAYER_ICONS = ${JSON.stringify(config, null, 2)};`;
+      document.getElementById('export-code-snippet').textContent = jsSnippet;
+      document.getElementById('export-modal').classList.add('open');
+    }
+
+    function closeExportModal() {
+      document.getElementById('export-modal').classList.remove('open');
+    }
+
+    function copyModalCode() {
+      const text = document.getElementById('export-code-snippet').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copied configuration to clipboard!');
+      });
+    }
+
+    function copySelectedConfigJson() {
+      const text = JSON.stringify(currentChoices, null, 2);
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copied choices JSON to clipboard!');
+      });
+    }
+
+    // Initial render
+    renderLayers();
+    updatePresetButtonState();
+  </script>
+</body>
+</html>

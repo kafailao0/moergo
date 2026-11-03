@@ -42,8 +42,21 @@ def main():
             super().end_headers()
 
     # Bind to 0.0.0.0 so both Tailscale and localhost work
-    server = socketserver.TCPServer(('0.0.0.0', port), Handler)
-    server.allow_reuse_address = True
+    class ThreadedHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
+        daemon_threads = True
+        allow_reuse_address = True
+
+        def server_bind(self):
+            import socket
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            if hasattr(socket, 'SO_REUSEPORT'):
+                try:
+                    self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+                except Exception:
+                    pass
+            super().server_bind()
+
+    server = ThreadedHTTPServer(('0.0.0.0', port), Handler)
 
     print("\n" + "=" * 60)
     print("  ⌨️  MoErgo Layout Visualizer is running!")
