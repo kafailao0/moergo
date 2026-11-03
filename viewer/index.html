@@ -247,6 +247,21 @@
       padding: 1px 5px;
       border-radius: 4px;
     }
+    .layer-btn .layer-icon {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+    .layer-btn .layer-icon text {
+      fill: currentColor;
+      stroke: none;
+    }
     .layer-btn:hover {
       background: #21262d;
       color: var(--text-bright);
@@ -649,8 +664,23 @@
       margin-left: 6px;
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
       vertical-align: middle;
+    }
+    .jump-layer-btn .jump-layer-icon {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+    .jump-layer-btn .jump-layer-icon text {
+      fill: currentColor;
+      stroke: none;
     }
     .jump-layer-btn:hover {
       background: #388bfd;
@@ -906,6 +936,10 @@
         font-size: 0.72rem;
         border-radius: 5px;
       }
+      .layer-btn .layer-icon {
+        width: 13px;
+        height: 13px;
+      }
       .layer-btn .idx {
         font-size: 0.65rem;
         padding: 1px 4px;
@@ -1084,6 +1118,10 @@
         font-size: 0.7rem;
         height: 22px;
         border-radius: 4px;
+      }
+      .layer-btn .layer-icon {
+        width: 12px;
+        height: 12px;
       }
       .layer-btn .idx {
         font-size: 0.62rem;
@@ -1874,6 +1912,26 @@ function toggleSimLayer(layerIdx) {
   updateUrlParams();
 }
 
+// Crisp vector SVG icons for layout layers (24x24 viewBox, stroke-width 2.2)
+const LAYER_ICONS = {
+  'Base': `<rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="10" y1="8" x2="10.01" y2="8"/><line x1="14" y1="8" x2="14.01" y2="8"/><line x1="18" y1="8" x2="18.01" y2="8"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="10" y1="12" x2="10.01" y2="12"/><line x1="14" y1="12" x2="14.01" y2="12"/><line x1="18" y1="12" x2="18.01" y2="12"/><line x1="8" y1="16" x2="16" y2="16"/>`,
+  'PC': `<rect x="2" y="4" width="20" height="16" rx="3"/><polyline points="6 9 10 12 6 15"/><line x1="12" y1="15" x2="17" y2="15"/>`,
+  'Gaming': `<line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="6"/>`,
+  'SymbolNav': `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/>`,
+  'Keypad': `<rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/>`,
+  'NumRow': `<text x="12" y="16.5" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="800" fill="currentColor" stroke="none" letter-spacing="-0.5px">123</text>`,
+  'Magic': `<path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.21 1.21 0 0 0 1.72 0L21.64 5.36a1.21 1.21 0 0 0 0-1.72Z"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M7 8H3"/><path d="M19 14v4"/><path d="M21 16h-4"/><path d="M10 2v2"/><path d="M11 3H9"/>`,
+  'Factory': `<path d="M2 20h20"/><path d="M20 20V8l-6 4V8l-6 4V4H2v16h18z"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="6" y1="16" x2="6.01" y2="16"/>`,
+  'Mouse': `<rect x="5" y="2" width="14" height="20" rx="7"/><line x1="12" y1="6" x2="12" y2="10"/>`,
+  'Sniper': `<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/>`
+};
+
+function getLayerTabHtml(idx, layerName) {
+  const icon = LAYER_ICONS[layerName];
+  const iconHtml = icon ? `<svg class="layer-icon" viewBox="0 0 24 24">${icon}</svg>` : '';
+  return `<span class="idx">${idx}</span>${iconHtml}<span>${layerName}</span>`;
+}
+
 function renderLayerTabs() {
   const kb = KEYBOARDS[currentKb];
   const bar = document.getElementById('layer-tabs');
@@ -1887,12 +1945,12 @@ function renderLayerTabs() {
       const isSimActive = simStack.includes(idx);
       const isMom = (momentaryHoverLayer === idx);
       btn.className = `layer-btn ${isSimActive ? 'sim-active' : ''} ${isMom ? 'sim-momentary' : ''}`;
-      btn.innerHTML = `<span class="idx">${idx}</span> ${layer.name}`;
+      btn.innerHTML = getLayerTabHtml(idx, layer.name);
       btn.onclick = () => toggleSimLayer(idx);
     } else {
       const isActive = (idx === currentLayer);
       btn.className = `layer-btn ${isActive ? 'active' : ''}`;
-      btn.innerHTML = `<span class="idx">${idx}</span> ${layer.name}`;
+      btn.innerHTML = getLayerTabHtml(idx, layer.name);
       btn.onclick = () => setLayer(idx);
     }
 
@@ -1920,11 +1978,11 @@ function updateLayerTabStates() {
       const isSimActive = simStack.includes(idx);
       const isMom = (momentaryHoverLayer === idx);
       btn.className = `layer-btn ${isSimActive ? 'sim-active' : ''} ${isMom ? 'sim-momentary' : ''}`;
-      btn.innerHTML = `<span class="idx">${idx}</span> ${layer.name}`;
+      btn.innerHTML = getLayerTabHtml(idx, layer.name);
     } else {
       const isActive = (idx === currentLayer);
       btn.className = `layer-btn ${isActive ? 'active' : ''}`;
-      btn.innerHTML = `<span class="idx">${idx}</span> ${layer.name}`;
+      btn.innerHTML = getLayerTabHtml(idx, layer.name);
     }
   });
 
@@ -2368,7 +2426,8 @@ function inspectKey(idx) {
   let layerJumpHtml = '';
   if (viewerMode === 'inspect' && key.targetLayer !== null && key.targetLayer !== undefined) {
     const targetName = kb.layers[key.targetLayer] ? kb.layers[key.targetLayer].name : `Layer ${key.targetLayer}`;
-    layerJumpHtml = `<button class="jump-layer-btn" onclick="setLayer(${key.targetLayer}, true)">Go to ${targetName} →</button>`;
+    const targetIcon = LAYER_ICONS[targetName] ? `<svg class="jump-layer-icon" viewBox="0 0 24 24">${LAYER_ICONS[targetName]}</svg>` : '';
+    layerJumpHtml = `<button class="jump-layer-btn" onclick="setLayer(${key.targetLayer}, true)">Go to ${targetIcon}${targetName} →</button>`;
   }
 
   const isMobile = window.innerWidth <= 768;

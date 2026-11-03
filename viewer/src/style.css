@@ -230,6 +230,21 @@
       padding: 1px 5px;
       border-radius: 4px;
     }
+    .layer-btn .layer-icon {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+    .layer-btn .layer-icon text {
+      fill: currentColor;
+      stroke: none;
+    }
     .layer-btn:hover {
       background: #21262d;
       color: var(--text-bright);
@@ -632,8 +647,23 @@
       margin-left: 6px;
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
       vertical-align: middle;
+    }
+    .jump-layer-btn .jump-layer-icon {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+    .jump-layer-btn .jump-layer-icon text {
+      fill: currentColor;
+      stroke: none;
     }
     .jump-layer-btn:hover {
       background: #388bfd;
@@ -889,6 +919,10 @@
         font-size: 0.72rem;
         border-radius: 5px;
       }
+      .layer-btn .layer-icon {
+        width: 13px;
+        height: 13px;
+      }
       .layer-btn .idx {
         font-size: 0.65rem;
         padding: 1px 4px;
@@ -1067,6 +1101,10 @@
         font-size: 0.7rem;
         height: 22px;
         border-radius: 4px;
+      }
+      .layer-btn .layer-icon {
+        width: 12px;
+        height: 12px;
       }
       .layer-btn .idx {
         font-size: 0.62rem;
