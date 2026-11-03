@@ -11,6 +11,7 @@ import re
 import os
 import sys
 import shutil
+import hashlib
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -634,6 +635,16 @@ def main():
     docs_path = os.path.join(docs_dir, 'index.html')
     with open(docs_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
+
+    # Auto-version sw.js with data hash so browsers always detect layout updates
+    data_hash = hashlib.sha256(json.dumps(data).encode('utf-8')).hexdigest()[:8]
+    sw_path = os.path.join(BASE_DIR, 'viewer', 'sw.js')
+    if os.path.exists(sw_path):
+        with open(sw_path, 'r', encoding='utf-8') as f:
+            sw_code = f.read()
+        sw_code = re.sub(r"const CACHE_NAME = ['\"][^'\"]+['\"];", f"const CACHE_NAME = 'moergo-layout-{data_hash}';", sw_code)
+        with open(sw_path, 'w', encoding='utf-8') as f:
+            f.write(sw_code)
 
     # Sync PWA assets (manifest, service worker, icons) to docs/
     pwa_files = [
