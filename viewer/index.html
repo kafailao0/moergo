@@ -512,6 +512,12 @@
       pointer-events: none;
       letter-spacing: -0.2px;
     }
+    .key-sec-icon {
+      pointer-events: none;
+    }
+    .key-sec-layer-link {
+      color: var(--badge-layer);
+    }
     .key-badge {
       font-size: 8px;
       font-weight: 800;
@@ -1929,7 +1935,7 @@ const LAYER_ICONS = {
   'Gaming': `<line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="6"/>`,
   'SymbolNav': `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/>`,
   'Keypad': `<rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/>`,
-  'NumRow': `<text x="12" y="16.5" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="800" fill="currentColor" stroke="none" letter-spacing="-0.5px">123</text>`,
+  'NumRow': `<text x="12" y="16.5" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="900" fill="currentColor" stroke="none" letter-spacing="-0.5px">123</text>`,
   'Magic': `<path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.21 1.21 0 0 0 1.72 0L21.64 5.36a1.21 1.21 0 0 0 0-1.72Z"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M7 8H3"/><path d="M19 14v4"/><path d="M21 16h-4"/><path d="M10 2v2"/><path d="M11 3H9"/>`,
   'Factory': `<path d="M2 20h20"/><path d="M20 20V8l-6 4V8l-6 4V4H2v16h18z"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="6" y1="16" x2="6.01" y2="16"/>`,
   'Mouse': `<rect x="5" y="2" width="14" height="20" rx="7"/><line x1="12" y1="6" x2="12" y2="10"/>`,
@@ -2187,11 +2193,7 @@ const ICON_SEARCH_ALIASES = {
 function getInspectorLabel(key) {
   if (!key) return '—';
   if (key.icon && FRIENDLY_LABELS[key.icon]) {
-    const baseLabel = FRIENDLY_LABELS[key.icon];
-    if (key.badgeType === 'lt' && key.secondary) {
-      return `${baseLabel} / ${key.secondary}`;
-    }
-    return baseLabel;
+    return FRIENDLY_LABELS[key.icon];
   }
   return key.line2 ? `${key.line1} ${key.line2}` : (key.line1 || '—');
 }
@@ -2206,10 +2208,7 @@ function renderInspectorPill(key) {
   }
 
   if (key.icon && ICON_PATHS[key.icon]) {
-    let label = FRIENDLY_LABELS[key.icon] || (key.line2 ? `${key.line1} ${key.line2}` : key.line1) || '';
-    if (key.badgeType === 'lt' && key.secondary) {
-      label = `${label} / ${key.secondary}`;
-    }
+    const label = FRIENDLY_LABELS[key.icon] || (key.line2 ? `${key.line1} ${key.line2}` : key.line1) || '';
     pillEl.innerHTML = `
       <span class="insp-pill-content">
         <svg class="key-icon insp-key-icon icon-${key.icon}" viewBox="0 0 24 24" width="18" height="18"
@@ -2231,8 +2230,8 @@ function renderKeyPrimary(key, cx, cy, primaryFontSize, primaryFontWeight) {
   if (key.icon && ICON_PATHS[key.icon] && !key.line2) {
     const size = 20;
     const half = size / 2;
-    // Shift slightly down if secondary label exists in top-right corner
-    const offsetY = key.secondary ? 2.5 : 0;
+    // Shift slightly down if secondary label or icon exists in top-right corner
+    const offsetY = (key.secondary || key.secondaryIcon) ? 2.5 : 0;
     const ix = cx - half;
     const iy = cy + offsetY - half;
 
@@ -2255,7 +2254,7 @@ function renderKeyPrimary(key, cx, cy, primaryFontSize, primaryFontWeight) {
 
   // 3. Generic 1-line label
   return `
-    <text class="key-text-primary" x="${cx}" y="${cy + (key.secondary ? 2.5 : 0)}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line1)}</text>
+    <text class="key-text-primary" x="${cx}" y="${cy + ((key.secondary || key.secondaryIcon) ? 2.5 : 0)}" font-size="${primaryFontSize}" font-weight="${primaryFontWeight}">${escapeHtml(key.line1)}</text>
   `;
 }
 
@@ -2300,6 +2299,7 @@ function renderSvg() {
             line1: baseK.line1,
             line2: baseK.line2,
             secondary: baseK.secondary,
+            secondaryIcon: baseK.secondaryIcon,
             badge: '',
             icon: baseK.icon,
             tooltip: `Pass-through (Inherited from Base: ${baseK.tooltip || baseK.line1})`,
@@ -2322,6 +2322,7 @@ function renderSvg() {
       (key.line1 && key.line1.toLowerCase().includes(searchQuery)) ||
       (key.line2 && key.line2.toLowerCase().includes(searchQuery)) ||
       (key.secondary && key.secondary.toLowerCase().includes(searchQuery)) ||
+      (key.secondaryIcon && (key.secondaryIcon.toLowerCase().includes(searchQuery) || (ICON_SEARCH_ALIASES[key.secondaryIcon] && ICON_SEARCH_ALIASES[key.secondaryIcon].some(alias => alias.includes(searchQuery))))) ||
       (key.rawBinding && key.rawBinding.toLowerCase().includes(searchQuery)) ||
       (key.tooltip && key.tooltip.toLowerCase().includes(searchQuery)) ||
       (key.icon && (key.icon.toLowerCase().includes(searchQuery) || (ICON_SEARCH_ALIASES[key.icon] && ICON_SEARCH_ALIASES[key.icon].some(alias => alias.includes(searchQuery)))))
@@ -2368,9 +2369,17 @@ function renderSvg() {
         <!-- Pass-through watermark icon -->
         ${isPassThrough ? `<text class="trans-watermark" x="${x + 4}" y="${y + 10}">▽</text>` : ''}
 
-        <!-- Corner Secondary / Mod / Layer Name -->
-        ${key.secondary ? `
-          <text class="${hasLayerLink && key.badgeType !== 'lt' ? 'key-text-layer-link' : 'key-text-sec'}"
+        <!-- Corner Secondary / Mod / Layer Name / Layer Icon -->
+        ${key.secondaryIcon && ICON_PATHS[key.secondaryIcon] ? `
+          <svg class="key-sec-icon ${hasLayerLink ? 'key-sec-layer-link' : ''}"
+               x="${x + KEY_SIZE - 17}" y="${y + 3}"
+               width="14" height="14" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.2"
+               stroke-linecap="round" stroke-linejoin="round">
+            ${ICON_PATHS[key.secondaryIcon]}
+          </svg>
+        ` : key.secondary ? `
+          <text class="${hasLayerLink ? 'key-text-layer-link' : 'key-text-sec'}"
                 x="${x + KEY_SIZE - 4}" y="${y + 4.5}"
                 font-size="${secFontSize}">${escapeHtml(key.secondary)}</text>
         ` : ''}

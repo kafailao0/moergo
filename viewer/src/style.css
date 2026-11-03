@@ -495,6 +495,12 @@
       pointer-events: none;
       letter-spacing: -0.2px;
     }
+    .key-sec-icon {
+      pointer-events: none;
+    }
+    .key-sec-layer-link {
+      color: var(--badge-layer);
+    }
     .key-badge {
       font-size: 8px;
       font-weight: 800;

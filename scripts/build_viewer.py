@@ -288,6 +288,7 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
     line1 = ''
     line2 = ''
     secondary = ''
+    secondary_icon = None
     badge = ''
     badge_type = ''
     tooltip = ''
@@ -334,23 +335,10 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
 
         if beh in ['&hold_tap_layer', '&lt']:
             layer_name = layer_names[layer_idx] if layer_idx < len(layer_names) else f"Layer {layer_idx}"
-            line1 = layer_name
+            secondary = format_layer_badge(layer_name)
+            secondary_icon = f"layer_{layer_name.lower()}"
             target_layer = layer_idx
-            badge = 'LT'
-            badge_type = 'lt'
-            icon = f"layer_{layer_name.lower()}"
-            tap_label = tap_val if tap_val else tap_formatted
-            if tap_label == 'SPACE':
-                tap_label = 'SPC'
-            elif tap_label == 'RETURN':
-                tap_label = 'RET'
-            elif tap_label == 'DELETE':
-                tap_label = 'DEL'
-            elif tap_label == 'BACKSPACE':
-                tap_label = 'BSPC'
-            elif tap_label == 'ESCAPE':
-                tap_label = 'ESC'
-            secondary = tap_label
+            badge_type = 'layer'
             tooltip = f"Tap for {tap_formatted} • Hold for {layer_name} (Click or hover to view layer)"
         elif beh == '&mt':
             mod = formatted_params[0] if len(formatted_params) > 0 else ''
@@ -517,6 +505,7 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
         'line1': line1,
         'line2': line2,
         'secondary': secondary,
+        'secondaryIcon': secondary_icon,
         'badge': badge,
         'badgeType': badge_type,
         'tooltip': tooltip,
