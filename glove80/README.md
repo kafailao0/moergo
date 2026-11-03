@@ -65,24 +65,7 @@ This downloads `glove80.uf2`.
 
 Alternatively, download `glove80.uf2` manually from the **Actions** tab on your GitHub repository page under the latest run's **Artifacts** section.
 
-### 3. Enter Bootloader Mode (Manual Physical Action Required)
-
-> **Important**: Entering bootloader mode cannot be done purely via software commands from your computer; it **requires manual physical action on each half**:
-
-1. **Connect via USB**: Ensure each keyboard half you wish to flash is connected to your PC with a USB-C cable (they can be connected at the same time or flashed one by one).
-2. **Trigger Bootloader Mode** on **each half**:
-   * **Via Keymap**: Hold the `Magic` key (bottom-left corner key on Base) and tap:
-     * **Left half:** **Caps Lock** (`td_caps` / Row 2 left outer key)
-     * **Right half:** **Hyphen** (`-` / Row 2 right outer key)
-     *(Note: Tapping `ESC` or `'` while holding `Magic` triggers `&sys_reset` (reboot), not bootloader).*
-   * **Via Hardware Power-Up** (official MoErgo method; Glove80 has no physical reset pinhole button):
-     * **Left half:** With USB connected, hold **Magic + E** and switch power **ON**.
-     * **Right half:** With USB connected, hold **I + PgDn** and switch power **ON**.
-3. The keyboard LEDs will flash/pulse red, and each half will mount as an external USB mass storage drive:
-   * Left half: **`GLV80LHBOOT`**
-   * Right half: **`GLV80RHBOOT`**
-
-### 4. Flash Firmware to Both Halves
+### 3. Flash Firmware to Both Halves
 
 #### Option A: Using the helper script
 Run the provided script to flash both halves:
@@ -90,7 +73,7 @@ Run the provided script to flash both halves:
 ./flash.sh
 ```
 
-> **Tip**: By default, `./flash.sh` runs in **monitor mode**. You can start `./flash.sh` *before* triggering bootloader mode. It will automatically detect, mount, flash, and reboot each half as it appears, supporting both simultaneous and one-by-one sequential flashing.
+> **Tip**: By default, `./flash.sh` runs in **monitor mode**. It will automatically detect, mount, flash, and reboot each half as it appears, supporting both simultaneous and one-by-one sequential flashing.
 >
 > To check once without waiting: `./flash.sh --once`
 

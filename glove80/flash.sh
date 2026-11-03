@@ -144,9 +144,6 @@ fi
 if [[ "$WATCH_MODE" == false ]]; then
     if [[ "$left_flashed" == false && "$right_flashed" == false ]]; then
         echo "No bootloader drives detected."
-        echo "Connect via USB and enter bootloader mode on each half:"
-        echo "  - Left half:  Hold 'Magic' + tap 'Caps Lock' (or hold Magic + E while powering on)"
-        echo "  - Right half: Hold 'Magic' + tap '-' (Hyphen) (or hold I + PgDn while powering on)"
         exit 1
     fi
     echo "One half was flashed. Run again to flash the other half."
@@ -155,17 +152,6 @@ fi
 
 echo ""
 echo "Monitoring for bootloader drives (timeout: ${TIMEOUT}s, press Ctrl+C to cancel)..."
-echo "Connect and trigger bootloader mode on each half (simultaneously or sequentially):"
-if [[ "$left_flashed" == true ]]; then
-    echo "  - Left half:  [ALREADY FLASHED]"
-else
-    echo "  - Left half:  Hold 'Magic' + tap 'Caps Lock' (or hold Magic + E while powering on)"
-fi
-if [[ "$right_flashed" == true ]]; then
-    echo "  - Right half: [ALREADY FLASHED]"
-else
-    echo "  - Right half: Hold 'Magic' + tap '-' (Hyphen) (or hold I + PgDn while powering on)"
-fi
 
 start_time=$(date +%s)
 while true; do
