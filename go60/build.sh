@@ -44,7 +44,9 @@ fi
 
 echo "Building Go60 firmware (LH + RH with per-key RGB)..." >&2
 out="$(nix-build "$REPO_DIR/config" --arg firmware "import $ZMK_SRC {}" --no-out-link)"
+rm -f "$REPO_DIR/go60.uf2"
 cp "$out/go60.uf2" "$REPO_DIR/go60.uf2"
+chmod u+w "$REPO_DIR/go60.uf2"
 END_TIME=$(date +%s)
 ELAPSED=$((END_TIME - START_TIME))
 echo "Done: $REPO_DIR/go60.uf2 ($(stat -c%s "$REPO_DIR/go60.uf2") bytes) in $(format_duration "$ELAPSED")" >&2

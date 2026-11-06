@@ -45,7 +45,9 @@ fi
 
 echo "Building Glove80 firmware (LH + RH with per-key RGB)..." >&2
 out="$(nix-build "$REPO_DIR/config" --arg firmware "import $ZMK_SRC {}" --no-out-link)"
+rm -f "$REPO_DIR/glove80.uf2"
 cp "$out/glove80.uf2" "$REPO_DIR/glove80.uf2"
+chmod u+w "$REPO_DIR/glove80.uf2"
 END_TIME=$(date +%s)
 ELAPSED=$((END_TIME - START_TIME))
 echo "Done: $REPO_DIR/glove80.uf2 ($(stat -c%s "$REPO_DIR/glove80.uf2") bytes) in $(format_duration "$ELAPSED")" >&2

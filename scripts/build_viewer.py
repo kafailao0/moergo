@@ -489,10 +489,23 @@ def parse_key_data(key_obj, layer_names, custom_meta=None):
         tooltip = f"{'Sniper Precision ' if is_sniper else 'Mouse '}Scroll {direction}"
     elif beh == '&mkp':
         sub = str(raw_params[0].get('value', '')).replace('CLK', '') if raw_params else ''
-        labels = {'L': 'L-Click', 'R': 'R-Click', 'M': 'M-Click'}
+        labels = {
+            'L': 'L-Click',
+            'R': 'R-Click',
+            'M': 'M-Click',
+            'MB4': 'Back',
+            'MB5': 'Forward'
+        }
+        tooltips = {
+            'L': 'Mouse Left Click',
+            'R': 'Mouse Right Click',
+            'M': 'Mouse Middle Click',
+            'MB4': 'Mouse Browser Back (MB4)',
+            'MB5': 'Mouse Browser Forward (MB5)'
+        }
         line1 = labels.get(sub, f"Click {sub}")
         badge_type = 'mouse'
-        tooltip = f"Mouse {line1}"
+        tooltip = tooltips.get(sub, f"Mouse {line1}")
     else:
         line1 = beh
         tooltip = raw_binding
