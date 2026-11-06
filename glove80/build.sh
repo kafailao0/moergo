@@ -5,6 +5,9 @@ set -euo pipefail
 START_TIME=$(date +%s)
 
 export PATH="/nix/var/nix/profiles/default/bin:/usr/local/bin:$PATH"
+if [[ -S "/nix/var/nix/daemon-socket/socket" ]]; then
+    export NIX_REMOTE="${NIX_REMOTE:-daemon}"
+fi
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
