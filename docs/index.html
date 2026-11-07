@@ -1890,19 +1890,29 @@ function resolveCompositeKey(idx) {
 function resolveCompositeRgb(idx) {
   const kb = KEYBOARDS[currentKb];
   const activeLayers = getActiveSimLayers();
+
+  // In ZMK firmware, RGB layers do not stack or fall through:
+  // only the single top-most active layer with an RGB definition is evaluated.
+  let topRgbLayerIdx = 0;
   for (let i = activeLayers.length - 1; i >= 0; i--) {
     const layerIdx = activeLayers[i];
     if (layerIdx === momentaryHoverLayer && idx === momentaryHoverTriggerIdx) {
       continue;
     }
-    const key = kb.layers[layerIdx] && kb.layers[layerIdx].keys[idx];
-    if (key && key.rgbToken && key.rgbToken !== '___') {
-      return {
-        rgbToken: key.rgbToken,
-        rgbHex: key.rgbHex,
-        rgbSourceLayer: layerIdx
-      };
+    const layerName = kb.layers[layerIdx] && kb.layers[layerIdx].name;
+    if (layerName && kb.rgbLayers && kb.rgbLayers[layerName]) {
+      topRgbLayerIdx = layerIdx;
+      break;
     }
+  }
+
+  const key = kb.layers[topRgbLayerIdx] && kb.layers[topRgbLayerIdx].keys[idx];
+  if (key && key.rgbToken && key.rgbToken !== '___') {
+    return {
+      rgbToken: key.rgbToken,
+      rgbHex: key.rgbHex,
+      rgbSourceLayer: topRgbLayerIdx
+    };
   }
   return { rgbToken: '___', rgbHex: '#000000', rgbSourceLayer: null };
 }
