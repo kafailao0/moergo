@@ -424,7 +424,7 @@
             bindings = <&kp LC(C)>, <&kp LC(V)>, <&kp LG(V)>;
         };
 
-        /* @viewer: ⏯ | ⏮ ⏭ | @badge: TD | @tooltip: Tap Dance: 1x Play/Pause • 2x Next Track • 3x Prev Track */
+        /* @viewer: ⏯ | @badge: TD | @tooltip: Tap Dance: 1x Play/Pause • 2x Next Track • 3x Prev Track */
         td_media: td_media {
             compatible = "zmk,behavior-tap-dance";
             label = "TD_MEDIA";
