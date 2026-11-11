@@ -5,13 +5,13 @@ scripts/generate_rgb.py
 Automates the generation, validation, and updating of per-key RGB underglow layers
 (`underglow-layer` blocks) in `go60/config/go60.keymap` and `glove80/config/glove80.keymap`.
 
-Rules follow docs/RGB_PALETTE.md (v46):
+Rules follow docs/RGB_PALETTE.md (v47):
 - BLU: Modifiers (Home Row Mods hml/hmr, Shift, Ctrl, Alt, GUI), BT profiles, USB out.
 - GRN: Navigation (Vim arrows HJKL, Home, End, PgUp, PgDn, Mouse move, Mouse clicks, Back/Forward).
 - YLW: Numbers (0-9) & Function keys (F1-F12).
 - CYN: Volume, media, and screen brightness controls in Magic layer.
-- WHT: Regular symbols, math operators, Double Quote ("), PC Copy/Paste, Keypad operators.
-- GLD: Enclosure pairs [ ] ( ) { }, Base tap dances (Caps, Copy/Paste, App Launcher, Screenshots), Mouse scroll, RGB controls.
+- WHT: Regular symbols, math operators, Parentheses ( ), Double Quote ("), PC Copy/Paste, Keypad operators.
+- GLD: Bracket/brace pairs [ ] { }, Base tap dances (Caps, Copy/Paste, App Launcher, Screenshots), Mouse scroll, RGB controls.
 - RED: Layer activators & toggles, system locks, bootloader, reset, deletes, layer exits, Sniper move.
 - MAG: Magic key & system indicator.
 - NML: NumLock dynamic indicator.
@@ -129,7 +129,6 @@ NAVIGATION_KEYS = {
 
 ENCLOSURE_KEYS = {
     '&kp LBKT',     '&kp RBKT',
-    '&kp LS(N9)',   '&kp LS(N0)',
     '&kp LS(LBKT)', '&kp LS(RBKT)',
 }
 
