@@ -9,13 +9,13 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 | Token | Name | Hex Code | RGB (Dec) | Visual Swatch | Functional Category & Usage |
 | :---: | :---: | :---: | :---: | :---: | :--- |
 | **`BLU`** | Blue | `#0066FF` | `(0, 102, 255)` | 🟦 | **Modifiers & Connectivity:** Home Row Mods (`hml` / `hmr`), primary thumb Shift, upper thumb mods (Ctrl, Alt, GUI), Gaming active mods, and Bluetooth profile selection in Magic layer. |
-| **`ORG`** | Orange | `#FF5500` | `(255, 85, 0)` | 🟧 | **Navigation:** Vim navigation cluster (HJKL / Left, Down, Up, Right), Home, End, PageUp, PageDown, and Glove80 mouse cursor movement keys. |
-| **`CYN`** | Cyan | `#00FFFF` | `(0, 255, 255)` | 🩵 | **Numbers & Function Keys:** Number row digits (1–0) in `layer_NumRow`, Keypad digits (0–9) in `layer_Keypad`, and Function keys (F1–F12) in `layer_SymbolNav`. |
+| **`GRN`** | Green | `#00FF00` | `(0, 255, 0)` | 🟩 | **Navigation & Mouse:** Vim navigation cluster (HJKL / Left, Down, Up, Right), Home, End, PageUp, PageDown, Mouse cursor movement (`mmv`), mouse clicks (Left, Right, Middle), and browser Back/Forward (`MB4`, `MB5`). |
+| **`YLW`** | Yellow | `#FFFF00` | `(255, 255, 0)` | 🟨 | **Numbers & Function Keys:** Number row digits (1–0) in `layer_NumRow`, Keypad digits (0–9) in `layer_Keypad`, and Function keys (F1–F12) in `layer_SymbolNav`. |
+| **`CYN`** | Cyan | `#00FFFF` | `(0, 255, 255)` | 🩵 | **Media & Hardware Controls:** Volume controls (`Vol Dn`, `Vol Up`, `Mute`), media keys (`Prev`, `Next`, `Play/Pause`), and screen brightness in `layer_Magic`. |
 | **`WHT`** | White | `#FFFFFF` | `(255, 255, 255)` | ⬜ | **Regular Symbols, Math & PC Overrides:** All standard punctuation / math operators (`@`, `#`, `$`, `%`, `^`, `&`, `*`, `+`, `-`, `=`, `/`, `\`, `|`, `<`, `>`, `~`, `` ` ``), Double Quote (`"`), Keypad operators (`+`, `-`, `*`, `/`, `=`, `.`, Enter), and PC layer Copy/Paste Tap Dance (`td_copy_paste_pc`). |
-| **`GLD`** | Gold | `#FFBF00` | `(255, 191, 0)` | 🟨 | **Enclosure Pairs & Base Tap Dances:** Symmetric bracket pairs `[ ]`, `( )`, `{ }` in `layer_SymbolNav`, and macOS Base layer tap dances (`td_copy_paste`, `td_launcher`, `td_screenshot`). |
-| **`GRN`** | Green | `#00FF00` | `(0, 255, 0)` | 🟩 | **Layer Toggles & Activators:** Momentary layer thumb triggers (NumRow, SymbolNav) and permanent layer toggle keys (Keypad, PC, Gaming, Mouse). |
+| **`GLD`** | Gold | `#FFBF00` | `(255, 191, 0)` | 🟧 | **Enclosure Pairs, Tap Dances & Scroll:** Symmetric bracket pairs `[ ]`, `( )`, `{ }` in `layer_SymbolNav`, macOS Base layer tap dances (`td_copy_paste`, `td_launcher`, `td_screenshot`, `td_browser`, `td_media`, `td_wm_prev`, `td_wm_next`), mouse wheel scrolling (`msc`), and RGB underglow controls in Magic. |
+| **`RED`** | Red | `#FF0000` | `(255, 0, 0)` | 🟥 | **Layer Controls, System & Locks:** Layer toggles & momentary thumb activators (NumRow, SymbolNav, Keypad, PC, Gaming, Mouse, Sniper), layer exit keys (`ESC`, `tog`), system locks, Bootloader, Reset, Delete keys, and Sniper precision motion. |
 | **`MAG`** | Magenta | `#FF00FF` | `(255, 0, 255)` | 🟪 | **Magic Key & System Indicator:** Dedicated indicator for the Magic layer access key across all permanent layers (Base, PC, Gaming). |
-| **`RED`** | Red | `#FF0000` | `(255, 0, 0)` | 🟥 | **Locks, Deletions & Exits:** Layer exit / toggle-off keys (e.g. Keypad toggle), Delete keys when standalone, Bootloader / Reset keys in Magic layer, and active CapsLock status indicator. |
 | **`NML`** | NumLock | Dynamic | — | 🟢/🔴 | **NumLock Status Indicator:** Green when NumLock is ON, Red when OFF. |
 | **`CPL`** | CapsLock | Dynamic | — | ⚫/🔴 | **CapsLock Status Indicator:** Unlit when OFF, Red when CapsLock or Caps Word is active. |
 | **`___`** | Black / Off | `#000000` | `(0, 0, 0)` | ⬛ | **Unlit / Pass-Through:** Normal alphanumeric keys, unmodified gaming keys, transparent pass-through positions, or inactive keys. |
@@ -25,14 +25,15 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 ## 2. Layer Color Mapping Matrix
 
 ### Base Layer (`layer_Base`)
+- **Red (`RED`)**: Layer keys (`td_LAYER_Keypad`, NumRow Tab thumb, SymbolNav Del thumb, Mouse toggle on Glove80).
 - **Blue (`BLU`)**: Home Row Mods (A, S, D, F and J, K, L, ;) and Left Thumb Shift (`&kp LSHFT`). Glove80 upper thumbs (Ctrl, Alt, GUI).
-- **Gold (`GLD`)**: macOS tap dances (`td_copy_paste`, `td_launcher`, `td_screenshot`).
-- **Green (`GRN`)**: Layer keys (`td_LAYER_Keypad`, NumRow Tab thumb, SymbolNav Del thumb).
+- **Gold (`GLD`)**: macOS tap dances (`td_copy_paste`, `td_launcher`, `td_screenshot`, `td_browser`, `td_media`, `td_wm_prev`, `td_wm_next`).
 - **Magenta (`MAG`)**: Magic key (`&magic LAYER_Magic 0`).
 - **Dynamic (`CPL`)**: Caps Lock status on `td_caps`.
 
 ### PC Layer (`layer_PC`)
 - Mirrors Base layer RGB highlights.
+- **Red (`RED`)**: Layer thumb keys and toggles.
 - **White (`WHT`)**: PC Copy/Paste tap dance (`td_copy_paste_pc` — 1x Ctrl+C, 2x Ctrl+V, 3x Win+V), clearly distinguished from Base layer's Gold.
 - **Blue (`BLU`)**: Modifiers, Home Row Mods, and thumb Shift.
 - **Magenta (`MAG`)**: Magic key.
@@ -43,32 +44,30 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 - **Unlit (`___`)**: All home row keys (ASDF, JKL;), numbers, and overridden non-modifier keys (Grave, Tab, Tilde, Backspace, Delete) remain dark to signify they behave as standard, non-modifier gaming keys.
 
 ### SymbolNav Layer (`layer_SymbolNav`)
-- **Cyan (`CYN`)**: Function keys (F1–F12).
-- **Orange (`ORG`)**: Vim navigation cluster (HJKL arrows), Home, End, PageUp, PageDown.
+- **Yellow (`YLW`)**: Function keys (F1–F12).
+- **Green (`GRN`)**: Vim navigation cluster (HJKL arrows), Home, End, PageUp, PageDown.
 - **Gold (`GLD`)**: Bracket enclosure pairs `[ ]`, `( )`, `{ }`.
 - **White (`WHT`)**: Double Quote (`"`) and all math/symbol operators (`@`, `#`, `!`, `$`, `%`, `^`, `&`, `*`, `+`, `-`, `=`, `/`, `\`, `|`, `<`, `>`, `~`, `` ` ``).
 
 ### Keypad Layer (`layer_Keypad`)
-- **Cyan (`CYN`)**: 3x3 numeric digit block (0–9).
+- **Yellow (`YLW`)**: 3x3 numeric digit block (0–9).
 - **White (`WHT`)**: Arithmetic operators (`+`, `-`, `*`, `/`, `=`, `.`) and Keypad Enter.
 - **Red (`RED`)**: Keypad exit toggle key (top-left).
 
 ### NumRow Layer (`layer_NumRow`)
-- **Cyan (`CYN`)**: Home row numbers 1–0 across A–G and H–;.
+- **Yellow (`YLW`)**: Home row numbers 1–0 across A–G and H–;.
 - **Dynamic (`CPL`)**: Caps Lock indicator.
 
 ### Magic Layer (`layer_Magic`)
-- **Blue (`BLU`)**: Bluetooth profile keys (BT 0, BT 1, BT 2).
-- **Cyan (`CYN`)**: Volume and media controls (Vol Dn, Vol Up, Mute).
-- **Red (`RED`)**: Bootloader, Reset, and system lock keys.
-- **Green (`GRN`)**: Layer toggles.
+- **Red (`RED`)**: Bootloader, Reset, system lock keys, and layer toggles (`PC`, `Gaming`, `Mouse`).
+- **Blue (`BLU`)**: Bluetooth profile keys (BT 0, BT 1, BT 2) and USB output.
+- **Cyan (`CYN`)**: Volume, media, and screen brightness controls (`Vol Dn`, `Vol Up`, `Mute`, `Prev`, `Next`, `PP`, `Bri Dn`, `Bri Up`).
 - **Gold (`GLD`)**: RGB underglow controls.
 
 ### Mouse Layer (`layer_Mouse`)
-- **Orange (`ORG`)**: Mouse cursor movement (`mmv`) and mouse click buttons (LCLK, RCLK, MCLK).
-- **Gold (`GLD`)**: Mouse wheel scrolling (`msc`) and browser Back/Forward navigation (`MB4`, `MB5` on Go60).
-- **Green (`GRN`)**: Sniper mode momentary activator (`mo LAYER_Sniper` on Glove80).
-- **Red (`RED`)**: Mouse layer exit keys (`kp ESC` and `tog LAYER_Mouse`).
+- **Green (`GRN`)**: Mouse cursor movement (`mmv`), mouse click buttons (Left, Right, Middle), and browser Back/Forward navigation (`MB4`, `MB5`).
+- **Gold (`GLD`)**: Mouse wheel scrolling (`msc`).
+- **Red (`RED`)**: Mouse layer exit keys (`kp ESC` and `tog LAYER_Mouse`), and Sniper mode momentary activator (`mo LAYER_Sniper` on Glove80).
 
 ### Sniper Layer (`layer_Sniper`)
 - **Red (`RED`)**: Sniper precision mouse movement (`mmv`).

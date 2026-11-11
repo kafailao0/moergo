@@ -50,6 +50,7 @@ def parse_rgb_from_keymap(keymap_path):
         'GLD': '#FFBF00',
         'ORG': '#FF5500',
         'CYN': '#00FFFF',
+        'YLW': '#FFFF00',
         'RED': '#FF0000',
         'BLU': '#0066FF',
         'NML': '#00FF00',

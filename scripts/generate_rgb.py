@@ -5,15 +5,15 @@ scripts/generate_rgb.py
 Automates the generation, validation, and updating of per-key RGB underglow layers
 (`underglow-layer` blocks) in `go60/config/go60.keymap` and `glove80/config/glove80.keymap`.
 
-Rules follow docs/RGB_PALETTE.md (v44):
+Rules follow docs/RGB_PALETTE.md (v45):
 - BLU: Modifiers (Home Row Mods hml/hmr, Shift, Ctrl, Alt, GUI), BT profiles, USB out.
-- ORG: Navigation (Vim arrows HJKL, Home, End, PgUp, PgDn, Mouse move, Mouse clicks).
-- CYN: Numbers (0-9) & Function keys (F1-F12), media/volume/brightness.
+- GRN: Navigation (Vim arrows HJKL, Home, End, PgUp, PgDn, Mouse move, Mouse clicks, Back/Forward).
+- YLW: Numbers (0-9) & Function keys (F1-F12).
+- CYN: Volume, media, and screen brightness controls in Magic layer.
 - WHT: Regular symbols, math operators, Double Quote ("), PC Copy/Paste, Keypad operators.
 - GLD: Enclosure pairs [ ] ( ) { }, Base macOS tap dances, Mouse scroll, RGB controls.
-- GRN: Layer toggles & momentary thumb activators.
+- RED: Layer activators & toggles, system locks, bootloader, reset, deletes, layer exits, Sniper move.
 - MAG: Magic key & system indicator.
-- RED: System locks, bootloader, reset, deletes, layer exit toggles.
 - CPL: CapsLock / CapsWord dynamic indicator.
 - NML: NumLock dynamic indicator.
 - ___: Unlit / pass-through.
@@ -179,7 +179,7 @@ def classify_key(
             binding.startswith('&to ') or
             binding.startswith('&lt ') or
             binding.startswith('&hold_tap_layer ')):
-            return 'GRN'
+            return 'RED'
         if (binding.startswith('&hml ') or
             binding.startswith('&hmr ') or
             binding in MODIFIER_KEYS):
@@ -211,9 +211,9 @@ def classify_key(
     # 4. SymbolNav Layer
     if layer_name == 'SymbolNav':
         if binding in FUNCTION_KEYS:
-            return 'CYN'
+            return 'YLW'
         if binding in NAVIGATION_KEYS:
-            return 'ORG'
+            return 'GRN'
         if binding in ENCLOSURE_KEYS:
             return 'GLD'
         if binding in ('&trans', '&none'):
@@ -226,7 +226,7 @@ def classify_key(
         if binding == '&tog LAYER_Keypad':
             return 'RED'
         if binding in KEYPAD_DIGITS:
-            return 'CYN'
+            return 'YLW'
         if binding in KEYPAD_OPERATORS:
             return 'WHT'
         return '___'
@@ -234,7 +234,7 @@ def classify_key(
     # 6. NumRow Layer
     if layer_name == 'NumRow':
         if binding in NUMROW_DIGITS:
-            return 'CYN'
+            return 'YLW'
         # CapsLock indicator pass-through from Base
         if binding == '&trans' and key_idx < len(base_bindings):
             if base_bindings[key_idx] == '&td_caps':
@@ -254,7 +254,7 @@ def classify_key(
             (binding.startswith('&bt ') and 'SEL' in binding)):
             return 'BLU'
         if binding.startswith('&tog LAYER_'):
-            return 'GRN'
+            return 'RED'
         return '___'
 
     # 8. Mouse Layer
@@ -262,14 +262,13 @@ def classify_key(
         if binding in ('&kp ESC', '&tog LAYER_Mouse'):
             return 'RED'
         if binding == '&mo LAYER_Sniper':
-            return 'GRN'
+            return 'RED'
         if binding.startswith('&msc '):
             return 'GLD'
         if binding in ('&mkp MB4', '&mkp MB5'):
-            # Back/Forward navigation matches browser tap-dance gold on Go60, orange on Glove80
-            return 'GLD' if kb_type == 'go60' else 'ORG'
+            return 'GRN'
         if binding.startswith('&mmv ') or binding.startswith('&mkp '):
-            return 'ORG'
+            return 'GRN'
         return '___'
 
     # 9. Sniper Layer

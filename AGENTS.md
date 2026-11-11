@@ -46,13 +46,13 @@ Whenever modifying keyboard layouts, follow these steps sequentially:
 - Each layer inside `underglow-layer` mirrors the exact physical key positions of the keymap.
 - Common color tokens (see full reference in `docs/RGB_PALETTE.md`):
   - `BLU` (Blue, `#0066FF`): Modifiers (Home Row Mods, Shift, Ctrl, Alt, GUI), Bluetooth indicators.
-  - `ORG` (Orange, `#FF5500`): Navigation (Vim HJKL arrows, Home, End, PgUp, PgDn, Mouse move).
-  - `CYN` (Cyan, `#00FFFF`): Numbers (0–9 in NumRow/Keypad) & Function keys (F1–F12).
+  - `GRN` (Green, `#00FF00`): Navigation (Vim HJKL arrows, Home, End, PgUp, PgDn, Mouse move & clicks).
+  - `YLW` (Yellow, `#FFFF00`): Numbers (0–9 in NumRow/Keypad) & Function keys (F1–F12).
+  - `CYN` (Cyan, `#00FFFF`): Media, volume, and screen brightness controls in Magic layer.
   - `WHT` (White, `#FFFFFF`): Regular symbols, math operators, Double Quote (`"`), PC Copy/Paste (`td_copy_paste_pc`), and Keypad operators.
-  - `GLD` (Gold, `#FFBF00`): Enclosure pairs `[ ]`, `( )`, `{ }`, and Base macOS tap dances.
-  - `GRN` (Green, `#00FF00`): Layer toggles & momentary thumb activators.
+  - `GLD` (Gold, `#FFBF00`): Enclosure pairs `[ ]`, `( )`, `{ }`, Base macOS tap dances, and mouse scroll.
+  - `RED` (Red, `#FF0000`): Layer toggles & momentary thumb activators, system locks, deletions, exit keys, CapsLock active, and Sniper movement.
   - `MAG` (Magenta, `#FF00FF`): Magic key & system indicator.
-  - `RED` (Red, `#FF0000`): Locks, deletions, system/exit keys, CapsLock active.
   - `___` (Transparent, `#000000`): LED unlit / pass-through.
 - Ensure right-hand keys (such as `PG_UP` and `PG_DN` under F12) have their corresponding positions updated in `layer_SymbolNav`.
 
