@@ -34,7 +34,7 @@ Interactive web-based layout viewer and firmware simulator for the **MoErgo Glov
 ### 3. Per-Key RGB Underglow & Fade Simulation
 - Visualizes exact per-key RGB colors defined in `underglow-layer` blocks from `*.keymap`.
 - In Simulation Mode, switching or toggling layers illuminates modified keys and gracefully fades out after **1 second**, matching the hardware underglow experience.
-- Interactive **🎨 Colors** modal providing a quick reference legend for the color coding system (Cyan F-keys, Magenta navigation, Orange symbols, Green numpad, Red locks/deletions, Blue PC/Bluetooth, etc.).
+- Interactive **🎨 Colors** modal providing a quick reference legend for the color coding system (Blue modifiers, Orange navigation, Cyan numbers/F-keys, White symbols/math, Gold brackets, Green layer toggles, Magenta Magic, Red locks/exits; see [`docs/RGB_PALETTE.md`](../docs/RGB_PALETTE.md)).
 
 ![SymbolNav Layer with Per-Key RGB Underglow](../docs/screenshots/02_glove80_symbol_nav_rgb.png)
 
