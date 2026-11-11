@@ -63,3 +63,35 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 - **Red (`RED`)**: Bootloader, Reset, and system lock keys.
 - **Green (`GRN`)**: Layer toggles.
 - **Gold (`GLD`)**: RGB underglow controls.
+
+### Mouse Layer (`layer_Mouse`)
+- **Orange (`ORG`)**: Mouse cursor movement (`mmv`) and mouse click buttons (LCLK, RCLK, MCLK).
+- **Gold (`GLD`)**: Mouse wheel scrolling (`msc`) and browser Back/Forward navigation (`MB4`, `MB5` on Go60).
+- **Green (`GRN`)**: Sniper mode momentary activator (`mo LAYER_Sniper` on Glove80).
+- **Red (`RED`)**: Mouse layer exit keys (`kp ESC` and `tog LAYER_Mouse`).
+
+### Sniper Layer (`layer_Sniper`)
+- **Red (`RED`)**: Sniper precision mouse movement (`mmv`).
+- **Gold (`GLD`)**: Sniper precision scrolling (`msc`).
+
+---
+
+## 3. Automated RGB Generation (`scripts/generate_rgb.py`)
+
+The layout RGB matrices can be verified and generated automatically from keymap bindings using `scripts/generate_rgb.py`:
+
+```bash
+# Verify that keymaps match color palette rules (exits with code 0 if synced, 1 if differences):
+python3 scripts/generate_rgb.py --check
+
+# Display token diffs without modifying files:
+python3 scripts/generate_rgb.py --diff
+
+# Regenerate and apply per-key underglow matrices to both keymap files:
+python3 scripts/generate_rgb.py
+
+# Target only a specific keyboard:
+python3 scripts/generate_rgb.py go60
+python3 scripts/generate_rgb.py glove80
+```
+

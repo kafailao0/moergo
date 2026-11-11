@@ -31,6 +31,18 @@ Whenever modifying keyboard layouts, follow these steps sequentially:
 ### Step 2: Update the Per-Key RGB Map (`underglow-layer`)
 - Target: `/ { underglow-layer { ... } };` inside `*.keymap`.
 - **Always update the RGB map whenever keys or layer behaviors change!**
+- **Automated Generation & Verification**:
+  - Run `scripts/generate_rgb.py` to automatically generate, validate, and format the per-key RGB layers based on the rules in `docs/RGB_PALETTE.md`:
+    ```bash
+    # Check if RGB layers are in sync with keymap bindings:
+    python3 scripts/generate_rgb.py --check
+
+    # Show token diffs:
+    python3 scripts/generate_rgb.py --diff
+
+    # Automatically generate and apply RGB matrices to keymaps:
+    python3 scripts/generate_rgb.py
+    ```
 - Each layer inside `underglow-layer` mirrors the exact physical key positions of the keymap.
 - Common color tokens (see full reference in `docs/RGB_PALETTE.md`):
   - `BLU` (Blue, `#0066FF`): Modifiers (Home Row Mods, Shift, Ctrl, Alt, GUI), Bluetooth indicators.
