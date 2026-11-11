@@ -5,13 +5,13 @@ scripts/generate_rgb.py
 Automates the generation, validation, and updating of per-key RGB underglow layers
 (`underglow-layer` blocks) in `go60/config/go60.keymap` and `glove80/config/glove80.keymap`.
 
-Rules follow docs/RGB_PALETTE.md (v47):
+Rules follow docs/RGB_PALETTE.md (v48):
 - BLU: Modifiers (Home Row Mods hml/hmr, Shift, Ctrl, Alt, GUI), BT profiles, USB out.
 - GRN: Navigation (Vim arrows HJKL, Home, End, PgUp, PgDn, Mouse move, Mouse clicks, Back/Forward).
 - YLW: Numbers (0-9) & Function keys (F1-F12).
 - CYN: Volume, media, and screen brightness controls in Magic layer.
-- WHT: Regular symbols, math operators, Parentheses ( ), Double Quote ("), PC Copy/Paste, Keypad operators.
-- GLD: Bracket/brace pairs [ ] { }, Base tap dances (Caps, Copy/Paste, App Launcher, Screenshots), Mouse scroll, RGB controls.
+- WHT: Regular symbols, math operators, Brackets & Braces [ ] { }, Parentheses ( ), Double Quote ("), PC Copy/Paste, Keypad operators.
+- GLD: Base tap dances (Caps, Copy/Paste, App Launcher, Screenshots), Mouse scroll, RGB controls.
 - RED: Layer activators & toggles, system locks, bootloader, reset, deletes, layer exits, Sniper move.
 - MAG: Magic key & system indicator.
 - NML: NumLock dynamic indicator.
@@ -127,11 +127,6 @@ NAVIGATION_KEYS = {
     '&kp HOME', '&kp END',  '&kp PG_UP', '&kp PG_DN',
 }
 
-ENCLOSURE_KEYS = {
-    '&kp LBKT',     '&kp RBKT',
-    '&kp LS(LBKT)', '&kp LS(RBKT)',
-}
-
 KEYPAD_DIGITS = {f'&kp KP_N{i}' for i in range(10)}
 
 KEYPAD_OPERATORS = {
@@ -210,11 +205,9 @@ def classify_key(
             return 'YLW'
         if binding in NAVIGATION_KEYS:
             return 'GRN'
-        if binding in ENCLOSURE_KEYS:
-            return 'GLD'
         if binding in ('&trans', '&none'):
             return '___'
-        # All regular punctuation, symbols, math operators, double quote (")
+        # All regular punctuation, symbols, math operators, brackets [ ], braces { }, parentheses ( ), double quote (")
         return 'WHT'
 
     # 5. Keypad Layer
