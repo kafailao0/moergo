@@ -5,16 +5,15 @@ scripts/generate_rgb.py
 Automates the generation, validation, and updating of per-key RGB underglow layers
 (`underglow-layer` blocks) in `go60/config/go60.keymap` and `glove80/config/glove80.keymap`.
 
-Rules follow docs/RGB_PALETTE.md (v45):
+Rules follow docs/RGB_PALETTE.md (v46):
 - BLU: Modifiers (Home Row Mods hml/hmr, Shift, Ctrl, Alt, GUI), BT profiles, USB out.
 - GRN: Navigation (Vim arrows HJKL, Home, End, PgUp, PgDn, Mouse move, Mouse clicks, Back/Forward).
 - YLW: Numbers (0-9) & Function keys (F1-F12).
 - CYN: Volume, media, and screen brightness controls in Magic layer.
 - WHT: Regular symbols, math operators, Double Quote ("), PC Copy/Paste, Keypad operators.
-- GLD: Enclosure pairs [ ] ( ) { }, Base macOS tap dances, Mouse scroll, RGB controls.
+- GLD: Enclosure pairs [ ] ( ) { }, Base tap dances (Caps, Copy/Paste, App Launcher, Screenshots), Mouse scroll, RGB controls.
 - RED: Layer activators & toggles, system locks, bootloader, reset, deletes, layer exits, Sniper move.
 - MAG: Magic key & system indicator.
-- CPL: CapsLock / CapsWord dynamic indicator.
 - NML: NumLock dynamic indicator.
 - ___: Unlit / pass-through.
 
@@ -170,8 +169,6 @@ def classify_key(
     """
     # 1. Base Layer
     if layer_name == 'Base':
-        if binding == '&td_caps':
-            return 'CPL'
         if binding.startswith('&magic'):
             return 'MAG'
         if (binding == '&td_LAYER_Keypad' or
@@ -235,10 +232,6 @@ def classify_key(
     if layer_name == 'NumRow':
         if binding in NUMROW_DIGITS:
             return 'YLW'
-        # CapsLock indicator pass-through from Base
-        if binding == '&trans' and key_idx < len(base_bindings):
-            if base_bindings[key_idx] == '&td_caps':
-                return 'CPL'
         return '___'
 
     # 7. Magic Layer

@@ -13,7 +13,7 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 | **`YLW`** | Yellow | `#FFFF00` | `(255, 255, 0)` | 🟨 | **Numbers & Function Keys:** Number row digits (1–0) in `layer_NumRow`, Keypad digits (0–9) in `layer_Keypad`, and Function keys (F1–F12) in `layer_SymbolNav`. |
 | **`CYN`** | Cyan | `#00FFFF` | `(0, 255, 255)` | 🩵 | **Media & Hardware Controls:** Volume controls (`Vol Dn`, `Vol Up`, `Mute`), media keys (`Prev`, `Next`, `Play/Pause`), and screen brightness in `layer_Magic`. |
 | **`WHT`** | White | `#FFFFFF` | `(255, 255, 255)` | ⬜ | **Regular Symbols, Math & PC Overrides:** All standard punctuation / math operators (`@`, `#`, `$`, `%`, `^`, `&`, `*`, `+`, `-`, `=`, `/`, `\`, `|`, `<`, `>`, `~`, `` ` ``), Double Quote (`"`), Keypad operators (`+`, `-`, `*`, `/`, `=`, `.`, Enter), and PC layer Copy/Paste Tap Dance (`td_copy_paste_pc`). |
-| **`GLD`** | Gold | `#FFBF00` | `(255, 191, 0)` | 🟧 | **Enclosure Pairs, Tap Dances & Scroll:** Symmetric bracket pairs `[ ]`, `( )`, `{ }` in `layer_SymbolNav`, macOS Base layer tap dances (`td_copy_paste`, `td_launcher`, `td_screenshot`, `td_browser`, `td_media`, `td_wm_prev`, `td_wm_next`), mouse wheel scrolling (`msc`), and RGB underglow controls in Magic. |
+| **`GLD`** | Gold | `#FFBF00` | `(255, 191, 0)` | 🟧 | **Enclosure Pairs, Tap Dances & Scroll:** Symmetric bracket pairs `[ ]`, `( )`, `{ }` in `layer_SymbolNav`, Base layer tap dances (`td_caps`, `td_copy_paste`, `td_launcher`, `td_screenshot`, `td_browser`, `td_media`, `td_wm_prev`, `td_wm_next`), mouse wheel scrolling (`msc`), and RGB underglow controls in Magic. |
 | **`RED`** | Red | `#FF0000` | `(255, 0, 0)` | 🟥 | **Layer Controls, System & Locks:** Layer toggles & momentary thumb activators (NumRow, SymbolNav, Keypad, PC, Gaming, Mouse, Sniper), layer exit keys (`ESC`, `tog`), system locks, Bootloader, Reset, Delete keys, and Sniper precision motion. |
 | **`MAG`** | Magenta | `#FF00FF` | `(255, 0, 255)` | 🟪 | **Magic Key & System Indicator:** Dedicated indicator for the Magic layer access key across all permanent layers (Base, PC, Gaming). |
 | **`NML`** | NumLock | Dynamic | — | 🟢/🔴 | **NumLock Status Indicator:** Green when NumLock is ON, Red when OFF. |
@@ -27,9 +27,8 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 ### Base Layer (`layer_Base`)
 - **Red (`RED`)**: Layer keys (`td_LAYER_Keypad`, NumRow Tab thumb, SymbolNav Del thumb, Mouse toggle on Glove80).
 - **Blue (`BLU`)**: Home Row Mods (A, S, D, F and J, K, L, ;) and Left Thumb Shift (`&kp LSHFT`). Glove80 upper thumbs (Ctrl, Alt, GUI).
-- **Gold (`GLD`)**: macOS tap dances (`td_copy_paste`, `td_launcher`, `td_screenshot`, `td_browser`, `td_media`, `td_wm_prev`, `td_wm_next`).
+- **Gold (`GLD`)**: Base tap dances (`td_caps`, `td_copy_paste`, `td_launcher`, `td_screenshot`, `td_browser`, `td_media`, `td_wm_prev`, `td_wm_next`).
 - **Magenta (`MAG`)**: Magic key (`&magic LAYER_Magic 0`).
-- **Dynamic (`CPL`)**: Caps Lock status on `td_caps`.
 
 ### PC Layer (`layer_PC`)
 - Mirrors Base layer RGB highlights.
@@ -56,7 +55,7 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 
 ### NumRow Layer (`layer_NumRow`)
 - **Yellow (`YLW`)**: Home row numbers 1–0 across A–G and H–;.
-- **Dynamic (`CPL`)**: Caps Lock indicator.
+- **Unlit (`___`)**: All other keys unlit.
 
 ### Magic Layer (`layer_Magic`)
 - **Red (`RED`)**: Bootloader, Reset, system lock keys, and layer toggles (`PC`, `Gaming`, `Mouse`).
