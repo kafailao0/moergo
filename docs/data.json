@@ -1,8 +1,8 @@
 {
   "glove80": {
     "name": "Glove80",
-    "title": "Kelvin's Glove80 layout v42",
-    "notes": "Kelvin's Glove80 layout v42.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 1), td_caps (Row 2), ESC (Row 3), Mouse layer toggle (Row 4), Magic (Row 5).\n- Right Outer Column (Punctuation & Nav): Screenshot tap dance (Row 1), Hyphen - (Row 2), Quote ' (Row 3), Underscore _ (Row 4), End (Row 5).\n- Thumb Cluster:\n  - Left Lower (Outer to Inner): LSHFT, BSPC (pure instant key), TAB (hold for NumRow).\n  - Right Lower (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n  - Left Upper (Outer to Inner): LCTRL, LALT, LGUI.\n  - Right Upper (Inner to Outer): Volume Down, Volume Up, Media (Tap: Play/Pause, 2x: Next, 3x: Prev; Combo Vol Dn+Up: Mute).\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Mouse toggle on Row 4, Magic on Row 5, Browser history tap-dance (1x: \u2318\u2325H Back, 2x: \u2318\u2325L Forward), Copy/Paste tap-dance (1x: \u2318C, 2x: \u2318V, 3x: \u2318\u2325V Clippy), Left, Right on bottom-left; Down, Up, Launcher tap-dance (\u2318Space/\u2318\u21e7Space), WM Prev tap-dance (1x: \u2303\u2318\u21e7U Prev Window, 2x: \u2303\u2318, Prev Workspace), WM Next tap-dance (1x: \u2303\u2318u Next Window, 2x: \u2303\u2318. Next Workspace) on bottom-right; combo WM Prev + WM Next (Home+End): Maximize Window (\u2303\u2318M); CleanShot X Screenshot tap-dance on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-row shortcuts to Ctrl+C/V/Win+V tap-dance, passes through Window Manager shortcuts to Win+Ctrl+U/./M). Mirrors Base layer RGB highlights with td_copy_paste_pc lit in Blue (instead of Gold) for 3 seconds then fading out.\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts ` (Grave) above Tab (Row 1), ~ (Tilde) to left of Z (Row 4), restores Magic to bottom-left corner, puts BSPC, DEL (pure key), and LGUI (Cmd/Super) on bottom-left, and uses LSHFT (pass-through), Hold-Tap Ctrl/Space, and Hold-Tap Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and PageUp/PageDown below F12.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T6 (TAB) for home-row numbers 1-0 on A-G / H-; with all other keys transparent.\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (PC, Gaming), RGB controls, Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n- Mouse / Sniper: Mouse toggle key enters mouse layer; home-row HJKL mouse movement; hold A for Sniper precision mode.\n\nPer-Key RGB (underglow-layer):\n- Base layer: Special keys highlighted (Layers in Green, Home Row Mods in Cyan, Tap Dances in Gold, Magic in Red, td_caps with dynamic Red CapsLock indicator), lighting up for 3 seconds on wake or layer return then fading out.\n- Caps Lock status: td_caps glows red when Caps Lock is active (in Base & NumRow).\n- Momentary layers (SymbolNav, NumRow, Magic, Mouse, Sniper) and Keypad stay color-coded while active (PageUp/PageDown light up Magenta; Keypad right thumbs light up Orange).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (PC mirrors Base layer with copy/paste in Blue; Gaming only lights up modified keys, avoiding ghost RGB on pass-through W and LSHFT).",
+    "title": "Kelvin's Glove80 layout v43",
+    "notes": "Kelvin's Glove80 layout v43.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 1), td_caps (Row 2), ESC (Row 3), Mouse layer toggle (Row 4), Magic (Row 5).\n- Right Outer Column (Punctuation & Nav): Screenshot tap dance (Row 1), Hyphen - (Row 2), Quote ' (Row 3), Underscore _ (Row 4), End (Row 5).\n- Thumb Cluster:\n  - Left Lower (Outer to Inner): LSHFT, BSPC (pure instant key), TAB (hold for NumRow).\n  - Right Lower (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n  - Left Upper (Outer to Inner): LCTRL, LALT, LGUI.\n  - Right Upper (Inner to Outer): Volume Down, Volume Up, Media (Tap: Play/Pause, 2x: Next, 3x: Prev; Combo Vol Dn+Up: Mute).\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Mouse toggle on Row 4, Magic on Row 5, Browser history tap-dance (1x: \u2318\u2325H Back, 2x: \u2318\u2325L Forward), Copy/Paste tap-dance (1x: \u2318C, 2x: \u2318V, 3x: \u2318\u2325V Clippy), Left, Right on bottom-left; Down, Up, Launcher tap-dance (\u2318Space/\u2318\u21e7Space), WM Prev tap-dance (1x: \u2303\u2318\u21e7U Prev Window, 2x: \u2303\u2318, Prev Workspace), WM Next tap-dance (1x: \u2303\u2318u Next Window, 2x: \u2303\u2318. Next Workspace) on bottom-right; combo WM Prev + WM Next (Home+End): Maximize Window (\u2303\u2318M); CleanShot X Screenshot tap-dance on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-row shortcuts to Ctrl+C/V/Win+V tap-dance, passes through Window Manager shortcuts to Win+Ctrl+U/./M). Mirrors Base layer RGB highlights with td_copy_paste_pc lit in Blue (instead of Gold) for 3 seconds then fading out.\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts ` (Grave) above Tab (Row 1), ~ (Tilde) to left of Z (Row 4), restores Magic to bottom-left corner, puts BSPC, DEL (pure key), and LGUI (Cmd/Super) on bottom-left, and uses LSHFT (pass-through), Hold-Tap Ctrl/Space, and Hold-Tap Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and PageUp/PageDown below F12.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T6 (TAB) for home-row numbers 1-0 on A-G / H-; with all other keys transparent.\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (PC, Gaming), RGB controls, Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n- Mouse / Sniper: Mouse toggle key enters mouse layer; home-row HJKL mouse movement; hold A for Sniper precision mode.\n\nPer-Key RGB (underglow-layer):\n- Base layer: Special keys highlighted (Layers in Green, Modifiers & Home Row Mods in Orange, Tap Dances in Gold, Magic in Purple, td_caps with dynamic Red CapsLock indicator), lighting up for 3 seconds on wake or layer return then fading out.\n- Caps Lock status: td_caps glows red when Caps Lock is active (in Base & NumRow).\n- Momentary layers (SymbolNav, NumRow, Magic, Mouse, Sniper) and Keypad stay color-coded while active (Numbers & F-keys in Cyan, Navigation in Blue, Enclosure Pairs in Gold, Regular Symbols / Double Quote / Keypad in White).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (PC mirrors Base layer with copy/paste in Warm Amber; Gaming only lights up Magic in Purple and modifiers in Orange, with plain gaming keys and non-modifiers unlit).",
     "keyCount": 80,
     "coords": [
       {
@@ -692,7 +692,9 @@
       "RED": "#FF0000",
       "BLU": "#0066FF",
       "NML": "#00FF00",
-      "CPL": "#000000"
+      "CPL": "#000000",
+      "AMB": "#FFA000",
+      "WHT": "#FFFFFF"
     },
     "rgbLayers": {
       "Base": [
@@ -731,16 +733,16 @@
         "___",
         "___",
         "___",
-        "CYN",
-        "CYN",
-        "CYN",
-        "CYN",
+        "ORG",
+        "ORG",
+        "ORG",
+        "ORG",
         "___",
         "___",
-        "CYN",
-        "CYN",
-        "CYN",
-        "CYN",
+        "ORG",
+        "ORG",
+        "ORG",
+        "ORG",
         "___",
         "GRN",
         "___",
@@ -748,9 +750,9 @@
         "___",
         "___",
         "___",
-        "___",
-        "___",
-        "___",
+        "ORG",
+        "ORG",
+        "ORG",
         "___",
         "___",
         "GLD",
@@ -760,12 +762,12 @@
         "___",
         "___",
         "___",
-        "RED",
+        "MAG",
         "GLD",
         "GLD",
         "___",
         "___",
-        "___",
+        "ORG",
         "___",
         "GRN",
         "___",
@@ -813,16 +815,16 @@
         "___",
         "___",
         "___",
-        "CYN",
-        "CYN",
-        "CYN",
-        "CYN",
+        "ORG",
+        "ORG",
+        "ORG",
+        "ORG",
         "___",
         "___",
-        "CYN",
-        "CYN",
-        "CYN",
-        "CYN",
+        "ORG",
+        "ORG",
+        "ORG",
+        "ORG",
         "___",
         "GRN",
         "___",
@@ -830,9 +832,9 @@
         "___",
         "___",
         "___",
-        "___",
-        "___",
-        "___",
+        "ORG",
+        "ORG",
+        "ORG",
         "___",
         "___",
         "GLD",
@@ -842,12 +844,12 @@
         "___",
         "___",
         "___",
-        "RED",
+        "MAG",
         "GLD",
-        "BLU",
+        "AMB",
         "___",
         "___",
-        "___",
+        "ORG",
         "___",
         "GRN",
         "___",
@@ -870,7 +872,6 @@
         "___",
         "___",
         "___",
-        "GLD",
         "___",
         "___",
         "___",
@@ -879,57 +880,58 @@
         "___",
         "___",
         "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "MAG",
         "___",
         "___",
         "___",
         "ORG",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "RED",
-        "RED",
-        "RED",
         "ORG",
-        "___",
-        "___",
-        "ORG",
-        "ORG",
-        "ORG",
-        "ORG",
-        "___",
-        "GLD",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "RED",
-        "___",
-        "ORG",
-        "RED",
-        "ORG",
-        "___",
         "ORG",
         "ORG",
         "___",
@@ -965,34 +967,34 @@
         "CYN",
         "CYN",
         "___",
-        "ORG",
+        "WHT",
         "GLD",
         "GLD",
-        "ORG",
+        "WHT",
         "___",
-        "ORG",
-        "ORG",
-        "ORG",
-        "ORG",
-        "ORG",
+        "WHT",
+        "WHT",
+        "WHT",
+        "WHT",
+        "WHT",
         "CYN",
-        "MAG",
-        "ORG",
+        "BLU",
+        "WHT",
         "GLD",
         "GLD",
+        "WHT",
+        "WHT",
+        "BLU",
+        "BLU",
+        "BLU",
+        "BLU",
+        "WHT",
+        "BLU",
+        "BLU",
+        "WHT",
         "GLD",
-        "ORG",
-        "MAG",
-        "MAG",
-        "MAG",
-        "MAG",
-        "ORG",
-        "MAG",
-        "MAG",
-        "ORG",
         "GLD",
-        "GLD",
-        "ORG",
+        "WHT",
         "___",
         "___",
         "___",
@@ -1000,12 +1002,12 @@
         "___",
         "___",
         "___",
-        "ORG",
-        "ORG",
-        "ORG",
-        "ORG",
-        "ORG",
-        "MAG",
+        "WHT",
+        "WHT",
+        "WHT",
+        "WHT",
+        "WHT",
+        "BLU",
         "___",
         "___",
         "___",
@@ -1053,11 +1055,11 @@
         "___",
         "___",
         "___",
-        "GRN",
-        "GRN",
-        "GRN",
-        "ORG",
-        "ORG",
+        "CYN",
+        "CYN",
+        "CYN",
+        "WHT",
+        "WHT",
         "___",
         "___",
         "___",
@@ -1065,27 +1067,11 @@
         "___",
         "___",
         "___",
-        "GRN",
-        "GRN",
-        "GRN",
-        "ORG",
-        "ORG",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "ORG",
-        "GRN",
-        "GRN",
-        "GRN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "WHT",
+        "WHT",
         "___",
         "___",
         "___",
@@ -1098,9 +1084,25 @@
         "___",
         "___",
         "___",
-        "ORG",
-        "GRN",
-        "ORG",
+        "WHT",
+        "CYN",
+        "CYN",
+        "CYN",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "WHT",
+        "CYN",
+        "WHT",
         "___",
         "___",
         "___"
@@ -1141,16 +1143,16 @@
         "___",
         "___",
         "___",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
         "___",
         "___",
         "___",
@@ -1310,10 +1312,10 @@
         "ORG",
         "ORG",
         "___",
-        "MAG",
-        "MAG",
-        "MAG",
-        "MAG",
+        "BLU",
+        "BLU",
+        "BLU",
+        "BLU",
         "___",
         "___",
         "RED",
@@ -1939,8 +1941,8 @@
             "targetLayer": null,
             "rawBinding": "&hml LGUI A",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "S",
@@ -1953,8 +1955,8 @@
             "targetLayer": null,
             "rawBinding": "&hml LALT S",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "D",
@@ -1967,8 +1969,8 @@
             "targetLayer": null,
             "rawBinding": "&hml LCTRL D",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "F",
@@ -1981,8 +1983,8 @@
             "targetLayer": null,
             "rawBinding": "&hml LSHFT F",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "G",
@@ -2023,8 +2025,8 @@
             "targetLayer": null,
             "rawBinding": "&hmr RSHFT J",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "K",
@@ -2037,8 +2039,8 @@
             "targetLayer": null,
             "rawBinding": "&hmr RCTRL K",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "L",
@@ -2051,8 +2053,8 @@
             "targetLayer": null,
             "rawBinding": "&hmr RALT L",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": ";",
@@ -2065,8 +2067,8 @@
             "targetLayer": null,
             "rawBinding": "&hmr RGUI SEMI",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "'",
@@ -2177,8 +2179,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LCTRL",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u2325",
@@ -2191,8 +2193,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LALT",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u2318",
@@ -2205,8 +2207,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LGUI",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\ud83d\udd09",
@@ -2345,8 +2347,8 @@
             "targetLayer": 6,
             "rawBinding": "&magic",
             "icon": "layer_magic",
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "MAG",
+            "rgbHex": "#FF00FF"
           },
           {
             "line1": "\ud83c\udf10",
@@ -2415,8 +2417,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LSHFT",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u232b",
@@ -3064,8 +3066,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -3078,8 +3080,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -3092,8 +3094,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -3106,22 +3108,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
-          },
-          {
-            "line1": "\u25bd",
-            "line2": "",
-            "secondary": "",
-            "secondaryIcon": null,
-            "badge": "",
-            "badgeType": "trans",
-            "tooltip": "Pass through (inherits key from Base layer)",
-            "targetLayer": null,
-            "rawBinding": "&trans",
-            "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -3148,8 +3136,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u25bd",
@@ -3162,8 +3150,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -3176,8 +3164,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -3190,8 +3178,22 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
+          },
+          {
+            "line1": "\u25bd",
+            "line2": "",
+            "secondary": "",
+            "secondaryIcon": null,
+            "badge": "",
+            "badgeType": "trans",
+            "tooltip": "Pass through (inherits key from Base layer)",
+            "targetLayer": null,
+            "rawBinding": "&trans",
+            "icon": null,
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -3302,8 +3304,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -3316,8 +3318,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -3330,8 +3332,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -3470,8 +3472,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "MAG",
+            "rgbHex": "#FF00FF"
           },
           {
             "line1": "\u25bd",
@@ -3498,8 +3500,8 @@
             "targetLayer": null,
             "rawBinding": "&td_copy_paste_pc",
             "icon": "clipboard",
-            "rgbToken": "BLU",
-            "rgbHex": "#0066FF"
+            "rgbToken": "AMB",
+            "rgbHex": "#FFA000"
           },
           {
             "line1": "\u25bd",
@@ -3540,8 +3542,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -3839,8 +3841,8 @@
             "targetLayer": null,
             "rawBinding": "&kp GRAVE",
             "icon": null,
-            "rgbToken": "GLD",
-            "rgbHex": "#FFBF00"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u25bd",
@@ -4007,8 +4009,8 @@
             "targetLayer": null,
             "rawBinding": "&kp TAB",
             "icon": "tab",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u25bd",
@@ -4189,8 +4191,8 @@
             "targetLayer": null,
             "rawBinding": "&kp A",
             "icon": null,
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "S",
@@ -4203,8 +4205,8 @@
             "targetLayer": null,
             "rawBinding": "&kp S",
             "icon": null,
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "D",
@@ -4217,8 +4219,8 @@
             "targetLayer": null,
             "rawBinding": "&kp D",
             "icon": null,
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "F",
@@ -4231,8 +4233,8 @@
             "targetLayer": null,
             "rawBinding": "&kp F",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u25bd",
@@ -4273,8 +4275,8 @@
             "targetLayer": null,
             "rawBinding": "&kp J",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "K",
@@ -4287,8 +4289,8 @@
             "targetLayer": null,
             "rawBinding": "&kp K",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "L",
@@ -4301,8 +4303,8 @@
             "targetLayer": null,
             "rawBinding": "&kp L",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": ";",
@@ -4315,8 +4317,8 @@
             "targetLayer": null,
             "rawBinding": "&kp SEMI",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u25bd",
@@ -4343,8 +4345,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(GRAVE)",
             "icon": null,
-            "rgbToken": "GLD",
-            "rgbHex": "#FFBF00"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u25bd",
@@ -4595,8 +4597,8 @@
             "targetLayer": 6,
             "rawBinding": "&magic",
             "icon": "layer_magic",
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "MAG",
+            "rgbHex": "#FF00FF"
           },
           {
             "line1": "\u2014",
@@ -4623,8 +4625,8 @@
             "targetLayer": null,
             "rawBinding": "&kp BSPC",
             "icon": "backspace",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u2326",
@@ -4637,8 +4639,8 @@
             "targetLayer": null,
             "rawBinding": "&kp DEL",
             "icon": "delete",
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u2318",
@@ -4665,8 +4667,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u2423",
@@ -5146,8 +5148,8 @@
             "targetLayer": null,
             "rawBinding": "&kp GRAVE",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "[",
@@ -5188,8 +5190,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N5)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\u2014",
@@ -5216,8 +5218,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N7)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "+",
@@ -5230,8 +5232,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(EQUAL)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "-",
@@ -5244,8 +5246,8 @@
             "targetLayer": null,
             "rawBinding": "&kp MINUS",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "*",
@@ -5258,8 +5260,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N8)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\\",
@@ -5272,8 +5274,8 @@
             "targetLayer": null,
             "rawBinding": "&kp BSLH",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "F12",
@@ -5300,8 +5302,8 @@
             "targetLayer": null,
             "rawBinding": "&kp HOME",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "@",
@@ -5314,8 +5316,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N2)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "(",
@@ -5356,8 +5358,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(SQT)",
             "icon": null,
-            "rgbToken": "GLD",
-            "rgbHex": "#FFBF00"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "#",
@@ -5370,8 +5372,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N3)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\u2190",
@@ -5384,8 +5386,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LEFT",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "\u2193",
@@ -5398,8 +5400,8 @@
             "targetLayer": null,
             "rawBinding": "&kp DOWN",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "\u2191",
@@ -5412,8 +5414,8 @@
             "targetLayer": null,
             "rawBinding": "&kp UP",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "\u2192",
@@ -5426,8 +5428,8 @@
             "targetLayer": null,
             "rawBinding": "&kp RIGHT",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "|",
@@ -5440,8 +5442,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(BSLH)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "PgUp",
@@ -5454,8 +5456,8 @@
             "targetLayer": null,
             "rawBinding": "&kp PG_UP",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "End",
@@ -5468,8 +5470,8 @@
             "targetLayer": null,
             "rawBinding": "&kp END",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "~",
@@ -5482,8 +5484,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(GRAVE)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "{",
@@ -5524,8 +5526,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N1)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\u2014",
@@ -5636,8 +5638,8 @@
             "targetLayer": null,
             "rawBinding": "&kp EQUAL",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "^",
@@ -5650,8 +5652,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N6)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "<",
@@ -5664,8 +5666,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(COMMA)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": ">",
@@ -5678,8 +5680,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(DOT)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "$",
@@ -5692,8 +5694,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N4)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "PgDn",
@@ -5706,8 +5708,8 @@
             "targetLayer": null,
             "rawBinding": "&kp PG_DN",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "\u25bd",
@@ -6355,8 +6357,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N7",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "8",
@@ -6369,8 +6371,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N8",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "9",
@@ -6383,8 +6385,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N9",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "-",
@@ -6397,8 +6399,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_MINUS",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "/",
@@ -6411,8 +6413,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_SLASH",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\u2014",
@@ -6523,8 +6525,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N4",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "5",
@@ -6537,8 +6539,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N5",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "6",
@@ -6551,8 +6553,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N6",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "+",
@@ -6565,8 +6567,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_PLUS",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "*",
@@ -6579,8 +6581,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_MULTIPLY",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\u2014",
@@ -6761,8 +6763,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_EQUAL",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "1",
@@ -6775,8 +6777,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N1",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "2",
@@ -6789,8 +6791,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N2",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "3",
@@ -6803,8 +6805,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N3",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "\u2014",
@@ -6985,8 +6987,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_ENTER",
             "icon": "enter",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "0",
@@ -6999,8 +7001,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N0",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": ".",
@@ -7013,8 +7015,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_DOT",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\u2014",
@@ -7564,8 +7566,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N1",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "2",
@@ -7578,8 +7580,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N2",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "3",
@@ -7592,8 +7594,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N3",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "4",
@@ -7606,8 +7608,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N4",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "5",
@@ -7620,8 +7622,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N5",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "6",
@@ -7634,8 +7636,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N6",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "7",
@@ -7648,8 +7650,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N7",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "8",
@@ -7662,8 +7664,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N8",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "9",
@@ -7676,8 +7678,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N9",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "0",
@@ -7690,8 +7692,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N0",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "\u25bd",
@@ -11009,8 +11011,8 @@
             "targetLayer": null,
             "rawBinding": "&mmv MOVE_LEFT",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "Mouse",
@@ -11023,8 +11025,8 @@
             "targetLayer": null,
             "rawBinding": "&mmv MOVE_DOWN",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "Mouse",
@@ -11037,8 +11039,8 @@
             "targetLayer": null,
             "rawBinding": "&mmv MOVE_UP",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "Mouse",
@@ -11051,8 +11053,8 @@
             "targetLayer": null,
             "rawBinding": "&mmv MOVE_RIGHT",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "\u25bd",
@@ -12689,8 +12691,8 @@
   },
   "go60": {
     "name": "Go60",
-    "title": "Kelvin's Go60 layout v42",
-    "notes": "Kelvin's Go60 layout v42.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 0), td_caps (Row 1), ESC (Row 2), Magic (Row 3).\n- Right Outer Column (Punctuation): Screenshot tap dance (Row 0), Hyphen - (Row 1), Quote ' (Row 2), Underscore _ (Row 3).\n- Bottom Row:\n  - Left (under X, C, V): td_copy_paste (1x: Cmd+C, 2x: Cmd+V, 3x: Cmd+Alt+V Clippy), Left, Right.\n  - Right (under M, ,, .): Down, Up, Cmd+Space tap dance (1x: Cmd+Space, 2x: Cmd+Shift+Space).\n- Thumb Cluster (identical to Glove80 lower thumb cluster):\n  - Left (Outer to Inner): LSHFT, BSPC (pure instant key), TAB (hold for NumRow).\n  - Right (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n- Trackpads: Right trackpad set to 3x sensitivity (9x in SymbolNav); Left trackpad scrolling scaled to 1/8 speed (default) for natural, controlled page scrolling.\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 3, Copy/Paste tap-dance (1x: \u2318C, 2x: \u2318V, 3x: \u2318\u2325V Clippy), Left, Right on bottom-left; Down, Up, Cmd+Space tap-dance on bottom-right; CleanShot X Screenshot tap-dance on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-row shortcuts to Ctrl+C/V/Win+V tap-dance). Mirrors Base layer RGB highlights with td_copy_paste_pc lit in Blue (instead of Gold) for 3 seconds then fading out.\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts ` (Grave) at top-left corner (Row 0), restores Magic to left of Z (Row 3), puts BSPC, DEL (pure key), and LGUI (Cmd/Super) on bottom-left, and uses LSHFT (pass-through), Hold-Tap Ctrl/Space, and Hold-Tap Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and PageUp/PageDown below F12.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T3 (TAB) for home-row numbers 1-0 on A-G / H-; with all other keys transparent.\n- Mouse: Auto-activated upon touching/moving trackpad (1000ms timeout, typing exits). Left hand home row has Left/Right/Middle clicks (F, D, S), upper row has Browser Back/Forward (W, E), and right thumbs have Middle/Right/Left clicks matching Glove80.\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (PC, Gaming), RGB controls, Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n\nPer-Key RGB (underglow-layer):\n- Base layer: Special keys highlighted (Layers in Green, Home Row Mods in Cyan, Tap Dances in Gold, Magic in Red, td_caps with dynamic Red CapsLock indicator), lighting up for 3 seconds on wake or layer return then fading out.\n- Caps Lock status: td_caps glows red when Caps Lock is active (in Base & NumRow).\n- Momentary layers (SymbolNav, NumRow, Magic), Keypad, and Mouse stay color-coded while active (Clicks light up Orange, Back/Forward Gold, Escape Red) (PageUp/PageDown light up Magenta; Keypad right thumbs light up Orange).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (PC mirrors Base layer with copy/paste in Blue; Gaming only lights up modified keys, avoiding ghost RGB on pass-through W and LSHFT).",
+    "title": "Kelvin's Go60 layout v43",
+    "notes": "Kelvin's Go60 layout v43.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 0), td_caps (Row 1), ESC (Row 2), Magic (Row 3).\n- Right Outer Column (Punctuation): Screenshot tap dance (Row 0), Hyphen - (Row 1), Quote ' (Row 2), Underscore _ (Row 3).\n- Bottom Row:\n  - Left (under X, C, V): td_copy_paste (1x: Cmd+C, 2x: Cmd+V, 3x: Cmd+Alt+V Clippy), Left, Right.\n  - Right (under M, ,, .): Down, Up, Cmd+Space tap dance (1x: Cmd+Space, 2x: Cmd+Shift+Space).\n- Thumb Cluster (identical to Glove80 lower thumb cluster):\n  - Left (Outer to Inner): LSHFT, BSPC (pure instant key), TAB (hold for NumRow).\n  - Right (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n- Trackpads: Right trackpad set to 3x sensitivity (9x in SymbolNav); Left trackpad scrolling scaled to 1/8 speed (default) for natural, controlled page scrolling.\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 3, Copy/Paste tap-dance (1x: \u2318C, 2x: \u2318V, 3x: \u2318\u2325V Clippy), Left, Right on bottom-left; Down, Up, Cmd+Space tap-dance on bottom-right; CleanShot X Screenshot tap-dance on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-row shortcuts to Ctrl+C/V/Win+V tap-dance). Mirrors Base layer RGB highlights with td_copy_paste_pc lit in Blue (instead of Gold) for 3 seconds then fading out.\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts ` (Grave) at top-left corner (Row 0), restores Magic to left of Z (Row 3), puts BSPC, DEL (pure key), and LGUI (Cmd/Super) on bottom-left, and uses LSHFT (pass-through), Hold-Tap Ctrl/Space, and Hold-Tap Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and PageUp/PageDown below F12.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T3 (TAB) for home-row numbers 1-0 on A-G / H-; with all other keys transparent.\n- Mouse: Auto-activated upon touching/moving trackpad (1000ms timeout, typing exits). Left hand home row has Left/Right/Middle clicks (F, D, S), upper row has Browser Back/Forward (W, E), and right thumbs have Middle/Right/Left clicks matching Glove80.\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (PC, Gaming), RGB controls, Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n\nPer-Key RGB (underglow-layer):\n- Base layer: Special keys highlighted (Layers in Green, Modifiers & Home Row Mods in Orange, Tap Dances in Gold, Magic in Purple, td_caps with dynamic Red CapsLock indicator), lighting up for 3 seconds on wake or layer return then fading out.\n- Caps Lock status: td_caps glows red when Caps Lock is active (in Base & NumRow).\n- Momentary layers (SymbolNav, NumRow, Magic), Keypad, and Mouse stay color-coded while active (Numbers & F-keys in Cyan, Navigation in Blue, Enclosure Pairs in Gold, Regular Symbols / Double Quote / Keypad in White, Back/Forward in Gold, Escape in Red).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (PC mirrors Base layer with copy/paste in Warm Amber; Gaming only lights up Magic in Purple and modifiers in Orange, with plain gaming keys and non-modifiers unlit).",
     "keyCount": 60,
     "coords": [
       {
@@ -13201,7 +13203,9 @@
       "RED": "#FF0000",
       "BLU": "#0066FF",
       "NML": "#00FF00",
-      "CPL": "#000000"
+      "CPL": "#000000",
+      "AMB": "#FFA000",
+      "WHT": "#FFFFFF"
     },
     "rgbLayers": {
       "Base": [
@@ -13230,21 +13234,18 @@
         "___",
         "___",
         "___",
-        "CYN",
-        "CYN",
-        "CYN",
-        "CYN",
+        "ORG",
+        "ORG",
+        "ORG",
+        "ORG",
         "___",
         "___",
-        "CYN",
-        "CYN",
-        "CYN",
-        "CYN",
+        "ORG",
+        "ORG",
+        "ORG",
+        "ORG",
         "___",
-        "RED",
-        "___",
-        "___",
-        "___",
+        "MAG",
         "___",
         "___",
         "___",
@@ -13252,14 +13253,17 @@
         "___",
         "___",
         "___",
-        "___",
-        "GLD",
         "___",
         "___",
         "___",
         "___",
         "GLD",
         "___",
+        "___",
+        "___",
+        "___",
+        "GLD",
+        "ORG",
         "___",
         "GRN",
         "___",
@@ -13292,21 +13296,18 @@
         "___",
         "___",
         "___",
-        "CYN",
-        "CYN",
-        "CYN",
-        "CYN",
+        "ORG",
+        "ORG",
+        "ORG",
+        "ORG",
         "___",
         "___",
-        "CYN",
-        "CYN",
-        "CYN",
-        "CYN",
+        "ORG",
+        "ORG",
+        "ORG",
+        "ORG",
         "___",
-        "RED",
-        "___",
-        "___",
-        "___",
+        "MAG",
         "___",
         "___",
         "___",
@@ -13315,13 +13316,16 @@
         "___",
         "___",
         "___",
-        "BLU",
+        "___",
+        "___",
+        "___",
+        "AMB",
         "___",
         "___",
         "___",
         "___",
         "GLD",
-        "___",
+        "ORG",
         "___",
         "GRN",
         "___",
@@ -13329,7 +13333,45 @@
         "___"
       ],
       "Gaming": [
-        "GLD",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "___",
+        "MAG",
+        "___",
+        "___",
         "___",
         "___",
         "___",
@@ -13345,45 +13387,7 @@
         "___",
         "___",
         "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "RED",
-        "RED",
-        "RED",
         "ORG",
-        "___",
-        "___",
-        "ORG",
-        "ORG",
-        "ORG",
-        "ORG",
-        "___",
-        "RED",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "___",
-        "ORG",
-        "RED",
-        "ORG",
-        "___",
-        "___",
-        "___",
-        "___",
         "ORG",
         "ORG",
         "___",
@@ -13404,41 +13408,41 @@
         "CYN",
         "CYN",
         "___",
-        "ORG",
+        "WHT",
         "GLD",
         "GLD",
-        "ORG",
+        "WHT",
         "___",
-        "ORG",
-        "ORG",
-        "ORG",
-        "ORG",
-        "ORG",
+        "WHT",
+        "WHT",
+        "WHT",
+        "WHT",
+        "WHT",
         "CYN",
-        "MAG",
-        "ORG",
+        "BLU",
+        "WHT",
         "GLD",
         "GLD",
+        "WHT",
+        "WHT",
+        "BLU",
+        "BLU",
+        "BLU",
+        "BLU",
+        "WHT",
+        "BLU",
+        "BLU",
+        "WHT",
         "GLD",
-        "ORG",
-        "MAG",
-        "MAG",
-        "MAG",
-        "MAG",
-        "ORG",
-        "MAG",
-        "MAG",
-        "ORG",
         "GLD",
-        "GLD",
-        "ORG",
+        "WHT",
         "___",
-        "ORG",
-        "ORG",
-        "ORG",
-        "ORG",
-        "ORG",
-        "MAG",
+        "WHT",
+        "WHT",
+        "WHT",
+        "WHT",
+        "WHT",
+        "BLU",
         "___",
         "___",
         "___",
@@ -13472,11 +13476,11 @@
         "___",
         "___",
         "___",
-        "GRN",
-        "GRN",
-        "GRN",
-        "ORG",
-        "ORG",
+        "CYN",
+        "CYN",
+        "CYN",
+        "WHT",
+        "WHT",
         "___",
         "___",
         "___",
@@ -13484,35 +13488,35 @@
         "___",
         "___",
         "___",
-        "GRN",
-        "GRN",
-        "GRN",
-        "ORG",
-        "ORG",
+        "CYN",
+        "CYN",
+        "CYN",
+        "WHT",
+        "WHT",
         "___",
         "___",
         "___",
         "___",
         "___",
         "___",
-        "ORG",
-        "GRN",
-        "GRN",
-        "GRN",
+        "WHT",
+        "CYN",
+        "CYN",
+        "CYN",
         "___",
         "___",
         "___",
         "___",
         "___",
-        "GRN",
-        "ORG",
+        "CYN",
+        "WHT",
         "___",
         "___",
         "___",
         "___",
         "___",
         "___",
-        "ORG"
+        "WHT"
       ],
       "NumRow": [
         "___",
@@ -13540,16 +13544,16 @@
         "___",
         "___",
         "___",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
-        "GRN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
+        "CYN",
         "___",
         "___",
         "___",
@@ -14066,8 +14070,8 @@
             "targetLayer": null,
             "rawBinding": "&hml LGUI A",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "S",
@@ -14080,8 +14084,8 @@
             "targetLayer": null,
             "rawBinding": "&hml LALT S",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "D",
@@ -14094,8 +14098,8 @@
             "targetLayer": null,
             "rawBinding": "&hml LCTRL D",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "F",
@@ -14108,8 +14112,8 @@
             "targetLayer": null,
             "rawBinding": "&hml LSHFT F",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "G",
@@ -14150,8 +14154,8 @@
             "targetLayer": null,
             "rawBinding": "&hmr RSHFT J",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "K",
@@ -14164,8 +14168,8 @@
             "targetLayer": null,
             "rawBinding": "&hmr RCTRL K",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "L",
@@ -14178,8 +14182,8 @@
             "targetLayer": null,
             "rawBinding": "&hmr RALT L",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": ";",
@@ -14192,8 +14196,8 @@
             "targetLayer": null,
             "rawBinding": "&hmr RGUI SEMI",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "'",
@@ -14220,8 +14224,8 @@
             "targetLayer": 6,
             "rawBinding": "&magic",
             "icon": "layer_magic",
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "MAG",
+            "rgbHex": "#FF00FF"
           },
           {
             "line1": "Z",
@@ -14472,8 +14476,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LSHFT",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u232b",
@@ -14911,8 +14915,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -14925,8 +14929,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -14939,8 +14943,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -14953,22 +14957,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
-          },
-          {
-            "line1": "\u25bd",
-            "line2": "",
-            "secondary": "",
-            "secondaryIcon": null,
-            "badge": "",
-            "badgeType": "trans",
-            "tooltip": "Pass through (inherits key from Base layer)",
-            "targetLayer": null,
-            "rawBinding": "&trans",
-            "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -14995,8 +14985,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u25bd",
@@ -15009,8 +14999,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -15023,8 +15013,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -15037,8 +15027,22 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "CYN",
-            "rgbHex": "#00FFFF"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
+          },
+          {
+            "line1": "\u25bd",
+            "line2": "",
+            "secondary": "",
+            "secondaryIcon": null,
+            "badge": "",
+            "badgeType": "trans",
+            "tooltip": "Pass through (inherits key from Base layer)",
+            "targetLayer": null,
+            "rawBinding": "&trans",
+            "icon": null,
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -15065,8 +15069,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "MAG",
+            "rgbHex": "#FF00FF"
           },
           {
             "line1": "\u25bd",
@@ -15233,8 +15237,8 @@
             "targetLayer": null,
             "rawBinding": "&td_copy_paste_pc",
             "icon": "clipboard",
-            "rgbToken": "BLU",
-            "rgbHex": "#0066FF"
+            "rgbToken": "AMB",
+            "rgbHex": "#FFA000"
           },
           {
             "line1": "\u25bd",
@@ -15317,8 +15321,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u25bd",
@@ -15406,8 +15410,8 @@
             "targetLayer": null,
             "rawBinding": "&kp GRAVE",
             "icon": null,
-            "rgbToken": "GLD",
-            "rgbHex": "#FFBF00"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u25bd",
@@ -15574,8 +15578,8 @@
             "targetLayer": null,
             "rawBinding": "&kp TAB",
             "icon": "tab",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u25bd",
@@ -15756,8 +15760,8 @@
             "targetLayer": null,
             "rawBinding": "&kp A",
             "icon": null,
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "S",
@@ -15770,8 +15774,8 @@
             "targetLayer": null,
             "rawBinding": "&kp S",
             "icon": null,
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "D",
@@ -15784,8 +15788,8 @@
             "targetLayer": null,
             "rawBinding": "&kp D",
             "icon": null,
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "F",
@@ -15798,8 +15802,8 @@
             "targetLayer": null,
             "rawBinding": "&kp F",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u25bd",
@@ -15840,8 +15844,8 @@
             "targetLayer": null,
             "rawBinding": "&kp J",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "K",
@@ -15854,8 +15858,8 @@
             "targetLayer": null,
             "rawBinding": "&kp K",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "L",
@@ -15868,8 +15872,8 @@
             "targetLayer": null,
             "rawBinding": "&kp L",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": ";",
@@ -15882,8 +15886,8 @@
             "targetLayer": null,
             "rawBinding": "&kp SEMI",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u25bd",
@@ -15910,8 +15914,8 @@
             "targetLayer": 6,
             "rawBinding": "&magic",
             "icon": "layer_magic",
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "MAG",
+            "rgbHex": "#FF00FF"
           },
           {
             "line1": "\u25bd",
@@ -16078,8 +16082,8 @@
             "targetLayer": null,
             "rawBinding": "&kp BSPC",
             "icon": "backspace",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u2326",
@@ -16092,8 +16096,8 @@
             "targetLayer": null,
             "rawBinding": "&kp DEL",
             "icon": "delete",
-            "rgbToken": "RED",
-            "rgbHex": "#FF0000"
+            "rgbToken": "___",
+            "rgbHex": "#000000"
           },
           {
             "line1": "\u2318",
@@ -16162,8 +16166,8 @@
             "targetLayer": null,
             "rawBinding": "&trans",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "ORG",
+            "rgbHex": "#FF5500"
           },
           {
             "line1": "\u2423",
@@ -16433,8 +16437,8 @@
             "targetLayer": null,
             "rawBinding": "&kp GRAVE",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "[",
@@ -16475,8 +16479,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N5)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\u2014",
@@ -16503,8 +16507,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N7)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "+",
@@ -16517,8 +16521,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(EQUAL)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "-",
@@ -16531,8 +16535,8 @@
             "targetLayer": null,
             "rawBinding": "&kp MINUS",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "*",
@@ -16545,8 +16549,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N8)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\\",
@@ -16559,8 +16563,8 @@
             "targetLayer": null,
             "rawBinding": "&kp BSLH",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "F12",
@@ -16587,8 +16591,8 @@
             "targetLayer": null,
             "rawBinding": "&kp HOME",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "@",
@@ -16601,8 +16605,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N2)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "(",
@@ -16643,8 +16647,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(SQT)",
             "icon": null,
-            "rgbToken": "GLD",
-            "rgbHex": "#FFBF00"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "#",
@@ -16657,8 +16661,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N3)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\u2190",
@@ -16671,8 +16675,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LEFT",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "\u2193",
@@ -16685,8 +16689,8 @@
             "targetLayer": null,
             "rawBinding": "&kp DOWN",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "\u2191",
@@ -16699,8 +16703,8 @@
             "targetLayer": null,
             "rawBinding": "&kp UP",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "\u2192",
@@ -16713,8 +16717,8 @@
             "targetLayer": null,
             "rawBinding": "&kp RIGHT",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "|",
@@ -16727,8 +16731,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(BSLH)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "PgUp",
@@ -16741,8 +16745,8 @@
             "targetLayer": null,
             "rawBinding": "&kp PG_UP",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "End",
@@ -16755,8 +16759,8 @@
             "targetLayer": null,
             "rawBinding": "&kp END",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "~",
@@ -16769,8 +16773,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(GRAVE)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "{",
@@ -16811,8 +16815,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N1)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\u2014",
@@ -16839,8 +16843,8 @@
             "targetLayer": null,
             "rawBinding": "&kp EQUAL",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "^",
@@ -16853,8 +16857,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N6)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "<",
@@ -16867,8 +16871,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(COMMA)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": ">",
@@ -16881,8 +16885,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(DOT)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "$",
@@ -16895,8 +16899,8 @@
             "targetLayer": null,
             "rawBinding": "&kp LS(N4)",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "PgDn",
@@ -16909,8 +16913,8 @@
             "targetLayer": null,
             "rawBinding": "&kp PG_DN",
             "icon": null,
-            "rgbToken": "MAG",
-            "rgbHex": "#FF00FF"
+            "rgbToken": "BLU",
+            "rgbHex": "#0066FF"
           },
           {
             "line1": "\u25bd",
@@ -17362,8 +17366,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N7",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "8",
@@ -17376,8 +17380,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N8",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "9",
@@ -17390,8 +17394,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N9",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "-",
@@ -17404,8 +17408,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_MINUS",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "/",
@@ -17418,8 +17422,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_SLASH",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\u2014",
@@ -17530,8 +17534,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N4",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "5",
@@ -17544,8 +17548,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N5",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "6",
@@ -17558,8 +17562,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N6",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "+",
@@ -17572,8 +17576,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_PLUS",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "*",
@@ -17586,8 +17590,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_MULTIPLY",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\u2014",
@@ -17684,8 +17688,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_EQUAL",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "1",
@@ -17698,8 +17702,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N1",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "2",
@@ -17712,8 +17716,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N2",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "3",
@@ -17726,8 +17730,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N3",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "\u2014",
@@ -17810,8 +17814,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_N0",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": ".",
@@ -17824,8 +17828,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_DOT",
             "icon": null,
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           },
           {
             "line1": "\u2014",
@@ -17922,8 +17926,8 @@
             "targetLayer": null,
             "rawBinding": "&kp KP_ENTER",
             "icon": "enter",
-            "rgbToken": "ORG",
-            "rgbHex": "#FF5500"
+            "rgbToken": "WHT",
+            "rgbHex": "#FFFFFF"
           }
         ]
       },
@@ -18291,8 +18295,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N1",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "2",
@@ -18305,8 +18309,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N2",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "3",
@@ -18319,8 +18323,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N3",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "4",
@@ -18333,8 +18337,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N4",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "5",
@@ -18347,8 +18351,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N5",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "6",
@@ -18361,8 +18365,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N6",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "7",
@@ -18375,8 +18379,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N7",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "8",
@@ -18389,8 +18393,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N8",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "9",
@@ -18403,8 +18407,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N9",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "0",
@@ -18417,8 +18421,8 @@
             "targetLayer": null,
             "rawBinding": "&kp N0",
             "icon": null,
-            "rgbToken": "GRN",
-            "rgbHex": "#00FF00"
+            "rgbToken": "CYN",
+            "rgbHex": "#00FFFF"
           },
           {
             "line1": "\u25bd",
