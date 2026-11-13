@@ -14,7 +14,7 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 | **`CYN`** | Cyan | `#00FFFF` | `(0, 255, 255)` | 🩵 | **Media & Hardware Controls:** Volume controls (`Vol Dn`, `Vol Up`, `Mute`), media keys (`Prev`, `Next`, `Play/Pause`), and screen brightness in `layer_Magic`. |
 | **`WHT`** | White | `#FFFFFF` | `(255, 255, 255)` | ⬜ | **Regular Symbols, Math & PC Overrides:** All standard punctuation / math operators (`@`, `#`, `$`, `%`, `^`, `&`, `*`, `+`, `-`, `=`, `/`, `\`, `|`, `<`, `>`, `~`, `` ` ``), Brackets & Braces (`[ ]`, `{ }`), Parentheses (`( )`), Double Quote (`"`), Keypad operators (`+`, `-`, `*`, `/`, `=`, `.`, Enter), and PC layer Copy/Paste Tap Dance (`td_copy_paste_pc`). |
 | **`GLD`** | Gold | `#FFBF00` | `(255, 191, 0)` | 🟧 | **Base Tap Dances, Scroll & Underglow:** Base layer tap dances (`td_caps`, `td_copy_paste`, `td_launcher`, `td_screenshot`, `td_browser`, `td_media`, `td_wm_prev`, `td_wm_next`), mouse wheel scrolling (`msc`), and RGB underglow controls in Magic. |
-| **`RED`** | Red | `#FF0000` | `(255, 0, 0)` | 🟥 | **Layer Controls, System & Locks:** Layer toggles & momentary thumb activators (NumRow, SymbolNav, Keypad, PC, Gaming, Mouse, Sniper), layer exit keys (`ESC`, `tog`), system locks, Bootloader, Reset, Delete keys, and Sniper precision motion. |
+| **`RED`** | Red | `#FF0000` | `(255, 0, 0)` | 🟥 | **Layer Controls, System & Locks:** Layer toggles & momentary thumb activators (NumRow, SymbolNav, Keypad, PC, Gaming, Mouse, Sniper), layer exit keys (`tog`), system locks, Bootloader, Reset, Delete keys, and Sniper precision motion. |
 | **`MAG`** | Magenta | `#FF00FF` | `(255, 0, 255)` | 🟪 | **Magic Key & System Indicator:** Dedicated indicator for the Magic layer access key across all permanent layers (Base, PC, Gaming). |
 | **`NML`** | NumLock | Dynamic | — | 🟢/🔴 | **NumLock Status Indicator:** Green when NumLock is ON, Red when OFF. |
 | **`CPL`** | CapsLock | Dynamic | — | ⚫/🔴 | **CapsLock Status Indicator:** Unlit when OFF, Red when CapsLock or Caps Word is active. |
@@ -65,7 +65,7 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 ### Mouse Layer (`layer_Mouse`)
 - **Green (`GRN`)**: Mouse cursor movement (`mmv`), mouse click buttons (Left, Right, Middle), and browser Back/Forward navigation (`MB4`, `MB5`).
 - **Gold (`GLD`)**: Mouse wheel scrolling (`msc`).
-- **Red (`RED`)**: Mouse layer exit keys (`kp ESC` and `tog LAYER_Mouse`), and Sniper mode momentary activator (`mo LAYER_Sniper` on Glove80).
+- **Red (`RED`)**: Mouse layer exit key (`tog LAYER_Mouse`), and Sniper mode momentary activator (`mo LAYER_Sniper` on Glove80).
 
 ### Sniper Layer (`layer_Sniper`)
 - **Red (`RED`)**: Sniper precision mouse movement (`mmv`).

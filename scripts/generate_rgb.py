@@ -5,7 +5,7 @@ scripts/generate_rgb.py
 Automates the generation, validation, and updating of per-key RGB underglow layers
 (`underglow-layer` blocks) in `go60/config/go60.keymap` and `glove80/config/glove80.keymap`.
 
-Rules follow docs/RGB_PALETTE.md (v48):
+Rules follow docs/RGB_PALETTE.md (v49):
 - BLU: Modifiers (Home Row Mods hml/hmr, Shift, Ctrl, Alt, GUI), BT profiles, USB out.
 - GRN: Navigation (Vim arrows HJKL, Home, End, PgUp, PgDn, Mouse move, Mouse clicks, Back/Forward).
 - YLW: Numbers (0-9) & Function keys (F1-F12).
@@ -244,7 +244,7 @@ def classify_key(
 
     # 8. Mouse Layer
     if layer_name == 'Mouse':
-        if binding in ('&kp ESC', '&tog LAYER_Mouse'):
+        if binding == '&tog LAYER_Mouse':
             return 'RED'
         if binding == '&mo LAYER_Sniper':
             return 'RED'
