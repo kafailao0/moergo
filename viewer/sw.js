@@ -1,4 +1,4 @@
-const CACHE_NAME = 'moergo-layout-063afaef';
+const CACHE_NAME = 'moergo-layout-3407c425';
 const ASSETS = [
   './',
   './index.html',
