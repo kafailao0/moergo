@@ -1,5 +1,6 @@
+const DEFAULT_KB = 'go60';
 let KEYBOARDS = null;
-let currentKb = 'glove80';
+let currentKb = DEFAULT_KB;
 let currentLayer = 0;
 let viewerMode = 'simulate'; // Default mode is Simulate
 let simStack = [0]; // Active layer indices in simulation mode
@@ -58,6 +59,8 @@ function readUrlParams() {
   const kbParam = params.get('kb');
   if (kbParam && KEYBOARDS && KEYBOARDS[kbParam.toLowerCase()]) {
     currentKb = kbParam.toLowerCase();
+  } else {
+    currentKb = DEFAULT_KB;
   }
   const modeParam = params.get('mode');
   if (modeParam && ['simulate', 'inspect'].includes(modeParam.toLowerCase())) {
