@@ -6,13 +6,13 @@
   "parent_uuid": "54cf5ee0-4c56-49ea-96ec-aac94a8ed94e",
   "date": 1761766000,
   "creator": "Ka Fai Lao",
-  "title": "Kelvin's Go60 layout v50",
-  "notes": "Kelvin's Go60 layout v50.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 0), td_caps (Row 1), ESC (Row 2), Magic (Row 3).\n- Right Outer Column (Punctuation): Screenshot tap dance (Row 0), Hyphen - (Row 1), Quote ' (Row 2), Underscore _ (Row 3).\n- Bottom Row:\n  - Left (under X, C, V): td_copy_paste (1x: Cmd+C, 2x: Cmd+V, 3x: Cmd+Alt+V Clippy), Left, Right.\n  - Right (under M, ,, .): Down, Up, Cmd+Space tap dance (1x: Cmd+Space, 2x: Cmd+Shift+Space).\n- Thumb Cluster (identical to Glove80 lower thumb cluster):\n  - Left (Outer to Inner): LSHFT, BSPC (pure instant key), TAB (hold for NumRow).\n  - Right (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n- Trackpads: Right trackpad set to 3x sensitivity (9x in SymbolNav); Left trackpad scrolling scaled to 1/8 speed (default) for natural, controlled page scrolling.\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 3, Copy/Paste tap-dance (1x: \u2318C, 2x: \u2318V, 3x: \u2318\u2325V Clippy), Left, Right on bottom-left; Down, Up, Cmd+Space tap-dance on bottom-right; CleanShot X Screenshot tap-dance on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-row shortcuts to Ctrl+C/V/Win+V tap-dance). Mirrors Base layer RGB highlights with td_copy_paste_pc lit in White (instead of Gold) for 3 seconds then fading out.\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts ` (Grave) at top-left corner (Row 0), restores Magic to left of Z (Row 3), puts BSPC, DEL (pure key), and LGUI (Cmd/Super) on bottom-left, and uses LSHFT (pass-through), Hold-Tap Ctrl/Space, and Hold-Tap Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and PageUp/PageDown below F12.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T3 (TAB) for home-row numbers 1-0 on A-G / H-; with all other keys transparent.\n- Mouse: Auto-activated upon touching/moving trackpad (1000ms timeout, typing exits). Left hand home row has Left/Right/Middle clicks (F, D, S), and upper row has Browser Back/Forward (W, E).\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls, Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n\nPer-Key RGB (underglow-layer):\n- Base layer: Special keys highlighted (Layers in Red, Modifiers & Home Row Mods in Blue, Tap Dances in Gold, Magic in Magenta), lighting up for 3 seconds on wake or layer return then fading out.\n- Momentary layers (SymbolNav, NumRow, Magic), Keypad, and Mouse stay color-coded while active (Navigation in Green, Numbers & F-keys in Yellow, Brackets / Braces / Parentheses / Regular Symbols / Double Quote / Keypad in White, Back/Forward & Mouse clicks in Green, Layer switches in Red, Magic Media/Volume in Cyan).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (PC mirrors Base layer with copy/paste in White; Gaming only lights up Magic in Magenta and modifiers in Blue, with plain gaming keys and non-modifiers unlit).",
+  "title": "Kelvin's Go60 layout v51",
+  "notes": "Kelvin's Go60 layout v51.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 0), td_caps (Row 1), ESC (Row 2), Magic (Row 3).\n- Right Outer Column (Media & Punctuation): Media tap dance (Row 0), Hyphen - (Row 1), Quote ' (Row 2), Underscore _ (Row 3).\n- Bottom Row:\n  - Left (under X, C, V): td_screenshot (1x: Area ⌘⌥⇧4, 2x: Window ⌘⌥⇧2, 3x: Fullscreen ⌘⌥⇧3), td_copy (1x: ⌘C, 2x: ⌘X), td_paste (1x: ⌘V, 2x: ⌘⌥V Clippy).\n  - Right (under M, ,, .): td_wm_prev (1x: ⌃⌘⇧U Prev Window, 2x: ⌃⌘, Prev Workspace), td_wm_next (1x: ⌃⌘u Next Window, 2x: ⌃⌘. Next Workspace), td_launcher (1x: ⌘Space, 2x: ⌘⇧Space); Combo WM Prev + WM Next: Maximize Window (⌃⌘M).\n- Thumb Cluster (identical to Glove80 lower thumb cluster):\n  - Left (Outer to Inner): LSHFT, BSPC (pure instant key), TAB (hold for NumRow).\n  - Right (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n- Trackpads: Right trackpad set to 3x sensitivity (9x in SymbolNav); Left trackpad scrolling scaled to 1/8 speed (default) for natural, controlled page scrolling. Left bottom keys (Screenshot, Copy/Cut, Paste/Clippy) are excluded from zip_temp_mouse so layer_Mouse stays active while mousing.\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 3, CleanShot X Screenshot, Copy/Cut, Paste/Clippy on bottom-left; WM Prev, WM Next, Launcher on bottom-right with Maximize combo; Media tap-dance on top-right number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-left Copy/Paste to td_copy_pc 1x Ctrl+C / 2x Ctrl+X and td_paste_pc 1x Ctrl+V / 2x Win+V). Mirrors Base layer RGB highlights with overridden PC keys lit in White (instead of Gold) for 3 seconds then fading out.\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts ` (Grave) at top-left corner (Row 0), restores Magic to left of Z (Row 3), puts BSPC, DEL (pure key), and LGUI (Cmd/Super) on bottom-left, and uses LSHFT (pass-through), Hold-Tap Ctrl/Space, and Hold-Tap Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and PageUp/PageDown below F12.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T3 (TAB) for home-row numbers 1-0 on A-G / H-; with all other keys transparent.\n- Mouse: Auto-activated upon touching/moving trackpad (1000ms timeout, typing exits). Left hand home row has Left/Right/Middle clicks (F, D, S), and upper row has Browser Back/Forward (W, E).\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls, Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n\nPer-Key RGB (underglow-layer):\n- Base layer: Special keys highlighted (Layers in Red, Modifiers & Home Row Mods in Blue, Tap Dances in Gold, Magic in Magenta), lighting up for 3 seconds on wake or layer return then fading out.\n- Momentary layers (SymbolNav, NumRow, Magic), Keypad, and Mouse stay color-coded while active (Navigation in Green, Numbers & F-keys in Yellow, Brackets / Braces / Parentheses / Regular Symbols / Double Quote / Keypad in White, Back/Forward & Mouse clicks in Green, Layer switches in Red, Magic Media/Volume in Cyan).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (PC mirrors Base layer with overridden keys in White; Gaming only lights up Magic in Magenta and modifiers in Blue, with plain gaming keys and non-modifiers unlit).",
   "tags": [
     "go60",
     "custom"
   ],
-  "custom_defined_behaviors": "behaviors {\n    /* @viewer: \u21ea | @badge: TD | @icon: caps | @tooltip: Tap Dance: 1x Caps Word \u2022 2x Caps Lock */\n    td_caps: td_caps {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_CAPS\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&caps_word>, <&kp CAPS>;\n    };\n    /* @viewer: \ud83d\ude80 | @badge: TD | @icon: rocket | @tooltip: Tap Dance: 1x Launcher (\u2318Space) \u2022 2x \u2318\u21e7Space */\n    td_launcher: td_launcher {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_LAUNCHER\";\n        #binding-cells = <0>;\n        tapping-term-ms = <200>;\n        bindings = <&kp LG(SPACE)>, <&kp LG(LS(SPACE))>;\n    };\n    /* @viewer: \ud83d\udcf7 | @badge: TD | @icon: screenshot | @tooltip: Tap Dance: 1x Area (\u2318\u2325\u21e74) \u2022 2x Scrolling/Window (\u2318\u2325\u21e72) \u2022 3x Fullscreen (\u2318\u2325\u21e73) */\n    td_screenshot: td_screenshot {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_SCREENSHOT\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&kp LG(LA(LS(N4)))>, <&kp LG(LA(LS(N2)))>, <&kp LG(LA(LS(N3)))>;\n    };\n    /* @viewer: \ud83d\udccb | @badge: TD | @icon: clipboard | @tooltip: Tap Dance: 1x \u2318C (Copy) \u2022 2x \u2318V (Paste) \u2022 3x \u2318\u2325V (Clippy) */\n    td_copy_paste: td_copy_paste {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_COPY_PASTE\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&kp LG(C)>, <&kp LG(V)>, <&kp LG(LA(V))>;\n    };\n    /* @viewer: \ud83d\udccb | @badge: TD | @icon: clipboard | @tooltip: Tap Dance: 1x Ctrl+C (Copy) \u2022 2x Ctrl+V (Paste) \u2022 3x Win+V (Clipboard) */\n    td_copy_paste_pc: td_copy_paste_pc {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_COPY_PASTE_PC\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&kp LC(C)>, <&kp LC(V)>, <&kp LG(V)>;\n    };\n};",
+  "custom_defined_behaviors": "behaviors {\n    /* @viewer: ⇪ | @badge: TD | @icon: caps | @tooltip: Tap Dance: 1x Caps Word • 2x Caps Lock */\n    td_caps: td_caps {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_CAPS\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&caps_word>, <&kp CAPS>;\n    };\n    /* @viewer: 🚀 | @badge: TD | @icon: rocket | @tooltip: Tap Dance: 1x Launcher (⌘Space) • 2x ⌘⇧Space */\n    td_launcher: td_launcher {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_LAUNCHER\";\n        #binding-cells = <0>;\n        tapping-term-ms = <200>;\n        bindings = <&kp LG(SPACE)>, <&kp LG(LS(SPACE))>;\n    };\n    /* @viewer: 📷 | @badge: TD | @icon: screenshot | @tooltip: Tap Dance: 1x Area (⌘⌥⇧4) • 2x Scrolling/Window (⌘⌥⇧2) • 3x Fullscreen (⌘⌥⇧3) */\n    td_screenshot: td_screenshot {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_SCREENSHOT\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&kp LG(LA(LS(N4)))>, <&kp LG(LA(LS(N2)))>, <&kp LG(LA(LS(N3)))>;\n    };\n    /* @viewer: ⌘C | @badge: TD | @icon: copy | @tooltip: Tap Dance: 1x ⌘C (Copy) • 2x ⌘X (Cut) */\n    td_copy: td_copy {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_COPY\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&kp LG(C)>, <&kp LG(X)>;\n    };\n    /* @viewer: 📋 | @badge: TD | @icon: clipboard | @tooltip: Tap Dance: 1x ⌘V (Paste) • 2x ⌘⌥V (Clippy) */\n    td_paste: td_paste {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_PASTE\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&kp LG(V)>, <&kp LG(LA(V))>;\n    };\n    /* @viewer: ^C | @badge: TD | @icon: copy | @tooltip: Tap Dance: 1x Ctrl+C (Copy) • 2x Ctrl+X (Cut) */\n    td_copy_pc: td_copy_pc {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_COPY_PC\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&kp LC(C)>, <&kp LC(X)>;\n    };\n    /* @viewer: 📋 | @badge: TD | @icon: clipboard | @tooltip: Tap Dance: 1x Ctrl+V (Paste) • 2x Win+V (Clipboard) */\n    td_paste_pc: td_paste_pc {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_PASTE_PC\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&kp LC(V)>, <&kp LG(V)>;\n    };\n    /* @viewer: ⏯ | @badge: TD | @tooltip: Tap Dance: 1x Play/Pause • 2x Next Track • 3x Prev Track */\n    td_media: td_media {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_MEDIA\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&kp C_PP>, <&kp C_NEXT>, <&kp C_PREV>;\n    };\n    /* @viewer: ◂🪟 | @badge: TD | @icon: window_prev | @tooltip: Tap Dance: 1x Prev Window (⌃⌘⇧U) • 2x Prev Workspace (⌃⌘,) */\n    td_wm_prev: td_wm_prev {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_WM_PREV\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&kp LC(LG(LS(U)))>, <&kp LC(LG(COMMA))>;\n    };\n    /* @viewer: 🪟▸ | @badge: TD | @icon: window_next | @tooltip: Tap Dance: 1x Next Window (⌃⌘u) • 2x Next Workspace (⌃⌘.) */\n    td_wm_next: td_wm_next {\n        compatible = \"zmk,behavior-tap-dance\";\n        label = \"TD_WM_NEXT\";\n        #binding-cells = <0>;\n        tapping-term-ms = <250>;\n        bindings = <&kp LC(LG(U))>, <&kp LC(LG(DOT))>;\n    };\n};",
   "custom_devicetree": "",
   "config_parameters": [],
   "layout_parameters": {},
@@ -132,7 +132,7 @@
         "value": "Custom",
         "params": [
           {
-            "value": "&td_screenshot",
+            "value": "&td_media",
             "params": []
           }
         ]
@@ -497,43 +497,43 @@
         "value": "Custom",
         "params": [
           {
-            "value": "&td_copy_paste",
+            "value": "&td_screenshot",
             "params": []
           }
         ]
       },
       {
-        "value": "&kp",
+        "value": "Custom",
         "params": [
           {
-            "value": "LEFT",
+            "value": "&td_copy",
             "params": []
           }
         ]
       },
       {
-        "value": "&kp",
+        "value": "Custom",
         "params": [
           {
-            "value": "RIGHT",
+            "value": "&td_paste",
             "params": []
           }
         ]
       },
       {
-        "value": "&kp",
+        "value": "Custom",
         "params": [
           {
-            "value": "DOWN",
+            "value": "&td_wm_prev",
             "params": []
           }
         ]
       },
       {
-        "value": "&kp",
+        "value": "Custom",
         "params": [
           {
-            "value": "UP",
+            "value": "&td_wm_next",
             "params": []
           }
         ]
@@ -804,21 +804,26 @@
         "params": []
       },
       {
+        "value": "&trans",
+        "params": []
+      },
+      {
         "value": "Custom",
         "params": [
           {
-            "value": "&td_copy_paste_pc",
+            "value": "&td_copy_pc",
             "params": []
           }
         ]
       },
       {
-        "value": "&trans",
-        "params": []
-      },
-      {
-        "value": "&trans",
-        "params": []
+        "value": "Custom",
+        "params": [
+          {
+            "value": "&td_paste_pc",
+            "params": []
+          }
+        ]
       },
       {
         "value": "&trans",
@@ -3744,5 +3749,35 @@
       "quickTapMs": 175
     }
   ],
-  "combos": []
+  "combos": [
+    {
+      "name": "combo_maximize",
+      "key_positions": [
+        51,
+        52
+      ],
+      "bindings": [
+        {
+          "value": "&kp",
+          "params": [
+            {
+              "value": "LC",
+              "params": [
+                {
+                  "value": "LG",
+                  "params": [
+                    {
+                      "value": "M",
+                      "params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "timeout_ms": 50
+    }
+  ]
 }

@@ -5,13 +5,13 @@ scripts/generate_rgb.py
 Automates the generation, validation, and updating of per-key RGB underglow layers
 (`underglow-layer` blocks) in `go60/config/go60.keymap` and `glove80/config/glove80.keymap`.
 
-Rules follow docs/RGB_PALETTE.md (v49):
+Rules follow docs/RGB_PALETTE.md:
 - BLU: Modifiers (Home Row Mods hml/hmr, Shift, Ctrl, Alt, GUI), BT profiles, USB out.
 - GRN: Navigation (Vim arrows HJKL, Home, End, PgUp, PgDn, Mouse move, Mouse clicks, Back/Forward).
 - YLW: Numbers (0-9) & Function keys (F1-F12).
 - CYN: Volume, media, and screen brightness controls in Magic layer.
-- WHT: Regular symbols, math operators, Brackets & Braces [ ] { }, Parentheses ( ), Double Quote ("), PC Copy/Paste, Keypad operators.
-- GLD: Base tap dances (Caps, Copy/Paste, App Launcher, Screenshots), Mouse scroll, RGB controls.
+- WHT: Regular symbols, math operators, Brackets & Braces [ ] { }, Parentheses ( ), Double Quote ("), PC layer overrides (Copy/Cut/Paste & Tab nav), Keypad operators.
+- GLD: Base tap dances (Caps, Copy/Cut, Paste/Clippy, App Launcher, Screenshots, Media, Browser, WM), Mouse scroll, RGB controls.
 - RED: Layer activators & toggles, system locks, bootloader, reset, deletes, layer exits, Sniper move.
 - MAG: Magic key & system indicator.
 - NML: NumLock dynamic indicator.
@@ -181,11 +181,11 @@ def classify_key(
 
     # 2. PC Layer (Overlay on Base)
     if layer_name == 'PC':
-        if binding == '&td_copy_paste_pc':
-            return 'WHT'
         if binding == '&trans':
             return base_tokens[key_idx] if key_idx < len(base_tokens) else '___'
-        return '___'
+        if binding == '&none':
+            return '___'
+        return 'WHT'
 
     # 3. Gaming Layer
     if layer_name == 'Gaming':

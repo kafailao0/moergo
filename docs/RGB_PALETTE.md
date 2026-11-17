@@ -12,8 +12,8 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 | **`GRN`** | Green | `#00FF00` | `(0, 255, 0)` | 🟩 | **Navigation & Mouse:** Vim navigation cluster (HJKL / Left, Down, Up, Right), Home, End, PageUp, PageDown, Mouse cursor movement (`mmv`), mouse clicks (Left, Right, Middle), and browser Back/Forward (`MB4`, `MB5`). |
 | **`YLW`** | Yellow | `#FFFF00` | `(255, 255, 0)` | 🟨 | **Numbers & Function Keys:** Number row digits (1–0) in `layer_NumRow`, Keypad digits (0–9) in `layer_Keypad`, and Function keys (F1–F12) in `layer_SymbolNav`. |
 | **`CYN`** | Cyan | `#00FFFF` | `(0, 255, 255)` | 🩵 | **Media & Hardware Controls:** Volume controls (`Vol Dn`, `Vol Up`, `Mute`), media keys (`Prev`, `Next`, `Play/Pause`), and screen brightness in `layer_Magic`. |
-| **`WHT`** | White | `#FFFFFF` | `(255, 255, 255)` | ⬜ | **Regular Symbols, Math & PC Overrides:** All standard punctuation / math operators (`@`, `#`, `$`, `%`, `^`, `&`, `*`, `+`, `-`, `=`, `/`, `\`, `|`, `<`, `>`, `~`, `` ` ``), Brackets & Braces (`[ ]`, `{ }`), Parentheses (`( )`), Double Quote (`"`), Keypad operators (`+`, `-`, `*`, `/`, `=`, `.`, Enter), and PC layer Copy/Paste Tap Dance (`td_copy_paste_pc`). |
-| **`GLD`** | Gold | `#FFBF00` | `(255, 191, 0)` | 🟧 | **Base Tap Dances, Scroll & Underglow:** Base layer tap dances (`td_caps`, `td_copy_paste`, `td_launcher`, `td_screenshot`, `td_browser`, `td_media`, `td_wm_prev`, `td_wm_next`), mouse wheel scrolling (`msc`), and RGB underglow controls in Magic. |
+| **`WHT`** | White | `#FFFFFF` | `(255, 255, 255)` | ⬜ | **Regular Symbols, Math & PC Overrides:** All standard punctuation / math operators (`@`, `#`, `$`, `%`, `^`, `&`, `*`, `+`, `-`, `=`, `/`, `\`, `|`, `<`, `>`, `~`, `` ` ``), Brackets & Braces (`[ ]`, `{ }`), Parentheses (`( )`), Double Quote (`"`), Keypad operators (`+`, `-`, `*`, `/`, `=`, `.`, Enter), and PC layer overrides (`td_copy_pc`, `td_paste_pc`, `Ctrl+Shift+Tab`, `Ctrl+Tab`). |
+| **`GLD`** | Gold | `#FFBF00` | `(255, 191, 0)` | 🟧 | **Base Tap Dances, Scroll & Underglow:** Base layer tap dances (`td_caps`, `td_copy`, `td_paste`, `td_launcher`, `td_screenshot`, `td_browser`, `td_media`, `td_wm_prev`, `td_wm_next`), mouse wheel scrolling (`msc`), and RGB underglow controls in Magic. |
 | **`RED`** | Red | `#FF0000` | `(255, 0, 0)` | 🟥 | **Layer Controls, System & Locks:** Layer toggles & momentary thumb activators (NumRow, SymbolNav, Keypad, PC, Gaming, Mouse, Sniper), layer exit keys (`tog`), system locks, Bootloader, Reset, Delete keys, and Sniper precision motion. |
 | **`MAG`** | Magenta | `#FF00FF` | `(255, 0, 255)` | 🟪 | **Magic Key & System Indicator:** Dedicated indicator for the Magic layer access key across all permanent layers (Base, PC, Gaming). |
 | **`NML`** | NumLock | Dynamic | — | 🟢/🔴 | **NumLock Status Indicator:** Green when NumLock is ON, Red when OFF. |
@@ -27,13 +27,13 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 ### Base Layer (`layer_Base`)
 - **Red (`RED`)**: Layer keys (`td_LAYER_Keypad`, NumRow Tab thumb, SymbolNav Del thumb, Mouse toggle on Glove80).
 - **Blue (`BLU`)**: Home Row Mods (A, S, D, F and J, K, L, ;) and Left Thumb Shift (`&kp LSHFT`). Glove80 upper thumbs (Ctrl, Alt, GUI).
-- **Gold (`GLD`)**: Base tap dances (`td_caps`, `td_copy_paste`, `td_launcher`, `td_screenshot`, `td_browser`, `td_media`, `td_wm_prev`, `td_wm_next`).
+- **Gold (`GLD`)**: Base tap dances (`td_caps`, `td_copy`, `td_paste`, `td_launcher`, `td_screenshot`, `td_browser`, `td_media`, `td_wm_prev`, `td_wm_next`).
 - **Magenta (`MAG`)**: Magic key (`&magic LAYER_Magic 0`).
 
 ### PC Layer (`layer_PC`)
 - Mirrors Base layer RGB highlights.
 - **Red (`RED`)**: Layer thumb keys and toggles.
-- **White (`WHT`)**: PC Copy/Paste tap dance (`td_copy_paste_pc` — 1x Ctrl+C, 2x Ctrl+V, 3x Win+V), clearly distinguished from Base layer's Gold.
+- **White (`WHT`)**: PC layer overrides (`td_copy_pc`, `td_paste_pc`, and Glove80 `Ctrl+Shift+Tab` / `Ctrl+Tab`), clearly distinguished from Base layer's Gold / unlit keys.
 - **Blue (`BLU`)**: Modifiers, Home Row Mods, and thumb Shift.
 - **Magenta (`MAG`)**: Magic key.
 
