@@ -6,8 +6,8 @@
   "parent_uuid": "54cf5ee0-4c56-49ea-96ec-aac94a8ed94e",
   "date": 1761766000,
   "creator": "Ka Fai Lao",
-  "title": "Kelvin's Go60 layout v51",
-  "notes": "Kelvin's Go60 layout v51.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 0), td_caps (Row 1), ESC (Row 2), Magic (Row 3).\n- Right Outer Column (Media & Punctuation): Media tap dance (Row 0), Hyphen - (Row 1), Quote ' (Row 2), Underscore _ (Row 3).\n- Bottom Row:\n  - Left (under X, C, V): td_screenshot (1x: Area ⌘⌥⇧4, 2x: Window ⌘⌥⇧2, 3x: Fullscreen ⌘⌥⇧3), td_copy (1x: ⌘C, 2x: ⌘X), td_paste (1x: ⌘V, 2x: ⌘⌥V Clippy).\n  - Right (under M, ,, .): td_wm_prev (1x: ⌃⌘⇧U Prev Window, 2x: ⌃⌘, Prev Workspace), td_wm_next (1x: ⌃⌘u Next Window, 2x: ⌃⌘. Next Workspace), td_launcher (1x: ⌘Space, 2x: ⌘⇧Space); Combo WM Prev + WM Next: Maximize Window (⌃⌘M).\n- Thumb Cluster (identical to Glove80 lower thumb cluster):\n  - Left (Outer to Inner): LSHFT, BSPC (pure instant key), TAB (hold for NumRow).\n  - Right (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n- Trackpads: Right trackpad set to 3x sensitivity (9x in SymbolNav); Left trackpad scrolling scaled to 1/8 speed (default) for natural, controlled page scrolling. Left bottom keys (Screenshot, Copy/Cut, Paste/Clippy) are excluded from zip_temp_mouse so layer_Mouse stays active while mousing.\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 3, CleanShot X Screenshot, Copy/Cut, Paste/Clippy on bottom-left; WM Prev, WM Next, Launcher on bottom-right with Maximize combo; Media tap-dance on top-right number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-left Copy/Paste to td_copy_pc 1x Ctrl+C / 2x Ctrl+X and td_paste_pc 1x Ctrl+V / 2x Win+V). Mirrors Base layer RGB highlights with overridden PC keys lit in White (instead of Gold) for 3 seconds then fading out.\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts ` (Grave) at top-left corner (Row 0), restores Magic to left of Z (Row 3), puts BSPC, DEL (pure key), and LGUI (Cmd/Super) on bottom-left, and uses LSHFT (pass-through), Hold-Tap Ctrl/Space, and Hold-Tap Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and PageUp/PageDown below F12.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T3 (TAB) for home-row numbers 1-0 on A-G / H-; with all other keys transparent.\n- Mouse: Auto-activated upon touching/moving trackpad (1000ms timeout, typing exits). Left hand home row has Left/Right/Middle clicks (F, D, S), and upper row has Browser Back/Forward (W, E).\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls, Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n\nPer-Key RGB (underglow-layer):\n- Base layer: Special keys highlighted (Layers in Red, Modifiers & Home Row Mods in Blue, Tap Dances in Gold, Magic in Magenta), lighting up for 3 seconds on wake or layer return then fading out.\n- Momentary layers (SymbolNav, NumRow, Magic), Keypad, and Mouse stay color-coded while active (Navigation in Green, Numbers & F-keys in Yellow, Brackets / Braces / Parentheses / Regular Symbols / Double Quote / Keypad in White, Back/Forward & Mouse clicks in Green, Layer switches in Red, Magic Media/Volume in Cyan).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (PC mirrors Base layer with overridden keys in White; Gaming only lights up Magic in Magenta and modifiers in Blue, with plain gaming keys and non-modifiers unlit).",
+  "title": "Kelvin's Go60 layout v52",
+  "notes": "Kelvin's Go60 layout v52.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 0), td_caps (Row 1), ESC (Row 2), Magic (Row 3).\n- Right Outer Column (Media & Punctuation): Media tap dance (Row 0), Hyphen - (Row 1), Quote ' (Row 2), Underscore _ (Row 3).\n- Bottom Row:\n  - Left (under X, C, V): td_screenshot (1x: Area ⌘⌥⇧4, 2x: Window ⌘⌥⇧2, 3x: Fullscreen ⌘⌥⇧3), td_copy (1x: ⌘C, 2x: ⌘X), td_paste (1x: ⌘V, 2x: ⌘⌥V Clippy).\n  - Right (under M, ,, .): td_launcher (1x: ⌘Space, 2x: ⌘⇧Space), td_wm_prev (1x: ⌃⌘⇧U Prev Window, 2x: ⌃⌘, Prev Workspace), td_wm_next (1x: ⌃⌘u Next Window, 2x: ⌃⌘. Next Workspace); Combo WM Prev + WM Next: Maximize Window (⌃⌘M).\n- Thumb Cluster (identical to Glove80 lower thumb cluster):\n  - Left (Outer to Inner): LSHFT, BSPC (pure instant key), TAB (hold for NumRow).\n  - Right (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n- Trackpads: Right trackpad set to 3x sensitivity (9x in SymbolNav); Left trackpad scrolling scaled to 1/8 speed (default) for natural, controlled page scrolling. Left bottom keys (Screenshot, Copy/Cut, Paste/Clippy) are excluded from zip_temp_mouse so layer_Mouse stays active while mousing.\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 3, CleanShot X Screenshot, Copy/Cut, Paste/Clippy on bottom-left; Launcher, WM Prev, WM Next on bottom-right with Maximize combo; Media tap-dance on top-right number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-left Copy/Paste to td_copy_pc 1x Ctrl+C / 2x Ctrl+X and td_paste_pc 1x Ctrl+V / 2x Win+V). Mirrors Base layer RGB highlights with overridden PC keys lit in White (instead of Gold) for 3 seconds then fading out.\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts ` (Grave) at top-left corner (Row 0), restores Magic to left of Z (Row 3), puts BSPC, DEL (pure key), and LGUI (Cmd/Super) on bottom-left, and uses LSHFT (pass-through), Hold-Tap Ctrl/Space, and Hold-Tap Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and PageUp/PageDown below F12.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T3 (TAB) for home-row numbers 1-0 on A-G / H-; with all other keys transparent.\n- Mouse: Auto-activated upon touching/moving trackpad (1000ms timeout, typing exits). Left hand home row has Left/Right/Middle clicks (F, D, S), and upper row has Browser Back/Forward (W, E).\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls, Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n\nPer-Key RGB (underglow-layer):\n- Base layer: Special keys highlighted (Layers in Red, Modifiers & Home Row Mods in Blue, Tap Dances in Gold, Magic in Magenta), lighting up for 3 seconds on wake or layer return then fading out.\n- Momentary layers (SymbolNav, NumRow, Magic), Keypad, and Mouse stay color-coded while active (Navigation in Green, Numbers & F-keys in Yellow, Brackets / Braces / Parentheses / Regular Symbols / Double Quote / Keypad in White, Back/Forward & Mouse clicks in Green, Layer switches in Red, Magic Media/Volume in Cyan).\n- Permanent layers (PC, Gaming) light up for 3 seconds on toggle and fade out (PC mirrors Base layer with overridden keys in White; Gaming only lights up Magic in Magenta and modifiers in Blue, with plain gaming keys and non-modifiers unlit).",
   "tags": [
     "go60",
     "custom"
@@ -524,6 +524,15 @@
         "value": "Custom",
         "params": [
           {
+            "value": "&td_launcher",
+            "params": []
+          }
+        ]
+      },
+      {
+        "value": "Custom",
+        "params": [
+          {
             "value": "&td_wm_prev",
             "params": []
           }
@@ -534,15 +543,6 @@
         "params": [
           {
             "value": "&td_wm_next",
-            "params": []
-          }
-        ]
-      },
-      {
-        "value": "Custom",
-        "params": [
-          {
-            "value": "&td_launcher",
             "params": []
           }
         ]
@@ -3753,8 +3753,8 @@
     {
       "name": "combo_maximize",
       "key_positions": [
-        51,
-        52
+        52,
+        53
       ],
       "bindings": [
         {
