@@ -1,0 +1,74 @@
+--- a/src/rgb_underglow.c
++++ b/src/rgb_underglow.c
+@@ -78,10 +78,18 @@ enum rgb_underglow_effect {
+     UNDERGLOW_EFFECT_SWIRL,
+ #if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
+     UNDERGLOW_EFFECT_LAYER_INDICATORS,
++    UNDERGLOW_EFFECT_LAYER_INDICATORS_PERMANENT,
+ #endif
+     UNDERGLOW_EFFECT_NUMBER // Used to track number of underglow effects
+ };
+ 
++#if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
++static inline bool zmk_rgb_underglow_is_layer_effect(uint8_t effect) {
++    return effect == UNDERGLOW_EFFECT_LAYER_INDICATORS ||
++           effect == UNDERGLOW_EFFECT_LAYER_INDICATORS_PERMANENT;
++}
++#endif
++
+ struct rgb_underglow_state {
+     struct zmk_led_hsb color;
+     uint8_t animation_speed;
+@@ -484,6 +492,8 @@ static void zmk_rgb_underglow_tick(struct k_work *work) {
+     case UNDERGLOW_EFFECT_LAYER_INDICATORS:
+         zmk_rgb_underglow_effect_layer();
+         break;
++    case UNDERGLOW_EFFECT_LAYER_INDICATORS_PERMANENT:
++        break;
+ #endif
+     }
+ 
+@@ -513,7 +523,7 @@ static int rgb_settings_set(const char *name, size_t len, settings_read_cb read_
+ 
+         rc = read_cb(cb_arg, &state, sizeof(state));
+         if (rc >= 0) {
+-            if (state.on) {
++            if (state.on && !state.layer_enabled) {
+                 k_timer_start(&underglow_tick, K_NO_WAIT, K_MSEC(50));
+             }
+ #if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
+@@ -633,8 +643,9 @@ void zmk_rgb_set_ext_power(void) {
+ int zmk_rgb_underglow_on(void) {
+     zmk_rgb_underglow_transient_on();
+ #if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
+-    if (state.current_effect == UNDERGLOW_EFFECT_LAYER_INDICATORS) {
++    if (zmk_rgb_underglow_is_layer_effect(state.current_effect)) {
+         state.layer_enabled = true;
++        zmk_rgb_underglow_set_layer(rgb_underglow_top_layer(), true);
+     }
+ #endif
+     return zmk_rgb_underglow_save_state();
+@@ -696,7 +707,12 @@ int zmk_rgb_underglow_select_effect(int effect) {
+     state.current_effect = effect;
+     state.animation_step = 0;
+ #if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
+-    state.layer_enabled = (effect == UNDERGLOW_EFFECT_LAYER_INDICATORS);
++    state.layer_enabled = zmk_rgb_underglow_is_layer_effect(effect);
++    if (state.layer_enabled) {
++        zmk_rgb_underglow_set_layer(rgb_underglow_top_layer(), true);
++    } else if (state.on) {
++        k_timer_start(&underglow_tick, K_NO_WAIT, K_MSEC(25));
++    }
+ #endif
+     return zmk_rgb_underglow_save_state();
+ }
+@@ -773,7 +789,8 @@ static void zmk_rgb_underglow_set_layer(uint8_t layer, bool wakeup) {
+         k_timer_stop(&underglow_tick);
+         state.animation_step = 0;
+         int fade_delay = zmk_rgbmap_fade_delay(layer);
+-        if (fade_delay >= 0) {
++        if (fade_delay >= 0 &&
++            state.current_effect != UNDERGLOW_EFFECT_LAYER_INDICATORS_PERMANENT) {
+             k_timer_start(&underglow_tick, K_SECONDS(fade_delay), K_MSEC(50));
+         }
+         LOG_DBG("write pixels");

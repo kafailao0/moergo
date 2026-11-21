@@ -73,7 +73,22 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 
 ---
 
-## 3. Automated RGB Generation (`scripts/generate_rgb.py`)
+## 3. RGB Modes (`Magic + G` / `&rgb_ug RGB_EFF`)
+
+Pressing `Magic + G` cycles through 6 firmware RGB modes (patched via [`patches/rgb-layer-permanent-mode.patch`](../patches/rgb-layer-permanent-mode.patch)):
+
+| Index | Mode | Behavior |
+| :---: | :--- | :--- |
+| `0` | **Solid** | Static solid color across all keys |
+| `1` | **Breathe** | Pulsing brightness across all keys |
+| `2` | **Spectrum** | Rainbow color cycle across the whole board |
+| `3` | **Swirl** | Rainbow wave across keys |
+| `4` | **Layer Indicators (Temp 3s)** | Per-key layer colors; `Base`, `PC`, and `Gaming` fade out after 3s (`fade-delay = <3>`) while momentary/overlay layers stay lit while active |
+| `5` | **Layer Indicators (Permanent)** | Per-key layer colors; ignores `fade-delay` so `Base`, `PC`, and `Gaming` stay lit indefinitely |
+
+---
+
+## 4. Automated RGB Generation (`scripts/generate_rgb.py`)
 
 The layout RGB matrices can be verified and generated automatically from keymap bindings using `scripts/generate_rgb.py`:
 
