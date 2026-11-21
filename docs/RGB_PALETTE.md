@@ -75,7 +75,7 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 
 ## 3. RGB Modes (`Magic + G` / `&rgb_ug RGB_EFF`)
 
-Pressing `Magic + G` cycles through 6 firmware RGB modes (patched via [`patches/rgb-layer-permanent-mode.patch`](../patches/rgb-layer-permanent-mode.patch)):
+Pressing `Magic + G` cycles through 7 firmware RGB modes (patched via [`patches/rgb-layer-permanent-mode.patch`](../patches/rgb-layer-permanent-mode.patch)):
 
 | Index | Mode | Behavior |
 | :---: | :--- | :--- |
@@ -85,6 +85,7 @@ Pressing `Magic + G` cycles through 6 firmware RGB modes (patched via [`patches/
 | `3` | **Swirl** | Rainbow wave across keys |
 | `4` | **Layer Indicators (Temp 3s)** | Per-key layer colors; `Base`, `PC`, and `Gaming` fade out after 3s (`fade-delay = <3>`) while momentary/overlay layers stay lit while active |
 | `5` | **Layer Indicators (Permanent)** | Per-key layer colors; ignores `fade-delay` so `Base`, `PC`, and `Gaming` stay lit indefinitely |
+| `6` | **Layer Indicators (Breathe)** | Per-key layer colors; `Base`, `PC`, and `Gaming` breathe smoothly (`0% ↔ 100%`, speed adjustable via `Magic + Q/A`), while momentary/overlay layers stay steady at full brightness |
 
 ---
 

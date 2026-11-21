@@ -1,34 +1,76 @@
 --- a/src/rgb_underglow.c
 +++ b/src/rgb_underglow.c
-@@ -78,10 +78,18 @@ enum rgb_underglow_effect {
+@@ -78,9 +78,19 @@
      UNDERGLOW_EFFECT_SWIRL,
  #if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
      UNDERGLOW_EFFECT_LAYER_INDICATORS,
 +    UNDERGLOW_EFFECT_LAYER_INDICATORS_PERMANENT,
++    UNDERGLOW_EFFECT_LAYER_INDICATORS_BREATHE,
  #endif
      UNDERGLOW_EFFECT_NUMBER // Used to track number of underglow effects
  };
- 
++
 +#if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
 +static inline bool zmk_rgb_underglow_is_layer_effect(uint8_t effect) {
 +    return effect == UNDERGLOW_EFFECT_LAYER_INDICATORS ||
-+           effect == UNDERGLOW_EFFECT_LAYER_INDICATORS_PERMANENT;
++           effect == UNDERGLOW_EFFECT_LAYER_INDICATORS_PERMANENT ||
++           effect == UNDERGLOW_EFFECT_LAYER_INDICATORS_BREATHE;
 +}
 +#endif
-+
+ 
  struct rgb_underglow_state {
      struct zmk_led_hsb color;
-     uint8_t animation_speed;
-@@ -484,6 +492,8 @@ static void zmk_rgb_underglow_tick(struct k_work *work) {
+@@ -97,6 +107,10 @@
+ 
+ static struct led_rgb pixels[STRIP_NUM_PIXELS];
+ static struct led_rgb status_pixels[STRIP_NUM_PIXELS];
++#if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
++static struct led_rgb layer_pixels[STRIP_NUM_PIXELS];
++static bool layer_breathe_active;
++#endif
+ 
+ static struct rgb_underglow_state state;
+ 
+@@ -227,6 +241,26 @@
+         zmk_rgb_underglow_transient_off();
+     }
+ }
++
++#if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
++static void zmk_rgb_underglow_effect_layer_breathe(void) {
++    if (!layer_breathe_active) {
++        return;
++    }
++
++    uint32_t scale = abs((int)state.animation_step - 1200);
++    for (int i = 0; i < STRIP_NUM_PIXELS; i++) {
++        pixels[i].r = (layer_pixels[i].r * scale + 600) / 1200;
++        pixels[i].g = (layer_pixels[i].g * scale + 600) / 1200;
++        pixels[i].b = (layer_pixels[i].b * scale + 600) / 1200;
++    }
++
++    state.animation_step += state.animation_speed * 10;
++    if (state.animation_step > 2400) {
++        state.animation_step = 0;
++    }
++}
++#endif
+ 
+ static int zmk_led_generate_status(void);
+ 
+@@ -484,6 +518,11 @@
      case UNDERGLOW_EFFECT_LAYER_INDICATORS:
          zmk_rgb_underglow_effect_layer();
          break;
 +    case UNDERGLOW_EFFECT_LAYER_INDICATORS_PERMANENT:
 +        break;
++    case UNDERGLOW_EFFECT_LAYER_INDICATORS_BREATHE:
++        zmk_rgb_underglow_effect_layer_breathe();
++        break;
  #endif
      }
  
-@@ -513,7 +523,7 @@ static int rgb_settings_set(const char *name, size_t len, settings_read_cb read_
+@@ -513,7 +552,7 @@
  
          rc = read_cb(cb_arg, &state, sizeof(state));
          if (rc >= 0) {
@@ -37,7 +79,7 @@
                  k_timer_start(&underglow_tick, K_NO_WAIT, K_MSEC(50));
              }
  #if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
-@@ -633,8 +643,9 @@ void zmk_rgb_set_ext_power(void) {
+@@ -633,8 +672,9 @@
  int zmk_rgb_underglow_on(void) {
      zmk_rgb_underglow_transient_on();
  #if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
@@ -48,7 +90,7 @@
      }
  #endif
      return zmk_rgb_underglow_save_state();
-@@ -696,7 +707,12 @@ int zmk_rgb_underglow_select_effect(int effect) {
+@@ -696,7 +736,15 @@
      state.current_effect = effect;
      state.animation_step = 0;
  #if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
@@ -56,19 +98,44 @@
 +    state.layer_enabled = zmk_rgb_underglow_is_layer_effect(effect);
 +    if (state.layer_enabled) {
 +        zmk_rgb_underglow_set_layer(rgb_underglow_top_layer(), true);
-+    } else if (state.on) {
-+        k_timer_start(&underglow_tick, K_NO_WAIT, K_MSEC(25));
++    } else {
++        layer_breathe_active = false;
++        if (state.on) {
++            k_timer_start(&underglow_tick, K_NO_WAIT, K_MSEC(25));
++        }
 +    }
  #endif
      return zmk_rgb_underglow_save_state();
  }
-@@ -773,7 +789,8 @@ static void zmk_rgb_underglow_set_layer(uint8_t layer, bool wakeup) {
+@@ -753,6 +801,9 @@
+             }
+         }
+     }
++    for (int i = 0; i < STRIP_NUM_PIXELS; i++) {
++        layer_pixels[i] = pixels[i];
++    }
+     return rc;
+ }
+ 
+@@ -772,13 +823,20 @@
+         }
          k_timer_stop(&underglow_tick);
          state.animation_step = 0;
++        layer_breathe_active = false;
          int fade_delay = zmk_rgbmap_fade_delay(layer);
--        if (fade_delay >= 0) {
-+        if (fade_delay >= 0 &&
-+            state.current_effect != UNDERGLOW_EFFECT_LAYER_INDICATORS_PERMANENT) {
-             k_timer_start(&underglow_tick, K_SECONDS(fade_delay), K_MSEC(50));
+         if (fade_delay >= 0) {
+-            k_timer_start(&underglow_tick, K_SECONDS(fade_delay), K_MSEC(50));
++            if (state.current_effect == UNDERGLOW_EFFECT_LAYER_INDICATORS) {
++                k_timer_start(&underglow_tick, K_SECONDS(fade_delay), K_MSEC(50));
++            } else if (state.current_effect == UNDERGLOW_EFFECT_LAYER_INDICATORS_BREATHE) {
++                layer_breathe_active = true;
++                k_timer_start(&underglow_tick, K_NO_WAIT, K_MSEC(25));
++            }
          }
          LOG_DBG("write pixels");
+         zmk_led_write_pixels();
+     } else {
++        layer_breathe_active = false;
+         if (state.on)
+             zmk_rgb_underglow_transient_off();
+     }
