@@ -1,8 +1,8 @@
 {
   "glove80": {
     "name": "Glove80",
-    "title": "Kelvin's Glove80 layout v54",
-    "notes": "Kelvin's Glove80 layout v54.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 1), td_caps (Row 2), ESC (Row 3), Mouse layer toggle (Row 4), Magic (Row 5).\n- Right Outer Column (Media & Punctuation): Media tap dance (Row 1), Hyphen - (Row 2), Quote ' (Row 3), Underscore _ (Row 4).\n- Thumb Cluster:\n  - Left Lower (Outer to Inner): LSHFT, BSPC (pure instant key), TAB (hold for NumRow).\n  - Right Lower (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n  - Left Upper (Outer to Inner): LCTRL, LALT, LGUI.\n  - Right Upper (Inner to Outer): Volume Down, Volume Up, Media (Tap: Play/Pause, 2x: Next, 3x: Prev; Combo Vol Dn+Up: Mute).\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Mouse toggle on Row 4, Magic on Row 5; Browser history tap-dance (1x: \u2318\u2325H Back, 2x: \u2318\u2325L Forward), CleanShot X Screenshot tap-dance, Copy/Cut tap-dance (1x: \u2318C, 2x: \u2318X), Paste/Clippy tap-dance (1x: \u2318V, 2x: \u2318\u2325V) on bottom-left; Launcher tap-dance (\u2318Space/\u2318\u21e7Space), WM Prev tap-dance (1x: \u2303\u2318\u21e7U Prev Window, 2x: \u2303\u2318, Prev Workspace), WM Next tap-dance (1x: \u2303\u2318u Next Window, 2x: \u2303\u2318. Next Workspace), Prev Tab (\u2318\u2325,), Next Tab (\u2318\u2325.) on bottom-right; combo WM Prev + WM Next: Maximize Window (\u2303\u2318M); Media tap-dance on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-left Copy/Paste to td_copy_pc 1x Ctrl+C / 2x Ctrl+X and td_paste_pc 1x Ctrl+V / 2x Win+V, converts bottom-right Tab Prev/Next to Ctrl+Shift+Tab / Ctrl+Tab, and passes through Window Manager shortcuts to Win+Ctrl+U/./M). Mirrors Base layer RGB highlights with overridden PC keys lit in White.\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts ` (Grave) above Tab (Row 1), ~ (Tilde) to left of Z (Row 4), restores Magic to bottom-left corner, puts BSPC, DEL (pure key), and LGUI (Cmd/Super) on bottom-left, and uses LSHFT (pass-through), Hold-Tap Ctrl/Space, and Hold-Tap Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and PageUp/PageDown below F12.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T6 (TAB) for home-row numbers 1-0 on A-G / H-; with all other keys transparent.\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls (Magic+G cycles 7 modes: Solid, Breathe, Spectrum, Swirl, Layer RGB Temp 3s, Layer RGB Permanent, Layer RGB Breathe), Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n- Mouse / Sniper: Mouse toggle key enters mouse layer; home-row HJKL mouse movement; hold A for Sniper precision mode.\n\nPer-Key RGB (underglow-layer):\n- RGB Modes (Magic+G): 0 Solid, 1 Breathe, 2 Spectrum, 3 Swirl, 4 Layer RGB (Temporary: Base/PC/Gaming fade out after 3s), 5 Layer RGB (Permanent: Base/PC/Gaming stay lit indefinitely), 6 Layer RGB (Breathe: Base/PC/Gaming breathe permanently while momentary/overlay layers stay steady at full brightness).\n- Base layer: Special keys highlighted (Layers in Red, Modifiers & Home Row Mods in Blue, Tap Dances in Gold, Magic in Magenta).\n- Momentary layers (SymbolNav, NumRow, Magic, Mouse, Sniper) and Keypad stay color-coded while active (Navigation in Green, Numbers & F-keys in Yellow, Brackets / Braces / Parentheses / Regular Symbols / Double Quote / Keypad in White, Mouse Clicks & Back/Forward in Green, Layer switches in Red, Magic Media/Volume in Cyan, Sniper movement in Red).\n- Permanent layers (PC, Gaming): PC mirrors Base layer with overridden keys in White; Gaming only lights up Magic in Magenta and modifiers in Blue, with plain gaming keys and non-modifiers unlit.",
+    "title": "Kelvin's Glove80 layout v55",
+    "notes": "Kelvin's Glove80 layout v55.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 1), td_caps (Row 2), ESC (Row 3), Mouse layer toggle (Row 4), Magic (Row 5).\n- Right Outer Column (Media & Punctuation): Media tap dance (Row 1), Hyphen - (Row 2), Quote ' (Row 3), Underscore _ (Row 4).\n- Thumb Cluster:\n  - Left Lower (Outer to Inner): LSHFT, BSPC (pure instant key), TAB (hold for NumRow).\n  - Right Lower (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n  - Left Upper (Outer to Inner): LCTRL, LALT, LGUI.\n  - Right Upper (Inner to Outer): Volume Down, Volume Up, Media (Tap: Play/Pause, 2x: Next, 3x: Prev; Combo Vol Dn+Up: Mute).\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Mouse toggle on Row 4, Magic on Row 5; Browser history tap-dance (1x: \u2318\u2325H Back, 2x: \u2318\u2325L Forward), CleanShot X Screenshot tap-dance, Copy/Cut tap-dance (1x: \u2318C, 2x: \u2318X), Paste/Clippy tap-dance (1x: \u2318V, 2x: \u2318\u2325V) on bottom-left; Launcher tap-dance (\u2318Space/\u2318\u21e7Space), WM Prev tap-dance (1x: \u2303\u2318\u21e7U Prev Window, 2x: \u2303\u2318, Prev Workspace), WM Next tap-dance (1x: \u2303\u2318u Next Window, 2x: \u2303\u2318. Next Workspace), Prev Tab (\u2318\u2325,), Next Tab (\u2318\u2325.) on bottom-right; combo WM Prev + WM Next: Maximize Window (\u2303\u2318M); Media tap-dance on number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-left Copy/Paste to td_copy_pc 1x Ctrl+C / 2x Ctrl+X and td_paste_pc 1x Ctrl+V / 2x Win+V, converts bottom-right Tab Prev/Next to Ctrl+Shift+Tab / Ctrl+Tab, and passes through Window Manager shortcuts to Win+Ctrl+U/./M). Mirrors Base layer RGB highlights with overridden PC keys lit in White.\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts ` (Grave) above Tab (Row 1), ~ (Tilde) to left of Z (Row 4), restores Magic to bottom-left corner, puts BSPC, DEL (pure key), and LGUI (Cmd/Super) on bottom-left, and uses LSHFT (pass-through), Hold-Tap Ctrl/Space, and Hold-Tap Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and PageUp/PageDown below F12.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T6 (TAB) for home-row numbers 1-0 on A-G / H-; with all other keys transparent.\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls (Magic+G cycles 7 modes forward, Magic+T cycles in reverse, Magic+Z toggles RGB: Solid, Breathe, Spectrum, Swirl, Layer RGB Temp 3s, Layer RGB Permanent, Layer RGB Breathe), Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n- Mouse / Sniper: Mouse toggle key enters mouse layer; home-row HJKL mouse movement; hold A for Sniper precision mode.\n\nPer-Key RGB (underglow-layer):\n- RGB Modes (Magic+G forward / Magic+T reverse, Magic+Z toggle): 0 Solid, 1 Breathe, 2 Spectrum, 3 Swirl, 4 Layer RGB (Temporary: Base/PC/Gaming fade out after 3s), 5 Layer RGB (Permanent: Base/PC/Gaming stay lit indefinitely), 6 Layer RGB (Breathe: Base/PC/Gaming breathe permanently while momentary/overlay layers stay steady at full brightness).\n- Base layer: Special keys highlighted (Layers in Red, Modifiers & Home Row Mods in Blue, Tap Dances in Gold, Magic in Magenta).\n- Momentary layers (SymbolNav, NumRow, Magic, Mouse, Sniper) and Keypad stay color-coded while active (Navigation in Green, Numbers & F-keys in Yellow, Brackets / Braces / Parentheses / Regular Symbols / Double Quote / Keypad in White, Mouse Clicks & Back/Forward in Green, Layer switches in Red, Magic Media/Volume in Cyan, Sniper movement in Red).\n- Permanent layers (PC, Gaming): PC mirrors Base layer with overridden keys in White; Gaming only lights up Magic in Magenta and modifiers in Blue, with plain gaming keys and non-modifiers unlit.",
     "keyCount": 80,
     "coords": [
       {
@@ -1237,7 +1237,7 @@
         "___",
         "RED",
         "___",
-        "___",
+        "GLD",
         "BLU",
         "BLU",
         "BLU",
@@ -8570,14 +8570,14 @@
           },
           {
             "line1": "RGB",
-            "line2": "TOG",
+            "line2": "EFR",
             "secondary": "",
             "secondaryIcon": null,
             "badge": "",
             "badgeType": "rgb",
-            "tooltip": "RGB Control: TOG",
+            "tooltip": "RGB Control: EFR",
             "targetLayer": null,
-            "rawBinding": "&rgb_ug RGB_TOG",
+            "rawBinding": "&rgb_ug RGB_EFR",
             "icon": null,
             "rgbToken": "GLD",
             "rgbHex": "#FFBF00"
@@ -8849,18 +8849,18 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "\u2014",
-            "line2": "",
+            "line1": "RGB",
+            "line2": "TOG",
             "secondary": "",
             "secondaryIcon": null,
             "badge": "",
-            "badgeType": "none",
-            "tooltip": "None (Inactive / Blocked)",
+            "badgeType": "rgb",
+            "tooltip": "RGB Control: TOG",
             "targetLayer": null,
-            "rawBinding": "&none",
+            "rawBinding": "&rgb_ug RGB_TOG",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "GLD",
+            "rgbHex": "#FFBF00"
           },
           {
             "line1": "BT 0",
@@ -12691,8 +12691,8 @@
   },
   "go60": {
     "name": "Go60",
-    "title": "Kelvin's Go60 layout v55",
-    "notes": "Kelvin's Go60 layout v55.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 0), td_caps (Row 1), ESC (Row 2), Magic (Row 3).\n- Right Outer Column (Media & Punctuation): Media tap dance (Row 0), Hyphen - (Row 1), Quote ' (Row 2), Underscore _ (Row 3).\n- Bottom Row:\n  - Left (under X, C, V): td_screenshot (1x: Area \u2318\u2325\u21e74, 2x: Window \u2318\u2325\u21e72, 3x: Fullscreen \u2318\u2325\u21e73), td_copy (1x: \u2318C, 2x: \u2318X), td_paste (1x: \u2318V, 2x: \u2318\u2325V Clippy).\n  - Right (under M, ,, .): td_launcher (1x: \u2318Space, 2x: \u2318\u21e7Space), td_wm_prev (1x: \u2303\u2318\u21e7U Prev Window, 2x: \u2303\u2318, Prev Workspace), td_wm_next (1x: \u2303\u2318u Next Window, 2x: \u2303\u2318. Next Workspace); Combo WM Prev + WM Next: Maximize Window (\u2303\u2318M).\n- Thumb Cluster (identical to Glove80 lower thumb cluster):\n  - Left (Outer to Inner): LSHFT, BSPC (pure instant key), TAB (hold for NumRow).\n  - Right (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n- Trackpads: Right trackpad set to 3x sensitivity (9x in SymbolNav); Left trackpad scrolling scaled to 1/8 speed (default) for natural, controlled page scrolling. Left bottom keys (Screenshot, Copy/Cut, Paste/Clippy) are excluded from zip_temp_mouse so layer_Mouse stays active while mousing.\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 3, CleanShot X Screenshot, Copy/Cut, Paste/Clippy on bottom-left; Launcher, WM Prev, WM Next on bottom-right with Maximize combo; Media tap-dance on top-right number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-left Copy/Paste to td_copy_pc 1x Ctrl+C / 2x Ctrl+X and td_paste_pc 1x Ctrl+V / 2x Win+V). Mirrors Base layer RGB highlights with overridden PC keys lit in White (instead of Gold).\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts ` (Grave) at top-left corner (Row 0), restores Magic to left of Z (Row 3), puts BSPC, DEL (pure key), and LGUI (Cmd/Super) on bottom-left, and uses LSHFT (pass-through), Hold-Tap Ctrl/Space, and Hold-Tap Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and PageUp/PageDown below F12.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T3 (TAB) for home-row numbers 1-0 on A-G / H-; with all other keys transparent.\n- Mouse: Auto-activated upon touching/moving trackpad (1000ms timeout, typing exits). Left hand home row has Left/Middle/Right clicks (F, D, S), and upper row has Browser Back/Forward (W, E).\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls (Magic+G cycles 7 modes: Solid, Breathe, Spectrum, Swirl, Layer RGB Temp 3s, Layer RGB Permanent, Layer RGB Breathe), Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n\nPer-Key RGB (underglow-layer):\n- RGB Modes (Magic+G): 0 Solid, 1 Breathe, 2 Spectrum, 3 Swirl, 4 Layer RGB (Temporary: Base/PC/Gaming fade out after 3s), 5 Layer RGB (Permanent: Base/PC/Gaming stay lit indefinitely), 6 Layer RGB (Breathe: Base/PC/Gaming breathe permanently while momentary/overlay layers stay steady at full brightness).\n- Base layer: Special keys highlighted (Layers in Red, Modifiers & Home Row Mods in Blue, Tap Dances in Gold, Magic in Magenta).\n- Momentary layers (SymbolNav, NumRow, Magic), Keypad, and Mouse stay color-coded while active (Navigation in Green, Numbers & F-keys in Yellow, Brackets / Braces / Parentheses / Regular Symbols / Double Quote / Keypad in White, Back/Forward & Mouse clicks in Green, Layer switches in Red, Magic Media/Volume in Cyan).\n- Permanent layers (PC, Gaming): PC mirrors Base layer with overridden keys in White; Gaming only lights up Magic in Magenta and modifiers in Blue, with plain gaming keys and non-modifiers unlit.",
+    "title": "Kelvin's Go60 layout v56",
+    "notes": "Kelvin's Go60 layout v56.\n\nKey Features:\n- Bilateral Home Row Mods (hml/hmr): A/S/D/F and J/K/L/; (GUI, Alt, Ctrl, Shift) with 280ms tapping term, 250ms quick-tap, 150ms prior-idle, and opposite-hand trigger.\n- Left Outer Column (Modes & System): td_LAYER_Keypad (Row 0), td_caps (Row 1), ESC (Row 2), Magic (Row 3).\n- Right Outer Column (Media & Punctuation): Media tap dance (Row 0), Hyphen - (Row 1), Quote ' (Row 2), Underscore _ (Row 3).\n- Bottom Row:\n  - Left (under X, C, V): td_screenshot (1x: Area \u2318\u2325\u21e74, 2x: Window \u2318\u2325\u21e72, 3x: Fullscreen \u2318\u2325\u21e73), td_copy (1x: \u2318C, 2x: \u2318X), td_paste (1x: \u2318V, 2x: \u2318\u2325V Clippy).\n  - Right (under M, ,, .): td_launcher (1x: \u2318Space, 2x: \u2318\u21e7Space), td_wm_prev (1x: \u2303\u2318\u21e7U Prev Window, 2x: \u2303\u2318, Prev Workspace), td_wm_next (1x: \u2303\u2318u Next Window, 2x: \u2303\u2318. Next Workspace); Combo WM Prev + WM Next: Maximize Window (\u2303\u2318M).\n- Thumb Cluster (identical to Glove80 lower thumb cluster):\n  - Left (Outer to Inner): LSHFT, BSPC (pure instant key), TAB (hold for NumRow).\n  - Right (Inner to Outer): RET, DEL (hold for SymbolNav), SPACE.\n- Trackpads: Right trackpad set to 3x sensitivity (9x in SymbolNav); Left trackpad scrolling scaled to 1/8 speed (default) for natural, controlled page scrolling. Left bottom keys (Screenshot, Copy/Cut, Paste/Clippy) are excluded from zip_temp_mouse so layer_Mouse stays active while mousing.\n\nLayers:\n- Base: macOS base layer (Keypad on top-left, Magic on Row 3, CleanShot X Screenshot, Copy/Cut, Paste/Clippy on bottom-left; Launcher, WM Prev, WM Next on bottom-right with Maximize combo; Media tap-dance on top-right number-row corner).\n- PC: Linux/Windows overlay layer (converts bottom-left Copy/Paste to td_copy_pc 1x Ctrl+C / 2x Ctrl+X and td_paste_pc 1x Ctrl+V / 2x Win+V). Mirrors Base layer RGB highlights with overridden PC keys lit in White (instead of Gold).\n- Gaming: Disables Home Row Mods on ASDF / JKL;, keeps TAB at left of Q, puts ` (Grave) at top-left corner (Row 0), restores Magic to left of Z (Row 3), puts BSPC, DEL (pure key), and LGUI (Cmd/Super) on bottom-left, and uses LSHFT (pass-through), Hold-Tap Ctrl/Space, and Hold-Tap Alt/Ret on left thumb.\n- SymbolNav: Left-hand brackets/quotes/symbols, Home/End on left outer column (left of @ and ~), Right-hand Vim HJKL arrows, math/comparison operators (& + - * \\ and = ^ < > $), F1-F12, and PageUp/PageDown below F12.\n- Keypad: 3x3 digit block shifted right to UJM (741), IK, (852), OL. (963) with 456 on home-row JKL. 0 on Down, . on Up, single Enter on right Space thumb. Equal (=) on N matching SymbolNav. All duplicate Enters, Backspaces, and 0/. removed. Left pinky toggles off.\n- NumRow: Hold Left Thumb T3 (TAB) for home-row numbers 1-0 on A-G / H-; with all other keys transparent.\n- Mouse: Auto-activated upon touching/moving trackpad (1000ms timeout, typing exits). Left hand home row has Left/Middle/Right clicks (F, D, S), and upper row has Browser Back/Forward (W, E).\n- Magic: Volume on U/I/O (Dn/Up/Mute), Bluetooth profiles (BT_0 -> Base/macOS, BT_1 -> PC/Linux-Win), layer toggles (Gaming, PC), RGB controls (Magic+G cycles 7 modes forward, Magic+T cycles in reverse, Magic+Z toggles RGB: Solid, Breathe, Spectrum, Swirl, Layer RGB Temp 3s, Layer RGB Permanent, Layer RGB Breathe), Insert/ScrollLock/PrintScreen on right bottom row, and bootloader/reset.\n\nPer-Key RGB (underglow-layer):\n- RGB Modes (Magic+G forward / Magic+T reverse, Magic+Z toggle): 0 Solid, 1 Breathe, 2 Spectrum, 3 Swirl, 4 Layer RGB (Temporary: Base/PC/Gaming fade out after 3s), 5 Layer RGB (Permanent: Base/PC/Gaming stay lit indefinitely), 6 Layer RGB (Breathe: Base/PC/Gaming breathe permanently while momentary/overlay layers stay steady at full brightness).\n- Base layer: Special keys highlighted (Layers in Red, Modifiers & Home Row Mods in Blue, Tap Dances in Gold, Magic in Magenta).\n- Momentary layers (SymbolNav, NumRow, Magic), Keypad, and Mouse stay color-coded while active (Navigation in Green, Numbers & F-keys in Yellow, Brackets / Braces / Parentheses / Regular Symbols / Double Quote / Keypad in White, Back/Forward & Mouse clicks in Green, Layer switches in Red, Magic Media/Volume in Cyan).\n- Permanent layers (PC, Gaming): PC mirrors Base layer with overridden keys in White; Gaming only lights up Magic in Magenta and modifiers in Blue, with plain gaming keys and non-modifiers unlit.",
     "keyCount": 60,
     "coords": [
       {
@@ -13618,7 +13618,7 @@
         "___",
         "RED",
         "___",
-        "___",
+        "GLD",
         "BLU",
         "BLU",
         "BLU",
@@ -19019,14 +19019,14 @@
           },
           {
             "line1": "RGB",
-            "line2": "TOG",
+            "line2": "EFR",
             "secondary": "",
             "secondaryIcon": null,
             "badge": "",
             "badgeType": "rgb",
-            "tooltip": "RGB Control: TOG",
+            "tooltip": "RGB Control: EFR",
             "targetLayer": null,
-            "rawBinding": "&rgb_ug RGB_TOG",
+            "rawBinding": "&rgb_ug RGB_EFR",
             "icon": null,
             "rgbToken": "GLD",
             "rgbHex": "#FFBF00"
@@ -19298,18 +19298,18 @@
             "rgbHex": "#000000"
           },
           {
-            "line1": "\u2014",
-            "line2": "",
+            "line1": "RGB",
+            "line2": "TOG",
             "secondary": "",
             "secondaryIcon": null,
             "badge": "",
-            "badgeType": "none",
-            "tooltip": "None (Inactive / Blocked)",
+            "badgeType": "rgb",
+            "tooltip": "RGB Control: TOG",
             "targetLayer": null,
-            "rawBinding": "&none",
+            "rawBinding": "&rgb_ug RGB_TOG",
             "icon": null,
-            "rgbToken": "___",
-            "rgbHex": "#000000"
+            "rgbToken": "GLD",
+            "rgbHex": "#FFBF00"
           },
           {
             "line1": "BT 0",

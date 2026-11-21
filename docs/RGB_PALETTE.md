@@ -73,9 +73,9 @@ This document provides a comprehensive reference for the per-key RGB underglow c
 
 ---
 
-## 3. RGB Modes (`Magic + G` / `&rgb_ug RGB_EFF`)
+## 3. RGB Modes (`Magic + G` / `Magic + T` & `Magic + Z`)
 
-Pressing `Magic + G` cycles through 7 firmware RGB modes (patched via [`patches/rgb-layer-permanent-mode.patch`](../patches/rgb-layer-permanent-mode.patch)):
+Pressing `Magic + G` (`&rgb_ug RGB_EFF`) cycles forward and `Magic + T` (`&rgb_ug RGB_EFR`) cycles in reverse through 7 firmware RGB modes (patched via [`patches/rgb-layer-permanent-mode.patch`](../patches/rgb-layer-permanent-mode.patch)), while `Magic + Z` (`&rgb_ug RGB_TOG`) toggles RGB on/off:
 
 | Index | Mode | Behavior |
 | :---: | :--- | :--- |
