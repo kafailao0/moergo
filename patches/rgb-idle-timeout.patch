@@ -1,0 +1,288 @@
+--- a/include/dt-bindings/zmk/rgb.h
++++ b/include/dt-bindings/zmk/rgb.h
+@@ -20,6 +20,8 @@
+ #define RGB_EFS_CMD 13
+ #define RGB_COLOR_HSB_CMD 14
+ #define RGB_STATUS_CMD 15
++#define RGB_IDLE_SLEEP_CMD 16
++#define RGB_IDLE_WAKE_CMD 17
+ 
+ #define RGB_TOG RGB_TOG_CMD 0
+ #define RGB_ON RGB_ON_CMD 0
+--- a/include/zmk/rgb_underglow.h
++++ b/include/zmk/rgb_underglow.h
+@@ -30,3 +30,5 @@
+ int zmk_rgb_underglow_change_spd(int direction);
+ int zmk_rgb_underglow_set_hsb(struct zmk_led_hsb color);
+ int zmk_rgb_underglow_status(void);
++int zmk_rgb_underglow_idle_sleep(void);
++int zmk_rgb_underglow_idle_wake(void);
+--- a/Kconfig
++++ b/Kconfig
+@@ -341,6 +341,10 @@
+ config ZMK_RGB_UNDERGLOW_AUTO_OFF_IDLE
+     bool "Turn off RGB underglow when keyboard goes into idle state"
+ 
++config ZMK_RGB_UNDERGLOW_IDLE_TIMEOUT
++    int "Milliseconds of inactivity before turning off RGB underglow (0 to disable)"
++    default 0
++
+ config ZMK_RGB_UNDERGLOW_AUTO_OFF_USB
+     bool "Turn off RGB underglow when USB is disconnected"
+     depends on USB_DEVICE_STACK
+--- a/src/behaviors/behavior_rgb_underglow.c
++++ b/src/behaviors/behavior_rgb_underglow.c
+@@ -244,6 +244,10 @@
+                                                               .b = binding->param2 & 0xFF});
+     case RGB_STATUS_CMD:
+         return zmk_rgb_underglow_status();
++    case RGB_IDLE_SLEEP_CMD:
++        return zmk_rgb_underglow_idle_sleep();
++    case RGB_IDLE_WAKE_CMD:
++        return zmk_rgb_underglow_idle_wake();
+     }
+ 
+     return -ENOTSUP;
+--- a/src/rgb_underglow.c
++++ b/src/rgb_underglow.c
+@@ -40,7 +40,22 @@
+ #include <zmk/workqueue.h>
+ #include <zmk/events/split_peripheral_layer_changed.h>
+ 
+-#if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING)
++#if defined(CONFIG_ZMK_RGB_UNDERGLOW_IDLE_TIMEOUT) && (CONFIG_ZMK_RGB_UNDERGLOW_IDLE_TIMEOUT > 0)
++#define UNDERGLOW_IDLE_TIMEOUT_ENABLED 1
++#include <dt-bindings/zmk/rgb.h>
++#include <zmk/events/position_state_changed.h>
++#include <zmk/events/sensor_event.h>
++#if IS_ENABLED(CONFIG_ZMK_POINTING)
++#include <zephyr/input/input.h>
++#endif
++#if IS_ENABLED(CONFIG_ZMK_SPLIT) && !IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
++#include <zmk/events/split_peripheral_status_changed.h>
++#endif
++#endif
++
++#if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING) ||                             \
++    (IS_ENABLED(UNDERGLOW_IDLE_TIMEOUT_ENABLED) && IS_ENABLED(CONFIG_ZMK_SPLIT) &&                 \
++     IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL))
+ #include <zmk/split/central.h>
+ #endif
+ 
+@@ -114,6 +129,62 @@
+ 
+ static struct rgb_underglow_state state;
+ 
++#if IS_ENABLED(UNDERGLOW_IDLE_TIMEOUT_ENABLED)
++static bool idle_asleep;
++static bool rgb_on_before_idle;
++#if IS_ENABLED(CONFIG_ZMK_SPLIT) && !IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
++static bool peripheral_connected;
++#endif
++
++#if IS_ENABLED(CONFIG_ZMK_SPLIT) && IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL) &&                    \
++    DT_HAS_COMPAT_STATUS_OKAY(zmk_behavior_rgb_underglow)
++static void zmk_rgb_underglow_sync_idle_to_peripherals(bool awake) {
++    struct zmk_behavior_binding binding = {
++        .behavior_dev = DEVICE_DT_NAME(DT_INST(0, zmk_behavior_rgb_underglow)),
++        .param1 = awake ? RGB_IDLE_WAKE_CMD : RGB_IDLE_SLEEP_CMD,
++        .param2 = 0,
++    };
++    struct zmk_behavior_binding_event event = {
++        .position = 0,
++        .timestamp = k_uptime_get(),
++    };
++    for (int i = 0; i < ZMK_SPLIT_CENTRAL_PERIPHERAL_COUNT; i++) {
++        zmk_split_central_invoke_behavior(i, &binding, event, true);
++    }
++}
++#endif
++
++static void zmk_rgb_underglow_idle_work_handler(struct k_work *work) {
++    zmk_rgb_underglow_idle_sleep();
++#if IS_ENABLED(CONFIG_ZMK_SPLIT) && IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL) &&                    \
++    DT_HAS_COMPAT_STATUS_OKAY(zmk_behavior_rgb_underglow)
++    zmk_rgb_underglow_sync_idle_to_peripherals(false);
++#endif
++}
++
++static K_WORK_DELAYABLE_DEFINE(underglow_idle_work, zmk_rgb_underglow_idle_work_handler);
++
++static void zmk_rgb_underglow_schedule_idle(void) {
++#if IS_ENABLED(CONFIG_ZMK_SPLIT) && !IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
++    if (peripheral_connected) {
++        return;
++    }
++#endif
++    k_work_reschedule(&underglow_idle_work, K_MSEC(CONFIG_ZMK_RGB_UNDERGLOW_IDLE_TIMEOUT));
++}
++
++static void zmk_rgb_underglow_note_activity(void) {
++    if (idle_asleep) {
++        zmk_rgb_underglow_idle_wake();
++#if IS_ENABLED(CONFIG_ZMK_SPLIT) && IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL) &&                    \
++    DT_HAS_COMPAT_STATUS_OKAY(zmk_behavior_rgb_underglow)
++        zmk_rgb_underglow_sync_idle_to_peripherals(true);
++#endif
++    }
++    zmk_rgb_underglow_schedule_idle();
++}
++#endif
++
+ #if IS_ENABLED(CONFIG_ZMK_RGB_UNDERGLOW_EXT_POWER)
+ static const struct device *const ext_power = DEVICE_DT_GET(DT_INST(0, zmk_ext_power_generic));
+ #endif
+@@ -615,6 +686,9 @@
+         zmk_rgb_underglow_set_layer(rgb_underglow_top_layer(), true);
+     }
+ #endif
++#if IS_ENABLED(UNDERGLOW_IDLE_TIMEOUT_ENABLED)
++    zmk_rgb_underglow_schedule_idle();
++#endif
+     return 0;
+ }
+ 
+@@ -631,7 +705,11 @@
+     if (!led_strip)
+         return -ENODEV;
+ 
+-    *on_off = state.on || state.layer_enabled;
++    *on_off = state.on || state.layer_enabled
++#if IS_ENABLED(UNDERGLOW_IDLE_TIMEOUT_ENABLED)
++              || (idle_asleep && rgb_on_before_idle)
++#endif
++        ;
+     return 0;
+ }
+ 
+@@ -670,6 +748,11 @@
+ }
+ 
+ int zmk_rgb_underglow_on(void) {
++#if IS_ENABLED(UNDERGLOW_IDLE_TIMEOUT_ENABLED)
++    idle_asleep = false;
++    rgb_on_before_idle = false;
++    zmk_rgb_underglow_schedule_idle();
++#endif
+     zmk_rgb_underglow_transient_on();
+ #if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
+     if (zmk_rgb_underglow_is_layer_effect(state.current_effect)) {
+@@ -703,6 +786,10 @@
+ K_WORK_DEFINE(underglow_off_work, zmk_rgb_underglow_off_handler);
+ 
+ int zmk_rgb_underglow_off(void) {
++#if IS_ENABLED(UNDERGLOW_IDLE_TIMEOUT_ENABLED)
++    idle_asleep = false;
++    rgb_on_before_idle = false;
++#endif
+     zmk_rgb_underglow_transient_off();
+     state.layer_enabled = false;
+     return zmk_rgb_underglow_save_state();
+@@ -733,6 +820,11 @@
+         return -EINVAL;
+     }
+ 
++#if IS_ENABLED(UNDERGLOW_IDLE_TIMEOUT_ENABLED)
++    idle_asleep = false;
++    rgb_on_before_idle = false;
++    zmk_rgb_underglow_schedule_idle();
++#endif
+     state.current_effect = effect;
+     state.animation_step = 0;
+ #if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
+@@ -811,6 +903,10 @@
+     LOG_DBG("state.layer: %d state.on: %d", state.layer_enabled, state.on);
+     if (!state.layer_enabled)
+         return;
++#if IS_ENABLED(UNDERGLOW_IDLE_TIMEOUT_ENABLED)
++    if (idle_asleep)
++        return;
++#endif
+ 
+     const struct zmk_behavior_binding *rgbmap = rgb_underglow_get_bindings(layer);
+     if (rgbmap != NULL && zmk_rgb_underglow_apply_rgbmap(rgbmap, ZMK_KEYMAP_LEN, layer)) {
+@@ -1067,4 +1163,84 @@
+ ZMK_SUBSCRIPTION(rgb_underglow, zmk_underglow_color_changed);
+ #endif
+ 
++int zmk_rgb_underglow_idle_sleep(void) {
++#if IS_ENABLED(UNDERGLOW_IDLE_TIMEOUT_ENABLED)
++    if (idle_asleep) {
++        return 0;
++    }
++    idle_asleep = true;
++    rgb_on_before_idle = state.on;
++#if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
++    layer_breathe_active = false;
++#endif
++    if (state.on) {
++        return zmk_rgb_underglow_transient_off();
++    }
++#endif
++    return 0;
++}
++
++int zmk_rgb_underglow_idle_wake(void) {
++#if IS_ENABLED(UNDERGLOW_IDLE_TIMEOUT_ENABLED)
++    if (!idle_asleep) {
++        return 0;
++    }
++    idle_asleep = false;
++#if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
++    if (state.layer_enabled) {
++        zmk_rgb_underglow_set_layer(rgb_underglow_top_layer(), true);
++        return 0;
++    }
++#endif
++    if (rgb_on_before_idle) {
++        return zmk_rgb_underglow_transient_on();
++    }
++#endif
++    return 0;
++}
++
++#if IS_ENABLED(UNDERGLOW_IDLE_TIMEOUT_ENABLED)
++static int rgb_underglow_idle_event_listener(const zmk_event_t *eh) {
++#if IS_ENABLED(CONFIG_ZMK_SPLIT) && !IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
++    const struct zmk_split_peripheral_status_changed *status_ev =
++        as_zmk_split_peripheral_status_changed(eh);
++    if (status_ev != NULL) {
++        peripheral_connected = status_ev->connected;
++        if (peripheral_connected) {
++            k_work_cancel_delayable(&underglow_idle_work);
++            if (idle_asleep) {
++                zmk_rgb_underglow_idle_wake();
++            }
++        } else if (!idle_asleep) {
++            zmk_rgb_underglow_schedule_idle();
++        }
++        return ZMK_EV_EVENT_BUBBLE;
++    }
++#endif
++    zmk_rgb_underglow_note_activity();
++    return ZMK_EV_EVENT_BUBBLE;
++}
++
++ZMK_LISTENER(rgb_underglow_idle, rgb_underglow_idle_event_listener);
++ZMK_SUBSCRIPTION(rgb_underglow_idle, zmk_position_state_changed);
++ZMK_SUBSCRIPTION(rgb_underglow_idle, zmk_sensor_event);
++#if IS_ENABLED(CONFIG_ZMK_SPLIT) && !IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
++ZMK_SUBSCRIPTION(rgb_underglow_idle, zmk_split_peripheral_status_changed);
++#endif
++
++#if IS_ENABLED(CONFIG_ZMK_POINTING)
++static void rgb_underglow_idle_input_work_cb(struct k_work *_work) {
++    zmk_rgb_underglow_note_activity();
++}
++
++K_WORK_DEFINE(rgb_underglow_idle_input_work, rgb_underglow_idle_input_work_cb);
++
++static void rgb_underglow_idle_input_listener(struct input_event *ev) {
++    k_work_submit(&rgb_underglow_idle_input_work);
++}
++
++INPUT_CALLBACK_DEFINE(NULL, rgb_underglow_idle_input_listener);
++#endif
++#endif /* IS_ENABLED(UNDERGLOW_IDLE_TIMEOUT_ENABLED) */
++
+ SYS_INIT(zmk_rgb_underglow_init, APPLICATION, CONFIG_APPLICATION_INIT_PRIORITY);

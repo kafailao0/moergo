@@ -4,7 +4,10 @@
 
 let
   config = ./.;
-  rgbPatches = [ ../../patches/rgb-layer-permanent-mode.patch ];
+  rgbPatches = [
+    ../../patches/rgb-layer-permanent-mode.patch
+    ../../patches/rgb-idle-timeout.patch
+  ];
 
   go60_left = (firmware.zmk.override {
     board = "go60_lh";

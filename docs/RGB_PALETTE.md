@@ -87,6 +87,8 @@ Pressing `Magic + G` (`&rgb_ug RGB_EFF`) cycles forward and `Magic + T` (`&rgb_u
 | `5` | **Layer Indicators (Permanent)** | Per-key layer colors; ignores `fade-delay` so `Base`, `PC`, and `Gaming` stay lit indefinitely |
 | `6` | **Layer Indicators (Breathe)** | Per-key layer colors; `Base`, `PC`, and `Gaming` breathe smoothly (`0% ↔ 100%`, speed adjustable via `Magic + Q/A`), while momentary/overlay layers stay steady at full brightness |
 
+- **Idle Timeout (`CONFIG_ZMK_RGB_UNDERGLOW_IDLE_TIMEOUT=1800000`)**: Patched via [`patches/rgb-idle-timeout.patch`](../patches/rgb-idle-timeout.patch), all 7 RGB modes automatically turn off (and disable LED strip `ext_power`) after **30 minutes** of inactivity across both halves — independent of ZMK's shorter BLE idle timeout — and wake cleanly on any key press or trackpad input from either half (while preserving manual `Magic + Z` off state).
+
 ---
 
 ## 4. Automated RGB Generation (`scripts/generate_rgb.py`)
